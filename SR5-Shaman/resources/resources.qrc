@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/Fonts">
+        <file alias="Fragile Bomber">fonts/FRAGILEB.TTF</file>
+        <file alias="Hemi Head">fonts/HEMIHEAD.TTF</file>
+        <file alias="Jagged Dreams">fonts/Jagged dreams.ttf</file>
+        <file alias="Bog Stand">fonts/BOGSTAND.TTF</file>
+        <file alias="Expressway">fonts/exprswy_free.ttf</file>
+        <file alias="Pakenham">fonts/pakenham free.ttf</file>
+        <file alias="New Republic">fonts/SF New Republic.ttf</file>
+        <file alias="Teen">fonts/teen.ttf</file>
+        <file alias="Zeroes Three">fonts/ZeroesThree.ttf</file>
+    </qresource>
+</RCC>
