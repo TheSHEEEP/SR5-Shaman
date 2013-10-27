@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="MainSplitView" name="widget" native="true"/>
+     <widget class="MainSplitView" name="mainSplitView" native="true"/>
     </item>
    </layout>
   </widget>
@@ -35,7 +35,16 @@
     </property>
     <addaction name="actionPreferences"/>
     <addaction name="separator"/>
+    <addaction name="actionSwitch_Preview_Position"/>
    </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew_Character"/>
+    <addaction name="actionLoad_Character"/>
+   </widget>
+   <addaction name="menuFile"/>
    <addaction name="menuSettings"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -50,6 +59,21 @@
   <action name="actionPreferences">
    <property name="text">
     <string>Preferences</string>
+   </property>
+  </action>
+  <action name="actionNew_Character">
+   <property name="text">
+    <string>New Character</string>
+   </property>
+  </action>
+  <action name="actionLoad_Character">
+   <property name="text">
+    <string>Load Character...</string>
+   </property>
+  </action>
+  <action name="actionSwitch_Preview_Position">
+   <property name="text">
+    <string>Switch Preview Position</string>
    </property>
   </action>
  </widget>

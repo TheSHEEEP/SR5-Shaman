@@ -15,10 +15,10 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
-    <widget class="QGraphicsView" name="graphicsView"/>
+    <widget class="QGraphicsView" name="imgCharPortrait"/>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="lblCharName">
      <property name="text">
       <string>TextLabel</string>
      </property>

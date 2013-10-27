@@ -38,12 +38,26 @@ AppLayoutSettings::initialize()
     // Set the stored font
     QString storedFont =
             _settings.value("preferences/layout/fontName", "Zeroes Three").toString();
-    QFont newFont(database.applicationFontFamilies(_fontIDs[storedFont]).at(0),
+    QString fontFamily;
+    // Get default font or...
+    if (storedFont == "Default")
+    {
+        QFont defaultFont;
+        fontFamily = defaultFont.defaultFamily();
+    }
+    // ... get custom font
+    else
+    {
+        fontFamily = database.applicationFontFamilies(_fontIDs[storedFont]).at(0);
+    }
+
+    QFont newFont(fontFamily,
                   _settings.value("preferences/layout/fontSize", 10).toInt(),
                   QFont::Normal, false);
     QApplication::setFont(newFont);
 
     // Enter font names
+    ui->cbFont->addItem("Default", "Default");
     ui->cbFont->addItem("Bog Stand", "Bog Stand");
     ui->cbFont->addItem("Expressway", "Expressway");
     ui->cbFont->addItem("Fragile Bomber", "Fragile Bomber");
@@ -70,9 +84,22 @@ AppLayoutSettings::handleFontNameChange(QString p_newCaption)
     // Store
     _settings.setValue("preferences/layout/fontName", p_newCaption);
 
-    // Apply
     QFontDatabase database;
-    QFont newFont(database.applicationFontFamilies(_fontIDs[p_newCaption]).at(0),
+    QString fontFamily;
+    // Get default font or...
+    if (p_newCaption == "Default")
+    {
+        QFont defaultFont;
+        fontFamily = defaultFont.defaultFamily();
+    }
+    // ... get custom font
+    else
+    {
+        fontFamily = database.applicationFontFamilies(_fontIDs[p_newCaption]).at(0);
+    }
+
+    // Apply
+    QFont newFont(fontFamily,
                   ui->spinFontSize->value(),
                   QFont::Normal, false);
     QApplication::setFont(newFont);
@@ -85,9 +112,22 @@ AppLayoutSettings::handleFontSizeChange(int p_newSize)
     // Store
     _settings.setValue("preferences/layout/fontSize", p_newSize);
 
-    // Apply
     QFontDatabase database;
-    QFont newFont(database.applicationFontFamilies(_fontIDs[ui->cbFont->currentText()]).at(0),
+    QString fontFamily;
+    // Get default font or...
+    if (ui->cbFont->currentText() == "Default")
+    {
+        QFont defaultFont;
+        fontFamily = defaultFont.defaultFamily();
+    }
+    // ... get custom font
+    else
+    {
+        fontFamily = database.applicationFontFamilies(_fontIDs[ui->cbFont->currentText()]).at(0);
+    }
+
+    // Apply
+    QFont newFont(fontFamily,
                   p_newSize,
                   QFont::Normal, false);
     QApplication::setFont(newFont);

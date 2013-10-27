@@ -7,6 +7,7 @@ namespace Ui {
 class MainWindow;
 }
 class PreferencesWindow;
+class CreationInitializingWindow;
 
 /**
  *  Main SR5 Shaman window.
@@ -40,10 +41,32 @@ private slots:
      */
     void on_actionPreferences_triggered();
 
+    /**
+     * @brief Starts the creation of a new character.
+     */
+    void on_actionNew_Character_triggered();
+
+    /**
+     * @brief switches the character preview position.
+     */
+    void on_actionSwitch_Preview_Position_triggered();
+
+    /**
+     * @brief Starts the character creation.
+     */
+    void startCharacterCreation();
+
+    /**
+     * @brief Cancels the character creation.
+     */
+    void cancelCharacterCreation();
+
 private:
     Ui::MainWindow *ui;
 
     PreferencesWindow*  _prefWindow;
+
+    CreationInitializingWindow* _creationInitWindow;
 };
 
 #endif // MAINWINDOW_H
