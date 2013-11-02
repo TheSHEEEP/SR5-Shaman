@@ -1,0 +1,34 @@
+{
+    "metatypes" : [
+        {   "unique_id" : "HUMAN_MAIN",
+            "translations" : { "en" : "Human",
+                            "de" : "Mensch"
+                            },
+            "special_attrib_points" : ["9", "7", "5", "3", "1"]
+            },
+        {   "unique_id" : "ELF_MAIN",
+            "translations" : { "en" : "Elf",
+                            "de" : "Elf"
+                            },
+            "special_attrib_points" : ["8", "6", "3", "0", "0"]
+            },
+        {   "unique_id" : "DWARF_MAIN",
+            "translations" : { "en" : "Dwarf",
+                            "de" : "Zwerg"
+                            },
+            "special_attrib_points" : ["7", "4", "1", "0", "0"]
+            },
+        {   "unique_id" : "ORC_MAIN",
+            "translations" : { "en" : "Orc",
+                            "de" : "Ork"
+                            },
+            "special_attrib_points" : ["7", "4", "0", "0", "0"]
+            },
+        {   "unique_id" : "TROLLN_MAIN",
+            "translations" : { "en" : "Troll",
+                            "de" : "Troll"
+                            },
+            "special_attrib_points" : ["5", "0", "0", "0", "0"]
+            }
+    ]
+}

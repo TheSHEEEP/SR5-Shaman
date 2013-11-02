@@ -31,6 +31,17 @@ public:
      */
     void initialize();
 
+private slots:
+    /**
+     * @brief Stores the new metatype and updates priority selection.
+     */
+    void on_cbMetatype_currentIndexChanged(int index);
+
+    /**
+     * @brief Stores the new priority for the metatype.
+     */
+    void on_cbPriority_currentIndexChanged(int index);
+
 private:
     Ui::CharEditMiscTab *ui;
 };

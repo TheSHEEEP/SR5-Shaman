@@ -24,6 +24,12 @@ MainSplitView::MainSplitView(QWidget *parent)
 //---------------------------------------------------------------------------------
 MainSplitView::~MainSplitView()
 {
+    // This has to be done here to prevent crashing on exit
+    // TODO: Find out why exactly
+    ui->horizontalLayout->removeWidget(_currentSideInfo);
+    ui->horizontalLayout->removeItem(ui->horizontalSpacer);
+    ui->horizontalLayout->removeWidget(ui->charTabs);
+
     delete ui;
 }
 
@@ -31,9 +37,10 @@ MainSplitView::~MainSplitView()
 void
 MainSplitView::initialize()
 {
-    // Character preview is default and thus already created
-    _currentSideInfo = ui->charPreview;
-    ui->charPreview->initialize();
+    // Init character preview
+    _charPreviewSideInfo = new CharacterPreviewSideInfo();
+    _charPreviewSideInfo->initialize();
+    _currentSideInfo = _charPreviewSideInfo;
 
     // Init creation side preview
     _creationSideInfo = new CreationSideInfo();

@@ -1,5 +1,5 @@
 #include "characterpreviewsideinfo.h"
-#include "ui_characterpreview.h"
+#include "ui_characterpreviewsideinfo.h"
 
 //---------------------------------------------------------------------------------
 CharacterPreviewSideInfo::CharacterPreviewSideInfo(QWidget *parent)

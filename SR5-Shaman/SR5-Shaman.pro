@@ -22,7 +22,10 @@ SOURCES += main.cpp\
     ui/character/creationinitializingwindow.cpp \
     ui/character/characterpreviewsideinfo.cpp \
     ui/character/creationsideinfo.cpp \
-    ui/character/tabs/chareditmisctab.cpp
+    ui/character/tabs/chareditmisctab.cpp \
+    data/character/characterdata.cpp \
+    rules/rules.cpp \
+    rules/metatyperules.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -33,7 +36,10 @@ HEADERS  += mainwindow.h \
     ui/character/creationinitializingwindow.h \
     ui/character/characterpreviewsideinfo.h \
     ui/character/creationsideinfo.h \
-    ui/character/tabs/chareditmisctab.h
+    ui/character/tabs/chareditmisctab.h \
+    data/character/characterdata.h \
+    rules/rules.h \
+    rules/metatyperules.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \

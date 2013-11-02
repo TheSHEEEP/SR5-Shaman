@@ -180,6 +180,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnGuidedContinue">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Choose metatype and priority to continue</string>
        </property>

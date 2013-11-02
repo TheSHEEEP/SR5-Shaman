@@ -1,6 +1,8 @@
 #ifndef APPSTATUS_H
 #define APPSTATUS_H
 
+#include <QString>
+
 /**
  * @brief The different possible application states.
  */
@@ -29,6 +31,7 @@ private:
      */
     AppStatus()
         : _state(APPSTATE_IDLE)
+        , _currentLocale("en")
     {
 
     }
@@ -64,8 +67,24 @@ public:
         _state = p_state;
     }
 
+    /**
+     * @brief Returns the current locale in short form: "en", "de", etc.
+     */
+    const QString& getCurrentLocale() const;
+
 private:
     AppState _state;
+
+    QString _currentLocale;
 };
+
+
+//---------------------------------------------------------------------------------
+inline
+const QString&
+AppStatus::getCurrentLocale() const
+{
+    return _currentLocale;
+}
 
 #endif // APPSTATUS_H
