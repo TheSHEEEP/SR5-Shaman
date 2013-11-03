@@ -31,6 +31,11 @@ public:
      */
     void initialize();
 
+    /**
+     * @brief Will show/hide the elements specific to the guided creation.
+     */
+    virtual void showEvent(QShowEvent* p_event);
+
 private slots:
     /**
      * @brief Stores the new metatype and updates priority selection.
@@ -44,6 +49,11 @@ private slots:
 
 private:
     Ui::CharEditMiscTab *ui;
+
+    /**
+     * @brief During guided creation, checks if all conditions are met to continue with the creation.
+     */
+    void checkContinue();
 };
 
 #endif // CHAREDITMISCTAB_H

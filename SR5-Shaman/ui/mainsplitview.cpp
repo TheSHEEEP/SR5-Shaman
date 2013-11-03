@@ -93,8 +93,8 @@ MainSplitView::initializeCharacterCreation()
             ui->charTabs->removeTab(0);
         }
 
-        // Insert guided widgets into tab container
-        // Step 1: Choosing priorities
+        // Insert widgets into tab container
+        // Step 1: Metatype & misc
         ui->charTabs->addTab(_tabCharEditMisc, tr("Step 1: Priorities"));
     }
 }

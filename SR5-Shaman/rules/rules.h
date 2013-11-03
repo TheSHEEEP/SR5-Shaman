@@ -11,7 +11,7 @@
 /**
  * @brief The priorities of the character generation.
  */
-enum Priorities
+enum Priority
 {
     PRIORITY_INVALID = -1,
     PRIORITY_METATYPE,
