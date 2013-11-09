@@ -59,6 +59,7 @@ void
 CharEditMiscTab::on_cbMetatype_currentIndexChanged(int index)
 {
     // Clear priority list
+    ui->cbPriority->blockSignals(true);
     for (int i = 0; i < 6; ++i)
     {
         ui->cbPriority->removeItem(0);
@@ -78,7 +79,6 @@ CharEditMiscTab::on_cbMetatype_currentIndexChanged(int index)
 
     // Update priority selection
     const MetatypeDefinition& definition = METATYPE_RULES_PTR->getDefinition(chosenType);
-    ui->cbPriority->blockSignals(true);
     ui->cbPriority->addItem(QString("A (%1)").arg(definition.specialAttribPointsPerPrio[0]), 0);
     ui->cbPriority->addItem(QString("B (%1)").arg(definition.specialAttribPointsPerPrio[1]), 1);
     ui->cbPriority->addItem(QString("C (%1)").arg(definition.specialAttribPointsPerPrio[2]), 2);
@@ -138,4 +138,18 @@ CharEditMiscTab::checkContinue()
             ui->btnGuidedContinue->setText(tr("Choose metatype and priority to continue"));
         }
     }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMiscTab::on_leRealName_textEdited(const QString& p_name)
+{
+    CHARACTER->setName(p_name);
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMiscTab::on_leAlias_textEdited(const QString& p_nick)
+{
+    CHARACTER->setNick(p_nick);
 }

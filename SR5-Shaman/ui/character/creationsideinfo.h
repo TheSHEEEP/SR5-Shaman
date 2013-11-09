@@ -3,9 +3,13 @@
 
 #include <QWidget>
 
+#include "rules/rules.h"
+
 namespace Ui {
 class CreationSideInfo;
 }
+
+class QLabel;
 
 /**
  * @brief Side info widget that displays useful information during the guided
@@ -32,8 +36,24 @@ public:
      */
     void initialize();
 
+private slots:
+    /**
+     * @brief Updates the side info once per second.
+     */
+    void update();
+
 private:
-    Ui::CreationSideInfo *ui;
+    Ui::CreationSideInfo* ui;
+
+    QTimer* _timer;
+
+    /**
+     * @brief Updates the passed label with the current selection of the passed priority index.
+     * @param p_label       The label to update.
+     * @param p_prioIndex   The priority index (0-4 for A-E).
+     * @param p_prio        The priority for the label.
+     */
+    void updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Priority p_prio);
 };
 
 #endif // CREATIONSIDEINFO_H

@@ -54,8 +54,8 @@ MainSplitView::initialize()
     // Initialize main tabs
     _tabCharEditMisc = new CharEditMiscTab();
     _tabCharEditMisc->initialize();
+    connect(_tabCharEditMisc, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
 }
-
 
 //---------------------------------------------------------------------------------
 void
@@ -96,6 +96,8 @@ MainSplitView::initializeCharacterCreation()
         // Insert widgets into tab container
         // Step 1: Metatype & misc
         ui->charTabs->addTab(_tabCharEditMisc, tr("Step 1: Priorities"));
+        // Step 2:
+        ui->charTabs->setCurrentIndex(0);
     }
 }
 
@@ -114,5 +116,19 @@ MainSplitView::applyOrder()
         ui->horizontalLayout->addWidget(ui->charTabs);
         ui->horizontalLayout->addItem(ui->horizontalSpacer);
         ui->horizontalLayout->addWidget(_currentSideInfo);
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+MainSplitView::handleGuidedNext()
+{
+    if (ui->charTabs->currentIndex() < (ui->charTabs->count() - 1))
+    {
+        ui->charTabs->setCurrentIndex(ui->charTabs->currentIndex() + 1);
+    }
+    else
+    {
+        ui->charTabs->setCurrentIndex(0);
     }
 }

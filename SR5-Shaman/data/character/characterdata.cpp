@@ -29,6 +29,20 @@ CharacterData::setPriority(int p_priorityIndex, Priority p_prio)
             }
         }
     }
+    // If not, just check if the priority is already somewhere else and remove it there
+    else
+    {
+        // Check if the passed priority is already somewhere else and switch
+        for (int i = 0; i < 5; ++i)
+        {
+            if (i != p_priorityIndex &&
+                _selectedPriorities[i] == p_prio)
+            {
+                _selectedPriorities[i] = PRIORITY_INVALID;
+                break;
+            }
+        }
+    }
 
     // Set the priotiy
     _selectedPriorities[p_priorityIndex] = p_prio;

@@ -45,6 +45,12 @@ public:
      */
     void initializeCharacterCreation();
 
+private slots:
+    /**
+     * @brief Will proceed to the next step in the guided creation.
+     */
+    void handleGuidedNext();
+
 private:
     Ui::MainSplitView *ui;
 

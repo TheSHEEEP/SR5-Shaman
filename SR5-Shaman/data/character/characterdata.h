@@ -69,9 +69,31 @@ public:
      */
     void unsetPriority(Priority p_prio);
 
+    /**
+     * @brief Sets the name of the character.
+     */
+    void setName(const QString& p_name);
+
+    /**
+     * @brief Returns the name of the character.
+     */
+    const QString& getName() const;
+
+    /**
+     * @brief Sets the nick of the character.
+     */
+    void setNick(const QString& p_nick);
+
+    /**
+     * @brief Returns the nick of the character.
+     */
+    const QString& getNick() const;
+
 private:
     std::vector<Priority>     _selectedPriorities;
 
+    QString     _name;
+    QString     _nick;
     QString     _metatypeID;    // Corresponds to the unique ID of one metatype
 };
 
@@ -122,6 +144,38 @@ CharacterData::getPriorityIndex(Priority p_prio) const
     }
 
     return -1;
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterData::setName(const QString& p_name)
+{
+    _name = p_name;
+}
+
+//---------------------------------------------------------------------------------
+inline
+const QString&
+CharacterData::getName() const
+{
+    return _name;
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterData::setNick(const QString& p_nick)
+{
+    _nick = p_nick;
+}
+
+//---------------------------------------------------------------------------------
+inline
+const QString&
+CharacterData::getNick() const
+{
+    return _nick;
 }
 
 #endif // CHARACTERDATA_H

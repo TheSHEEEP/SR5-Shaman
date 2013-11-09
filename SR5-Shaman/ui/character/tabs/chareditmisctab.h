@@ -36,6 +36,9 @@ public:
      */
     virtual void showEvent(QShowEvent* p_event);
 
+signals:
+    void guidedNextStep();
+
 private slots:
     /**
      * @brief Stores the new metatype and updates priority selection.
@@ -46,6 +49,16 @@ private slots:
      * @brief Stores the new priority for the metatype.
      */
     void on_cbPriority_currentIndexChanged(int index);
+
+    /**
+     * @brief Stores the name of the character.
+     */
+    void on_leRealName_textEdited(const QString& p_name);
+
+    /**
+     * @brief Stores the nick of the character.
+     */
+    void on_leAlias_textEdited(const QString& p_nick);
 
 private:
     Ui::CharEditMiscTab *ui;

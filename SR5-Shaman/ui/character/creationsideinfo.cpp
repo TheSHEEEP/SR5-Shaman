@@ -1,6 +1,13 @@
 #include "creationsideinfo.h"
 #include "ui_creationsideinfo.h"
 
+#include <QTimer>
+#include <QMap>
+#include <QLabel>
+
+#include "data/character/characterdata.h"
+#include "data/appstatus.h"
+
 //---------------------------------------------------------------------------------
 CreationSideInfo::CreationSideInfo(QWidget *parent)
     : QWidget(parent)
@@ -13,11 +20,92 @@ CreationSideInfo::CreationSideInfo(QWidget *parent)
 CreationSideInfo::~CreationSideInfo()
 {
     delete ui;
+
+    if (_timer)
+    {
+        _timer->stop();
+        delete _timer;
+    }
 }
 
 //---------------------------------------------------------------------------------
 void
 CreationSideInfo::initialize()
 {
-
+    // Update the side info automatically once per second
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(update()));
+    _timer->start(1000);
 }
+
+//---------------------------------------------------------------------------------
+void
+CreationSideInfo::update()
+{
+    // Do nothing when not visible
+    if (!isVisible())
+    {
+        return;
+    }
+
+    // Get the index of each priority
+    QMap<int, Priority> indexPriorityMap;
+    for (int i = 0; i < 5; ++i)
+    {
+        indexPriorityMap[i] = PRIORITY_INVALID;
+    }
+    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_ATTRIBUTES)] = PRIORITY_ATTRIBUTES;
+    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_METATYPE)] = PRIORITY_METATYPE;
+    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_MAGIC)] = PRIORITY_MAGIC;
+    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_SKILLS)] = PRIORITY_SKILLS;
+    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_RESOURCES)] = PRIORITY_RESOURCES;
+
+    // Check each priority and show the current selection
+    updatePriorityLabelText(ui->lblASel, 0, indexPriorityMap[0]);
+    updatePriorityLabelText(ui->lblBSel, 1, indexPriorityMap[1]);
+    updatePriorityLabelText(ui->lblCSel, 2, indexPriorityMap[2]);
+    updatePriorityLabelText(ui->lblDSel, 3, indexPriorityMap[3]);
+    updatePriorityLabelText(ui->lblESel, 4, indexPriorityMap[4]);
+}
+
+//---------------------------------------------------------------------------------
+void
+CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Priority p_prio)
+{
+    // TODO: Show all information (for example, how many skill points are left for skills priority)
+    switch (p_prio)
+    {
+    case PRIORITY_INVALID:
+        p_label->setText("-");
+        break;
+
+    case PRIORITY_ATTRIBUTES:
+        p_label->setText(tr("Attributes"));
+        break;
+
+    case PRIORITY_SKILLS:
+        p_label->setText(tr("Skills"));
+        break;
+
+    case PRIORITY_RESOURCES:
+        p_label->setText(tr("Attributes"));
+        break;
+
+    case PRIORITY_MAGIC:
+        p_label->setText(tr("Magic / Resonance"));
+        break;
+
+    case PRIORITY_METATYPE:
+        if (CHARACTER->getMetatypeID() == "")
+        {
+            return;
+        }
+        const MetatypeDefinition& type =
+                METATYPE_RULES_PTR->getDefinition(CHARACTER->getMetatypeID());
+        QString metatypeName = type.translations[APPSTATUS->getCurrentLocale()];
+        int specialAttribPoints = type.specialAttribPointsPerPrio[p_prioIndex];
+        p_label->setText(tr("Metatype") + " - " + metatypeName + QString(" (%1)").arg(specialAttribPoints));
+        break;
+    }
+}
+
