@@ -4,33 +4,36 @@
 #include "rules/rules.h"
 #include <vector>
 #include <QString>
+#include <QObject>
 
 // Helpful defines
-#define CHARACTER CharacterData::getSingletonPtr()
+#define CHARACTER_CHOICES CharacterChoices::getSingletonPtr()
 
 /**
  * @brief This singleton class holds all player choices of the character creation.
  *          Does NOT hold any information about rules.
  */
-class CharacterData
+class CharacterChoices : public QObject
 {
+    Q_OBJECT
+
 private:
-    static CharacterData* _instance;
+    static CharacterChoices* _instance;
 
     /**
      * @brief Constructor.
      */
-    CharacterData();
+    CharacterChoices();
 
 public:
     /**
-     * @brief Returns a pointer to the CharacterData.
+     * @brief Returns a pointer to the CharacterChoices.
      */
-    static CharacterData* getSingletonPtr()
+    static CharacterChoices* getSingletonPtr()
     {
         if (_instance == 0)
         {
-            _instance = new CharacterData();
+            _instance = new CharacterChoices();
         }
         return _instance;
     }
@@ -89,19 +92,56 @@ public:
      */
     const QString& getNick() const;
 
+    /**
+     * @brief Returns the total amount of karma spent.
+     */
+    int getSpentKarma() const;
+
+    /**
+     * @brief Increase the passed attribute by the passed amount (can also be used to decrease).
+     * @param p_attribute   The name of the attribute to increase.
+     * @param p_increase    The amount by which the attribute is to be increased (can be negative for decrease).
+     *                      May be bigger than the allowed maximum. In that case, the attribute is increased
+     *                      only to the maximum.
+     * @param p_fromFreebie The amount of the increases/decreases that come from the free attribute points
+     *                      during character creation.
+     *                      This number can be bigger than the actual number of attribute points left.
+     *                      In that case, if we are in guided creation, increasse only to the number of attribute
+     *                      points available. The rest will be bought from karma, if possible.
+     *                      If we are not in guided creation, this number should always be 0.
+     */
+    void increaseAttribute(const QString& p_attribute, int p_increase, int p_fromFreebies);
+
+    /**
+     * @brief Returns the number of attribute increases for the passed attribute.
+     * @param p_attribute       The name of the attribute to check.
+     * @param p_fromFreebies    If the increases from free attribute points should be counted.
+     * @param p_fromKarma       If the increases from karma points should be counted.
+     * @return  The number of attribute increases.
+     */
+    int getAttributeIncreases(const QString& p_attribute, bool p_fromFreebies = true, bool p_fromKarma = true) const;
+
+    /**
+     * @brief Returns the number of available free attribute points.
+     */
+    int getAvailableAttributePoints() const;
+
 private:
     std::vector<Priority>     _selectedPriorities;
 
     QString     _name;
     QString     _nick;
     QString     _metatypeID;    // Corresponds to the unique ID of one metatype
+
+    QMap<QString, int> _attributeIncreasesFreebies;
+    QMap<QString, int> _attributeIncreasesKarma;
 };
 
 
 //---------------------------------------------------------------------------------
 inline
 void
-CharacterData::setMetatypeID(const QString& p_uniqueID)
+CharacterChoices::setMetatypeID(const QString& p_uniqueID)
 {
     _metatypeID = p_uniqueID;
 }
@@ -109,7 +149,7 @@ CharacterData::setMetatypeID(const QString& p_uniqueID)
 //---------------------------------------------------------------------------------
 inline
 const QString&
-CharacterData::getMetatypeID() const
+CharacterChoices::getMetatypeID() const
 {
     return _metatypeID;
 }
@@ -117,7 +157,7 @@ CharacterData::getMetatypeID() const
 //---------------------------------------------------------------------------------
 inline
 void
-CharacterData::unsetPriority(Priority p_prio)
+CharacterChoices::unsetPriority(Priority p_prio)
 {
     for (int i = 0; i < 5; ++i)
     {
@@ -132,7 +172,7 @@ CharacterData::unsetPriority(Priority p_prio)
 //---------------------------------------------------------------------------------
 inline
 int
-CharacterData::getPriorityIndex(Priority p_prio) const
+CharacterChoices::getPriorityIndex(Priority p_prio) const
 {
     for (int i = 0; i < 5; ++i)
     {
@@ -149,7 +189,7 @@ CharacterData::getPriorityIndex(Priority p_prio) const
 //---------------------------------------------------------------------------------
 inline
 void
-CharacterData::setName(const QString& p_name)
+CharacterChoices::setName(const QString& p_name)
 {
     _name = p_name;
 }
@@ -157,7 +197,7 @@ CharacterData::setName(const QString& p_name)
 //---------------------------------------------------------------------------------
 inline
 const QString&
-CharacterData::getName() const
+CharacterChoices::getName() const
 {
     return _name;
 }
@@ -165,7 +205,7 @@ CharacterData::getName() const
 //---------------------------------------------------------------------------------
 inline
 void
-CharacterData::setNick(const QString& p_nick)
+CharacterChoices::setNick(const QString& p_nick)
 {
     _nick = p_nick;
 }
@@ -173,7 +213,7 @@ CharacterData::setNick(const QString& p_nick)
 //---------------------------------------------------------------------------------
 inline
 const QString&
-CharacterData::getNick() const
+CharacterChoices::getNick() const
 {
     return _nick;
 }

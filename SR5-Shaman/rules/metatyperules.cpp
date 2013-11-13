@@ -6,7 +6,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QStringList>
-
+#include <QJsonParseError>
 #include <QDebug>
 
 //---------------------------------------------------------------------------------
@@ -38,8 +38,16 @@ MetatypeRules::initialize(const QString& p_jsonFile)
     val = file.readAll();
     file.close();
 
+    // Read document
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8(), &error);
+    if (error.error != QJsonParseError::NoError)
+    {
+        qCritical() << QString("Error while reading file: %1\nError: %2").arg(p_jsonFile, error.errorString());
+        return;
+    }
+
     // Parse each metatype and add to the rules
-    QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8());
     QJsonArray metatypesArray = doc.object().value("metatypes").toArray();
     QJsonObject currentType;
     MetatypeDefinition* typeDef = 0;
@@ -65,6 +73,20 @@ MetatypeRules::initialize(const QString& p_jsonFile)
         {
             typeDef->specialAttribPointsPerPrio.push_back(tempArray.at(j).toVariant().toInt());
         }
+
+        // Attributes
+        tempObject = currentType["attribute_values"].toObject();
+        for (int j = 0; j < tempObject.keys().size(); ++j)
+        {
+            typeDef->attributesMin[tempObject.keys().at(j)] =
+                    tempObject[tempObject.keys().at(j)].toArray().at(0).toVariant().toInt();
+            typeDef->attributesMax[tempObject.keys().at(j)] =
+                    tempObject[tempObject.keys().at(j)].toArray().at(1).toVariant().toInt();
+        }
+
+        // Starting essence
+        typeDef->startingEssence = currentType["starting_essence"].toDouble();
+
         _definitions[currentType["unique_id"].toString()] = typeDef;
     }
 }

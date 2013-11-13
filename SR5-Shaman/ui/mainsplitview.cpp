@@ -55,6 +55,8 @@ MainSplitView::initialize()
     _tabCharEditMisc = new CharEditMiscTab();
     _tabCharEditMisc->initialize();
     connect(_tabCharEditMisc, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
+
+    // TODO: here
 }
 
 //---------------------------------------------------------------------------------

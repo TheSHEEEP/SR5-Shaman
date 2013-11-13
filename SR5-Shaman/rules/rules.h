@@ -6,7 +6,11 @@
  **/
 
 #include "metatyperules.h"
+#include "attributerules.h"
 
+// Helpful defines
+#define METATYPE_RULES Rules::getSingletonPtr()->getMetatypeRules()
+#define ATTRIBUTE_RULES Rules::getSingletonPtr()->getAttributeRules()
 
 /**
  * @brief The priorities of the character generation.
@@ -21,9 +25,6 @@ enum Priority
     PRIORITY_RESOURCES,
     PRIORITY_NUM_PRIORITIES
 };
-
-// Helpful defines
-#define METATYPE_RULES_PTR Rules::getSingletonPtr()->getMetatypeRules()
 
 /**
  * @brief This singleton class holds all the rules for the SR5 Shaman.
@@ -67,10 +68,16 @@ public:
      */
     const MetatypeRules* getMetatypeRules() const;
 
+    /**
+     * @brief Returns a pointer to the attribute rules.
+     */
+    const AttributeRules* getAttributeRules() const;
+
 private:
     bool    _initialized;
 
-    MetatypeRules*  _metatypeRules;
+    MetatypeRules*      _metatypeRules;
+    AttributeRules*     _attributeRules;
 };
 
 //---------------------------------------------------------------------------------
@@ -79,6 +86,14 @@ const MetatypeRules*
 Rules::getMetatypeRules() const
 {
     return _metatypeRules;
+}
+
+//---------------------------------------------------------------------------------
+inline
+const AttributeRules*
+Rules::getAttributeRules() const
+{
+    return _attributeRules;
 }
 
 #endif // RULES_H

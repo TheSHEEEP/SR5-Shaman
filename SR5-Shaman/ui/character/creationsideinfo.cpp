@@ -5,7 +5,7 @@
 #include <QMap>
 #include <QLabel>
 
-#include "data/character/characterdata.h"
+#include "data/character/characterchoices.h"
 #include "data/appstatus.h"
 
 //---------------------------------------------------------------------------------
@@ -54,11 +54,11 @@ CreationSideInfo::update()
     {
         indexPriorityMap[i] = PRIORITY_INVALID;
     }
-    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_ATTRIBUTES)] = PRIORITY_ATTRIBUTES;
-    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_METATYPE)] = PRIORITY_METATYPE;
-    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_MAGIC)] = PRIORITY_MAGIC;
-    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_SKILLS)] = PRIORITY_SKILLS;
-    indexPriorityMap[CHARACTER->getPriorityIndex(PRIORITY_RESOURCES)] = PRIORITY_RESOURCES;
+    indexPriorityMap[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES)] = PRIORITY_ATTRIBUTES;
+    indexPriorityMap[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE)] = PRIORITY_METATYPE;
+    indexPriorityMap[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)] = PRIORITY_MAGIC;
+    indexPriorityMap[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_SKILLS)] = PRIORITY_SKILLS;
+    indexPriorityMap[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_RESOURCES)] = PRIORITY_RESOURCES;
 
     // Check each priority and show the current selection
     updatePriorityLabelText(ui->lblASel, 0, indexPriorityMap[0]);
@@ -96,12 +96,12 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
         break;
 
     case PRIORITY_METATYPE:
-        if (CHARACTER->getMetatypeID() == "")
+        if (CHARACTER_CHOICES->getMetatypeID() == "")
         {
             return;
         }
         const MetatypeDefinition& type =
-                METATYPE_RULES_PTR->getDefinition(CHARACTER->getMetatypeID());
+                METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID());
         QString metatypeName = type.translations[APPSTATUS->getCurrentLocale()];
         int specialAttribPoints = type.specialAttribPointsPerPrio[p_prioIndex];
         p_label->setText(tr("Metatype") + " - " + metatypeName + QString(" (%1)").arg(specialAttribPoints));

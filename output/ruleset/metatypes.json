@@ -4,31 +4,91 @@
             "translations" : { "en" : "Human",
                             "de" : "Mensch"
                             },
-            "special_attrib_points" : ["9", "7", "5", "3", "1"]
+            "special_attrib_points" : ["9", "7", "5", "3", "1"],
+            "attribute_values" : {
+                "body" :         ["1", "6"],
+                "agility" :      ["1", "6"],
+                "reaction" :     ["1", "6"],
+                "strength" :     ["1", "6"],
+                "willpower" :    ["1", "6"],
+                "logic" :        ["1", "6"],
+                "intuition" :    ["1", "6"],
+                "charisma" :     ["1", "6"],
+                "edge" :         ["2", "7"]
             },
+            "starting_essence" : "6"
+        },
         {   "unique_id" : "ELF_MAIN",
             "translations" : { "en" : "Elf",
                             "de" : "Elf"
                             },
-            "special_attrib_points" : ["8", "6", "3", "0", "0"]
+            "special_attrib_points" : ["8", "6", "3", "0", "0"],
+            "attribute_values" : {
+                "body" :         ["1", "6"],
+                "agility" :      ["2", "7"],
+                "reaction" :     ["1", "6"],
+                "strength" :     ["1", "6"],
+                "willpower" :    ["1", "6"],
+                "logic" :        ["1", "6"],
+                "intuition" :    ["1", "6"],
+                "charisma" :     ["3", "8"],
+                "edge" :         ["1", "6"]
             },
+            "starting_essence" : "6"
+        },
         {   "unique_id" : "DWARF_MAIN",
             "translations" : { "en" : "Dwarf",
                             "de" : "Zwerg"
                             },
-            "special_attrib_points" : ["7", "4", "1", "0", "0"]
+            "special_attrib_points" : ["7", "4", "1", "0", "0"],
+            "attribute_values" : {
+                "body" :         ["3", "8"],
+                "agility" :      ["1", "6"],
+                "reaction" :     ["1", "5"],
+                "strength" :     ["3", "8"],
+                "willpower" :    ["2", "7"],
+                "logic" :        ["1", "6"],
+                "intuition" :    ["1", "6"],
+                "charisma" :     ["1", "6"],
+                "edge" :         ["1", "6"]
             },
+            "starting_essence" : "6"
+        },
         {   "unique_id" : "ORC_MAIN",
             "translations" : { "en" : "Orc",
                             "de" : "Ork"
                             },
-            "special_attrib_points" : ["7", "4", "0", "0", "0"]
+            "special_attrib_points" : ["7", "4", "0", "0", "0"],
+            "attribute_values" : {
+                "body" :         ["4", "9"],
+                "agility" :      ["1", "6"],
+                "reaction" :     ["1", "6"],
+                "strength" :     ["3", "8"],
+                "willpower" :    ["1", "6"],
+                "logic" :        ["1", "5"],
+                "intuition" :    ["1", "6"],
+                "charisma" :     ["1", "5"],
+                "edge" :         ["1", "6"]
             },
+            "starting_essence" : "6"
+        },
         {   "unique_id" : "TROLL_MAIN",
             "translations" : { "en" : "Troll",
                             "de" : "Troll"
                             },
-            "special_attrib_points" : ["5", "0", "0", "0", "0"]
-            }
+            "special_attrib_points" : ["5", "0", "0", "0", "0"],
+            "attribute_values" : {
+                "body" :         ["5", "10"],
+                "agility" :      ["1", "5"],
+                "reaction" :     ["1", "6"],
+                "strength" :     ["5", "10"],
+                "willpower" :    ["1", "6"],
+                "logic" :        ["1", "5"],
+                "intuition" :    ["1", "5"],
+                "charisma" :     ["1", "4"],
+                "edge" :         ["1", "6"]
+            },
+            "starting_essence" : "6"
+        }
     ]
 }

@@ -12,6 +12,9 @@ struct MetatypeDefinition
 {
     QMap<QString, QString>  translations;
     std::vector<int>        specialAttribPointsPerPrio;
+    QMap<QString, int>      attributesMin;
+    QMap<QString, int>      attributesMax;
+    float                   startingEssence;
 };
 
 /**

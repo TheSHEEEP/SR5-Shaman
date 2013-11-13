@@ -6,7 +6,7 @@
 
 #include "data/appstatus.h"
 #include "rules/rules.h"
-#include "data/character/characterdata.h"
+#include "data/character/characterchoices.h"
 
 //---------------------------------------------------------------------------------
 CharEditMiscTab::CharEditMiscTab(QWidget *parent) :
@@ -28,7 +28,7 @@ CharEditMiscTab::initialize()
 {
     // Fill the metatypes
     ui->cbMetatype->blockSignals(true);
-    const QMap<QString, MetatypeDefinition*>& definitions = METATYPE_RULES_PTR->getAllDefinitions();
+    const QMap<QString, MetatypeDefinition*>& definitions = METATYPE_RULES->getAllDefinitions();
     QMap<QString, MetatypeDefinition*>::const_iterator it;
     for (it = definitions.begin(); it != definitions.end(); ++it)
     {
@@ -69,16 +69,16 @@ CharEditMiscTab::on_cbMetatype_currentIndexChanged(int index)
     QString chosenType = ui->cbMetatype->itemData(index).toString();
     if (chosenType == "")
     {
-        CHARACTER->setMetatypeID("");
+        CHARACTER_CHOICES->setMetatypeID("");
         checkContinue();
         return;
     }
 
     // Store selection in character data
-    CHARACTER->setMetatypeID(chosenType);
+    CHARACTER_CHOICES->setMetatypeID(chosenType);
 
     // Update priority selection
-    const MetatypeDefinition& definition = METATYPE_RULES_PTR->getDefinition(chosenType);
+    const MetatypeDefinition& definition = METATYPE_RULES->getDefinition(chosenType);
     ui->cbPriority->addItem(QString("A (%1)").arg(definition.specialAttribPointsPerPrio[0]), 0);
     ui->cbPriority->addItem(QString("B (%1)").arg(definition.specialAttribPointsPerPrio[1]), 1);
     ui->cbPriority->addItem(QString("C (%1)").arg(definition.specialAttribPointsPerPrio[2]), 2);
@@ -87,9 +87,9 @@ CharEditMiscTab::on_cbMetatype_currentIndexChanged(int index)
     ui->cbPriority->addItem("", -1);
 
     // Apply last selection of priority (if any)
-    if (CHARACTER->getPriorityIndex(PRIORITY_METATYPE) != -1)
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) != -1)
     {
-        ui->cbPriority->setCurrentIndex(CHARACTER->getPriorityIndex(PRIORITY_METATYPE));
+        ui->cbPriority->setCurrentIndex(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE));
     }
     else
     {
@@ -108,13 +108,13 @@ CharEditMiscTab::on_cbPriority_currentIndexChanged(int index)
     int chosenPriority = ui->cbPriority->itemData(index).toInt();
     if (chosenPriority == -1)
     {
-        CHARACTER->unsetPriority(PRIORITY_METATYPE);
+        CHARACTER_CHOICES->unsetPriority(PRIORITY_METATYPE);
         checkContinue();
         return;
     }
 
     // Store selection in character data
-    CHARACTER->setPriority(chosenPriority, PRIORITY_METATYPE);
+    CHARACTER_CHOICES->setPriority(chosenPriority, PRIORITY_METATYPE);
 
     checkContinue();
 }
@@ -126,8 +126,8 @@ CharEditMiscTab::checkContinue()
     if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION)
     {
         // Must have a metatype and a priority
-        if (CHARACTER->getPriorityIndex(PRIORITY_METATYPE) != -1 &&
-            CHARACTER->getMetatypeID() != "")
+        if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) != -1 &&
+            CHARACTER_CHOICES->getMetatypeID() != "")
         {
             ui->btnGuidedContinue->setEnabled(true);
             ui->btnGuidedContinue->setText(tr("Continue"));
@@ -144,12 +144,12 @@ CharEditMiscTab::checkContinue()
 void
 CharEditMiscTab::on_leRealName_textEdited(const QString& p_name)
 {
-    CHARACTER->setName(p_name);
+    CHARACTER_CHOICES->setName(p_name);
 }
 
 //---------------------------------------------------------------------------------
 void
 CharEditMiscTab::on_leAlias_textEdited(const QString& p_nick)
 {
-    CHARACTER->setNick(p_nick);
+    CHARACTER_CHOICES->setNick(p_nick);
 }

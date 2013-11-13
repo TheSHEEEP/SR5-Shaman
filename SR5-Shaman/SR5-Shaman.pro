@@ -23,10 +23,13 @@ SOURCES += main.cpp\
     ui/character/characterpreviewsideinfo.cpp \
     ui/character/creationsideinfo.cpp \
     ui/character/tabs/chareditmisctab.cpp \
-    data/character/characterdata.cpp \
     rules/rules.cpp \
     rules/metatyperules.cpp \
-    ui/character/tabs/chareditmagictab.cpp
+    ui/character/tabs/chareditmagictab.cpp \
+    ui/character/tabs/chareditattributetab.cpp \
+    rules/attributerules.cpp \
+    data/character/characterchoices.cpp \
+    data/character/charactervalues.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -38,10 +41,13 @@ HEADERS  += mainwindow.h \
     ui/character/characterpreviewsideinfo.h \
     ui/character/creationsideinfo.h \
     ui/character/tabs/chareditmisctab.h \
-    data/character/characterdata.h \
     rules/rules.h \
     rules/metatyperules.h \
-    ui/character/tabs/chareditmagictab.h
+    ui/character/tabs/chareditmagictab.h \
+    ui/character/tabs/chareditattributetab.h \
+    rules/attributerules.h \
+    data/character/characterchoices.h \
+    data/character/charactervalues.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
@@ -52,7 +58,8 @@ FORMS    += mainwindow.ui \
     ui/character/characterpreviewsideinfo.ui \
     ui/character/creationsideinfo.ui \
     ui/character/tabs/chareditmisctab.ui \
-    ui/character/tabs/chareditmagictab.ui
+    ui/character/tabs/chareditmagictab.ui \
+    ui/character/tabs/chareditattributetab.ui
 
 TRANSLATIONS = sr5shaman_de.ts
 

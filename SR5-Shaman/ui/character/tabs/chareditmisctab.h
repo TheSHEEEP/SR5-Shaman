@@ -8,7 +8,7 @@ class CharEditMiscTab;
 }
 
 /**
- * @brief This tabs hold character information like name, nick, portrait and metatype.
+ * @brief This tab holds character information like name, nick, portrait and metatype.
  * @author  TheSHEEEP
  */
 class CharEditMiscTab : public QWidget

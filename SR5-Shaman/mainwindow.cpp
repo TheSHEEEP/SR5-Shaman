@@ -5,6 +5,7 @@
 
 #include "ui/settings/preferenceswindow.h"
 #include "ui/character/creationinitializingwindow.h"
+#include "data/appstatus.h"
 
 //---------------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *parent)
@@ -49,7 +50,10 @@ MainWindow::initialize()
     ui->mainSplitView->initialize();
 
     // Show init message while initializing
-    statusBar()->showMessage(tr("Initializing..."), 2000);
+    ui->statusBar->showMessage(tr("Initializing..."), 2000);
+
+    // Set global status bar
+    APPSTATUS->setStatusBar(ui->statusBar);
 
     // Make sure the window fits the screen
     int desktopWidth = QApplication::desktop()->width();

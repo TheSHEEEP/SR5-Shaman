@@ -29,6 +29,10 @@ Rules::initialize()
     _metatypeRules = new MetatypeRules();
     _metatypeRules->initialize("../../ruleset/metatypes.json");
 
+    // Read attribute rules
+    _attributeRules = new AttributeRules();
+    _attributeRules->initialize("../../ruleset/attributes.json");
+
     // Done!
     _initialized = true;
 }

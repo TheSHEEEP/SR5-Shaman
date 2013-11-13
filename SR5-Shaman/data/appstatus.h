@@ -2,6 +2,7 @@
 #define APPSTATUS_H
 
 #include <QString>
+#include <QObject>
 
 /**
  * @brief The different possible application states.
@@ -18,23 +19,21 @@ enum AppState
 // Friendly helper defines
 #define APPSTATUS AppStatus::getSingletonPtr()
 
+class QStatusBar;
+
 /**
  * @brief Singleton class that holds information about the current application status.
  */
 class AppStatus
 {
+
 private:
     static AppStatus* _instance;
 
     /**
      * @brief Constructor.
      */
-    AppStatus()
-        : _state(APPSTATE_IDLE)
-        , _currentLocale("en")
-    {
-
-    }
+    AppStatus();
 
 public:
     /**
@@ -48,6 +47,8 @@ public:
         }
         return _instance;
     }
+
+public:
 
     /**
      * @brief Returns the current application state.
@@ -72,10 +73,24 @@ public:
      */
     const QString& getCurrentLocale() const;
 
+    /**
+     * @brief Sets the status bar to use.
+     */
+    void setStatusBar(QStatusBar* p_statusBar);
+
+    /**
+     * @brief Sets the status bar message.
+     * @note    Make sure to call setStatusBar first.
+     * @param p_message The message to show.
+     * @param p_seconds How many seconds the message should be visible.
+     */
+    void setStatusBarMessage(const QString& p_message, float p_seconds);
+
 private:
     AppState _state;
 
-    QString _currentLocale;
+    QString     _currentLocale;
+    QStatusBar* _statusBar;
 };
 
 
@@ -85,6 +100,14 @@ const QString&
 AppStatus::getCurrentLocale() const
 {
     return _currentLocale;
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+AppStatus::setStatusBar(QStatusBar* p_statusBar)
+{
+    _statusBar = p_statusBar;
 }
 
 #endif // APPSTATUS_H

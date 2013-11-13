@@ -8,7 +8,7 @@ class CharEditMagicTab;
 }
 
 /**
- * @brief This tab hols all user choices about the character's magic type, selection of magical / resonance skills
+ * @brief This tab holds all information about the character's magic type, selection of magical / resonance skills
  *          and the selection of spells / complex forms.
  */
 class CharEditMagicTab : public QWidget
