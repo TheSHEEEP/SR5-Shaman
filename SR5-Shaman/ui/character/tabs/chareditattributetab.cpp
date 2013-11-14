@@ -24,9 +24,6 @@ CharEditAttributeTab::~CharEditAttributeTab()
 void
 CharEditAttributeTab::initialize()
 {
-    // Hide "fill" controls
-    ui->spinEmpty->setVisible(false);
-
     // Connect all spin buttons
     _attributeSpinBoxAssignment[ui->spinAgility] = "agility";
     _attributeSpinBoxAssignment[ui->spinBody] = "body";
@@ -48,8 +45,18 @@ CharEditAttributeTab::initialize()
     connect(ui->spinReaction, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged(int)));
     connect(ui->spinStrength, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged(int)));
     connect(ui->spinWillpower, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged(int)));
-}
 
+    // Insert attribute priorities
+    ui->cbPriority->blockSignals(true);
+    ui->cbPriority->addItem(QString("A (%1)").arg(ATTRIBUTE_RULES->getNumFreebies(0)), 0);
+    ui->cbPriority->addItem(QString("B (%1)").arg(ATTRIBUTE_RULES->getNumFreebies(1)), 1);
+    ui->cbPriority->addItem(QString("C (%1)").arg(ATTRIBUTE_RULES->getNumFreebies(2)), 2);
+    ui->cbPriority->addItem(QString("D (%1)").arg(ATTRIBUTE_RULES->getNumFreebies(3)), 3);
+    ui->cbPriority->addItem(QString("E (%1)").arg(ATTRIBUTE_RULES->getNumFreebies(4)), 4);
+    ui->cbPriority->addItem(QString(" "), -1);
+    ui->cbPriority->setCurrentIndex(5);
+    ui->cbPriority->blockSignals(false);
+}
 
 //---------------------------------------------------------------------------------
 void
@@ -90,8 +97,10 @@ CharEditAttributeTab::updateSpinBoxText(QSpinBox* p_spinBox, const QString& p_at
     QString suffix = QString(" / %1").arg(maxValue);
     // TODO: add augmentation/other influences here
 
+    p_spinBox->blockSignals(true);
     p_spinBox->setValue(currentValue);
     p_spinBox->setSuffix(suffix);
+    p_spinBox->blockSignals(false);
 
     // TODO: update correct derived values
 }
@@ -100,6 +109,25 @@ CharEditAttributeTab::updateSpinBoxText(QSpinBox* p_spinBox, const QString& p_at
 void
 CharEditAttributeTab::updateValues()
 {
+    if (!isEnabled())
+    {
+        return;
+    }
+
+    // Priority value
+    ui->cbPriority->blockSignals(true);
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES) != -1)
+    {
+        ui->cbPriority->setCurrentIndex(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES));
+    }
+    else
+    {
+        ui->cbPriority->setCurrentIndex(5);
+    }
+    ui->cbPriority->blockSignals(false);
+
+    // TODO: Give each available priority in a comboBox another color if it is occupied
+
     // SpinBoxes
     updateSpinBoxText(ui->spinAgility, "agility");
     updateSpinBoxText(ui->spinBody, "body");
@@ -111,6 +139,13 @@ CharEditAttributeTab::updateValues()
     updateSpinBoxText(ui->spinReaction, "reaction");
     updateSpinBoxText(ui->spinStrength, "strength");
     updateSpinBoxText(ui->spinWillpower, "willpower");
+
+    // Magic could be disabled
+    bool magicUser = CHARACTER_CHOICES->getIsMagicUser();
+    ui->spinMagic->setEnabled(magicUser);
+    ui->lblMagic->setEnabled(magicUser);
+    ui->lblAstralIniValue->setEnabled(magicUser);
+    ui->lblAtralIni->setEnabled(magicUser);
 
     // Derived values
     updateDerivedValues();
@@ -138,11 +173,12 @@ CharEditAttributeTab::updateDerivedValues()
                                                 CHARACTER_VALUES->getEssence())));
 
     // TODO: other derived values
+    // TODO: here
 }
 
 //---------------------------------------------------------------------------------
 void
-CharEditAttributeTab::showEvent(QShowEvent* p_event)
+CharEditAttributeTab::showEvent(QShowEvent* /*unused*/)
 {
     if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION)
     {
@@ -150,7 +186,9 @@ CharEditAttributeTab::showEvent(QShowEvent* p_event)
         updateValues();
 
         // Enable or disable the attribute increase buttons
-        ui->attributeLayout->setEnabled(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES) != -1);
+        bool enable = CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES) != -1;
+        ui->attributeFrame->setEnabled(enable);
+        ui->limitFrame->setEnabled(enable);
 
         checkContinue();
     }
@@ -166,9 +204,9 @@ CharEditAttributeTab::checkContinue()
 {
     if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION)
     {
-        // Must have a metatype and a priority
-        if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) != -1 &&
-            CHARACTER_CHOICES->getMetatypeID() != "")
+        // Must have a priority and spent all attribute points
+        if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES) != -1 &&
+            CHARACTER_CHOICES->getAvailableAttributePoints() == 0)
         {
             ui->btnGuidedContinue->setEnabled(true);
             ui->btnGuidedContinue->setText(tr("Continue"));
@@ -176,7 +214,9 @@ CharEditAttributeTab::checkContinue()
         else
         {
             ui->btnGuidedContinue->setEnabled(false);
-            ui->btnGuidedContinue->setText(tr("Choose metatype and priority to continue"));
+            ui->btnGuidedContinue->setText(tr("Select priority and spend attribute points to continue"));
+
+            emit disableNext();
         }
     }
 }
@@ -185,12 +225,39 @@ CharEditAttributeTab::checkContinue()
 void
 CharEditAttributeTab::on_cbPriority_currentIndexChanged(int p_index)
 {
+    // Set/Unset the chosen priority for the attributes
+    if (ui->cbPriority->itemData(p_index).toInt() != -1)
+    {
+        CHARACTER_CHOICES->setPriority(p_index, PRIORITY_ATTRIBUTES);
+    }
+    else
+    {
+        CHARACTER_CHOICES->unsetPriority(PRIORITY_ATTRIBUTES);
+    }
+
+    // It is possible that this choice deselected the metatype
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) == -1)
+    {
+        setEnabled(false);
+        APPSTATUS->setStatusBarMessage(
+                    tr("Deselected metatype. Go back and select your metatype!"), 5.0f, QColor(255, 0, 0));
+        return;
+    }
+
     // Enable or disable the attribute increase buttons
-    ui->attributeLayout->setEnabled(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES) != -1);
+    ui->attributeFrame->setEnabled(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES) != -1);
+    ui->limitFrame->setEnabled(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES) != -1);
 
     // Update the displayed values
     updateValues();
 
     // Check if we can continue
     checkContinue();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditAttributeTab::on_btnGuidedContinue_clicked()
+{
+    emit guidedNextStep();
 }

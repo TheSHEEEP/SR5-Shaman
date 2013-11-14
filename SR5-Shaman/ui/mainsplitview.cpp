@@ -4,19 +4,22 @@
 #include <QSettings>
 
 #include "data/appstatus.h"
+#include "data/character/characterchoices.h"
 #include "ui/character/characterpreviewsideinfo.h"
 #include "ui/character/creationsideinfo.h"
 #include "ui/character/tabs/chareditmisctab.h"
+#include "ui/character/tabs/chareditattributetab.h"
 
 //---------------------------------------------------------------------------------
 MainSplitView::MainSplitView(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainSplitView)
+    , _previewLeft(true)
     , _currentSideInfo(0)
     , _charPreviewSideInfo(0)
     , _creationSideInfo(0)
-    , _previewLeft(true)
     , _tabCharEditMisc(0)
+    , _tabCharEditAttribute(0)
 {
     ui->setupUi(this);
 }
@@ -31,6 +34,14 @@ MainSplitView::~MainSplitView()
     ui->horizontalLayout->removeWidget(ui->charTabs);
 
     delete ui;
+
+    if (_charPreviewSideInfo)
+    {
+        delete _charPreviewSideInfo;
+        delete _creationSideInfo;
+        delete _tabCharEditMisc;
+        delete _tabCharEditAttribute;
+    }
 }
 
 //---------------------------------------------------------------------------------
@@ -55,8 +66,12 @@ MainSplitView::initialize()
     _tabCharEditMisc = new CharEditMiscTab();
     _tabCharEditMisc->initialize();
     connect(_tabCharEditMisc, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
+    connect(_tabCharEditMisc, SIGNAL(disableNext()), SLOT(handleDisableNext()));
 
-    // TODO: here
+    _tabCharEditAttribute = new CharEditAttributeTab();
+    _tabCharEditAttribute->initialize();
+    connect(_tabCharEditAttribute, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
+    connect(_tabCharEditAttribute, SIGNAL(disableNext()), SLOT(handleDisableNext()));
 }
 
 //---------------------------------------------------------------------------------
@@ -95,10 +110,16 @@ MainSplitView::initializeCharacterCreation()
             ui->charTabs->removeTab(0);
         }
 
+        // Set character default values
+        CHARACTER_CHOICES->setIsMagicUser(false);
+
         // Insert widgets into tab container
         // Step 1: Metatype & misc
         ui->charTabs->addTab(_tabCharEditMisc, tr("Step 1: Priorities"));
-        // Step 2:
+        _tabCharEditMisc->setEnabled(true);
+        // Step 2: Attributes
+        ui->charTabs->addTab(_tabCharEditAttribute, tr("Step 2: Attributes"));
+        _tabCharEditAttribute->setEnabled(false);
         ui->charTabs->setCurrentIndex(0);
     }
 }
@@ -127,10 +148,22 @@ MainSplitView::handleGuidedNext()
 {
     if (ui->charTabs->currentIndex() < (ui->charTabs->count() - 1))
     {
+        ui->charTabs->setTabEnabled(ui->charTabs->currentIndex() + 1, true);
+        ui->charTabs->widget(ui->charTabs->currentIndex() + 1)->setEnabled(true);
         ui->charTabs->setCurrentIndex(ui->charTabs->currentIndex() + 1);
     }
     else
     {
         ui->charTabs->setCurrentIndex(0);
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+MainSplitView::handleDisableNext()
+{
+    for (int i = ui->charTabs->currentIndex() + 1; i < ui->charTabs->count(); ++i)
+    {
+        ui->charTabs->setTabEnabled(i, false);
     }
 }

@@ -83,8 +83,18 @@ public:
      * @note    Make sure to call setStatusBar first.
      * @param p_message The message to show.
      * @param p_seconds How many seconds the message should be visible.
+     * @param p_color   The color of the message.
      */
     void setStatusBarMessage(const QString& p_message, float p_seconds);
+
+    /**
+     * @brief Sets the status bar message.
+     * @note    Make sure to call setStatusBar first.
+     * @param p_message The message to show.
+     * @param p_seconds How many seconds the message should be visible.
+     * @param p_color   The color of the message.
+     */
+    void setStatusBarMessage(const QString& p_message, float p_seconds, const QColor& p_color);
 
 private:
     AppState _state;

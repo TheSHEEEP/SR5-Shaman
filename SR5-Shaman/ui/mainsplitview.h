@@ -9,6 +9,7 @@ class MainSplitView;
 class CharacterPreviewSideInfo;
 class CreationSideInfo;
 class CharEditMiscTab;
+class CharEditAttributeTab;
 
 /**
  * @brief This class manages the main split view between the character preview and
@@ -51,6 +52,11 @@ private slots:
      */
     void handleGuidedNext();
 
+    /**
+     * @brief Will disable all tabs that come after the current one.
+     */
+    void handleDisableNext();
+
 private:
     Ui::MainSplitView *ui;
 
@@ -61,7 +67,8 @@ private:
     CreationSideInfo*           _creationSideInfo;
 
     // All the editing/creation tabs
-    CharEditMiscTab*    _tabCharEditMisc;
+    CharEditMiscTab*        _tabCharEditMisc;
+    CharEditAttributeTab*   _tabCharEditAttribute;
 
 private:
     /**

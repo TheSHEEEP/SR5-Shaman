@@ -20,6 +20,13 @@ AppStatus::AppStatus()
 void
 AppStatus::setStatusBarMessage(const QString& p_message, float p_seconds)
 {
+    setStatusBarMessage(p_message, p_seconds, QColor(0, 0, 0));
+}
+
+//---------------------------------------------------------------------------------
+void
+AppStatus::setStatusBarMessage(const QString& p_message, float p_seconds, const QColor& p_color)
+{
     if (_statusBar == 0)
     {
         qWarning() << QObject::tr("Trying to set status bar message without a set status bar.");

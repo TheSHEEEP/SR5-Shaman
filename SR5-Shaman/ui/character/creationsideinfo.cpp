@@ -72,7 +72,7 @@ CreationSideInfo::update()
 void
 CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Priority p_prio)
 {
-    // TODO: Show all information (for example, how many skill points are left for skills priority)
+    // TODO: Show all information
     switch (p_prio)
     {
     case PRIORITY_INVALID:
@@ -80,7 +80,7 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
         break;
 
     case PRIORITY_ATTRIBUTES:
-        p_label->setText(tr("Attributes"));
+        p_label->setText(tr("Attributes (%1)").arg(ATTRIBUTE_RULES->getNumFreebies(p_prioIndex)));
         break;
 
     case PRIORITY_SKILLS:
@@ -88,7 +88,7 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
         break;
 
     case PRIORITY_RESOURCES:
-        p_label->setText(tr("Attributes"));
+        p_label->setText(tr("Resources"));
         break;
 
     case PRIORITY_MAGIC:

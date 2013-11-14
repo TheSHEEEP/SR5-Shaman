@@ -50,11 +50,7 @@ public:
 
     /**
      * @brief Sets the priority at the passed index.
-     *          If the index is already taken by another priority, two things can happen:
-     *              a) If the passed priority was previously at another index, the two will
-     *                 switch indices.
-     *              b) If the passed priority is new, the current priority at the passed index
-     *                 will simply be overwritten.
+     *          This may unset other priorities.
      * @param p_priorityIndex   The index of the priority (0-4 is A-E)
      * @param p_prio            The priority type to set.
      */
@@ -93,6 +89,22 @@ public:
     const QString& getNick() const;
 
     /**
+     * @brief Returns true if this character is a mgic user.
+     */
+    bool getIsMagicUser() const;
+
+    /**
+     * @brief Sets if the character is a magic user or not.
+     *          This is a convenience function that also sets priorities accordingly.
+     */
+    void setIsMagicUser(bool p_user);
+
+    /**
+     * @brief Returns the unique ID of the magic user type. Or "", if none.
+     */
+    const QString& getMagicUserType() const;
+
+    /**
      * @brief Returns the total amount of karma spent.
      */
     int getSpentKarma() const;
@@ -126,12 +138,18 @@ public:
      */
     int getAvailableAttributePoints() const;
 
+    /**
+     * @brief Returns the number of available SPECIAL free attribute points (edge & magic/resonance).
+     */
+    int getAvailableSpecialAttributePoints() const;
+
 private:
     std::vector<Priority>     _selectedPriorities;
 
     QString     _name;
     QString     _nick;
-    QString     _metatypeID;    // Corresponds to the unique ID of one metatype
+    QString     _metatypeID;        // Corresponds to the unique ID of one metatype
+    QString     _magicUserType;     // Corresponds to the unique ID of one magic user type
 
     QMap<QString, int> _attributeIncreasesFreebies;
     QMap<QString, int> _attributeIncreasesKarma;
@@ -216,6 +234,34 @@ const QString&
 CharacterChoices::getNick() const
 {
     return _nick;
+}
+
+
+//---------------------------------------------------------------------------------
+inline
+bool
+CharacterChoices::getIsMagicUser() const
+{
+    return (getPriorityIndex(PRIORITY_MAGIC) != 4);
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterChoices::setIsMagicUser(bool p_user)
+{
+    if (!p_user)
+    {
+        setPriority(4, PRIORITY_MAGIC);
+    }
+}
+
+//---------------------------------------------------------------------------------
+inline
+const QString&
+CharacterChoices::getMagicUserType() const
+{
+    return _magicUserType;
 }
 
 #endif // CHARACTERDATA_H

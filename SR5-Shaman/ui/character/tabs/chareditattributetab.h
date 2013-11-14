@@ -37,10 +37,13 @@ public:
      * @brief Will show/hide the elements specific to the guided creation.
      *          Will also re-calculate all the displayed values.
      */
-    virtual void showEvent(QShowEvent* p_event);
+    virtual void showEvent(QShowEvent* /*unused*/);
+
+signals:
+    void guidedNextStep();
+    void disableNext();
 
 private slots:
-
     /**
      * @brief Called whenever any attribute spin button changed.
      *          Will update the according text and the character values.
@@ -51,6 +54,11 @@ private slots:
      * @brief Will enable the attribute layout and update all values.
      */
     void on_cbPriority_currentIndexChanged(int p_index);
+
+    /**
+     * @brief Emits the guidedNextStep signal.
+     */
+    void on_btnGuidedContinue_clicked();
 
 private:
     Ui::CharEditAttributeTab*   ui;

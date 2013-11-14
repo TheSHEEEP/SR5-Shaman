@@ -11,6 +11,7 @@ CharacterChoices* CharacterChoices::_instance = 0;
 //---------------------------------------------------------------------------------
 CharacterChoices::CharacterChoices()
     : _metatypeID("")
+    , _magicUserType("")
 {
     _selectedPriorities.resize(5, PRIORITY_INVALID);
 }
@@ -19,39 +20,27 @@ CharacterChoices::CharacterChoices()
 void
 CharacterChoices::setPriority(int p_priorityIndex, Priority p_prio)
 {
-    // Check if there already is a priority at the passed index
-    if (_selectedPriorities[p_priorityIndex] != PRIORITY_INVALID)
-    {
-        Priority oldPrio = _selectedPriorities[p_priorityIndex];
-
-        // Check if the passed priority is already somewhere else and switch
-        for (int i = 0; i < 5; ++i)
-        {
-            if (i != p_priorityIndex &&
-                _selectedPriorities[i] == p_prio)
-            {
-                _selectedPriorities[i] = oldPrio;
-                break;
-            }
-        }
-    }
-    // If not, just check if the priority is already somewhere else and remove it there
-    else
-    {
-        // Check if the passed priority is already somewhere else and switch
-        for (int i = 0; i < 5; ++i)
-        {
-            if (i != p_priorityIndex &&
-                _selectedPriorities[i] == p_prio)
-            {
-                _selectedPriorities[i] = PRIORITY_INVALID;
-                break;
-            }
-        }
-    }
+    // Make sure non-magic stays at lowest priority
+    bool magicUser = getIsMagicUser();
 
     // Set the priotiy
     _selectedPriorities[p_priorityIndex] = p_prio;
+
+    // Make sure we only have this priority once
+    for (int i = 0; i < 5; ++i)
+    {
+        if (i != p_priorityIndex &&
+            _selectedPriorities[i] == p_prio)
+        {
+            _selectedPriorities[i] = PRIORITY_INVALID;
+        }
+    }
+
+    // Make sure non-magic stays at lowest priority
+    if (!magicUser && p_priorityIndex != 4)
+    {
+        setIsMagicUser(false);
+    }
 }
 
 //---------------------------------------------------------------------------------
@@ -148,8 +137,16 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
         wouldBeValue = valueCurrent + attemptedIncrease;
     }
 
-    // Get available free attribute points
-    int availableFreebies = getAvailableAttributePoints();
+    // Get available free attribute points from correct pool
+    int availableFreebies = 0;
+    if (p_attribute == "edge" || p_attribute == "magic")
+    {
+        availableFreebies = getAvailableSpecialAttributePoints();
+    }
+    else
+    {
+        availableFreebies = getAvailableAttributePoints();
+    }
     int actualFromFreebies = p_fromFreebies > availableFreebies ? availableFreebies : p_fromFreebies;
 
     // Number of increases from karma
@@ -231,7 +228,50 @@ CharacterChoices::getAvailableAttributePoints() const
     QMap<QString, int>::const_iterator it = _attributeIncreasesFreebies.begin();
     while (it != _attributeIncreasesFreebies.end())
     {
-        result -= *it;
+        if (it.key() != "edge" && it.key() != "magic")
+        {
+            result -= *it;
+        }
+        ++it;
+    }
+
+    return result;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterChoices::getAvailableSpecialAttributePoints() const
+{
+    // Sanity check 1 - priority
+    if (getPriorityIndex(PRIORITY_ATTRIBUTES) == -1)
+    {
+        qWarning() << QString("Cannot get the number of available special attribute points when attributes have no priority selected.");
+        return 0;
+    }
+    // Sanity check 2 - metatype
+    if (getMetatypeID() == "")
+    {
+        qWarning() << QString("Cannot get the number of available special attribute points when no metatype is selected.");
+        return 0;
+    }
+    // Sanity check 3 - metatype prio
+    if (getPriorityIndex(PRIORITY_METATYPE) == -1)
+    {
+        qWarning() << QString("Cannot get the number of available special attribute points when metatype has no priority selected.");
+        return 0;
+    }
+
+    // Get the available amount
+    int result = METATYPE_RULES->getDefinition(getMetatypeID()).specialAttribPointsPerPrio[getPriorityIndex(PRIORITY_METATYPE)];
+
+    // Subtract the spent amount
+    QMap<QString, int>::const_iterator it = _attributeIncreasesFreebies.begin();
+    while (it != _attributeIncreasesFreebies.end())
+    {
+        if (it.key() == "edge" || it.key() == "magic")
+        {
+            result -= *it;
+        }
         ++it;
     }
 

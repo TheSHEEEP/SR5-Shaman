@@ -14,6 +14,7 @@
                 "logic" :        ["1", "6"],
                 "intuition" :    ["1", "6"],
                 "charisma" :     ["1", "6"],
+                "magic" :        ["0", "6"],
                 "edge" :         ["2", "7"]
             },
             "starting_essence" : "6"
@@ -32,6 +33,7 @@
                 "logic" :        ["1", "6"],
                 "intuition" :    ["1", "6"],
                 "charisma" :     ["3", "8"],
+                "magic" :        ["0", "6"],
                 "edge" :         ["1", "6"]
             },
             "starting_essence" : "6"
@@ -50,6 +52,7 @@
                 "logic" :        ["1", "6"],
                 "intuition" :    ["1", "6"],
                 "charisma" :     ["1", "6"],
+                "magic" :        ["0", "6"],
                 "edge" :         ["1", "6"]
             },
             "starting_essence" : "6"
@@ -68,6 +71,7 @@
                 "logic" :        ["1", "5"],
                 "intuition" :    ["1", "6"],
                 "charisma" :     ["1", "5"],
+                "magic" :        ["0", "6"],
                 "edge" :         ["1", "6"]
             },
             "starting_essence" : "6"
@@ -86,6 +90,7 @@
                 "logic" :        ["1", "5"],
                 "intuition" :    ["1", "5"],
                 "charisma" :     ["1", "4"],
+                "magic" :        ["0", "6"],
                 "edge" :         ["1", "6"]
             },
             "starting_essence" : "6"

@@ -37,16 +37,24 @@ CharEditMiscTab::initialize()
     ui->cbMetatype->addItem("", "");
     ui->cbMetatype->setCurrentIndex(definitions.size());
     ui->cbMetatype->blockSignals(false);
+
+    // TODO: Initialize available magic user types
 }
 
 //---------------------------------------------------------------------------------
 void
-CharEditMiscTab::showEvent(QShowEvent* p_event)
+CharEditMiscTab::showEvent(QShowEvent* /*unused*/)
 {
     if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION)
     {
         ui->btnGuidedContinue->show();
         checkContinue();
+
+        // Update values
+        updateValues();
+
+        // Magic user
+        ui->magicUserFrame->setEnabled(CHARACTER_CHOICES->getIsMagicUser());
     }
     else
     {
@@ -116,7 +124,39 @@ CharEditMiscTab::on_cbPriority_currentIndexChanged(int index)
     // Store selection in character data
     CHARACTER_CHOICES->setPriority(chosenPriority, PRIORITY_METATYPE);
 
+    // It is possible that this "enabled"/"disabled" magic user
+    if (CHARACTER_CHOICES->getIsMagicUser())
+    {
+        ui->checkIsMagicUser->setCheckState(Qt::Checked);
+        ui->magicUserFrame->setEnabled(true);
+    }
+    else
+    {
+        ui->checkIsMagicUser->setCheckState(Qt::Unchecked);
+        ui->magicUserFrame->setEnabled(false);
+    }
+
+    // Can we move on?
     checkContinue();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMiscTab::updateValues()
+{
+    // Priority value
+    ui->cbPriority->blockSignals(true);
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) != -1)
+    {
+        ui->cbPriority->setCurrentIndex(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE));
+    }
+    else
+    {
+        ui->cbPriority->setCurrentIndex(5);
+    }
+    ui->cbPriority->blockSignals(false);
+
+    // TODO: Give each available priority in a comboBox another color if it is occupied
 }
 
 //---------------------------------------------------------------------------------
@@ -126,16 +166,29 @@ CharEditMiscTab::checkContinue()
     if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION)
     {
         // Must have a metatype and a priority
+        // And, if some kind of magic user is selected, must have a priority and type
         if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) != -1 &&
             CHARACTER_CHOICES->getMetatypeID() != "")
         {
-            ui->btnGuidedContinue->setEnabled(true);
-            ui->btnGuidedContinue->setText(tr("Continue"));
+            if(!CHARACTER_CHOICES->getIsMagicUser() ||
+                 (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC) <= 3 &&
+                 CHARACTER_CHOICES->getMagicUserType() != ""))
+            {
+                ui->btnGuidedContinue->setEnabled(true);
+                ui->btnGuidedContinue->setText(tr("Continue"));
+            }
+            else
+            {
+                ui->btnGuidedContinue->setEnabled(false);
+                ui->btnGuidedContinue->setText(tr("You need to select a magic user priority and type"));
+            }
         }
         else
         {
             ui->btnGuidedContinue->setEnabled(false);
             ui->btnGuidedContinue->setText(tr("Choose metatype and priority to continue"));
+
+            emit disableNext();
         }
     }
 }
@@ -152,4 +205,25 @@ void
 CharEditMiscTab::on_leAlias_textEdited(const QString& p_nick)
 {
     CHARACTER_CHOICES->setNick(p_nick);
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMiscTab::on_btnGuidedContinue_clicked()
+{
+    emit guidedNextStep();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMiscTab::on_checkIsMagicUser_stateChanged(int p_state)
+{
+    CHARACTER_CHOICES->setIsMagicUser(p_state == Qt::Checked);
+    ui->magicUserFrame->setEnabled(p_state == Qt::Checked);
+
+    // This possibly invalidates metatype priority
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) == -1)
+    {
+        ui->cbPriority->setCurrentIndex(5);
+    }
 }
