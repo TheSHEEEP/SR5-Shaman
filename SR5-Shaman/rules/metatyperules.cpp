@@ -85,7 +85,10 @@ MetatypeRules::initialize(const QString& p_jsonFile)
         }
 
         // Starting essence
-        typeDef->startingEssence = currentType["starting_essence"].toDouble();
+        typeDef->startingEssence = currentType.value("starting_essence").toString().toFloat();
+
+        // Sprint increase
+        typeDef->sprintIncrease = currentType.value("sprint_increase").toString().toInt();
 
         _definitions[currentType["unique_id"].toString()] = typeDef;
     }

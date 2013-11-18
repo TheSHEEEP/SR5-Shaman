@@ -15,6 +15,7 @@ struct MetatypeDefinition
     QMap<QString, int>      attributesMin;
     QMap<QString, int>      attributesMax;
     float                   startingEssence;
+    int                     sprintIncrease;
 };
 
 /**

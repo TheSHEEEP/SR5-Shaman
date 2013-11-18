@@ -9,6 +9,8 @@
 #include <QJsonParseError>
 #include <QDebug>
 
+#include "rules/rules.h"
+
 //---------------------------------------------------------------------------------
 AttributeRules::AttributeRules()
 {
@@ -51,6 +53,19 @@ AttributeRules::initialize(const QString& p_jsonFile)
     _freebiesPerPrio.push_back(freebieArray.at(4).toVariant().toInt());
 }
 
+
+//---------------------------------------------------------------------------------
+int
+AttributeRules::getNumFreebies(int p_prioIndex) const
+{
+    if (p_prioIndex == -1)
+    {
+        return 0;
+    }
+
+    return _freebiesPerPrio[p_prioIndex];
+}
+
 //---------------------------------------------------------------------------------
 int
 AttributeRules::calculateMaximumAttributeIncrease(int p_currentValue, int p_maxValue, int p_availableKarma) const
@@ -80,7 +95,7 @@ AttributeRules::calculateAttributeIncreaseCost(int p_oldValue, int p_newValue) c
     // Calculate the gain
     if (decrease)
     {
-        for (int i = p_oldValue; i >= p_newValue; --i)
+        for (int i = p_oldValue; i > p_newValue; --i)
         {
             result -= 5 * i;
         }
@@ -88,7 +103,7 @@ AttributeRules::calculateAttributeIncreaseCost(int p_oldValue, int p_newValue) c
     // Calculate the cost
     else
     {
-        for (int i = p_oldValue; i >= p_newValue; ++i)
+        for (int i = p_oldValue; i < p_newValue; ++i)
         {
             result += 5 * i;
         }
@@ -119,4 +134,81 @@ AttributeRules::calculateSocialLimit(int p_charisma, int p_willpower, int p_esse
 {
     float temp = (p_charisma * 2.0f + p_willpower + p_essence) / 3.0f;
     return temp + 0.5f;
+}
+
+//---------------------------------------------------------------------------------
+int
+AttributeRules::calculateInitiative(int p_intuition, int p_reaction) const
+{
+    return (p_intuition + p_reaction);
+}
+
+//---------------------------------------------------------------------------------
+int
+AttributeRules::calculateMatrixInitiative(int p_intuition, int p_reaction) const
+{
+    return (p_intuition + p_reaction);
+}
+
+//---------------------------------------------------------------------------------
+int
+AttributeRules::calculateAstralInitiative(int p_intuition) const
+{
+    return p_intuition << 1;
+}
+
+//---------------------------------------------------------------------------------
+int
+AttributeRules::calculateComposure(int p_charisma, int p_will) const
+{
+    return (p_charisma + p_will);
+}
+
+//---------------------------------------------------------------------------------
+int
+AttributeRules::calculateJudgeIntentions(int p_charisma, int p_intuition) const
+{
+    return (p_charisma + p_intuition);
+}
+
+//---------------------------------------------------------------------------------
+int
+AttributeRules::calculateMemory(int p_logic, int p_willpower) const
+{
+    return (p_logic + p_willpower);
+}
+
+//---------------------------------------------------------------------------------
+LiftCarryValues
+AttributeRules::calculateLiftCarry(int p_strength, int p_body) const
+{
+    LiftCarryValues result;
+    result.liftBase = 15 * p_strength;
+    result.carryBase = 10 * p_strength;
+    result.dicePool = p_strength + p_body;
+
+    return result;
+}
+
+//---------------------------------------------------------------------------------
+MovementValues
+AttributeRules::calculateMovement(int p_agility, const QString& p_metatypeID) const
+{
+    // Sanity check - metatype
+    if (p_metatypeID == "")
+    {
+        qWarning() << QString("Cannot calculate movement without a set metatype.");
+        MovementValues result;
+        result.running = 0;
+        result.sprintIncrease = 0;
+        result.walking = 0;
+        return result;
+    }
+
+    MovementValues result;
+    result.walking = p_agility << 1;
+    result.running = p_agility << 2;
+    result.sprintIncrease = METATYPE_RULES->getDefinition(p_metatypeID).sprintIncrease;
+
+    return result;
 }

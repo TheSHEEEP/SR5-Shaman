@@ -17,7 +17,8 @@
                 "magic" :        ["0", "6"],
                 "edge" :         ["2", "7"]
             },
-            "starting_essence" : "6"
+            "starting_essence" : "6",
+            "sprint_increase" : "2"
         },
         {   "unique_id" : "ELF_MAIN",
             "translations" : { "en" : "Elf",
@@ -36,7 +37,8 @@
                 "magic" :        ["0", "6"],
                 "edge" :         ["1", "6"]
             },
-            "starting_essence" : "6"
+            "starting_essence" : "6",
+            "sprint_increase" : "2"
         },
         {   "unique_id" : "DWARF_MAIN",
             "translations" : { "en" : "Dwarf",
@@ -55,7 +57,8 @@
                 "magic" :        ["0", "6"],
                 "edge" :         ["1", "6"]
             },
-            "starting_essence" : "6"
+            "starting_essence" : "6",
+            "sprint_increase" : "1"
         },
         {   "unique_id" : "ORC_MAIN",
             "translations" : { "en" : "Orc",
@@ -74,7 +77,8 @@
                 "magic" :        ["0", "6"],
                 "edge" :         ["1", "6"]
             },
-            "starting_essence" : "6"
+            "starting_essence" : "6",
+            "sprint_increase" : "2"
         },
         {   "unique_id" : "TROLL_MAIN",
             "translations" : { "en" : "Troll",
@@ -93,7 +97,8 @@
                 "magic" :        ["0", "6"],
                 "edge" :         ["1", "6"]
             },
-            "starting_essence" : "6"
+            "starting_essence" : "6",
+            "sprint_increase" : "1"
         }
     ]
 }

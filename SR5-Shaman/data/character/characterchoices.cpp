@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QString>
+#include <QColor>
 
 #include "charactervalues.h"
 #include "data/appstatus.h"
@@ -60,9 +61,17 @@ CharacterChoices::getSpentKarma() const
         }
         result += ATTRIBUTE_RULES->calculateAttributeIncreaseCost(valueWithoutKarma,
                                                                   CHARACTER_VALUES->getAttribute(it.key(), false, false));
+        ++it;
     }
 
     return result;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterChoices::getAvailableKarma() const
+{
+    return CHARACTER_VALUES->getKarmaPool() - getSpentKarma();
 }
 
 //---------------------------------------------------------------------------------
@@ -102,7 +111,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
         {
             APPSTATUS->setStatusBarMessage(tr("Trying to reduce %1 below natural minimum. Set to minimum.")
                                                 .arg(p_attribute),
-                                           2.5f);
+                                           2.5f, QColor(0, 0, 255));
             _attributeIncreasesFreebies[p_attribute] = 0;
             _attributeIncreasesKarma[p_attribute] = 0;
             return;
@@ -132,9 +141,20 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     if (wouldBeValue > naturalMax)
     {
         APPSTATUS->setStatusBarMessage(tr("Trying to increase %1 above natural maximum. Set to maximum.").arg(p_attribute),
-                                       2.5f);
+                                       2.5f,
+                                       QColor(0, 0, 255));
         attemptedIncrease = naturalMax - valueCurrent;
+        if (p_fromFreebies > attemptedIncrease)
+        {
+            p_fromFreebies = attemptedIncrease;
+        }
         wouldBeValue = valueCurrent + attemptedIncrease;
+    }
+
+    // No increase possible? Do nothing
+    if (attemptedIncrease == 0)
+    {
+        return;
     }
 
     // Get available free attribute points from correct pool
@@ -148,6 +168,10 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
         availableFreebies = getAvailableAttributePoints();
     }
     int actualFromFreebies = p_fromFreebies > availableFreebies ? availableFreebies : p_fromFreebies;
+    if (actualFromFreebies > attemptedIncrease)
+    {
+        actualFromFreebies = attemptedIncrease;
+    }
 
     // Number of increases from karma
     int fromKarma = attemptedIncrease - actualFromFreebies;
@@ -176,6 +200,15 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
         attemptedIncrease = actualFromFreebies + fromKarma;
         wouldBeValue = valueCurrent + attemptedIncrease;
         karmaCost = ATTRIBUTE_RULES->calculateAttributeIncreaseCost(valueCurrent + actualFromFreebies, wouldBeValue);
+    }
+
+    // If the increase is now 0, it means we do not have enough attribute/karma points
+    if (attemptedIncrease == 0)
+    {
+        APPSTATUS->setStatusBarMessage(tr("Not enough attribute or karma points to increase %1 further.").arg(p_attribute),
+                                       2.5f,
+                                       QColor(0, 0, 255));
+        return;
     }
 
     // Finally do the increase!

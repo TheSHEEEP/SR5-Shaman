@@ -102,7 +102,8 @@ CharEditAttributeTab::updateSpinBoxText(QSpinBox* p_spinBox, const QString& p_at
     p_spinBox->setSuffix(suffix);
     p_spinBox->blockSignals(false);
 
-    // TODO: update correct derived values
+    // Update the derived values depending on this attribute
+    updateDerivedValues(p_attribute, false);
 }
 
 //---------------------------------------------------------------------------------
@@ -147,33 +148,140 @@ CharEditAttributeTab::updateValues()
     ui->lblAstralIniValue->setEnabled(magicUser);
     ui->lblAtralIni->setEnabled(magicUser);
 
+    // Essence
+    ui->lblEssenceValue->setText(QString("%1").arg(CHARACTER_VALUES->getEssence()));
+
     // Derived values
-    updateDerivedValues();
+    updateDerivedValues("", true);
 }
 
 //---------------------------------------------------------------------------------
 void
-CharEditAttributeTab::updateDerivedValues()
+CharEditAttributeTab::updateDerivedValues(const QString& p_attribute, bool p_all)
 {
-    // Limits
-    ui->lblPhysicalLimitValue->setText(QString("%1")
-                                       .arg(ATTRIBUTE_RULES->calculatePhysicalLimit(
-                                                CHARACTER_VALUES->getAttribute("strength"),
-                                                CHARACTER_VALUES->getAttribute("body"),
-                                                CHARACTER_VALUES->getAttribute("reaction"))));
-    ui->lblMentalLimitValue->setText(QString("%1")
-                                       .arg(ATTRIBUTE_RULES->calculateMentalLimit(
-                                                CHARACTER_VALUES->getAttribute("logic"),
-                                                CHARACTER_VALUES->getAttribute("intuition"),
-                                                CHARACTER_VALUES->getAttribute("willpower"))));
-    ui->lblSocialLimitValue->setText(QString("%1")
-                                       .arg(ATTRIBUTE_RULES->calculateSocialLimit(
-                                                CHARACTER_VALUES->getAttribute("charisma"),
-                                                CHARACTER_VALUES->getAttribute("willpower"),
-                                                CHARACTER_VALUES->getEssence())));
+    bool isBody = p_attribute == "body";
+    bool isAgility = p_attribute == "agility";
+    bool isStrength = p_attribute == "strength";
+    bool isReaction = p_attribute == "reaction";
+    bool isWillpower = p_attribute == "willpower";
+    bool isLogic = p_attribute == "logic";
+    bool isIntuition = p_attribute == "intuition";
+    bool isCharisma = p_attribute == "charisma";
 
-    // TODO: other derived values
-    // TODO: here
+
+    // Available points - those are affected by pretty much verything so always update those
+    // Attribute points
+    ui->lblPointsValue->setText(QString("%1 / %2")
+                                .arg(CHARACTER_CHOICES->getAvailableAttributePoints())
+                                .arg(ATTRIBUTE_RULES->getNumFreebies(
+                                         CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES))));
+    // Special attribute points
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) != -1)
+    {
+        ui->lblSpecialPointsValue->setText(QString("%1 / %2")
+                                    .arg(CHARACTER_CHOICES->getAvailableSpecialAttributePoints())
+                                    .arg(METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID())
+                                        .specialAttribPointsPerPrio[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE)]));
+    }
+    // Karma points
+    ui->lblKarmaValue->setText(QString("%1 / %2")
+                                .arg(CHARACTER_CHOICES->getAvailableKarma())
+                                .arg(CHARACTER_VALUES->getKarmaPool()));
+
+    // Limits
+    if (p_all || isStrength || isBody || isReaction)
+    {
+        ui->lblPhysicalLimitValue->setText(QString("%1")
+                                           .arg(ATTRIBUTE_RULES->calculatePhysicalLimit(
+                                                    CHARACTER_VALUES->getAttribute("strength"),
+                                                    CHARACTER_VALUES->getAttribute("body"),
+                                                    CHARACTER_VALUES->getAttribute("reaction"))));
+    }
+    if (p_all || isLogic || isIntuition || isWillpower)
+    {
+        ui->lblMentalLimitValue->setText(QString("%1")
+                                           .arg(ATTRIBUTE_RULES->calculateMentalLimit(
+                                                    CHARACTER_VALUES->getAttribute("logic"),
+                                                    CHARACTER_VALUES->getAttribute("intuition"),
+                                                    CHARACTER_VALUES->getAttribute("willpower"))));
+    }
+    if (p_all || isCharisma || isWillpower)
+    {
+        ui->lblSocialLimitValue->setText(QString("%1")
+                                           .arg(ATTRIBUTE_RULES->calculateSocialLimit(
+                                                    CHARACTER_VALUES->getAttribute("charisma"),
+                                                    CHARACTER_VALUES->getAttribute("willpower"),
+                                                    CHARACTER_VALUES->getEssence())));
+    }
+
+    // Initiatives
+    if (p_all || isReaction || isIntuition)
+    {
+        ui->lblIniValue->setText(QString("%1")
+                                     .arg(ATTRIBUTE_RULES->calculateInitiative(
+                                              CHARACTER_VALUES->getAttribute("intuition"),
+                                              CHARACTER_VALUES->getAttribute("reaction"))));
+    }
+    if (p_all || isIntuition || isReaction)
+    {
+        ui->lblMatrixIniValue->setText(QString("%1")
+                                     .arg(ATTRIBUTE_RULES->calculateMatrixInitiative(
+                                              CHARACTER_VALUES->getAttribute("intuition"),
+                                              CHARACTER_VALUES->getAttribute("reaction"))));
+    }
+    if (p_all || isIntuition)
+    {
+        ui->lblAstralIniValue->setText(QString("%1")
+                                     .arg(ATTRIBUTE_RULES->calculateAstralInitiative(
+                                              CHARACTER_VALUES->getAttribute("intuition"))));
+    }
+
+    // Composure
+    if (p_all || isCharisma || isWillpower)
+    {
+        ui->lblComposureValue->setText(QString("%1")
+                                     .arg(ATTRIBUTE_RULES->calculateComposure(
+                                              CHARACTER_VALUES->getAttribute("charisma"),
+                                              CHARACTER_VALUES->getAttribute("willpower"))));
+    }
+
+    // Judge Intentions
+    if (p_all || isCharisma || isIntuition)
+    {
+        ui->lblJudgeIntValue->setText(QString("%1")
+                                     .arg(ATTRIBUTE_RULES->calculateJudgeIntentions(
+                                              CHARACTER_VALUES->getAttribute("charisma"),
+                                              CHARACTER_VALUES->getAttribute("intuition"))));
+    }
+
+    // Memory
+    if (p_all || isLogic || isIntuition)
+    {
+        ui->lblMemoryValue->setText(QString("%1")
+                                     .arg(ATTRIBUTE_RULES->calculateMemory(
+                                              CHARACTER_VALUES->getAttribute("logic"),
+                                              CHARACTER_VALUES->getAttribute("intuition"))));
+    }
+
+    // Lift & carry limits
+    if (p_all || isStrength || isBody)
+    {
+        LiftCarryValues lcv = ATTRIBUTE_RULES->calculateLiftCarry(
+                                            CHARACTER_VALUES->getAttribute("strength"),
+                                            CHARACTER_VALUES->getAttribute("body"));
+        ui->lblLiftCarryValue->setText(tr("Lift: %1kg   Carry: %2kg   Dice: %3")
+                                        .arg(lcv.liftBase).arg(lcv.carryBase).arg(lcv.dicePool));
+    }
+
+    // Movement
+    if (p_all || isAgility)
+    {
+        MovementValues movValues = ATTRIBUTE_RULES->calculateMovement(
+                                            CHARACTER_VALUES->getAttribute("agility"),
+                                            CHARACTER_CHOICES->getMetatypeID());
+        ui->lblMovementValue->setText(tr("Walk/Run: %1m / %2m   Sprint: +%3m")
+                                        .arg(movValues.walking).arg(movValues.running).arg(movValues.sprintIncrease));
+    }
 }
 
 //---------------------------------------------------------------------------------

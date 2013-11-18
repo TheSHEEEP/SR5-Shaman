@@ -77,9 +77,10 @@ private:
     void updateValues();
 
     /**
-     * @brief Updates all displayed derived values.
+     * @brief Updates all displayed derived values that depend on the passed attribute.
+     * @param p_all if this is true, all value will be updated independent of the passed attribute;
      */
-    void updateDerivedValues();
+    void updateDerivedValues(const QString& p_attribute, bool p_all);
 
     /**
      * @brief During guided creation, checks if all conditions are met to continue with the creation.

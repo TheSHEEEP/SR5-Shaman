@@ -32,5 +32,8 @@ AppStatus::setStatusBarMessage(const QString& p_message, float p_seconds, const 
         qWarning() << QObject::tr("Trying to set status bar message without a set status bar.");
         return;
     }
+    _statusBar->setStyleSheet(QString("QStatusBar { color: rgb(%1, %2, %3) }").arg(p_color.red())
+                                                                              .arg(p_color.green())
+                                                                              .arg(p_color.blue()));
     _statusBar->showMessage(p_message, p_seconds * 1000);
 }

@@ -80,7 +80,7 @@ CharacterValues::getEssence(bool p_withAugments) const
     float result = 0.0f;
 
     // Get starting value
-    METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID()).startingEssence;
+    result += METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID()).startingEssence;
 
     // TODO: get augmentation influence
 

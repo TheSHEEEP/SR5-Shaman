@@ -5,6 +5,27 @@
 #include <vector>
 
 /**
+ * @brief Helper struct that holds values for lift and carry capacity.
+ */
+struct LiftCarryValues
+{
+public:
+    int liftBase;
+    int carryBase;
+    int dicePool;
+};
+/**
+ * @brief Helper struct that holds values for movement.
+ */
+struct MovementValues
+{
+public:
+    int walking;
+    int running;
+    int sprintIncrease;
+};
+
+/**
  * @brief Contains all rules concerining direct and derived attributes.
  */
 class AttributeRules
@@ -65,16 +86,50 @@ public:
      */
     int calculateSocialLimit(int p_charisma, int p_willpower, int p_essence) const;
 
+    /**
+     * @brief Calculates and returns the initiative value for the given attributes.
+     */
+    int calculateInitiative(int p_intuition, int p_reaction) const;
+
+    /**
+     * @brief Calculates and returns the matrix initiative value for the given attributes.
+     */
+    int calculateMatrixInitiative(int p_intuition, int p_reaction) const;
+
+    /**
+     * @brief Calculates and returns the astral initiative value for the given attributes.
+     */
+    int calculateAstralInitiative(int p_intuition) const;
+
+    /**
+     * @brief Calculates and returns the composure value for the given attributes.
+     */
+    int calculateComposure(int p_charisma, int p_willpower) const;
+
+    /**
+     * @brief Calculates and returns the judge intentions value for the given attributes.
+     */
+    int calculateJudgeIntentions(int p_charisma, int p_intuition) const;
+
+    /**
+     * @brief Calculates and returns the memory value for the given attributes.
+     */
+    int calculateMemory(int p_logic, int p_willpower) const;
+
+    /**
+     * @brief Calculates and returns the base carry and lift values as well as
+     *          the dice pool for checks value for the given attributes.
+     */
+    LiftCarryValues calculateLiftCarry(int p_strength, int p_body) const;
+
+    /**
+     * @brief Calculates and returns the walking and running distance as well as the
+     *          sprint increase for the passed agility and metatype.
+     */
+    MovementValues calculateMovement(int p_agility, const QString& p_metatypeID) const;
+
 private:
     std::vector<int>    _freebiesPerPrio;
 };
 
-
-//---------------------------------------------------------------------------------
-inline
-int
-AttributeRules::getNumFreebies(int p_prioIndex) const
-{
-    return _freebiesPerPrio[p_prioIndex];
-}
 #endif // ATTRIBUTERULES_H

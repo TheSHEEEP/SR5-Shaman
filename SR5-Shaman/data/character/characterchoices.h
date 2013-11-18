@@ -110,6 +110,11 @@ public:
     int getSpentKarma() const;
 
     /**
+     * @brief Returns the number of available karma points.
+     */
+    int getAvailableKarma() const;
+
+    /**
      * @brief Increase the passed attribute by the passed amount (can also be used to decrease).
      * @param p_attribute   The name of the attribute to increase.
      * @param p_increase    The amount by which the attribute is to be increased (can be negative for decrease).
