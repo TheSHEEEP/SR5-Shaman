@@ -7,10 +7,12 @@
 
 #include "metatyperules.h"
 #include "attributerules.h"
+#include "magicrules.h"
 
 // Helpful defines
 #define METATYPE_RULES Rules::getSingletonPtr()->getMetatypeRules()
 #define ATTRIBUTE_RULES Rules::getSingletonPtr()->getAttributeRules()
+#define MAGIC_RULES Rules::getSingletonPtr()->getMagicRules()
 
 /**
  * @brief The priorities of the character generation.
@@ -73,11 +75,17 @@ public:
      */
     const AttributeRules* getAttributeRules() const;
 
+    /**
+     * @brief Returns a pointer to the magic rules.
+     */
+    const MagicRules* getMagicRules() const;
+
 private:
     bool    _initialized;
 
     MetatypeRules*      _metatypeRules;
     AttributeRules*     _attributeRules;
+    MagicRules*         _magicRules;
 };
 
 //---------------------------------------------------------------------------------
@@ -94,6 +102,14 @@ const AttributeRules*
 Rules::getAttributeRules() const
 {
     return _attributeRules;
+}
+
+//---------------------------------------------------------------------------------
+inline
+const MagicRules*
+Rules::getMagicRules() const
+{
+    return _magicRules;
 }
 
 #endif // RULES_H

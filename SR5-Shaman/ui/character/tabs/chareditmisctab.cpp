@@ -38,7 +38,7 @@ CharEditMiscTab::initialize()
     ui->cbMetatype->setCurrentIndex(definitions.size());
     ui->cbMetatype->blockSignals(false);
 
-    // TODO: Initialize available magic user types
+    // Initialize available magic user types
 }
 
 //---------------------------------------------------------------------------------

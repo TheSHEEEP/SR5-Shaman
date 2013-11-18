@@ -1,0 +1,148 @@
+{
+    "magic_types" : 
+    [
+        {   "unique_id" : "MAGICIAN",
+            "translations" : 
+            { 
+                "en" : "Magician",
+                "de" : "Zauberer"
+            },
+            "types" : [ "magic" ],
+            "priorities" : 
+            {
+                "0" : 
+                {
+                    "starting_magic" : "6",
+                    "free_spells"    : "10",
+                    "free_skills"    : ["2", "5"]
+                },
+                "1" :
+                {
+                    "starting_magic" : "4",
+                    "free_spells"    : "7",
+                    "free_skills"    : ["2", "4"]
+                },
+                "2" :
+                {
+                    "starting_magic" : "3",
+                    "free_spells"    : "5"
+                }
+            }
+        },
+        {   "unique_id" : "ASPECT_MAGICIAN",
+            "translations" : 
+            { 
+                "en" : "Aspected Magician",
+                "de" : "Aspektzauberer"
+            },
+            "types" : [ "magic" ],
+            "priorities" : 
+            {
+                "1" :
+                {
+                    "starting_magic"         : "5",
+                    "free_spells"            : "0",
+                    "forced_skill_groups"    : ["1", "4"]
+                },
+                "2" :
+                {
+                    "starting_magic"         : "3",
+                    "free_spells"            : "0",
+                    "forced_skill_groups"    : ["1", "2"]
+                },
+                "3" :
+                {
+                    "starting_magic"         : "2",
+                    "free_spells"            : "0"
+                }
+            }
+        },
+        {   "unique_id" : "MYSTIC_ADEPT",
+            "translations" : 
+            { 
+                "en" : "Mystic Adept",
+                "de" : "Magieradept"
+            },
+            "types" : [ "magic", "adept" ],
+            "priorities" : 
+            {
+                "0" : 
+                {
+                    "starting_magic"     : "6",
+                    "free_spells"        : "10",
+                    "free_power_points"  : "0",
+                    "free_skills"        : ["2", "5"]
+                },
+                "1" :
+                {
+                    "starting_magic"     : "4",
+                    "free_spells"        : "7",
+                    "free_power_points"  : "0",
+                    "free_skills"        : ["2", "4"]
+                },
+                "2" :
+                {
+                    "starting_magic"     : "3",
+                    "free_spells"        : "5",
+                    "free_power_points"  : "0"
+                }
+            }
+        },
+        {   "unique_id" : "ADEPT",
+            "translations" : 
+            { 
+                "en" : "Adept",
+                "de" : "Adept"
+            },
+            "types" : [ "adept" ],
+            "priorities" : 
+            {
+                "1" :
+                {
+                    "starting_magic"     : "6",
+                    "free_power_points"  : "6",
+                    "free_skills"        : ["1", "4"]
+                },
+                "2" :
+                {
+                    "starting_magic"     : "4",
+                    "free_power_points"  : "4",
+                    "free_skills"        : ["1", "2"]
+                },
+                "3" :
+                {
+                    "starting_magic"     : "2",
+                    "free_power_points"  : "2"
+                }
+            }
+        },
+        {   "unique_id" : "TECHNOMANCER",
+            "translations" : 
+            { 
+                "en" : "Technomancer",
+                "de" : "Technomancer"
+            },
+            "types" : [ "resonance" ],
+            "priorities" : 
+            {
+                "0" : 
+                {
+                    "starting_magic" : "6",
+                    "free_spells"    : "5",
+                    "free_skills"    : ["2", "5"]
+                },
+                "1" :
+                {
+                    "starting_magic" : "4",
+                    "free_spells"    : "2",
+                    "free_skills"    : ["2", "4"]
+                },
+                "2" :
+                {
+                    "starting_magic" : "3",
+                    "free_spells"    : "1"
+                }
+            }
+        }
+    ]
+}

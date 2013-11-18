@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     ui/character/tabs/chareditattributetab.cpp \
     rules/attributerules.cpp \
     data/character/characterchoices.cpp \
-    data/character/charactervalues.cpp
+    data/character/charactervalues.cpp \
+    rules/magicrules.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     ui/character/tabs/chareditattributetab.h \
     rules/attributerules.h \
     data/character/characterchoices.h \
-    data/character/charactervalues.h
+    data/character/charactervalues.h \
+    rules/magicrules.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
