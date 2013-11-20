@@ -85,6 +85,8 @@ CharEditAttributeTab::spinBoxChanged(int p_newValue)
 
     // Done, unlock signals
     spinBox->blockSignals(false);
+
+    checkContinue();
 }
 
 //---------------------------------------------------------------------------------

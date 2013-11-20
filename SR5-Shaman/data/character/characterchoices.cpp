@@ -38,7 +38,7 @@ CharacterChoices::setPriority(int p_priorityIndex, Priority p_prio)
     }
 
     // Make sure non-magic stays at lowest priority
-    if (!magicUser && p_priorityIndex != 4)
+    if (!magicUser && p_priorityIndex != 4 && p_prio != PRIORITY_MAGIC)
     {
         setIsMagicUser(false);
     }
@@ -55,6 +55,15 @@ CharacterChoices::getSpentKarma() const
     while (it != _attributeIncreasesKarma.end())
     {
         int valueWithoutKarma = METATYPE_RULES->getDefinition(getMetatypeID()).attributesMin[it.key()];
+
+        // Mind possible magic bonus starting value
+        if (getIsMagicUser() &&
+            it.key() == "magic")
+        {
+            valueWithoutKarma += MAGIC_RULES->getDefinition(getMagicUserType())
+                    .priorities[getPriorityIndex(PRIORITY_MAGIC)]->startingMagic;
+        }
+
         if (_attributeIncreasesFreebies.find(it.key()) != _attributeIncreasesFreebies.end())
         {
             valueWithoutKarma += _attributeIncreasesFreebies[it.key()];

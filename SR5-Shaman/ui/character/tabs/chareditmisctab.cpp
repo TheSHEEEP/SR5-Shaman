@@ -39,6 +39,16 @@ CharEditMiscTab::initialize()
     ui->cbMetatype->blockSignals(false);
 
     // Initialize available magic user types
+    ui->cbMagicType->blockSignals(true);
+    const QMap<QString, MagicTypeDefinition*>& magicTypeDefs = MAGIC_RULES->getAllDefinitions();
+    QMap<QString, MagicTypeDefinition*>::const_iterator mtIt;
+    for(mtIt = magicTypeDefs.begin(); mtIt != magicTypeDefs.end(); ++mtIt)
+    {
+        ui->cbMagicType->addItem((*mtIt)->translations[APPSTATUS->getCurrentLocale()], mtIt.key());
+    }
+    ui->cbMagicType->addItem("", "");
+    ui->cbMagicType->setCurrentIndex(definitions.size());
+    ui->cbMagicType->blockSignals(false);
 }
 
 //---------------------------------------------------------------------------------
@@ -170,7 +180,7 @@ CharEditMiscTab::checkContinue()
         if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) != -1 &&
             CHARACTER_CHOICES->getMetatypeID() != "")
         {
-            if(!CHARACTER_CHOICES->getIsMagicUser() ||
+            if((!CHARACTER_CHOICES->getIsMagicUser() && !ui->checkIsMagicUser->isChecked()) ||
                  (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC) <= 3 &&
                  CHARACTER_CHOICES->getMagicUserType() != ""))
             {
@@ -226,4 +236,93 @@ CharEditMiscTab::on_checkIsMagicUser_stateChanged(int p_state)
     {
         ui->cbPriority->setCurrentIndex(5);
     }
+
+    // Unselect any magic settings
+    if (ui->cbMagicType->count() > 0)
+    {
+        ui->cbMagicType->setCurrentIndex(ui->cbMagicType->count() - 1);
+    }
+    if (ui->cbMagicPriority->count() > 0)
+    {
+        ui->cbMagicPriority->setCurrentIndex(ui->cbMagicPriority->count() - 1);
+    }
+
+    checkContinue();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMiscTab::on_cbMagicType_currentIndexChanged(int p_index)
+{
+    QString type = ui->cbMagicType->itemData(p_index).toString();
+    // Unselect magic type
+    if (type == "")
+    {
+        CHARACTER_CHOICES->setMagicUserType("");
+        CHARACTER_CHOICES->setPriority(4, PRIORITY_MAGIC);
+        if (ui->cbMagicPriority->count() > 0)
+        {
+            ui->cbMagicPriority->blockSignals(true);
+            ui->cbMagicPriority->setCurrentIndex(ui->cbMagicPriority->count() - 1);
+            ui->cbMagicPriority->blockSignals(false);
+        }
+        return;
+    }
+
+    // Select magic type
+    CHARACTER_CHOICES->setMagicUserType(type);
+
+    // Clear priority selection// Clear priority list
+    ui->cbMagicPriority->blockSignals(true);
+    while (ui->cbMagicPriority->count() > 0)
+    {
+        ui->cbMagicPriority->removeItem(0);
+    }
+
+    // Fill priority selection
+    const MagicTypeDefinition& definition = MAGIC_RULES->getDefinition(type);
+    if (definition.priorities.contains(0))
+    {
+        ui->cbMagicPriority->addItem("A", 0);
+    }
+    if (definition.priorities.contains(1))
+    {
+        ui->cbMagicPriority->addItem("B", 1);
+    }
+    if (definition.priorities.contains(2))
+    {
+        ui->cbMagicPriority->addItem("C", 2);
+    }
+    if (definition.priorities.contains(3))
+    {
+        ui->cbMagicPriority->addItem("D", 3);
+    }
+    if (definition.priorities.contains(4))
+    {
+        ui->cbMagicPriority->addItem("E", 4);
+    }
+    ui->cbMagicPriority->addItem("", -1);
+    ui->cbMagicPriority->setCurrentIndex(ui->cbMagicPriority->count() - 1);
+    ui->cbMagicPriority->blockSignals(false);
+
+    checkContinue();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMiscTab::on_cbMagicPriority_currentIndexChanged(int p_index)
+{
+    int prio = ui->cbMagicPriority->itemData(p_index).toInt();
+
+    // Unset priority
+    if (prio == -1)
+    {
+        CHARACTER_CHOICES->unsetPriority(PRIORITY_MAGIC);
+        return;
+    }
+
+    // Set priority
+    CHARACTER_CHOICES->setPriority(prio, PRIORITY_MAGIC);
+
+    checkContinue();
 }

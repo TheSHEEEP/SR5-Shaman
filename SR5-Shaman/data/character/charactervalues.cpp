@@ -52,10 +52,18 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
     }
 
     // Get metatype minimal value
-    int pure = METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID()).attributesMin[p_attribute];
+    int attribValue = METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID()).attributesMin[p_attribute];
+
+    // Get possible modification from magic user
+    if (p_attribute == "magic" &&
+        CHARACTER_CHOICES->getIsMagicUser())
+    {
+        attribValue += MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserType())
+                            .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)]->startingMagic;
+    }
 
     // Add freebie & karma influences
-    pure += CHARACTER_CHOICES->getAttributeIncreases(p_attribute);
+    attribValue += CHARACTER_CHOICES->getAttributeIncreases(p_attribute);
 
     // Add augmentation influences
     // TODO: Add augmentation influences
@@ -63,7 +71,7 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
     // Add other influences
     // TODO: Add other influences
 
-    return pure;
+    return attribValue;
 }
 
 //---------------------------------------------------------------------------------

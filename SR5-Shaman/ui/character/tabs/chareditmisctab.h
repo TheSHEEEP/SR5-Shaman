@@ -67,7 +67,20 @@ private slots:
      */
     void on_btnGuidedContinue_clicked();
 
-    void on_checkIsMagicUser_stateChanged(int arg1);
+    /**
+     * @brief Activates/deactivates the magic type selection.
+     */
+    void on_checkIsMagicUser_stateChanged(int p_state);
+
+    /**
+     * @brief Fills the selection of available priorities for the selected type.
+     */
+    void on_cbMagicType_currentIndexChanged(int p_index);
+
+    /**
+     * @brief Stores the selected magic priority.
+     */
+    void on_cbMagicPriority_currentIndexChanged(int p_index);
 
 private:
     Ui::CharEditMiscTab *ui;

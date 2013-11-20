@@ -100,6 +100,11 @@ public:
     void setIsMagicUser(bool p_user);
 
     /**
+     * @brief Sets the magic user type. Pass "" to unset.
+     */
+    void setMagicUserType(const QString& p_type);
+
+    /**
      * @brief Returns the unique ID of the magic user type. Or "", if none.
      */
     const QString& getMagicUserType() const;
@@ -259,6 +264,14 @@ CharacterChoices::setIsMagicUser(bool p_user)
     {
         setPriority(4, PRIORITY_MAGIC);
     }
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterChoices::setMagicUserType(const QString& p_type)
+{
+    _magicUserType = p_type;
 }
 
 //---------------------------------------------------------------------------------

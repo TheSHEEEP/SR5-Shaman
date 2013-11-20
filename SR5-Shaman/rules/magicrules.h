@@ -5,11 +5,38 @@
 #include <QMap>
 #include <vector>
 
+
+/**
+ * @brief The definition of one magic type priority.
+ */
+struct MagicTypePriorityDefinition
+{
+    MagicTypePriorityDefinition()
+        : startingMagic(-1)
+        , freeSpells(-1)
+        , freePowerPoints(-1)
+    {
+        freeSkills.first = -1;
+        freeSkills.second = -1;
+        forcedSkillGroup.first = -1;
+        forcedSkillGroup.second = -1;
+    }
+
+    int                 startingMagic;
+    int                 freeSpells;
+    int                 freePowerPoints;
+    std::pair<int, int> freeSkills;
+    std::pair<int, int> forcedSkillGroup;
+};
+
 /**
  * @brief The definition of one magic type.
  */
 struct MagicTypeDefinition
 {
+    QMap<QString, QString>                  translations;
+    std::vector<QString>                    types;
+    QMap<int, MagicTypePriorityDefinition*>  priorities;
 };
 
 /**
