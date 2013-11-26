@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     rules/attributerules.cpp \
     data/character/characterchoices.cpp \
     data/character/charactervalues.cpp \
-    rules/magicrules.cpp
+    rules/magicrules.cpp \
+    ui/utils/comboprioritydelegate.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     rules/attributerules.h \
     data/character/characterchoices.h \
     data/character/charactervalues.h \
-    rules/magicrules.h
+    rules/magicrules.h \
+    ui/utils/comboprioritydelegate.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \

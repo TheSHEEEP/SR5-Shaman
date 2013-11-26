@@ -1,6 +1,7 @@
 #include "chareditattributetab.h"
 #include "ui_chareditattributetab.h"
 
+#include "ui/utils/comboprioritydelegate.h"
 #include "data/appstatus.h"
 #include "data/character/characterchoices.h"
 #include "data/character/charactervalues.h"
@@ -17,6 +18,7 @@ CharEditAttributeTab::CharEditAttributeTab(QWidget *parent)
 //---------------------------------------------------------------------------------
 CharEditAttributeTab::~CharEditAttributeTab()
 {
+    delete ui->cbPriority->itemDelegate();
     delete ui;
 }
 
@@ -24,6 +26,9 @@ CharEditAttributeTab::~CharEditAttributeTab()
 void
 CharEditAttributeTab::initialize()
 {
+    // Set priority delegates
+    ui->cbPriority->setItemDelegate(new ComboPriorityDelegate(ui->cbPriority));
+
     // Connect all spin buttons
     _attributeSpinBoxAssignment[ui->spinAgility] = "agility";
     _attributeSpinBoxAssignment[ui->spinBody] = "body";

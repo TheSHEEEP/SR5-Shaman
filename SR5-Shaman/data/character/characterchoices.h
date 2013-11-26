@@ -62,6 +62,12 @@ public:
     int getPriorityIndex(Priority p_prio) const;
 
     /**
+     * @brief Returns the priority at the passed index. return PRIORITY_INVALID if none is there.
+     * @param p_index   The index to look at.
+     */
+    Priority getPriorityAtIndex(int p_index) const;
+
+    /**
      * @brief Will unset the priority of the chosen type, setting it to invalid.
      *          i.e.    If you pass PRIORITY_METATYPE and it is currently at priority D,
      *                  priority D will be set to invalid.
@@ -212,6 +218,19 @@ CharacterChoices::getPriorityIndex(Priority p_prio) const
     }
 
     return -1;
+}
+
+//---------------------------------------------------------------------------------
+inline
+Priority
+CharacterChoices::getPriorityAtIndex(int p_index) const
+{
+    if (p_index < 0 || p_index > 4)
+    {
+        return PRIORITY_INVALID;
+    }
+
+    return _selectedPriorities[p_index];
 }
 
 //---------------------------------------------------------------------------------

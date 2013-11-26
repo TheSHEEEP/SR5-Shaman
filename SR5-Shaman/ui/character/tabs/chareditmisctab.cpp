@@ -4,6 +4,7 @@
 #include <QMap>
 #include <QString>
 
+#include "ui/utils/comboprioritydelegate.h"
 #include "data/appstatus.h"
 #include "rules/rules.h"
 #include "data/character/characterchoices.h"
@@ -19,6 +20,8 @@ CharEditMiscTab::CharEditMiscTab(QWidget *parent) :
 //---------------------------------------------------------------------------------
 CharEditMiscTab::~CharEditMiscTab()
 {
+    delete ui->cbPriority->itemDelegate();
+    delete ui->cbMagicPriority->itemDelegate();
     delete ui;
 }
 
@@ -26,6 +29,10 @@ CharEditMiscTab::~CharEditMiscTab()
 void
 CharEditMiscTab::initialize()
 {
+    // Set priority delegates
+    ui->cbPriority->setItemDelegate(new ComboPriorityDelegate(ui->cbPriority));
+    ui->cbMagicPriority->setItemDelegate(new ComboPriorityDelegate(ui->cbMagicPriority));
+
     // Fill the metatypes
     ui->cbMetatype->blockSignals(true);
     const QMap<QString, MetatypeDefinition*>& definitions = METATYPE_RULES->getAllDefinitions();
