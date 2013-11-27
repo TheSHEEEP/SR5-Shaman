@@ -271,7 +271,7 @@ inline
 bool
 CharacterChoices::getIsMagicUser() const
 {
-    return (getPriorityIndex(PRIORITY_MAGIC) != 4);
+    return (getPriorityIndex(PRIORITY_MAGIC) != 4 && getPriorityIndex(PRIORITY_MAGIC) != -1);
 }
 
 //---------------------------------------------------------------------------------

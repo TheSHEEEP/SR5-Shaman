@@ -4,7 +4,7 @@
 #include <QMap>
 #include <QString>
 
-#include "ui/utils/comboprioritydelegate.h"
+#include "ui/utils/priorityeventfilter.h"
 #include "data/appstatus.h"
 #include "rules/rules.h"
 #include "data/character/characterchoices.h"
@@ -20,8 +20,7 @@ CharEditMiscTab::CharEditMiscTab(QWidget *parent) :
 //---------------------------------------------------------------------------------
 CharEditMiscTab::~CharEditMiscTab()
 {
-    delete ui->cbPriority->itemDelegate();
-    delete ui->cbMagicPriority->itemDelegate();
+    delete _filter;
     delete ui;
 }
 
@@ -30,8 +29,11 @@ void
 CharEditMiscTab::initialize()
 {
     // Set priority delegates
-    ui->cbPriority->setItemDelegate(new ComboPriorityDelegate(ui->cbPriority));
-    ui->cbMagicPriority->setItemDelegate(new ComboPriorityDelegate(ui->cbMagicPriority));
+    _filter = new PriorityEventFilter();
+    ui->cbPriority->installEventFilter(_filter);
+    ui->cbMagicPriority->installEventFilter(_filter);
+    connect(ui->cbPriority, SIGNAL(activated(int)), _filter ,SLOT(handlePrioritySelection(int)));
+    connect(ui->cbMagicPriority, SIGNAL(activated(int)), _filter ,SLOT(handlePrioritySelection(int)));
 
     // Fill the metatypes
     ui->cbMetatype->blockSignals(true);
@@ -151,6 +153,7 @@ CharEditMiscTab::on_cbPriority_currentIndexChanged(int index)
     {
         ui->checkIsMagicUser->setCheckState(Qt::Unchecked);
         ui->magicUserFrame->setEnabled(false);
+        ui->cbMagicPriority->setCurrentIndex(ui->cbMagicPriority->count() - 1);
     }
 
     // Can we move on?
@@ -189,7 +192,8 @@ CharEditMiscTab::checkContinue()
         {
             if((!CHARACTER_CHOICES->getIsMagicUser() && !ui->checkIsMagicUser->isChecked()) ||
                  (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC) <= 3 &&
-                 CHARACTER_CHOICES->getMagicUserType() != ""))
+                  CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC) >= 0 &&
+                  CHARACTER_CHOICES->getMagicUserType() != ""))
             {
                 ui->btnGuidedContinue->setEnabled(true);
                 ui->btnGuidedContinue->setText(tr("Continue"));
@@ -325,11 +329,18 @@ CharEditMiscTab::on_cbMagicPriority_currentIndexChanged(int p_index)
     if (prio == -1)
     {
         CHARACTER_CHOICES->unsetPriority(PRIORITY_MAGIC);
+        checkContinue();
         return;
     }
 
     // Set priority
     CHARACTER_CHOICES->setPriority(prio, PRIORITY_MAGIC);
+
+    // This possibly unselected the metatype priority
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) == -1)
+    {
+        ui->cbPriority->setCurrentIndex(5);
+    }
 
     checkContinue();
 }

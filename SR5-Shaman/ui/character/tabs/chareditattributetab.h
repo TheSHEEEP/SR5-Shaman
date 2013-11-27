@@ -9,6 +9,7 @@ class CharEditAttributeTab;
 }
 
 class QSpinBox;
+class PriorityEventFilter;
 
 /**
  * @brief This tab holds all information about the character's attributes.
@@ -63,6 +64,7 @@ private slots:
 private:
     Ui::CharEditAttributeTab*   ui;
     QMap<QSpinBox*, QString>    _attributeSpinBoxAssignment;
+    PriorityEventFilter*        _filter;
 
     /**
      * @brief Updates the text on the passed spinbox to reflect the current character values.

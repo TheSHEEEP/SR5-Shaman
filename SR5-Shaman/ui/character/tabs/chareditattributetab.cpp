@@ -1,7 +1,7 @@
 #include "chareditattributetab.h"
 #include "ui_chareditattributetab.h"
 
-#include "ui/utils/comboprioritydelegate.h"
+#include "ui/utils/priorityeventfilter.h"
 #include "data/appstatus.h"
 #include "data/character/characterchoices.h"
 #include "data/character/charactervalues.h"
@@ -18,7 +18,7 @@ CharEditAttributeTab::CharEditAttributeTab(QWidget *parent)
 //---------------------------------------------------------------------------------
 CharEditAttributeTab::~CharEditAttributeTab()
 {
-    delete ui->cbPriority->itemDelegate();
+    delete _filter;
     delete ui;
 }
 
@@ -26,8 +26,10 @@ CharEditAttributeTab::~CharEditAttributeTab()
 void
 CharEditAttributeTab::initialize()
 {
-    // Set priority delegates
-    ui->cbPriority->setItemDelegate(new ComboPriorityDelegate(ui->cbPriority));
+    // Set priority event filter
+    _filter = new PriorityEventFilter();
+    ui->cbPriority->installEventFilter(_filter);
+    connect(ui->cbPriority, SIGNAL(activated(int)), _filter ,SLOT(handlePrioritySelection(int)));
 
     // Connect all spin buttons
     _attributeSpinBoxAssignment[ui->spinAgility] = "agility";

@@ -7,6 +7,8 @@ namespace Ui {
 class CharEditMiscTab;
 }
 
+class PriorityEventFilter;
+
 /**
  * @brief This tab holds character information like name, nick, portrait and metatype.
  *          The kind of magic user is also selected here.
@@ -83,7 +85,8 @@ private slots:
     void on_cbMagicPriority_currentIndexChanged(int p_index);
 
 private:
-    Ui::CharEditMiscTab *ui;
+    Ui::CharEditMiscTab*    ui;
+    PriorityEventFilter*    _filter;
 
     /**
      * @brief Updates all displayed elements.

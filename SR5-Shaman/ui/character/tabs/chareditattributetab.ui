@@ -40,6 +40,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToContents</enum>
+       </property>
       </widget>
      </item>
      <item row="0" column="0">

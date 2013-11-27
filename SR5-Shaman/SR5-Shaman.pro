@@ -31,7 +31,7 @@ SOURCES += main.cpp\
     data/character/characterchoices.cpp \
     data/character/charactervalues.cpp \
     rules/magicrules.cpp \
-    ui/utils/comboprioritydelegate.cpp
+    ui/utils/priorityeventfilter.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -51,7 +51,7 @@ HEADERS  += mainwindow.h \
     data/character/characterchoices.h \
     data/character/charactervalues.h \
     rules/magicrules.h \
-    ui/utils/comboprioritydelegate.h
+    ui/utils/priorityeventfilter.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
