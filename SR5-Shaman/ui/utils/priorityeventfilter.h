@@ -9,6 +9,7 @@ class QComboBox;
  * @brief Event filter to catch the even of a QComboBox to change the texts and their colors,
  *          depending on the priority status of the character.
  * @note    Make sure to connect the COmboBox to the handlePrioritySelection slot!
+ * @author  TheSHEEEP
  */
 class PriorityEventFilter : public QObject
 {

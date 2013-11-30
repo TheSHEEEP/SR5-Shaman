@@ -12,6 +12,7 @@
  *          kind of calculation attached (attributes, skills, etc.).
  *          It does not store any information, but instead uses the CharacterChoices and Rules classes
  *          to calculate values on demand.
+ * @author  TheSHEEEP
  */
 class CharacterValues
 {

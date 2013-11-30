@@ -136,8 +136,6 @@ CharEditAttributeTab::updateValues()
     }
     ui->cbPriority->blockSignals(false);
 
-    // TODO: Give each available priority in a comboBox another color if it is occupied
-
     // SpinBoxes
     updateSpinBoxText(ui->spinAgility, "agility");
     updateSpinBoxText(ui->spinBody, "body");
@@ -178,7 +176,7 @@ CharEditAttributeTab::updateDerivedValues(const QString& p_attribute, bool p_all
     bool isCharisma = p_attribute == "charisma";
 
 
-    // Available points - those are affected by pretty much verything so always update those
+    // Available points - those are affected by pretty much everything so always update those
     // Attribute points
     ui->lblPointsValue->setText(QString("%1 / %2")
                                 .arg(CHARACTER_CHOICES->getAvailableAttributePoints())
@@ -342,10 +340,12 @@ CharEditAttributeTab::checkContinue()
 void
 CharEditAttributeTab::on_cbPriority_currentIndexChanged(int p_index)
 {
+    int prio = ui->cbPriority->itemData(p_index).toInt();
+
     // Set/Unset the chosen priority for the attributes
-    if (ui->cbPriority->itemData(p_index).toInt() != -1)
+    if (prio != -1)
     {
-        CHARACTER_CHOICES->setPriority(p_index, PRIORITY_ATTRIBUTES);
+        CHARACTER_CHOICES->setPriority(prio, PRIORITY_ATTRIBUTES);
     }
     else
     {

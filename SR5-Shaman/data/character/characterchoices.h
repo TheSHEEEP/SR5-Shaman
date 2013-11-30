@@ -12,6 +12,7 @@
 /**
  * @brief This singleton class holds all player choices of the character creation.
  *          Does NOT hold any information about rules.
+ * @author  TheSHEEEP
  */
 class CharacterChoices : public QObject
 {
@@ -113,7 +114,7 @@ public:
     /**
      * @brief Returns the unique ID of the magic user type. Or "", if none.
      */
-    const QString& getMagicUserType() const;
+    const QString& getMagicUserTypeID() const;
 
     /**
      * @brief Returns the total amount of karma spent.
@@ -158,6 +159,21 @@ public:
      * @brief Returns the number of available SPECIAL free attribute points (edge & magic/resonance).
      */
     int getAvailableSpecialAttributePoints() const;
+
+    /**
+     * @brief This will reset all spent attribute increases to 0, freeing all freebies and spent karma.
+     * @param p_cleanUpSpecialPoints    If this is true, the special attribute points will be cleaned.
+     *                                  If this is false, they will NOT be cleaned!
+     */
+    void cleanUpSpentAttributes(bool p_cleanUpSpecialPoints);
+
+    /**
+     * @brief Resets all attribute increases of the passed attribute.
+     * @param p_attribute       The name of the attribute.
+     * @param p_fromFreebies    If increases from Freebies should be reset.
+     * @param p_fromKarma       If increases from Karma should be reset.
+     */
+    void resetAttributeIncreases(const QString p_attribute, bool p_fromFreebies = true, bool p_fromKarma = true);
 
 private:
     std::vector<Priority>     _selectedPriorities;
@@ -296,7 +312,7 @@ CharacterChoices::setMagicUserType(const QString& p_type)
 //---------------------------------------------------------------------------------
 inline
 const QString&
-CharacterChoices::getMagicUserType() const
+CharacterChoices::getMagicUserTypeID() const
 {
     return _magicUserType;
 }

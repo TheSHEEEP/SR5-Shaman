@@ -58,7 +58,7 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
     if (p_attribute == "magic" &&
         CHARACTER_CHOICES->getIsMagicUser())
     {
-        attribValue += MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserType())
+        attribValue += MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
                             .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)]->startingMagic;
     }
 

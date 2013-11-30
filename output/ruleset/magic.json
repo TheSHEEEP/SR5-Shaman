@@ -35,20 +35,20 @@
                 "en" : "Aspected Magician",
                 "de" : "Aspektzauberer"
             },
-            "types" : [ "magic" ],
+            "types" : [ "magic", "aspected" ],
             "priorities" : 
             {
                 "1" :
                 {
                     "starting_magic"         : "5",
                     "free_spells"            : "0",
-                    "forced_skill_groups"    : ["1", "4"]
+                    "free_skill_groups"    : ["1", "4"]
                 },
                 "2" :
                 {
                     "starting_magic"         : "3",
                     "free_spells"            : "0",
-                    "forced_skill_groups"    : ["1", "2"]
+                    "free_skill_groups"    : ["1", "2"]
                 },
                 "3" :
                 {

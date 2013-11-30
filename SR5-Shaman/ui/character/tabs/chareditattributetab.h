@@ -13,6 +13,7 @@ class PriorityEventFilter;
 
 /**
  * @brief This tab holds all information about the character's attributes.
+ * @author  TheSHEEEP
  */
 class CharEditAttributeTab : public QWidget
 {

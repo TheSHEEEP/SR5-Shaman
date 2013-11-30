@@ -18,15 +18,15 @@ struct MagicTypePriorityDefinition
     {
         freeSkills.first = -1;
         freeSkills.second = -1;
-        forcedSkillGroup.first = -1;
-        forcedSkillGroup.second = -1;
+        freeSkillGroup.first = -1;
+        freeSkillGroup.second = -1;
     }
 
     int                 startingMagic;
     int                 freeSpells;
     int                 freePowerPoints;
     std::pair<int, int> freeSkills;
-    std::pair<int, int> forcedSkillGroup;
+    std::pair<int, int> freeSkillGroup;
 };
 
 /**
@@ -42,6 +42,7 @@ struct MagicTypeDefinition
 /**
  * @brief This class holds all information regarding magic specific rules.
  *          For example, this class holds all magic type definitions.
+ * @author  TheSHEEEP
  */
 class MagicRules
 {

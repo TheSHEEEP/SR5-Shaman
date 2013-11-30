@@ -27,6 +27,7 @@ public:
 
 /**
  * @brief Contains all rules concerining direct and derived attributes.
+ * @author  TheSHEEEP
  */
 class AttributeRules
 {

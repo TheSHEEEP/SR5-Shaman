@@ -9,6 +9,7 @@
 #include "ui/character/creationsideinfo.h"
 #include "ui/character/tabs/chareditmisctab.h"
 #include "ui/character/tabs/chareditattributetab.h"
+#include "ui/character/tabs/chareditmagictab.h"
 
 //---------------------------------------------------------------------------------
 MainSplitView::MainSplitView(QWidget *parent)
@@ -41,6 +42,7 @@ MainSplitView::~MainSplitView()
         delete _creationSideInfo;
         delete _tabCharEditMisc;
         delete _tabCharEditAttribute;
+        delete _tabCharEditMagic;
     }
 }
 
@@ -72,6 +74,11 @@ MainSplitView::initialize()
     _tabCharEditAttribute->initialize();
     connect(_tabCharEditAttribute, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
     connect(_tabCharEditAttribute, SIGNAL(disableNext()), SLOT(handleDisableNext()));
+
+    _tabCharEditMagic = new CharEditMagicTab();
+    _tabCharEditMagic->initialize();
+    connect(_tabCharEditMagic, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
+    connect(_tabCharEditMagic, SIGNAL(disableNext()), SLOT(handleDisableNext()));
 }
 
 //---------------------------------------------------------------------------------
@@ -114,12 +121,15 @@ MainSplitView::initializeCharacterCreation()
         CHARACTER_CHOICES->setIsMagicUser(false);
 
         // Insert widgets into tab container
-        // Step 1: Metatype & misc
-        ui->charTabs->addTab(_tabCharEditMisc, tr("Step 1: Priorities"));
+        // Step 1: Metatype & magic type
+        ui->charTabs->addTab(_tabCharEditMisc, tr("Step 1: Metatype and Magic Type"));
         _tabCharEditMisc->setEnabled(true);
         // Step 2: Attributes
         ui->charTabs->addTab(_tabCharEditAttribute, tr("Step 2: Attributes"));
         _tabCharEditAttribute->setEnabled(false);
+        // Step 3: Magic / Resonance
+        ui->charTabs->addTab(_tabCharEditMagic, tr("Step 3: Magic / Resonance"));
+        _tabCharEditMagic->setEnabled(false);
         ui->charTabs->setCurrentIndex(0);
     }
 }

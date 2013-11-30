@@ -24,23 +24,41 @@ CharacterChoices::setPriority(int p_priorityIndex, Priority p_prio)
     // Make sure non-magic stays at lowest priority
     bool magicUser = getIsMagicUser();
 
-    // Set the priotiy
-    _selectedPriorities[p_priorityIndex] = p_prio;
-
     // Make sure we only have this priority once
+    // Also get the old index of this priority
+    int oldPrioIndex = -1;
     for (int i = 0; i < 5; ++i)
     {
-        if (i != p_priorityIndex &&
-            _selectedPriorities[i] == p_prio)
+        if (_selectedPriorities[i] == p_prio)
         {
-            _selectedPriorities[i] = PRIORITY_INVALID;
+            oldPrioIndex = i;
+            if (i != p_priorityIndex)
+            {
+                _selectedPriorities[i] = PRIORITY_INVALID;
+            }
         }
     }
+
+    // Set the priotiy
+    _selectedPriorities[p_priorityIndex] = p_prio;
 
     // Make sure non-magic stays at lowest priority
     if (!magicUser && p_priorityIndex != 4 && p_prio != PRIORITY_MAGIC)
     {
         setIsMagicUser(false);
+    }
+
+    // If this is a "downgrade" we possibly need to clean up spent points
+    if (oldPrioIndex < p_priorityIndex)
+    {
+        if (p_prio == PRIORITY_ATTRIBUTES)
+        {
+            cleanUpSpentAttributes(false);
+        }
+        else if (p_prio == PRIORITY_METATYPE)
+        {
+            cleanUpSpentAttributes(true);
+        }
     }
 }
 
@@ -60,7 +78,7 @@ CharacterChoices::getSpentKarma() const
         if (getIsMagicUser() &&
             it.key() == "magic")
         {
-            valueWithoutKarma += MAGIC_RULES->getDefinition(getMagicUserType())
+            valueWithoutKarma += MAGIC_RULES->getDefinition(getMagicUserTypeID())
                     .priorities[getPriorityIndex(PRIORITY_MAGIC)]->startingMagic;
         }
 
@@ -318,4 +336,53 @@ CharacterChoices::getAvailableSpecialAttributePoints() const
     }
 
     return result;
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::cleanUpSpentAttributes(bool p_cleanUpSpecialPoints)
+{
+    // TODO: In theory, we could iterate over all attributes, keeping as many spent
+    //          points as possible, but that would require knowing which attributes the player favors.
+    if (!p_cleanUpSpecialPoints)
+    {
+        resetAttributeIncreases("body");
+        resetAttributeIncreases("agility");
+        resetAttributeIncreases("reaction");
+        resetAttributeIncreases("strength");
+        resetAttributeIncreases("willpower");
+        resetAttributeIncreases("logic");
+        resetAttributeIncreases("intuition");
+        resetAttributeIncreases("charisma");
+    }
+    else
+    {
+        resetAttributeIncreases("magic");
+        resetAttributeIncreases("edge");
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::resetAttributeIncreases(const QString p_attribute, bool p_fromFreebies, bool p_fromKarma)
+{
+    // Sanity check - attribute name
+    if (CHARACTER_VALUES->getValidBaseAttributes().find(p_attribute) == CHARACTER_VALUES->getValidBaseAttributes().end())
+    {
+        qWarning() << QString("Attribute \"%1\" is not a valid base attribute.")
+                            .arg(p_attribute);
+        return;
+    }
+
+    // Reset from freebies
+    if (p_fromFreebies)
+    {
+        _attributeIncreasesFreebies.remove(p_attribute);
+    }
+
+    // Reset from karma
+    if (p_fromKarma)
+    {
+        _attributeIncreasesKarma.remove(p_attribute);
+    }
 }

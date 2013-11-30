@@ -23,6 +23,7 @@ class QStatusBar;
 
 /**
  * @brief Singleton class that holds information about the current application status.
+ * @author  TheSHEEEP
  */
 class AppStatus
 {

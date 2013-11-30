@@ -92,7 +92,23 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
         break;
 
     case PRIORITY_MAGIC:
-        p_label->setText(tr("Magic / Resonance"));
+        {
+            if (CHARACTER_CHOICES->getIsMagicUser())
+            {
+                if (CHARACTER_CHOICES->getMagicUserTypeID() == "")
+                {
+                    return;
+                }
+                const MagicTypeDefinition& magicType =
+                        MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserTypeID());
+                QString magicTypeName = magicType.translations[APPSTATUS->getCurrentLocale()];
+                p_label->setText(tr("Magic / Resonance") + " - " + magicTypeName);
+            }
+            else
+            {
+                p_label->setText(tr("Magic / Resonance"));
+            }
+        }
         break;
 
     case PRIORITY_METATYPE:

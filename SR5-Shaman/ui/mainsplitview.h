@@ -10,6 +10,7 @@ class CharacterPreviewSideInfo;
 class CreationSideInfo;
 class CharEditMiscTab;
 class CharEditAttributeTab;
+class CharEditMagicTab;
 
 /**
  * @brief This class manages the main split view between the character preview and
@@ -69,6 +70,7 @@ private:
     // All the editing/creation tabs
     CharEditMiscTab*        _tabCharEditMisc;
     CharEditAttributeTab*   _tabCharEditAttribute;
+    CharEditMagicTab*       _tabCharEditMagic;
 
 private:
     /**

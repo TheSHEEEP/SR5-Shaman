@@ -175,8 +175,6 @@ CharEditMiscTab::updateValues()
         ui->cbPriority->setCurrentIndex(5);
     }
     ui->cbPriority->blockSignals(false);
-
-    // TODO: Give each available priority in a comboBox another color if it is occupied
 }
 
 //---------------------------------------------------------------------------------
@@ -193,7 +191,7 @@ CharEditMiscTab::checkContinue()
             if((!CHARACTER_CHOICES->getIsMagicUser() && !ui->checkIsMagicUser->isChecked()) ||
                  (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC) <= 3 &&
                   CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC) >= 0 &&
-                  CHARACTER_CHOICES->getMagicUserType() != ""))
+                  CHARACTER_CHOICES->getMagicUserTypeID() != ""))
             {
                 ui->btnGuidedContinue->setEnabled(true);
                 ui->btnGuidedContinue->setText(tr("Continue"));

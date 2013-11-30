@@ -21,6 +21,7 @@ struct MetatypeDefinition
 /**
  * @brief This class holds all information regarding metatype specific rules.
  *          For example, this class holds all metatype definitions.
+ * @author  TheSHEEEP
  */
 class MetatypeRules
 {
