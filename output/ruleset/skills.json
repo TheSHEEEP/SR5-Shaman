@@ -1,0 +1,800 @@
+{
+    "skill_groups" :
+    [
+        {   "unique_id" : "ACTING",
+            "translations" :
+            {
+                "en" : "Acting",
+                "de" : "Schauspielerei"
+            }            
+        },
+        {   "unique_id" : "ATHLETICS",
+            "translations" :
+            {
+                "en" : "Athletics",
+                "de" : "Athletik"
+            }            
+        },
+        {   "unique_id" : "BIOTECH",
+            "translations" :
+            {
+                "en" : "Biotech",
+                "de" : "Biotech"
+            }            
+        },
+        {   "unique_id" : "CLOSE_COMBAT",
+            "translations" :
+            {
+                "en" : "Close Combat",
+                "de" : "Nahkampf"
+            }            
+        },
+        {   "unique_id" : "CONJURING",
+            "translations" :
+            {
+                "en" : "Conjuring",
+                "de" : "Beschwören"
+            }            
+        },
+        {   "unique_id" : "CRACKING",
+            "translations" :
+            {
+                "en" : "Cracking",
+                "de" : "Cracken"
+            }            
+        },
+        {   "unique_id" : "ELECTRONICS",
+            "translations" :
+            {
+                "en" : "Electronics",
+                "de" : "Elektronik"
+            }            
+        },
+        {   "unique_id" : "ENCHANTING",
+            "translations" :
+            {
+                "en" : "Enchanting",
+                "de" : "Elektronik"
+            }            
+        },
+        {   "unique_id" : "FIREARMS",
+            "translations" :
+            {
+                "en" : "Firearms",
+                "de" : "Feuerwaffen"
+            }            
+        },
+        {   "unique_id" : "INFLUENCE",
+            "translations" :
+            {
+                "en" : "Influence",
+                "de" : "Einfluss"
+            }            
+        },
+        {   "unique_id" : "ENGINEERING",
+            "translations" :
+            {
+                "en" : "Engineering",
+                "de" : "Mechanik"
+            }            
+        },
+        {   "unique_id" : "OUTDOORS",
+            "translations" :
+            {
+                "en" : "Outdoors",
+                "de" : "Natur"
+            }            
+        },
+        {   "unique_id" : "SORCERY",
+            "translations" :
+            {
+                "en" : "Sorcery",
+                "de" : "Hexerei"
+            }            
+        },
+        {   "unique_id" : "STEALTH",
+            "translations" :
+            {
+                "en" : "Stealth",
+                "de" : "Heimlichkeit"
+            }            
+        },
+        {   "unique_id" : "TASKING",
+            "translations" :
+            {
+                "en" : "Tasking",
+                "de" : "Tasken"
+            }            
+        }
+    ],
+    "skills" :
+    [
+        {   "unique_id" : "ARCHERY",
+            "translations" :
+            {
+                "en" : "Archery",
+                "de" : "Projektilwaffen"
+            },
+            "attribute"    : "agility",
+            "group"        : "none"
+        },
+        {   "unique_id" : "CON",
+            "translations" :
+            {
+                "en" : "Con",
+                "de" : "Überreden"
+            },
+            "attribute"    : "charisma",
+            "group"        : "ACTING"
+        },
+        {   "unique_id" : "IMPERSONATION",
+            "translations" :
+            {
+                "en" : "Impersonation",
+                "de" : "Verkörperung"
+            },
+            "attribute"    : "charisma",
+            "group"        : "ACTING"
+        },
+        {   "unique_id" : "PERFORMANCE",
+            "translations" :
+            {
+                "en" : "Performance",
+                "de" : "Vorführung"
+            },
+            "attribute"    : "charisma",
+            "group"        : "ACTING"
+        },
+        {   "unique_id" : "GYMNASTICS",
+            "translations" :
+            {
+                "en" : "Gymnastics",
+                "de" : "Akrobatik"
+            },
+            "attribute"    : "agility",
+            "group"        : "ATHLETICS"
+        },
+        {   "unique_id" : "RUNNING",
+            "translations" :
+            {
+                "en" : "Running",
+                "de" : "Laufen"
+            },
+            "attribute"    : "strength",
+            "group"        : "ATHLETICS"
+        },
+        {   "unique_id" : "SWIMMING",
+            "translations" :
+            {
+                "en" : "Swimming",
+                "de" : "Schwimmen"
+            },
+            "attribute"    : "strength",
+            "group"        : "ATHLETICS"
+        },
+        {   "unique_id" : "CYBERTECHNOLOGY",
+            "translations" :
+            {
+                "en" : "Cybertechnology",
+                "de" : "Kybernetik"
+            },
+            "attribute"    : "logic",
+            "group"        : "BIOTECH"
+        },
+        {   "unique_id" : "FIRST_AID",
+            "translations" :
+            {
+                "en" : "First Aid",
+                "de" : "Erste Hilfe"
+            },
+            "attribute"    : "logic",
+            "group"        : "BIOTECH"
+        },
+        {   "unique_id" : "MEDICINE",
+            "translations" :
+            {
+                "en" : "Medicine",
+                "de" : "Medizin"
+            },
+            "attribute"    : "logic",
+            "group"        : "BIOTECH"
+        },
+        {   "unique_id" : "BLADES",
+            "translations" :
+            {
+                "en" : "Blades",
+                "de" : "Klingenwaffen"
+            },
+            "attribute"    : "agility",
+            "group"        : "CLOSE_COMBAT"
+        },
+        {   "unique_id" : "CLUBS",
+            "translations" :
+            {
+                "en" : "Clubs",
+                "de" : "Knüppel"
+            },
+            "attribute"    : "agility",
+            "group"        : "CLOSE_COMBAT"
+        },
+        {   "unique_id" : "UNARMED",
+            "translations" :
+            {
+                "en" : "Unarmed",
+                "de" : "Waffenloser Kampf"
+            },
+            "attribute"    : "agility",
+            "group"        : "CLOSE_COMBAT"
+        },
+        {   "unique_id" : "BANISHING",
+            "translations" :
+            {
+                "en" : "Banishing",
+                "de" : "Verbannen"
+            },
+            "attribute"    : "magic",
+            "group"        : "CONJURING"
+        },
+        {   "unique_id" : "BINDING",
+            "translations" :
+            {
+                "en" : "Binding",
+                "de" : "Binden"
+            },
+            "attribute"    : "magic",
+            "group"        : "CONJURING"
+        },
+        {   "unique_id" : "SUMMONING",
+            "translations" :
+            {
+                "en" : "Summoning",
+                "de" : "Herbeirufen"
+            },
+            "attribute"    : "magic",
+            "group"        : "CONJURING"
+        },
+        {   "unique_id" : "CYBERCOMBAT",
+            "translations" :
+            {
+                "en" : "Cybercombat",
+                "de" : "Matrixkampf"
+            },
+            "attribute"    : "logic",
+            "group"        : "CRACKING"
+        },
+        {   "unique_id" : "ELECTRONIC_WARFARE",
+            "translations" :
+            {
+                "en" : "Electronic Warfare",
+                "de" : "Elektronische Kriegsführung"
+            },
+            "attribute"    : "logic",
+            "group"        : "CRACKING"
+        },
+        {   "unique_id" : "HACKING",
+            "translations" :
+            {
+                "en" : "Hacking",
+                "de" : "Hacking"
+            },
+            "attribute"    : "logic",
+            "group"        : "CRACKING"
+        },
+        {   "unique_id" : "COMPUTER",
+            "translations" :
+            {
+                "en" : "Computer",
+                "de" : "Computer"
+            },
+            "attribute"    : "logic",
+            "group"        : "CRACKING"
+        },
+        {   "unique_id" : "HARDWARE",
+            "translations" :
+            {
+                "en" : "Hardware",
+                "de" : "Hardware"
+            },
+            "attribute"    : "logic",
+            "group"        : "CRACKING"
+        },
+        {   "unique_id" : "SOFTWARE",
+            "translations" :
+            {
+                "en" : "Software",
+                "de" : "Software"
+            },
+            "attribute"    : "logic",
+            "group"        : "CRACKING"
+        },
+        {   "unique_id" : "ALCHEMY",
+            "translations" :
+            {
+                "en" : "Alchemy",
+                "de" : "Alchemie"
+            },
+            "attribute"    : "magic",
+            "group"        : "ENCHANTING"
+        },
+        {   "unique_id" : "ARTIFICING",
+            "translations" :
+            {
+                "en" : "Artificing",
+                "de" : "Fokusherstellung"
+            },
+            "attribute"    : "magic",
+            "group"        : "ENCHANTING"
+        },
+        {   "unique_id" : "DISENCHANTING",
+            "translations" :
+            {
+                "en" : "Disenchanting",
+                "de" : "Entzaubern"
+            },
+            "attribute"    : "magic",
+            "group"        : "ENCHANTING"
+        },
+        {   "unique_id" : "AUTOMATICS",
+            "translations" :
+            {
+                "en" : "Automatics",
+                "de" : "Schnellfeuerwaffen"
+            },
+            "attribute"    : "agility",
+            "group"        : "FIREARMS"
+        },
+        {   "unique_id" : "LONGARMS",
+            "translations" :
+            {
+                "en" : "Longarms",
+                "de" : "Gewehre"
+            },
+            "attribute"    : "agility",
+            "group"        : "FIREARMS"
+        },
+        {   "unique_id" : "PISTOLS",
+            "translations" :
+            {
+                "en" : "Pistols",
+                "de" : "Pistolen"
+            },
+            "attribute"    : "agility",
+            "group"        : "FIREARMS"
+        },
+        {   "unique_id" : "ETIQUETTE",
+            "translations" :
+            {
+                "en" : "Etiquette",
+                "de" : "Gebräuche"
+            },
+            "attribute"    : "charisma",
+            "group"        : "INFLUENCE"
+        },
+        {   "unique_id" : "LEADERSHIP",
+            "translations" :
+            {
+                "en" : "Leadership",
+                "de" : "Führung"
+            },
+            "attribute"    : "charisma",
+            "group"        : "INFLUENCE"
+        },
+        {   "unique_id" : "NEGOTIATION",
+            "translations" :
+            {
+                "en" : "Negotiation",
+                "de" : "Verhandlung"
+            },
+            "attribute"    : "charisma",
+            "group"        : "INFLUENCE"
+        },
+        {   "unique_id" : "AERONAUTICS_MECHANIC",
+            "translations" :
+            {
+                "en" : "Aeronautics Mechanic",
+                "de" : "Luftfahrtmechanik"
+            },
+            "attribute"    : "logic",
+            "group"        : "ENGINEERING"
+        },
+        {   "unique_id" : "AUTOMOTIVE_MECHANIC",
+            "translations" :
+            {
+                "en" : "Automotive Mechanic",
+                "de" : "Fahrzeugmechanik"
+            },
+            "attribute"    : "logic",
+            "group"        : "ENGINEERING"
+        },
+        {   "unique_id" : "INDUSTRIAL_MECHANIC",
+            "translations" :
+            {
+                "en" : "Industrial Mechanic",
+                "de" : "Industriemechanik"
+            },
+            "attribute"    : "logic",
+            "group"        : "ENGINEERING"
+        },
+        {   "unique_id" : "NAUTICAL_MECHANIC",
+            "translations" :
+            {
+                "en" : "Nautical Mechanic",
+                "de" : "Seefahrtmechanik"
+            },
+            "attribute"    : "logic",
+            "group"        : "ENGINEERING"
+        },
+        {   "unique_id" : "NAVIGATION",
+            "translations" :
+            {
+                "en" : "Navigation",
+                "de" : "Navigation"
+            },
+            "attribute"    : "intuition",
+            "group"        : "OUTDOORS"
+        },
+        {   "unique_id" : "SURVIVAL",
+            "translations" :
+            {
+                "en" : "Survival",
+                "de" : "Survival"
+            },
+            "attribute"    : "willpower",
+            "group"        : "OUTDOORS"
+        },
+        {   "unique_id" : "TRACKING",
+            "translations" :
+            {
+                "en" : "Tracking",
+                "de" : "Spurenlesen"
+            },
+            "attribute"    : "intuition",
+            "group"        : "OUTDOORS"
+        },
+        {   "unique_id" : "COUNTERSPELLING",
+            "translations" :
+            {
+                "en" : "Counterspelling",
+                "de" : "Antimagie"
+            },
+            "attribute"    : "magic",
+            "group"        : "SORCERY"
+        },
+        {   "unique_id" : "RITUAL_SPELLCASTING",
+            "translations" :
+            {
+                "en" : "Ritual Spellcasting",
+                "de" : "Ritualzauberei"
+            },
+            "attribute"    : "magic",
+            "group"        : "SORCERY"
+        },
+        {   "unique_id" : "SPELLCASTING",
+            "translations" :
+            {
+                "en" : "Spellcasting",
+                "de" : "Spruchzauberei"
+            },
+            "attribute"    : "magic",
+            "group"        : "SORCERY"
+        },
+        {   "unique_id" : "DISGUISE",
+            "translations" :
+            {
+                "en" : "Disguise",
+                "de" : "Verkleiden"
+            },
+            "attribute"    : "intuition",
+            "group"        : "STEALTH"
+        },
+        {   "unique_id" : "PALMING",
+            "translations" :
+            {
+                "en" : "Palming",
+                "de" : "Fingerfertigkeit"
+            },
+            "attribute"    : "agility",
+            "group"        : "STEALTH"
+        },
+        {   "unique_id" : "SNEAKING",
+            "translations" :
+            {
+                "en" : "Sneaking",
+                "de" : "Schleichen"
+            },
+            "attribute"    : "agility",
+            "group"        : "STEALTH"
+        },
+        {   "unique_id" : "COMPILING",
+            "translations" :
+            {
+                "en" : "Compiling",
+                "de" : "Kompilieren"
+            },
+            "attribute"    : "magic",
+            "group"        : "TASKING"
+        },
+        {   "unique_id" : "DECOMPILING",
+            "translations" :
+            {
+                "en" : "Decompiling",
+                "de" : "Dekompilieren"
+            },
+            "attribute"    : "magic",
+            "group"        : "TASKING"
+        },
+        {   "unique_id" : "REGISTERING",
+            "translations" :
+            {
+                "en" : "Registering",
+                "de" : "Registrieren"
+            },
+            "attribute"    : "magic",
+            "group"        : "TASKING"
+        },
+        {   "unique_id" : "ESCAPE_ARTIST",
+            "translations" :
+            {
+                "en" : "Escape Artist",
+                "de" : "Entfesseln"
+            },
+            "attribute"    : "agility",
+            "group"        : "none"
+        },
+        {   "unique_id" : "EXOTIC_MELEE_WEAPON",
+            "translations" :
+            {
+                "en" : "Exotic Melee Weapon",
+                "de" : "Exotische Nahkampfwaffe"
+            },
+            "attribute"        : "agility",
+            "requires_custom"  : "true",  
+            "group"            : "none"
+        },
+        {   "unique_id" : "EXOTIC_RANGED_WEAPON",
+            "translations" :
+            {
+                "en" : "Exotic Ranged Weapon",
+                "de" : "Exotische Fernkampfwaffe"
+            },
+            "attribute"        : "agility",
+            "requires_custom"  : "true",  
+            "group"            : "none"
+        },
+        {   "unique_id" : "GUNNERY",
+            "translations" :
+            {
+                "en" : "Gunnery",
+                "de" : "Geschütze"
+            },
+            "attribute"    : "agility",
+            "group"        : "none"
+        },
+        {   "unique_id" : "HEAVY_WEAPONS",
+            "translations" :
+            {
+                "en" : "Heavy Weapons",
+                "de" : "Schwere Waffen"
+            },
+            "attribute"    : "agility",
+            "group"        : "none"
+        },
+        {   "unique_id" : "LOCKSMITH",
+            "translations" :
+            {
+                "en" : "Locksmith",
+                "de" : "Schlosser"
+            },
+            "attribute"    : "agility",
+            "group"        : "none"
+        },
+        {   "unique_id" : "LOCKPICKING",
+            "translations" :
+            {
+                "en" : "Lockpicking",
+                "de" : "Schlösser Knacken"
+            },
+            "attribute"    : "agility",
+            "group"        : "none"
+        },
+        {   "unique_id" : "THRWOWING_WEAPONS",
+            "translations" :
+            {
+                "en" : "Throwing Weapons",
+                "de" : "Wurfwaffen"
+            },
+            "attribute"    : "agility",
+            "group"        : "none"
+        },
+        {   "unique_id" : "DIVING",
+            "translations" :
+            {
+                "en" : "Diving",
+                "de" : "Tauchen"
+            },
+            "attribute"    : "body",
+            "group"        : "none"
+        },
+        {   "unique_id" : "FREE-FALL",
+            "translations" :
+            {
+                "en" : "Free-Fall",
+                "de" : "Freifall"
+            },
+            "attribute"    : "body",
+            "group"        : "none"
+        },
+        {   "unique_id" : "PILOT_AEROSPACE",
+            "translations" :
+            {
+                "en" : "Pilot Aerospace",
+                "de" : "Raumfahrzeuge"
+            },
+            "attribute"    : "reaction",
+            "group"        : "none"
+        },
+        {   "unique_id" : "PILOT_AIRCRAFT",
+            "translations" :
+            {
+                "en" : "Pilot Aircraft",
+                "de" : "Flugzeuge"
+            },
+            "attribute"    : "reaction",
+            "group"        : "none"
+        },
+        {   "unique_id" : "PILOT_EXOTIC_VEHICLE",
+            "translations" :
+            {
+                "en" : "Pilot Exotic Vehicle",
+                "de" : "Exotisches Fahrzeug"
+            },
+            "attribute"        : "reaction",
+            "requires_custom"  : "true",  
+            "group"            : "none"
+        },
+        {   "unique_id" : "PILOT_GROUNDCRAFT",
+            "translations" :
+            {
+                "en" : "Pilot Groundcraft",
+                "de" : "Bodenfahrzeuge"
+            },
+            "attribute"    : "reaction",
+            "group"        : "none"
+        },
+        {   "unique_id" : "PILOT_WALKER",
+            "translations" :
+            {
+                "en" : "Pilot Walker",
+                "de" : "Läufer"
+            },
+            "attribute"    : "reaction",
+            "group"        : "none"
+        },
+        {   "unique_id" : "PILOT_WATERCRAFT",
+            "translations" :
+            {
+                "en" : "Pilot Watercraft",
+                "de" : "Schiffe"
+            },
+            "attribute"    : "reaction",
+            "group"        : "none"
+        },
+        {   "unique_id" : "ANIMAL_HANDLING",
+            "translations" :
+            {
+                "en" : "Animal Handling",
+                "de" : "Tierführung"
+            },
+            "attribute"    : "charisma",
+            "group"        : "none"
+        },
+        {   "unique_id" : "INSTRUCTION",
+            "translations" :
+            {
+                "en" : "Instruction",
+                "de" : "Unterricht"
+            },
+            "attribute"    : "charisma",
+            "group"        : "none"
+        },
+        {   "unique_id" : "INTIMIDATION",
+            "translations" :
+            {
+                "en" : "Intimidation",
+                "de" : "Einschüchtern"
+            },
+            "attribute"    : "charisma",
+            "group"        : "none"
+        },
+        {   "unique_id" : "ARTISAN",
+            "translations" :
+            {
+                "en" : "Artisan",
+                "de" : "Handwerk"
+            },
+            "attribute"    : "intuition",
+            "group"        : "none"
+        },
+        {   "unique_id" : "ASSENSING",
+            "translations" :
+            {
+                "en" : "Assensing",
+                "de" : "Askennen"
+            },
+            "attribute"    : "intuition",
+            "group"        : "none"
+        },
+        {   "unique_id" : "PERCEPTION",
+            "translations" :
+            {
+                "en" : "Perception",
+                "de" : "Wahrnehmung"
+            },
+            "attribute"    : "intuition",
+            "group"        : "none"
+        },
+        {   "unique_id" : "ARCANA",
+            "translations" :
+            {
+                "en" : "Arcana",
+                "de" : "Arkana"
+            },
+            "attribute"    : "logic",
+            "group"        : "none"
+        },
+        {   "unique_id" : "ARMORER",
+            "translations" :
+            {
+                "en" : "Armorer",
+                "de" : "Waffenbau"
+            },
+            "attribute"    : "logic",
+            "group"        : "none"
+        },
+        {   "unique_id" : "BIOTECHNOLOGY",
+            "translations" :
+            {
+                "en" : "Biotechnology",
+                "de" : "Biotechnologie"
+            },
+            "attribute"    : "logic",
+            "group"        : "none"
+        },
+        {   "unique_id" : "CHEMISTRY",
+            "translations" :
+            {
+                "en" : "Chemistry",
+                "de" : "Chemie"
+            },
+            "attribute"    : "logic",
+            "group"        : "none"
+        },
+        {   "unique_id" : "DEMOLITIONS",
+            "translations" :
+            {
+                "en" : "Demolitions",
+                "de" : "Sprengstoffe"
+            },
+            "attribute"    : "logic",
+            "group"        : "none"
+        },
+        {   "unique_id" : "FORGERY",
+            "translations" :
+            {
+                "en" : "Forgery",
+                "de" : "Fälschen"
+            },
+            "attribute"    : "logic",
+            "group"        : "none"
+        },
+        {   "unique_id" : "ASTRAL_COMBAT",
+            "translations" :
+            {
+                "en" : "Astral Combat",
+                "de" : "Astralkampf"
+            },
+            "attribute"    : "willpower",
+            "group"        : "none"
+        }
+    ]
+}
