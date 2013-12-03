@@ -37,6 +37,10 @@ Rules::initialize()
     _magicRules = new MagicRules();
     _magicRules->initialize("../../ruleset/magic.json");
 
+    // Read skill rules
+    _skillRules = new SkillRules();
+    _skillRules->initialize("../../ruleset/skills.json");
+
     // Done!
     _initialized = true;
 }

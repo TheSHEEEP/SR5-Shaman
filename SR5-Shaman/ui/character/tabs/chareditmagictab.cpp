@@ -5,6 +5,7 @@
 #include "rules/rules.h"
 #include "data/character/characterchoices.h"
 #include "data/character/charactervalues.h"
+#include "ui/models/skilltreemodel.h"
 
 //---------------------------------------------------------------------------------
 CharEditMagicTab::CharEditMagicTab(QWidget *parent)
@@ -24,7 +25,10 @@ CharEditMagicTab::~CharEditMagicTab()
 void
 CharEditMagicTab::initialize()
 {
-    // TODO: Initialize views, mind model
+    // Initialize the skill views
+    SkillTreeModel* skillTreeModel = new SkillTreeModel();
+    skillTreeModel->initialize();
+    ui->treeSkillsAvailable->setModel(skillTreeModel);
 }
 
 //---------------------------------------------------------------------------------

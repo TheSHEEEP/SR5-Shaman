@@ -90,6 +90,13 @@ MetatypeRules::initialize(const QString& p_jsonFile)
         // Sprint increase
         typeDef->sprintIncrease = currentType.value("sprint_increase").toString().toInt();
 
+        // Make sure the definition doesn't already exist
+        if (_definitions.contains(currentType["unique_id"].toString()))
+        {
+            qCritical() << "Metatype \"" << currentType["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            return;
+        }
+
         _definitions[currentType["unique_id"].toString()] = typeDef;
     }
 }

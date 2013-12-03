@@ -5,14 +5,46 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <vector>
+
+#include "rules/skillrules.h"
+
 /**
  * @brief Helper class that holds a skill model item.
  */
-struct SkillModelItem
+class SkillModelItem
 {
-    SkillModelItem*                 parent;
+public:
+    /**
+     * @brief Constructor.
+     */
+    SkillModelItem(SkillModelItem* p_parent = NULL);
 
-    QString                         id;         // The unique ID of the skill, use for lookup in skill rules
+    /**
+     * @brief Copy constructor.
+     */
+    SkillModelItem(const SkillModelItem& p_other);
+
+    /**
+     * @brief Destructor.
+     */
+    ~SkillModelItem();
+
+    /**
+     * @brief Returns true if this item has a child with the passed value.
+     * @param p_id  The ID to look for.
+     */
+    bool hasChild(const QString& p_id) const;
+
+    /**
+     * @brief Returns the child with the passed value. Or NULL, if no child was found.
+     */
+    SkillModelItem* getChild(const QString& p_id) const;
+
+    bool                            isCategory;
+    SkillType                       type;
+    QString                         id; // Unique ID, use for lookup in skill rules
+
+    SkillModelItem*                 parent;
     std::vector<SkillModelItem*>    children;
 };
 

@@ -116,6 +116,7 @@
                 "de" : "Projektilwaffen"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "none"
         },
         {   "unique_id" : "CON",
@@ -125,6 +126,7 @@
                 "de" : "Überreden"
             },
             "attribute"    : "charisma",
+            "type"         : "social",
             "group"        : "ACTING"
         },
         {   "unique_id" : "IMPERSONATION",
@@ -134,6 +136,7 @@
                 "de" : "Verkörperung"
             },
             "attribute"    : "charisma",
+            "type"         : "social",
             "group"        : "ACTING"
         },
         {   "unique_id" : "PERFORMANCE",
@@ -143,6 +146,7 @@
                 "de" : "Vorführung"
             },
             "attribute"    : "charisma",
+            "type"         : "social",
             "group"        : "ACTING"
         },
         {   "unique_id" : "GYMNASTICS",
@@ -152,6 +156,7 @@
                 "de" : "Akrobatik"
             },
             "attribute"    : "agility",
+            "type"         : "physical",
             "group"        : "ATHLETICS"
         },
         {   "unique_id" : "RUNNING",
@@ -161,6 +166,7 @@
                 "de" : "Laufen"
             },
             "attribute"    : "strength",
+            "type"         : "physical",
             "group"        : "ATHLETICS"
         },
         {   "unique_id" : "SWIMMING",
@@ -170,6 +176,7 @@
                 "de" : "Schwimmen"
             },
             "attribute"    : "strength",
+            "type"         : "physical",
             "group"        : "ATHLETICS"
         },
         {   "unique_id" : "CYBERTECHNOLOGY",
@@ -179,6 +186,7 @@
                 "de" : "Kybernetik"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "BIOTECH"
         },
         {   "unique_id" : "FIRST_AID",
@@ -188,6 +196,7 @@
                 "de" : "Erste Hilfe"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "BIOTECH"
         },
         {   "unique_id" : "MEDICINE",
@@ -197,6 +206,7 @@
                 "de" : "Medizin"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "BIOTECH"
         },
         {   "unique_id" : "BLADES",
@@ -206,6 +216,7 @@
                 "de" : "Klingenwaffen"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "CLOSE_COMBAT"
         },
         {   "unique_id" : "CLUBS",
@@ -215,6 +226,7 @@
                 "de" : "Knüppel"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "CLOSE_COMBAT"
         },
         {   "unique_id" : "UNARMED",
@@ -224,6 +236,7 @@
                 "de" : "Waffenloser Kampf"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "CLOSE_COMBAT"
         },
         {   "unique_id" : "BANISHING",
@@ -233,6 +246,7 @@
                 "de" : "Verbannen"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "CONJURING"
         },
         {   "unique_id" : "BINDING",
@@ -242,6 +256,7 @@
                 "de" : "Binden"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "CONJURING"
         },
         {   "unique_id" : "SUMMONING",
@@ -251,6 +266,7 @@
                 "de" : "Herbeirufen"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "CONJURING"
         },
         {   "unique_id" : "CYBERCOMBAT",
@@ -260,6 +276,7 @@
                 "de" : "Matrixkampf"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "CRACKING"
         },
         {   "unique_id" : "ELECTRONIC_WARFARE",
@@ -269,6 +286,7 @@
                 "de" : "Elektronische Kriegsführung"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "CRACKING"
         },
         {   "unique_id" : "HACKING",
@@ -278,6 +296,7 @@
                 "de" : "Hacking"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "CRACKING"
         },
         {   "unique_id" : "COMPUTER",
@@ -287,6 +306,7 @@
                 "de" : "Computer"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "CRACKING"
         },
         {   "unique_id" : "HARDWARE",
@@ -296,6 +316,7 @@
                 "de" : "Hardware"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "CRACKING"
         },
         {   "unique_id" : "SOFTWARE",
@@ -305,6 +326,7 @@
                 "de" : "Software"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "CRACKING"
         },
         {   "unique_id" : "ALCHEMY",
@@ -314,6 +336,7 @@
                 "de" : "Alchemie"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "ENCHANTING"
         },
         {   "unique_id" : "ARTIFICING",
@@ -323,6 +346,7 @@
                 "de" : "Fokusherstellung"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "ENCHANTING"
         },
         {   "unique_id" : "DISENCHANTING",
@@ -332,6 +356,7 @@
                 "de" : "Entzaubern"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "ENCHANTING"
         },
         {   "unique_id" : "AUTOMATICS",
@@ -341,6 +366,7 @@
                 "de" : "Schnellfeuerwaffen"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "FIREARMS"
         },
         {   "unique_id" : "LONGARMS",
@@ -350,6 +376,7 @@
                 "de" : "Gewehre"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "FIREARMS"
         },
         {   "unique_id" : "PISTOLS",
@@ -359,6 +386,7 @@
                 "de" : "Pistolen"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "FIREARMS"
         },
         {   "unique_id" : "ETIQUETTE",
@@ -368,6 +396,7 @@
                 "de" : "Gebräuche"
             },
             "attribute"    : "charisma",
+            "type"         : "social",
             "group"        : "INFLUENCE"
         },
         {   "unique_id" : "LEADERSHIP",
@@ -377,6 +406,7 @@
                 "de" : "Führung"
             },
             "attribute"    : "charisma",
+            "type"         : "social",
             "group"        : "INFLUENCE"
         },
         {   "unique_id" : "NEGOTIATION",
@@ -386,6 +416,7 @@
                 "de" : "Verhandlung"
             },
             "attribute"    : "charisma",
+            "type"         : "social",
             "group"        : "INFLUENCE"
         },
         {   "unique_id" : "AERONAUTICS_MECHANIC",
@@ -395,6 +426,7 @@
                 "de" : "Luftfahrtmechanik"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "ENGINEERING"
         },
         {   "unique_id" : "AUTOMOTIVE_MECHANIC",
@@ -404,6 +436,7 @@
                 "de" : "Fahrzeugmechanik"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "ENGINEERING"
         },
         {   "unique_id" : "INDUSTRIAL_MECHANIC",
@@ -413,6 +446,7 @@
                 "de" : "Industriemechanik"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "ENGINEERING"
         },
         {   "unique_id" : "NAUTICAL_MECHANIC",
@@ -422,6 +456,7 @@
                 "de" : "Seefahrtmechanik"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "ENGINEERING"
         },
         {   "unique_id" : "NAVIGATION",
@@ -431,6 +466,7 @@
                 "de" : "Navigation"
             },
             "attribute"    : "intuition",
+            "type"         : "technical",
             "group"        : "OUTDOORS"
         },
         {   "unique_id" : "SURVIVAL",
@@ -440,6 +476,7 @@
                 "de" : "Survival"
             },
             "attribute"    : "willpower",
+            "type"         : "physical",
             "group"        : "OUTDOORS"
         },
         {   "unique_id" : "TRACKING",
@@ -449,6 +486,7 @@
                 "de" : "Spurenlesen"
             },
             "attribute"    : "intuition",
+            "type"         : "physical",
             "group"        : "OUTDOORS"
         },
         {   "unique_id" : "COUNTERSPELLING",
@@ -458,6 +496,7 @@
                 "de" : "Antimagie"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "SORCERY"
         },
         {   "unique_id" : "RITUAL_SPELLCASTING",
@@ -467,6 +506,7 @@
                 "de" : "Ritualzauberei"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "SORCERY"
         },
         {   "unique_id" : "SPELLCASTING",
@@ -476,6 +516,7 @@
                 "de" : "Spruchzauberei"
             },
             "attribute"    : "magic",
+            "type"         : "magic",
             "group"        : "SORCERY"
         },
         {   "unique_id" : "DISGUISE",
@@ -485,6 +526,7 @@
                 "de" : "Verkleiden"
             },
             "attribute"    : "intuition",
+            "type"         : "physical",
             "group"        : "STEALTH"
         },
         {   "unique_id" : "PALMING",
@@ -494,6 +536,7 @@
                 "de" : "Fingerfertigkeit"
             },
             "attribute"    : "agility",
+            "type"         : "physical",
             "group"        : "STEALTH"
         },
         {   "unique_id" : "SNEAKING",
@@ -503,6 +546,7 @@
                 "de" : "Schleichen"
             },
             "attribute"    : "agility",
+            "type"         : "physical",
             "group"        : "STEALTH"
         },
         {   "unique_id" : "COMPILING",
@@ -512,6 +556,7 @@
                 "de" : "Kompilieren"
             },
             "attribute"    : "magic",
+            "type"         : "resonance",
             "group"        : "TASKING"
         },
         {   "unique_id" : "DECOMPILING",
@@ -521,6 +566,7 @@
                 "de" : "Dekompilieren"
             },
             "attribute"    : "magic",
+            "type"         : "resonance",
             "group"        : "TASKING"
         },
         {   "unique_id" : "REGISTERING",
@@ -530,6 +576,7 @@
                 "de" : "Registrieren"
             },
             "attribute"    : "magic",
+            "type"         : "resonance",
             "group"        : "TASKING"
         },
         {   "unique_id" : "ESCAPE_ARTIST",
@@ -539,6 +586,7 @@
                 "de" : "Entfesseln"
             },
             "attribute"    : "agility",
+            "type"         : "physical",
             "group"        : "none"
         },
         {   "unique_id" : "EXOTIC_MELEE_WEAPON",
@@ -549,6 +597,7 @@
             },
             "attribute"        : "agility",
             "requires_custom"  : "true",  
+            "type"             : "combat",
             "group"            : "none"
         },
         {   "unique_id" : "EXOTIC_RANGED_WEAPON",
@@ -559,6 +608,7 @@
             },
             "attribute"        : "agility",
             "requires_custom"  : "true",  
+            "type"             : "combat",
             "group"            : "none"
         },
         {   "unique_id" : "GUNNERY",
@@ -568,6 +618,7 @@
                 "de" : "Geschütze"
             },
             "attribute"    : "agility",
+            "type"         : "vehicle",
             "group"        : "none"
         },
         {   "unique_id" : "HEAVY_WEAPONS",
@@ -577,6 +628,7 @@
                 "de" : "Schwere Waffen"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "none"
         },
         {   "unique_id" : "LOCKSMITH",
@@ -586,15 +638,7 @@
                 "de" : "Schlosser"
             },
             "attribute"    : "agility",
-            "group"        : "none"
-        },
-        {   "unique_id" : "LOCKPICKING",
-            "translations" :
-            {
-                "en" : "Lockpicking",
-                "de" : "Schlösser Knacken"
-            },
-            "attribute"    : "agility",
+            "type"         : "technical",
             "group"        : "none"
         },
         {   "unique_id" : "THRWOWING_WEAPONS",
@@ -604,6 +648,7 @@
                 "de" : "Wurfwaffen"
             },
             "attribute"    : "agility",
+            "type"         : "combat",
             "group"        : "none"
         },
         {   "unique_id" : "DIVING",
@@ -613,6 +658,7 @@
                 "de" : "Tauchen"
             },
             "attribute"    : "body",
+            "type"         : "physical",
             "group"        : "none"
         },
         {   "unique_id" : "FREE-FALL",
@@ -622,6 +668,7 @@
                 "de" : "Freifall"
             },
             "attribute"    : "body",
+            "type"         : "physical",
             "group"        : "none"
         },
         {   "unique_id" : "PILOT_AEROSPACE",
@@ -631,6 +678,7 @@
                 "de" : "Raumfahrzeuge"
             },
             "attribute"    : "reaction",
+            "type"         : "vehicle",
             "group"        : "none"
         },
         {   "unique_id" : "PILOT_AIRCRAFT",
@@ -640,6 +688,7 @@
                 "de" : "Flugzeuge"
             },
             "attribute"    : "reaction",
+            "type"         : "vehicle",
             "group"        : "none"
         },
         {   "unique_id" : "PILOT_EXOTIC_VEHICLE",
@@ -650,6 +699,7 @@
             },
             "attribute"        : "reaction",
             "requires_custom"  : "true",  
+            "type"             : "vehicle",
             "group"            : "none"
         },
         {   "unique_id" : "PILOT_GROUNDCRAFT",
@@ -659,6 +709,7 @@
                 "de" : "Bodenfahrzeuge"
             },
             "attribute"    : "reaction",
+            "type"         : "vehicle",
             "group"        : "none"
         },
         {   "unique_id" : "PILOT_WALKER",
@@ -668,6 +719,7 @@
                 "de" : "Läufer"
             },
             "attribute"    : "reaction",
+            "type"         : "vehicle",
             "group"        : "none"
         },
         {   "unique_id" : "PILOT_WATERCRAFT",
@@ -677,6 +729,7 @@
                 "de" : "Schiffe"
             },
             "attribute"    : "reaction",
+            "type"         : "vehicle",
             "group"        : "none"
         },
         {   "unique_id" : "ANIMAL_HANDLING",
@@ -686,6 +739,7 @@
                 "de" : "Tierführung"
             },
             "attribute"    : "charisma",
+            "type"         : "technical",
             "group"        : "none"
         },
         {   "unique_id" : "INSTRUCTION",
@@ -695,6 +749,7 @@
                 "de" : "Unterricht"
             },
             "attribute"    : "charisma",
+            "type"         : "social",
             "group"        : "none"
         },
         {   "unique_id" : "INTIMIDATION",
@@ -704,6 +759,7 @@
                 "de" : "Einschüchtern"
             },
             "attribute"    : "charisma",
+            "type"         : "social",
             "group"        : "none"
         },
         {   "unique_id" : "ARTISAN",
@@ -713,6 +769,7 @@
                 "de" : "Handwerk"
             },
             "attribute"    : "intuition",
+            "type"         : "technical",
             "group"        : "none"
         },
         {   "unique_id" : "ASSENSING",
@@ -722,6 +779,7 @@
                 "de" : "Askennen"
             },
             "attribute"    : "intuition",
+            "type"         : "magic",
             "group"        : "none"
         },
         {   "unique_id" : "PERCEPTION",
@@ -731,6 +789,7 @@
                 "de" : "Wahrnehmung"
             },
             "attribute"    : "intuition",
+            "type"         : "physical",
             "group"        : "none"
         },
         {   "unique_id" : "ARCANA",
@@ -740,6 +799,7 @@
                 "de" : "Arkana"
             },
             "attribute"    : "logic",
+            "type"         : "magic",
             "group"        : "none"
         },
         {   "unique_id" : "ARMORER",
@@ -749,6 +809,7 @@
                 "de" : "Waffenbau"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "none"
         },
         {   "unique_id" : "BIOTECHNOLOGY",
@@ -758,6 +819,7 @@
                 "de" : "Biotechnologie"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "none"
         },
         {   "unique_id" : "CHEMISTRY",
@@ -767,6 +829,7 @@
                 "de" : "Chemie"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "none"
         },
         {   "unique_id" : "DEMOLITIONS",
@@ -776,6 +839,7 @@
                 "de" : "Sprengstoffe"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "none"
         },
         {   "unique_id" : "FORGERY",
@@ -785,6 +849,7 @@
                 "de" : "Fälschen"
             },
             "attribute"    : "logic",
+            "type"         : "technical",
             "group"        : "none"
         },
         {   "unique_id" : "ASTRAL_COMBAT",
@@ -794,6 +859,7 @@
                 "de" : "Astralkampf"
             },
             "attribute"    : "willpower",
+            "type"         : "magic",
             "group"        : "none"
         }
     ]

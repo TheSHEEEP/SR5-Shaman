@@ -4,7 +4,24 @@
 #include <QString>
 #include <QMap>
 #include <vector>
+#include <QObject>
 
+// Skill categories
+enum SkillType
+{
+    SKILL_TYPE_INVALID = -1,
+    SKILL_TYPE_COMBAT,
+    SKILL_TYPE_PHYSICAL,
+    SKILL_TYPE_SOCIAL,
+    SKILL_TYPE_MAGIC,
+    SKILL_TYPE_RESONANCE,
+    SKILL_TYPE_TECHNICAL,
+    SKILL_TYPE_VEHICLE,
+    SKILL_TYPE_KNOWLEDGE,
+    NUM_SKILL_TYPES
+};
+
+// Knowledge skill types
 enum KnowledgeType
 {
     KNOWLEDGE_TYPE_INVALID = -1,
@@ -20,12 +37,13 @@ enum KnowledgeType
  */
 struct SkillDefinition
 {
+
 public:
     /**
      * @brief Constructor.
      */
     SkillDefinition()
-        : isGroup(false), isLanguage(false), isUserDefined(false)
+        : isGroup(false), isLanguage(false), isUserDefined(false), requiresCustom(false)
         , knowledgeType(KNOWLEDGE_TYPE_INVALID)
         , custom("")
         , attribute("")
@@ -34,9 +52,12 @@ public:
     bool                            isGroup;
     bool                            isLanguage;
     bool                            isUserDefined;
+    bool                            requiresCustom;
+    SkillType                       type;
     KnowledgeType                   knowledgeType;
     QString                         custom;     // This can be used for further definition, like the name defined by the user
     QString                         attribute;
+    QString                         group;
     QMap<QString, QString>          translations;
     QMap<QString, SkillDefinition*> groupSkills;
 };
@@ -64,6 +85,11 @@ public:
      * @param p_jsonFile    The JSON file to parse.
      */
     void initialize(const QString& p_jsonFile);
+
+    /**
+     * @brief Returns the localized name of the passed type.
+     */
+    QString getTypeString(SkillType p_type) const;
 
     /**
      * @brief Returns the map of metatype definitions.

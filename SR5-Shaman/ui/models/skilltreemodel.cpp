@@ -1,5 +1,70 @@
 #include "skilltreemodel.h"
 
+#include "rules/rules.h"
+#include "data/appstatus.h"
+
+
+//---------------------------------------------------------------------------------
+SkillModelItem::SkillModelItem(SkillModelItem* p_parent)
+    : isCategory(false)
+    , type(SKILL_TYPE_INVALID)
+    , id("")
+    , parent(p_parent)
+{
+}
+
+//---------------------------------------------------------------------------------
+SkillModelItem::SkillModelItem(const SkillModelItem& p_other)
+{
+    isCategory = p_other.isCategory;
+    type = p_other.type;
+    id = p_other.id;
+    parent = p_other.parent;
+    children = p_other.children;
+}
+
+//---------------------------------------------------------------------------------
+SkillModelItem::~SkillModelItem()
+{
+    // Do not delete if this is a group - group skills are deleted by the parent category
+    if (id != "" &&
+        !SKILL_RULES->getDefinition(id).isGroup)
+    {
+        for (unsigned int i = 0; i < children.size(); ++i)
+        {
+            delete children[i];
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------
+bool
+SkillModelItem::hasChild(const QString& p_id) const
+{
+    for (unsigned int i = 0; i < children.size(); ++i)
+    {
+        if (children[i]->id == p_id)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------------
+SkillModelItem*
+SkillModelItem::getChild(const QString& p_id) const
+{
+    for (unsigned int i = 0; i < children.size(); ++i)
+    {
+        if (children[i]->id == p_id)
+        {
+            return children[i];
+        }
+    }
+    return NULL;
+}
+
 //---------------------------------------------------------------------------------
 SkillTreeModel::SkillTreeModel()
 {
@@ -7,11 +72,69 @@ SkillTreeModel::SkillTreeModel()
     _rootItem = new SkillModelItem();
     _rootItem->id = "DEFINITION";
     _rootItem->parent = NULL;
+
+    // Add categories
+    // THE ORDER IS VERY IMPORTANT HERE, DEPENDS ON THE SKILL TYPE ENUM
+    // Combat
+    SkillModelItem* category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_COMBAT";
+    category->type = SKILL_TYPE_COMBAT;
+    _rootItem->children.push_back(category);
+    // Physical
+    category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_PHYSICAL";
+    category->type = SKILL_TYPE_PHYSICAL;
+    _rootItem->children.push_back(category);
+    // Social
+    category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_SOCIAL";
+    category->type = SKILL_TYPE_SOCIAL;
+    _rootItem->children.push_back(category);
+    // Magical
+    category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_MAGIC";
+    category->type = SKILL_TYPE_MAGIC;
+    _rootItem->children.push_back(category);
+    // Resonance
+    category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY";
+    category->type = SKILL_TYPE_RESONANCE;
+    _rootItem->children.push_back(category);
+    // Technical
+    category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_TECHNICAL";
+    category->type = SKILL_TYPE_TECHNICAL;
+    _rootItem->children.push_back(category);
+    // Vehicle
+    category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_VEHICLE";
+    category->type = SKILL_TYPE_VEHICLE;
+    _rootItem->children.push_back(category);
+    // Knowledge
+    category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_KNOWLEDGE";
+    category->type = SKILL_TYPE_KNOWLEDGE;
+    _rootItem->children.push_back(category);
+    // Groups - this is a workaround
+    category = new SkillModelItem(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_GROUPS";
+    category->type = NUM_SKILL_TYPES;
+    _rootItem->children.push_back(category);
 }
 
 //---------------------------------------------------------------------------------
 SkillTreeModel::~SkillTreeModel()
 {
+    // Children will be deleted recursively
     delete _rootItem;
 }
 
@@ -19,7 +142,64 @@ SkillTreeModel::~SkillTreeModel()
 void
 SkillTreeModel::initialize()
 {
+    // TODO: It sucks somehow that the tree model items and actual skill definition struct are different things.
+    //          Could this be improved?
+
     // Get the skills from the rules
+    const QMap<QString, SkillDefinition*>& definitions  = SKILL_RULES->getAllDefinitions();
+    QMap<QString, SkillDefinition*>::const_iterator it;
+    SkillModelItem* category = NULL;
+    SkillModelItem* newItem = NULL;
+    SkillDefinition* skill = NULL;
+    SkillModelItem* groupCategory = _rootItem->children[_rootItem->children.size() - 1];
+    for (it = definitions.begin(); it != definitions.end(); ++it)
+    {
+        skill = *it;
+
+        // If this is a group, ignore it
+        if (skill->isGroup)
+        {
+            continue;
+        }
+
+        // Create the item
+        newItem = new SkillModelItem();
+
+        // Get the correct category
+        category = _rootItem->children[(*it)->type];
+        newItem->parent = category;
+
+        // Assign the definition id
+        newItem->id = it.key();
+
+        // Assign the type
+        newItem->type = (*it)->type;
+
+        // Is this also in a group?
+        if ((*it)->group != "none")
+        {
+            // Do we need to create the group?
+            SkillModelItem* groupItem;
+            if (!groupCategory->hasChild((*it)->group))
+            {
+                groupItem = new SkillModelItem(groupCategory);
+                groupItem->id = (*it)->group;
+                groupCategory->children.push_back(groupItem);
+            }
+            groupItem = groupCategory->getChild((*it)->group);
+
+            // Duplicate the item - cannot have the item in multiple parents, it seems
+            // TODO: Is there a better way to do this?
+            SkillModelItem* newItem2 = new SkillModelItem(*newItem);
+            newItem2->parent = groupItem;
+
+            // Add to the group
+            groupItem->children.push_back(newItem2);
+        }
+
+        // Add to category
+        category->children.push_back(newItem);
+    }
 }
 
 //---------------------------------------------------------------------------------
@@ -35,7 +215,23 @@ SkillTreeModel::data(const QModelIndex& p_index, int p_role) const
 
     SkillModelItem* item = static_cast<SkillModelItem*>(p_index.internalPointer());
 
-    return QVariant(item->id);
+    // Return category name
+    if (item->id.startsWith("CATEGORY"))
+    {
+        if (item->type == NUM_SKILL_TYPES)
+        {
+            // Ugly workaround to be able to handle the groups category the same way
+            return tr("Skill Groups");
+        }
+        else
+        {
+            return SKILL_RULES->getTypeString(item->type);
+        }
+    }
+
+    // Return translation
+    QString translation = SKILL_RULES->getDefinition(item->id).translations[APPSTATUS->getCurrentLocale()];
+    return QVariant(translation);
 }
 
 //---------------------------------------------------------------------------------
@@ -64,8 +260,8 @@ QModelIndex
 SkillTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) const
 {
     // Validity checks
-    if (!hasIndex(p_row, p_column, p_parent))
-        return QModelIndex();
+    if (p_parent.isValid() && p_parent.column() != 0)
+            return QModelIndex();
 
     // Get parent item
     SkillModelItem* parentItem;
@@ -77,7 +273,7 @@ SkillTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) cons
     // Get correct child item and create model index
     SkillModelItem* childItem = parentItem->children[p_row];
     if (childItem)
-        return createIndex(p_row, p_column, childItem);
+        return createIndex(p_row, 0, childItem);
     else
         return QModelIndex();
 }
@@ -99,8 +295,7 @@ SkillTreeModel::parent(const QModelIndex& p_index) const
 
     // Create model index
     // Use continuity of vector data to get index
-    int row = std::distance(parentItem->parent->children[0], parentItem);
-    return createIndex(row, 0, parentItem);
+    return createIndex(parentItem->children.size(), 0, parentItem);
 }
 
 //---------------------------------------------------------------------------------

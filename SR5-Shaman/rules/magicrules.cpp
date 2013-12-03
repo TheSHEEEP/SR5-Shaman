@@ -126,6 +126,13 @@ MagicRules::initialize(const QString& p_jsonFile)
             typeDef->priorities[tempObject.keys().at(j).toInt()] = prioDef;
         }
 
+        // Make sure the definition doesn't already exist
+        if (_definitions.contains(currentType["unique_id"].toString()))
+        {
+            qCritical() << "Magic type \"" << currentType["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            return;
+        }
+
         _definitions[currentType["unique_id"].toString()] = typeDef;
     }
 }

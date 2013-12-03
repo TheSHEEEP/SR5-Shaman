@@ -257,22 +257,10 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QTreeWidget" name="treeSkills">
-            <column>
-             <property name="text">
-              <string notr="true">1</string>
-             </property>
-            </column>
-           </widget>
+           <widget class="QTreeView" name="treeSkills"/>
           </item>
           <item>
-           <widget class="QTreeWidget" name="treeSkillsAvailable">
-            <column>
-             <property name="text">
-              <string notr="true">1</string>
-             </property>
-            </column>
-           </widget>
+           <widget class="QTreeView" name="treeSkillsAvailable"/>
           </item>
          </layout>
         </item>
@@ -317,22 +305,10 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QTreeWidget" name="treeSpells">
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
+        <widget class="QTreeView" name="treeSpells"/>
        </item>
        <item>
-        <widget class="QTreeWidget" name="treeSpellsAvailable">
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
+        <widget class="QTreeView" name="treeSpellsAvailable"/>
        </item>
       </layout>
      </item>
