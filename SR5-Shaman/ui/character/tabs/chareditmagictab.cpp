@@ -6,6 +6,7 @@
 #include "data/character/characterchoices.h"
 #include "data/character/charactervalues.h"
 #include "ui/models/skilltreemodel.h"
+#include "ui/models/skillsortfilterproxymodel.h"
 
 //---------------------------------------------------------------------------------
 CharEditMagicTab::CharEditMagicTab(QWidget *parent)
@@ -18,6 +19,9 @@ CharEditMagicTab::CharEditMagicTab(QWidget *parent)
 //---------------------------------------------------------------------------------
 CharEditMagicTab::~CharEditMagicTab()
 {
+    // Cannot delete the model, or it crashes.. wtf?
+//    delete ((SkillSortFilterProxyModel*)ui->treeSkillsAvailable->model())->sourceModel();
+//    delete ui->treeSkillsAvailable->model();
     delete ui;
 }
 
@@ -28,7 +32,10 @@ CharEditMagicTab::initialize()
     // Initialize the skill views
     SkillTreeModel* skillTreeModel = new SkillTreeModel();
     skillTreeModel->initialize();
-    ui->treeSkillsAvailable->setModel(skillTreeModel);
+    SkillSortFilterProxyModel* skillFilter = new SkillSortFilterProxyModel(ui->treeSkillsAvailable);
+    skillFilter->setSourceModel(skillTreeModel);
+    ui->treeSkillsAvailable->setModel(skillFilter);
+    ui->treeSkillsAvailable->setSortingEnabled(true);
 }
 
 //---------------------------------------------------------------------------------

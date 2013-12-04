@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     rules/magicrules.cpp \
     ui/utils/priorityeventfilter.cpp \
     ui/models/skilltreemodel.cpp \
-    rules/skillrules.cpp
+    rules/skillrules.cpp \
+    ui/models/skillsortfilterproxymodel.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -55,7 +56,8 @@ HEADERS  += mainwindow.h \
     rules/magicrules.h \
     ui/utils/priorityeventfilter.h \
     ui/models/skilltreemodel.h \
-    rules/skillrules.h
+    rules/skillrules.h \
+    ui/models/skillsortfilterproxymodel.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
