@@ -19,7 +19,7 @@ CharEditMagicTab::CharEditMagicTab(QWidget *parent)
 //---------------------------------------------------------------------------------
 CharEditMagicTab::~CharEditMagicTab()
 {
-    // Cannot delete the model, or it crashes.. wtf?
+    // Cannot delete the model I created, or it crashes..
 //    delete ((SkillSortFilterProxyModel*)ui->treeSkillsAvailable->model())->sourceModel();
 //    delete ui->treeSkillsAvailable->model();
     delete ui;
@@ -32,8 +32,16 @@ CharEditMagicTab::initialize()
     // Initialize the skill views
     SkillTreeModel* skillTreeModel = new SkillTreeModel();
     skillTreeModel->initialize();
+
     SkillSortFilterProxyModel* skillFilter = new SkillSortFilterProxyModel(ui->treeSkillsAvailable);
     skillFilter->setSourceModel(skillTreeModel);
+    std::vector<SkillType> filterTypes;
+    filterTypes.push_back(SKILL_TYPE_MAGIC);
+    skillFilter->setFilterTypes(filterTypes);
+    skillFilter->setFilterMask(SKILL_FILTERMASK_TYPE);
+    skillFilter->setShowEmptyCategories(false);
+    skillFilter->applyFilter();
+
     ui->treeSkillsAvailable->setModel(skillFilter);
     ui->treeSkillsAvailable->setSortingEnabled(true);
 }

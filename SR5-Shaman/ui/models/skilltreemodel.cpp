@@ -11,6 +11,7 @@ SkillModelItem::SkillModelItem(SkillModelItem* p_parent)
     , id("")
     , parent(p_parent)
 {
+    children.clear();
 }
 
 //---------------------------------------------------------------------------------
