@@ -38,6 +38,16 @@ public:
     void setShowEmptyCategories(bool p_show);
 
     /**
+     * @brief If this is true, skill groups will be shown.
+     */
+    void setShowSkillGroups(bool p_skillGroups);
+
+    /**
+     * @brief If this is true, skill that are not inside  skill group will be shown.
+     */
+    void setShowNormalSkills(bool p_skillGroups);
+
+    /**
      * @brief Sets the filter mask to use.
      *          Use defines like SKILL_FILTERMASK_ID_CONTAINS here to set how the filtering behaves.
      */
@@ -53,6 +63,11 @@ public:
      * @brief This filter will only show items whose type is one of those in the passed vector.
      */
     void setFilterTypes(const std::vector<SkillType>& p_filterTypes);
+
+    /**
+     * @brief Returns the filter for types.
+     */
+    std::vector<SkillType>& getFilterTypes();
 
     /**
      * @brief Applies the filtering, updating all views using this.
@@ -76,6 +91,8 @@ protected:
 
 private:
     bool        _showEmptyCategories;
+    bool        _showSkillGroups;
+    bool        _showNormalSkills;
     int         _filterMask;
 
     QStringList             _filterIDContains;
@@ -95,6 +112,21 @@ SkillSortFilterProxyModel::setShowEmptyCategories(bool p_show)
     _showEmptyCategories = p_show;
 }
 
+//---------------------------------------------------------------------------------
+inline
+void
+SkillSortFilterProxyModel::setShowSkillGroups(bool p_skillGroups)
+{
+    _showSkillGroups = p_skillGroups;
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+SkillSortFilterProxyModel::setShowNormalSkills(bool p_normalSkills)
+{
+    _showNormalSkills = p_normalSkills;
+}
 
 //---------------------------------------------------------------------------------
 inline
@@ -112,13 +144,20 @@ SkillSortFilterProxyModel::setFilterIDContains(const QStringList& p_filterIDs)
     _filterIDContains = p_filterIDs;
 }
 
-
 //---------------------------------------------------------------------------------
 inline
 void
 SkillSortFilterProxyModel::setFilterTypes(const std::vector<SkillType>& p_filterTypes)
 {
     _filterTypes = p_filterTypes;
+}
+
+//---------------------------------------------------------------------------------
+inline
+std::vector<SkillType>&
+SkillSortFilterProxyModel::getFilterTypes()
+{
+    return _filterTypes;
 }
 
 #endif // SKILLSORTFILTERMODEL_H

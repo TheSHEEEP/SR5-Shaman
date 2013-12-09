@@ -216,3 +216,42 @@ SkillRules::getTypeString(SkillType p_type) const
         return QObject::tr("Invalid Skilltype");
     }
 }
+
+//---------------------------------------------------------------------------------
+std::vector<std::pair<QString, SkillDefinition*> >
+SkillRules::getDefinitionsByType(SkillType p_type, bool p_onlyGroups) const
+{
+    std::vector<std::pair<QString, SkillDefinition*> > result;
+
+    // Iterate over all definitions to find those that fit the parameters
+    QMap<QString, SkillDefinition*>::const_iterator it;
+    QMap<QString, SkillDefinition*>::const_iterator groupIt;
+    for (it = _definitions.begin(); it != _definitions.end(); ++it)
+    {
+        if (!p_onlyGroups && it.value()->type == p_type)
+        {
+            result.push_back(std::make_pair(it.key(), it.value()));
+        }
+        else if (p_onlyGroups && it.value()->isGroup)
+        {
+            // For groups, we need to check each child and only if all children fit the type
+            // the group is returned
+            bool add = true;
+            for (groupIt = it.value()->groupSkills.begin(); groupIt != it.value()->groupSkills.end(); ++groupIt)
+            {
+                if (groupIt.value()->type != p_type)
+                {
+                    add = false;
+                    break;
+                }
+            }
+
+            if (add)
+            {
+                result.push_back(std::make_pair(it.key(), it.value()));
+            }
+        }
+    }
+
+    return result;
+}

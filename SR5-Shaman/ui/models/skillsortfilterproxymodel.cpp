@@ -1,12 +1,16 @@
 #include "skillsortfilterproxymodel.h"
 
+#include <iostream>
+
 #include "skilltreemodel.h"
-#include "rules/skillrules.h"
+#include "rules/rules.h"
 
 //---------------------------------------------------------------------------------
 SkillSortFilterProxyModel::SkillSortFilterProxyModel(QObject* p_parent)
     : QSortFilterProxyModel(p_parent)
     , _showEmptyCategories(true)
+    , _showSkillGroups(true)
+    , _showNormalSkills(true)
     , _filterMask(0)
 {
 
@@ -106,6 +110,22 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
         return true;
     }
 
+    // Groups may or may not be shown
+    if (SKILL_RULES->getAllDefinitions().contains(p_item->id) &&
+        SKILL_RULES->getDefinition(p_item->id).isGroup &&
+        !_showSkillGroups)
+    {
+        return false;
+    }
+
+    // Non-skill-groups may or may not be shown
+    if (SKILL_RULES->getAllDefinitions().contains(p_item->id) &&
+        !SKILL_RULES->getDefinition(p_item->id).isGroup &&
+        !_showNormalSkills)
+    {
+        return false;
+    }
+
     // Accept items whose ID contains a substring
     if (!p_item->isCategory &&
         _filterMask & SKILL_FILTERMASK_ID_CONTAINS)
@@ -123,17 +143,41 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
     }
 
     // Accept items that fit one of the filter types
-    if (!p_item->isCategory &&
+    if (accept &&
+        !p_item->isCategory &&
         _filterMask & SKILL_FILTERMASK_TYPE)
     {
         accept = false;
         int numFilters = _filterTypes.size();
-        for (int i = 0; i < numFilters; ++i)
+        if (!SKILL_RULES->getDefinition(p_item->id).isGroup)
         {
-            if (p_item->type == _filterTypes[i])
+            for (int i = 0; i < numFilters; ++i)
+            {
+                if (p_item->type == _filterTypes[i])
+                {
+                    accept = true;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            // A group is only of valid type if all its group skills are of a valid type
+            unsigned int valid = 0;
+            for (unsigned int i = 0; i < p_item->children.size(); ++i)
+            {
+                for (int j = 0; j < numFilters; ++j)
+                {
+                    if (p_item->children[i]->type == _filterTypes[j])
+                    {
+                        valid++;
+                        break;
+                    }
+                }
+            }
+            if (valid == p_item->children.size())
             {
                 accept = true;
-                break;
             }
         }
     }

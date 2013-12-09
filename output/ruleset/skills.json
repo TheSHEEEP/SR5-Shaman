@@ -307,7 +307,7 @@
             },
             "attribute"    : "logic",
             "type"         : "technical",
-            "group"        : "CRACKING"
+            "group"        : "ELECTRONICS"
         },
         {   "unique_id" : "HARDWARE",
             "translations" :
@@ -317,7 +317,7 @@
             },
             "attribute"    : "logic",
             "type"         : "technical",
-            "group"        : "CRACKING"
+            "group"        : "ELECTRONICS"
         },
         {   "unique_id" : "SOFTWARE",
             "translations" :
@@ -327,7 +327,7 @@
             },
             "attribute"    : "logic",
             "type"         : "technical",
-            "group"        : "CRACKING"
+            "group"        : "ELECTRONICS"
         },
         {   "unique_id" : "ALCHEMY",
             "translations" :

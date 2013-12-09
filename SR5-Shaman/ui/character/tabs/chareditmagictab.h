@@ -7,6 +7,8 @@ namespace Ui {
 class CharEditMagicTab;
 }
 
+class SkillSortFilterProxyModel;
+
 /**
  * @brief This tab holds all information about the character's magic type, selection of magical / resonance skills
  *          and the selection of spells / complex forms.
@@ -42,7 +44,8 @@ signals:
     void disableNext();
 
 private:
-    Ui::CharEditMagicTab* ui;
+    Ui::CharEditMagicTab*       ui;
+    SkillSortFilterProxyModel*  _skillFilter;
 
     /**
      * @brief Updates all displayed values.
@@ -54,11 +57,22 @@ private:
      */
     void checkContinue();
 
+    /**
+     * @brief Checks if the skills views should be shown or hidden and updates them.
+     */
+    void showHideSkillsViews();
+
 private slots:
     /**
      * @brief Emits the guidedNextStep signal.
      */
     void on_btnGuidedContinue_clicked();
+
+    /**
+     * @brief Will update the character values and views to present new values for selected aspect.
+     * @param p_index   The new selected index.
+     */
+    void on_cbAspect_currentIndexChanged(int p_index);
 };
 
 #endif // CHAREDITMAGICTAB_H

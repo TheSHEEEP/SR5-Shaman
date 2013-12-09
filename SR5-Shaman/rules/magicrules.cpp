@@ -110,10 +110,10 @@ MagicRules::initialize(const QString& p_jsonFile)
             }
 
             // Forced skill group
-            if (tempObject2.contains("forced_skill_groups"))
+            if (tempObject2.contains("free_skill_groups"))
             {
-                prioDef->freeSkillGroup.first = tempObject2.value("forced_skill_groups").toArray().at(0).toString().toInt();
-                prioDef->freeSkillGroup.second = tempObject2.value("forced_skill_groups").toArray().at(1).toString().toInt();
+                prioDef->freeSkillGroup.first = tempObject2.value("free_skill_groups").toArray().at(0).toString().toInt();
+                prioDef->freeSkillGroup.second = tempObject2.value("free_skill_groups").toArray().at(1).toString().toInt();
             }
 
             // Free power points

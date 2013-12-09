@@ -102,6 +102,14 @@ public:
      */
     const SkillDefinition& getDefinition(const QString& p_uniqueId) const;
 
+    /**
+     * @brief Returns the definitions in vector that fit the passed configuration.
+     * @param p_type        The skill type to look for.
+     * @param p_onlyGroups  If this is true, only skill groups will be returned.
+     *                      If this is false, only skills that are not a group will be returned.
+     */
+    std::vector<std::pair<QString, SkillDefinition*> > getDefinitionsByType(SkillType p_type, bool p_onlyGroups) const;
+
 private:
     QMap<QString, SkillDefinition*>  _definitions;
 };
