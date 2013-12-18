@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     ui/utils/priorityeventfilter.cpp \
     ui/models/skilltreemodel.cpp \
     rules/skillrules.cpp \
-    ui/models/skillsortfilterproxymodel.cpp
+    ui/models/skillsortfilterproxymodel.cpp \
+    ui/models/skilldelegate.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -57,7 +58,8 @@ HEADERS  += mainwindow.h \
     ui/utils/priorityeventfilter.h \
     ui/models/skilltreemodel.h \
     rules/skillrules.h \
-    ui/models/skillsortfilterproxymodel.h
+    ui/models/skillsortfilterproxymodel.h \
+    ui/models/skilldelegate.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \

@@ -8,6 +8,7 @@ class CharEditMagicTab;
 }
 
 class SkillSortFilterProxyModel;
+class SkillDelegate;
 
 /**
  * @brief This tab holds all information about the character's magic type, selection of magical / resonance skills
@@ -45,7 +46,11 @@ signals:
 
 private:
     Ui::CharEditMagicTab*       ui;
-    SkillSortFilterProxyModel*  _skillFilter;
+    SkillSortFilterProxyModel*  _skillsAvailableFilter;
+    SkillDelegate*              _skillsAvailableDelegate;
+    SkillSortFilterProxyModel*  _skillsFilter;
+    SkillDelegate*              _skillsDelegate;
+
 
     /**
      * @brief Updates all displayed values.
@@ -73,6 +78,19 @@ private slots:
      * @param p_index   The new selected index.
      */
     void on_cbAspect_currentIndexChanged(int p_index);
+
+    /**
+     * @brief Will enable/disable the remove or add skill button.
+     * @param p_current     The currently selected item.
+     * @param p_previous    The previously selected item.
+     */
+    void handleSkillChanged(const QModelIndex& p_current, const QModelIndex& p_previous);
+
+    /**
+     * @brief Will add the selected skill to the list of selected skills.
+     */
+    void on_btnAddSkill_clicked();
+    void on_btnRemoveSkill_clicked();
 };
 
 #endif // CHAREDITMAGICTAB_H

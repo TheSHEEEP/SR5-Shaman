@@ -83,6 +83,9 @@ AttributeRules::calculateMaximumAttributeIncrease(int p_currentValue, int p_maxV
 
         ++increases;
     }
+
+    // Shouldn't be reached
+    return 0;
 }
 
 //---------------------------------------------------------------------------------

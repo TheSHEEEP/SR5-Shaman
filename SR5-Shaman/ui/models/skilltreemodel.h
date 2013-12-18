@@ -48,6 +48,8 @@ public:
     std::vector<SkillModelItem*>    children;
 };
 
+Q_DECLARE_METATYPE(SkillModelItem);
+
 /**
  * @brief This model is used to organize skills in a tree view.
  * @author  TheSHEEEP

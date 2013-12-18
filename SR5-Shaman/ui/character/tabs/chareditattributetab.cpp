@@ -70,7 +70,7 @@ void
 CharEditAttributeTab::spinBoxChanged(int p_newValue)
 {
     // Get the box and the attribute
-    QSpinBox* spinBox = (QSpinBox*)sender();
+    QSpinBox* spinBox = static_cast<QSpinBox*>(sender());
     QString& attribute = _attributeSpinBoxAssignment[spinBox];
 
     // We're going to change the text so lock updates

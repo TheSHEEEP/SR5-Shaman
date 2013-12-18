@@ -121,6 +121,7 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
     // Non-skill-groups may or may not be shown
     if (SKILL_RULES->getAllDefinitions().contains(p_item->id) &&
         !SKILL_RULES->getDefinition(p_item->id).isGroup &&
+        (p_item->parent == NULL || (!p_item->parent->isCategory && !SKILL_RULES->getDefinition(p_item->parent->id).isGroup)) &&
         !_showNormalSkills)
     {
         return false;
@@ -140,6 +141,53 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
                 break;
             }
         }
+
+        // If this item is part of an accepted group, add it automatically
+        // Even if it would not normally be accepted
+        if (p_item->parent && !p_item->parent->isCategory &&
+            SKILL_RULES->getDefinition(p_item->parent->id).isGroup)
+        {
+            for (int i = 0; i < numFilters; ++i)
+            {
+                if (p_item->parent->id.contains(_filterIDContains[i]))
+                {
+                    accept = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    // Accept items whose ID is equal to one in our list
+    if (accept &&
+        !p_item->isCategory &&
+        _filterMask & SKILL_FILTERMASK_ID_EQUALS)
+    {
+        accept = false;
+        int numFilters = _filterIDEquals.size();
+        for (int i = 0; i < numFilters; ++i)
+        {
+            if (p_item->id == _filterIDEquals[i])
+            {
+                accept = true;
+                break;
+            }
+        }
+
+        // If this item is part of an accepted group, add it automatically
+        // Even if it would not normally be accepted
+        if (p_item->parent && !p_item->parent->isCategory &&
+            SKILL_RULES->getDefinition(p_item->parent->id).isGroup)
+        {
+            for (int i = 0; i < numFilters; ++i)
+            {
+                if (p_item->parent->id == _filterIDEquals[i])
+                {
+                    accept = true;
+                    break;
+                }
+            }
+        }
     }
 
     // Accept items that fit one of the filter types
@@ -157,6 +205,21 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
                 {
                     accept = true;
                     break;
+                }
+            }
+
+            // If this item is part of an accepted group, accept it automatically
+            // Even if it would not normally be accepted
+            if (p_item->parent && !p_item->parent->isCategory &&
+                SKILL_RULES->getDefinition(p_item->parent->id).isGroup)
+            {
+                for (int i = 0; i < numFilters; ++i)
+                {
+                    if (p_item->parent->type == _filterTypes[i])
+                    {
+                        accept = true;
+                        break;
+                    }
                 }
             }
         }

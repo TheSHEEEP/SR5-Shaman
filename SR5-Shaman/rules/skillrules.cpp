@@ -215,6 +215,8 @@ SkillRules::getTypeString(SkillType p_type) const
     case SKILL_TYPE_INVALID:
         return QObject::tr("Invalid Skilltype");
     }
+
+    return QObject::tr("This shouldn't happen");
 }
 
 //---------------------------------------------------------------------------------

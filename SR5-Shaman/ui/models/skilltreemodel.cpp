@@ -189,7 +189,7 @@ SkillTreeModel::initialize()
             }
             groupItem = groupCategory->getChild((*it)->group);
 
-            // Duplicate the item - cannot have the item in multiple parents, it seems
+            // Duplicate the item - cannot have the same item in multiple parents, it seems
             // TODO: Is there a better way to do this?
             SkillModelItem* newItem2 = new SkillModelItem(*newItem);
             newItem2->parent = groupItem;
@@ -216,23 +216,9 @@ SkillTreeModel::data(const QModelIndex& p_index, int p_role) const
 
     SkillModelItem* item = static_cast<SkillModelItem*>(p_index.internalPointer());
 
-    // Return category name
-    if (item->id.startsWith("CATEGORY"))
-    {
-        if (item->type == NUM_SKILL_TYPES)
-        {
-            // Ugly workaround to be able to handle the groups category the same way
-            return tr("Skill Groups");
-        }
-        else
-        {
-            return SKILL_RULES->getTypeString(item->type);
-        }
-    }
-
-    // Return translation
-    QString translation = SKILL_RULES->getDefinition(item->id).translations[APPSTATUS->getCurrentLocale()];
-    return QVariant(translation);
+    QVariant result;
+    result.setValue((void*)item);
+    return result;
 }
 
 //---------------------------------------------------------------------------------

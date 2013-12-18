@@ -54,7 +54,7 @@ public:
     /**
      * @brief Returns the current application state.
      */
-    const AppState getState() const
+    AppState getState() const
     {
         return _state;
     }

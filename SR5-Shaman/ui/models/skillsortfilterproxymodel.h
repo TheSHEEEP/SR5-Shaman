@@ -6,8 +6,9 @@
 
 #include "rules/skillrules.h"
 
-#define SKILL_FILTERMASK_ID_CONTAINS    1  // Use the filterIDs (setFilterIDContains) for filtering
-#define SKILL_FILTERMASK_TYPE           2  // Use the filterTypes (setFilterTypes) for filtering
+#define SKILL_FILTERMASK_ID_CONTAINS    1  // Use the filterIDContains (getFilterIDContains) for filtering
+#define SKILL_FILTERMASK_ID_EQUALS      2  // Use the filterIDEquals (getFilterIDEquals) for filtering
+#define SKILL_FILTERMASK_TYPE           4  // Use the filterTypes (getFilterTypes) for filtering
 
 class SkillModelItem;
 
@@ -60,6 +61,21 @@ public:
     void setFilterIDContains(const QStringList& p_filterIDs);
 
     /**
+     * @brief Returns the contains filter for IDs.
+     */
+    QStringList& getFilterIDContains();
+
+    /**
+     * @brief This filter will only show items whose ID is equal to an entry in the passed QStringList.
+     */
+    void setFilterIDEquals(const QStringList& p_filterIDs);
+
+    /**
+     * @brief Returns the equals filter for IDs.
+     */
+    QStringList& getFilterIDEquals();
+
+    /**
      * @brief This filter will only show items whose type is one of those in the passed vector.
      */
     void setFilterTypes(const std::vector<SkillType>& p_filterTypes);
@@ -96,6 +112,7 @@ private:
     int         _filterMask;
 
     QStringList             _filterIDContains;
+    QStringList             _filterIDEquals;
     std::vector<SkillType>  _filterTypes;
 
     /**
@@ -142,6 +159,30 @@ void
 SkillSortFilterProxyModel::setFilterIDContains(const QStringList& p_filterIDs)
 {
     _filterIDContains = p_filterIDs;
+}
+
+//---------------------------------------------------------------------------------
+inline
+QStringList&
+SkillSortFilterProxyModel::getFilterIDContains()
+{
+    return _filterIDContains;
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+SkillSortFilterProxyModel::setFilterIDEquals(const QStringList& p_filterIDs)
+{
+    _filterIDEquals = p_filterIDs;
+}
+
+//---------------------------------------------------------------------------------
+inline
+QStringList&
+SkillSortFilterProxyModel::getFilterIDEquals()
+{
+    return _filterIDEquals;
 }
 
 //---------------------------------------------------------------------------------

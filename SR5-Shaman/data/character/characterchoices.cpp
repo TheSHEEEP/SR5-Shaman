@@ -386,3 +386,120 @@ CharacterChoices::resetAttributeIncreases(const QString p_attribute, bool p_from
         _attributeIncreasesKarma.remove(p_attribute);
     }
 }
+
+
+//---------------------------------------------------------------------------------
+int
+CharacterChoices::getAvailableFreeSkills(bool p_skillGroups) const
+{
+    int maxFreeSkills = 0;
+
+    // Get free skills from magic user
+    if (getIsMagicUser())
+    {
+        std::pair<int, int> freeSkills;
+        if (!p_skillGroups)
+        {
+            freeSkills = MAGIC_RULES->getDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
+                            ->freeSkills;
+        }
+        else
+        {
+            freeSkills = MAGIC_RULES->getDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
+                    ->freeSkillGroup;
+        }
+
+        if (freeSkills.first > 0)
+        {
+            maxFreeSkills += freeSkills.first;
+        }
+    }
+
+    // Stop here when we have no free skills
+    if (maxFreeSkills == 0)
+    {
+        return 0;
+    }
+
+    // Get the number of spent free skills
+    int spentSkills = 0;
+    QMap<QString, int>::const_iterator it;
+    for (it = _skillIncreasesFreebies.begin(); it != _skillIncreasesFreebies.end(); ++it)
+    {
+        // Every increase, no matter the actual increase value counts as one spent free skill
+        // TODO: This might change in the future and require a more deep look at the nature of the increase
+        ++spentSkills;
+    }
+
+    return maxFreeSkills - spentSkills;
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::addFreeSkill(const QString& p_id, Priority p_source)
+{
+    // Check we do not already have this skill as a free skill increase
+    if (_skillIncreasesFreebies.contains(p_id))
+    {
+        qWarning() << QString("Could not add free skill %1. Skill is already added as a free skill.")
+                            .arg(p_id);
+        return;
+    }
+
+    // Most likely source is magic
+    if (p_source == PRIORITY_MAGIC)
+    {
+        // Sanity check - magic user
+        if (!getIsMagicUser())
+        {
+            qWarning() << QString("Could not add free skill %1. Magic priority given, but character is no magic user.")
+                                .arg(p_id);
+            return;
+        }
+
+        // Get the skill definition
+        const SkillDefinition& skillDef = SKILL_RULES->getDefinition(p_id);
+
+        // Get the skill value
+        int skillValue = 0;
+        if (!skillDef.isGroup)
+        {
+            skillValue = MAGIC_RULES->getDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
+                            ->freeSkills.second;
+        }
+        else
+        {
+            skillValue = MAGIC_RULES->getDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
+                                        ->freeSkillGroup.second;
+        }
+
+        // No free skills available!
+        if (skillValue <= 0)
+        {
+            qWarning() << QString("Could not add free skill %1. Magic type %2 does not have free skills at priority %3.")
+                                .arg(p_id)
+                                .arg(getMagicUserTypeID())
+                                .arg(getPriorityIndex(PRIORITY_MAGIC));
+            return;
+        }
+
+        // Apply free skill
+        _skillIncreasesFreebies[p_id] = skillValue;
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::removeFreeSkill(const QString& p_id)
+{
+    // Check if the skill is actually there
+    if (!_skillIncreasesFreebies.contains(p_id))
+    {
+        qWarning() << QString("Could not remove free skill %1. Skill does not exist in freebies.")
+                            .arg(p_id);
+        return;
+    }
+
+    _skillIncreasesFreebies.remove(p_id);
+}
+

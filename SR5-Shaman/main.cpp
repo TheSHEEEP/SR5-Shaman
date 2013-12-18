@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "rules/rules.h"
+#include "ui/models/skilltreemodel.h"
 
 static std::ofstream logFile;
 
@@ -59,6 +60,8 @@ int main(int argc, char *argv[])
 
     // Init application
     QApplication a(argc, argv);
+
+    qRegisterMetaType<SkillModelItem>();
 
     QCoreApplication::setOrganizationName("SR5 Shaman Team");
     QCoreApplication::setOrganizationDomain("http://www.github.com");

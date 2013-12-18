@@ -175,6 +175,25 @@ public:
      */
     void resetAttributeIncreases(const QString p_attribute, bool p_fromFreebies = true, bool p_fromKarma = true);
 
+    /**
+     * @brief Returns the number of remaining free skills.
+     * @param p_skillGroups If this is true, the number of remaining free skill groups will be returned instead.
+     */
+    int getAvailableFreeSkills(bool p_skillGroups) const;
+
+    /**
+     * @brief Adds the passed free skill.
+     * @param p_id      The ID of the skill.
+     * @param p_source  A hint to tell the program where to look for the value of the free skill.
+     */
+    void addFreeSkill(const QString& p_id, Priority p_source);
+
+    /**
+     * @brief Removes the passed free skill.
+     * @param p_id  The ID of the skill.
+     */
+    void removeFreeSkill(const QString& p_id);
+
 private:
     std::vector<Priority>     _selectedPriorities;
 
@@ -185,6 +204,8 @@ private:
 
     QMap<QString, int> _attributeIncreasesFreebies;
     QMap<QString, int> _attributeIncreasesKarma;
+    QMap<QString, int> _skillIncreasesFreebies;
+    QMap<QString, int> _skillIncreasesKarma;
 };
 
 
