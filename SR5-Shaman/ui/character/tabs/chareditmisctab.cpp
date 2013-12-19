@@ -281,6 +281,10 @@ CharEditMiscTab::on_cbMagicType_currentIndexChanged(int p_index)
     // Select magic type
     CHARACTER_CHOICES->setMagicUserType(type);
 
+    // Unset priority
+    CHARACTER_CHOICES->unsetPriority(PRIORITY_MAGIC);
+    CHARACTER_CHOICES->resetFreeSkills();
+
     // Clear priority selection// Clear priority list
     ui->cbMagicPriority->blockSignals(true);
     while (ui->cbMagicPriority->count() > 0)
@@ -333,6 +337,7 @@ CharEditMiscTab::on_cbMagicPriority_currentIndexChanged(int p_index)
 
     // Set priority
     CHARACTER_CHOICES->setPriority(prio, PRIORITY_MAGIC);
+    CHARACTER_CHOICES->resetFreeSkills();
 
     // This possibly unselected the metatype priority
     if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) == -1)

@@ -253,6 +253,7 @@ CharEditMagicTab::showHideSkillsViews()
         // Filter the kinds of skills we are to show
         if (showGroups || showSkills)
         {
+            // TODO: Mystical Adept is a special case not handled correctly yet
             std::vector<SkillType>& filterTypes = _skillsAvailableFilter->getFilterTypes();
             filterTypes.clear();
             if (std::find(def.types.begin(), def.types.end(), "magic") != def.types.end())
@@ -276,8 +277,15 @@ CharEditMagicTab::showHideSkillsViews()
             _skillsAvailableFilter->setShowSkillGroups(showGroups);
             _skillsAvailableFilter->setShowNormalSkills(showSkills);
 
+            // Set Mask
+            int mask = SKILL_FILTERMASK_TYPE;
+            if (ui->frameAspected->isVisible())
+            {
+                mask |= SKILL_FILTERMASK_ID_EQUALS;
+            }
+            _skillsAvailableFilter->setFilterMask(mask);
+
             // Apply
-            _skillsAvailableFilter->setFilterMask(SKILL_FILTERMASK_TYPE | SKILL_FILTERMASK_ID_EQUALS);
             _skillsAvailableFilter->applyFilter();
         }
 
@@ -295,7 +303,18 @@ CharEditMagicTab::showHideSkillsViews()
         {
             ui->frameFreeSkills->setEnabled(true);
         }
-    }
+
+        // Clear the skills view if the free skills were reset
+        const MagicTypePriorityDefinition* magicPrioDef =
+                MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
+                    .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)];
+        if (CHARACTER_CHOICES->getAvailableFreeSkills(false) >= magicPrioDef->freeSkills.first &&
+            CHARACTER_CHOICES->getAvailableFreeSkills(true) >= magicPrioDef->freeSkillGroup.first)
+        {
+            _skillsFilter->getFilterIDEquals().clear();
+            _skillsFilter->applyFilter();
+        }
+    } // END if we have free skills
 }
 
 //---------------------------------------------------------------------------------
@@ -381,6 +400,7 @@ CharEditMagicTab::on_btnAddSkill_clicked()
 
     // Update the display
     _skillsFilter->applyFilter();
+    ui->treeSkills->expandAll();
 
     // Disable the add button if we have no more free skills
     // If this is adding and we have no more free skills, disable
@@ -417,6 +437,7 @@ CharEditMagicTab::on_btnRemoveSkill_clicked()
 
     // Update the display
     _skillsFilter->applyFilter();
+    ui->treeSkills->expandAll();
 
     // Re-select the current skill from the available list to cause updating the add button
     QModelIndex currentIndex(ui->treeSkillsAvailable->currentIndex());

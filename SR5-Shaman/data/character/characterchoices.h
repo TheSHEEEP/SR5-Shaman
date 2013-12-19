@@ -194,6 +194,12 @@ public:
      */
     void removeFreeSkill(const QString& p_id);
 
+    /**
+     * @brief Removes all free skills.
+     */
+    void resetFreeSkills();
+
+
 private:
     std::vector<Priority>     _selectedPriorities;
 
@@ -336,6 +342,14 @@ const QString&
 CharacterChoices::getMagicUserTypeID() const
 {
     return _magicUserType;
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterChoices::resetFreeSkills()
+{
+    _skillIncreasesFreebies.clear();
 }
 
 #endif // CHARACTERDATA_H
