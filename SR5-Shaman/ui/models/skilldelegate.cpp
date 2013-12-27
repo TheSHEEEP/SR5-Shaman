@@ -33,7 +33,7 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
     {
         if (item->id == "CATEGORY_GROUPS")
         {
-            // Ugly workaround to be able to handle the groups category the same way
+            // Ugly workaround to be able to handle the "groups" category the same way
             text = tr("Skill Groups");
         }
         else

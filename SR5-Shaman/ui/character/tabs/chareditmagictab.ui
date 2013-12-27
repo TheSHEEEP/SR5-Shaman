@@ -318,7 +318,11 @@
            <widget class="QTreeView" name="treeSkills"/>
           </item>
           <item>
-           <widget class="QTreeView" name="treeSkillsAvailable"/>
+           <widget class="QTreeView" name="treeSkillsAvailable">
+            <property name="headerHidden">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>

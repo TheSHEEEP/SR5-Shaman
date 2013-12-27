@@ -144,5 +144,115 @@
                 }
             }
         }
+    ],
+    "spell_categories" : [
+      { "unique_id" : "COMBAT",
+	"translations" : 
+	{ 
+	    "en" : "Combat Spells",
+	    "de" : "Kampfzauber"
+	}
+      },
+      { "unique_id" : "DETECTION",
+	"translations" : 
+	{ 
+	    "en" : "Detection Spells",
+	    "de" : "Erkennungszauber"
+	}
+      },
+      { "unique_id" : "HEALTH",
+	"translations" : 
+	{ 
+	    "en" : "Health Spells",
+	    "de" : "Heilungszauber"
+	}
+      },
+      { "unique_id" : "ILLUSION",
+	"translations" : 
+	{ 
+	    "en" : "Illusion Spells",
+	    "de" : "Illusionszauber"
+	}
+      },
+      { "unique_id" : "MANIPULATION",
+	"translations" : 
+	{ 
+	    "en" : "Manipulation Spells",
+	    "de" : "Veränderungszauber"
+	}
+      }
+    ],
+    "spells" : [
+      { "unique_id" 	: "ACID_STREAM",
+	"translations" : 
+	{ 
+	    "en" : "Acid Stream",
+	    "de" : "lalala"
+	},
+	"category"	: "COMBAT",
+	"type"		: "P",
+	"range"		: "LOS",
+	"damage"	: "P",
+	"duration"	: "I",
+	"drain"		: "F - 3",
+	"combat_types"	: [ "indirect", "elemental" ]
+      },
+      { "unique_id" 	: "TOXIC_WAVE",
+	"translations" : 
+	{ 
+	    "en" : "Toxic Wave",
+	    "de" : "lalala"
+	},
+	"category"	: "COMBAT",
+	"type"		: "P",
+	"range"		: "LOS(A)",
+	"damage"	: "P",
+	"duration"	: "I",
+	"drain"		: "F - 1",
+	"combat_types"	: [ "indirect", "elemental" ]
+      },
+      { "unique_id" 	: "PUNCH",
+	"translations" : 
+	{ 
+	    "en" : "Punch",
+	    "de" : "lalala"
+	},
+	"category"	: "COMBAT",
+	"type"		: "P",
+	"range"		: "T",
+	"damage"	: "S",
+	"duration"	: "I",
+	"drain"		: "F - 6",
+	"combat_types"	: [ "indirect" ]
+      },
+      { "unique_id" 	: "CLOUT",
+	"translations" : 
+	{ 
+	    "en" : "Clout",
+	    "de" : "lalala"
+	},
+	"category"	: "COMBAT",
+	"type"		: "P",
+	"range"		: "LOS",
+	"damage"	: "S",
+	"duration"	: "I",
+	"drain"		: "F - 3",
+	"combat_types"	: [ "indirect" ]
+      },
+      { "unique_id" 	: "BLAST",
+	"translations" : 
+	{ 
+	    "en" : "Blast",
+	    "de" : "lalala"
+	},
+	"category"	: "COMBAT",
+	"type"		: "P",
+	"range"		: "LOS(A)",
+	"damage"	: "S",
+	"duration"	: "I",
+	"drain"		: "F",
+	"combat_types"	: [ "indirect" ]
+      }
+    ]
     ]
 }

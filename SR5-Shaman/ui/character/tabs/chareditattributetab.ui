@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>681</width>
-    <height>480</height>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -907,6 +907,20 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cbPriority</tabstop>
+  <tabstop>spinBody</tabstop>
+  <tabstop>spinAgility</tabstop>
+  <tabstop>spinReaction</tabstop>
+  <tabstop>spinStrength</tabstop>
+  <tabstop>spinWillpower</tabstop>
+  <tabstop>spinLogic</tabstop>
+  <tabstop>spinIntuition</tabstop>
+  <tabstop>spinCharisma</tabstop>
+  <tabstop>spinEdge</tabstop>
+  <tabstop>spinMagic</tabstop>
+  <tabstop>btnGuidedContinue</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

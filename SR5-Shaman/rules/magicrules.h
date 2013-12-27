@@ -40,6 +40,15 @@ struct MagicTypeDefinition
 };
 
 /**
+ * @brief The definition of one magic type.
+ */
+struct SpellDefinition
+{
+    QMap<QString, QString>                  translations;
+    std::vector<QString>                    types;
+};
+
+/**
  * @brief This class holds all information regarding magic specific rules.
  *          For example, this class holds all magic type definitions.
  * @author  TheSHEEEP
@@ -75,7 +84,8 @@ public:
     const MagicTypeDefinition& getDefinition(const QString& p_uniqueId) const;
 
 private:
-    QMap<QString, MagicTypeDefinition*>  _definitions;
+    QMap<QString, MagicTypeDefinition*>  _typeDefinitions;
+    QMap<QString, SpellDefinition*>  _spellDefinitions;
 };
 
 //---------------------------------------------------------------------------------
@@ -83,7 +93,7 @@ inline
 const QMap<QString, MagicTypeDefinition*>&
 MagicRules::getAllDefinitions() const
 {
-    return _definitions;
+    return _typeDefinitions;
 }
 
 //---------------------------------------------------------------------------------
@@ -91,7 +101,7 @@ inline
 const MagicTypeDefinition&
 MagicRules::getDefinition(const QString& p_uniqueId) const
 {
-    return *(_definitions[p_uniqueId]);
+    return *(_typeDefinitions[p_uniqueId]);
 }
 
 

@@ -20,7 +20,7 @@ MagicRules::~MagicRules()
 {
     // Clean definitions
     QMap<QString, MagicTypeDefinition*>::iterator it;
-    for (it = _definitions.begin(); it != _definitions.end(); ++it)
+    for (it = _typeDefinitions.begin(); it != _typeDefinitions.end(); ++it)
     {
         QMap<int, MagicTypePriorityDefinition*>::iterator prioIt;
         for (prioIt = (*it)->priorities.begin(); prioIt != (*it)->priorities.end(); ++prioIt)
@@ -127,12 +127,12 @@ MagicRules::initialize(const QString& p_jsonFile)
         }
 
         // Make sure the definition doesn't already exist
-        if (_definitions.contains(currentType["unique_id"].toString()))
+        if (_typeDefinitions.contains(currentType["unique_id"].toString()))
         {
             qCritical() << "Magic type \"" << currentType["unique_id"].toString() << "\" already exists. Parsing aborted.";
             return;
         }
 
-        _definitions[currentType["unique_id"].toString()] = typeDef;
+        _typeDefinitions[currentType["unique_id"].toString()] = typeDef;
     }
 }

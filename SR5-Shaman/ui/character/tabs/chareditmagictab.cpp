@@ -253,7 +253,7 @@ CharEditMagicTab::showHideSkillsViews()
         // Filter the kinds of skills we are to show
         if (showGroups || showSkills)
         {
-            // TODO: Mystical Adept is a special case not handled correctly yet
+            // TODO: Mystical Adept is a special case not handled correctly here, need to have a look at the ruleset
             std::vector<SkillType>& filterTypes = _skillsAvailableFilter->getFilterTypes();
             filterTypes.clear();
             if (std::find(def.types.begin(), def.types.end(), "magic") != def.types.end())

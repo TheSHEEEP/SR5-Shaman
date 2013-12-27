@@ -33,6 +33,8 @@ public:
      */
     int columnCount(const QModelIndex& p_parent ) const;
 
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+
     /**
      * @brief If the filter will show empty categories.
      */

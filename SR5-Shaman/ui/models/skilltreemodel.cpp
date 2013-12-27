@@ -145,6 +145,7 @@ SkillTreeModel::initialize()
 {
     // TODO: It sucks somehow that the tree model items and actual skill definition struct are different things.
     //          Could this be improved?
+    //          One problem is that the skill definitions do not store categories.
 
     // Get the skills from the rules
     const QMap<QString, SkillDefinition*>& definitions  = SKILL_RULES->getAllDefinitions();
@@ -239,7 +240,7 @@ SkillTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_r
     if (p_orientation == Qt::Horizontal && p_section == Qt::DisplayRole)
         return QVariant("Wat");
 
-    return QVariant();
+    return QVariant("Hello");
 }
 
 //---------------------------------------------------------------------------------
