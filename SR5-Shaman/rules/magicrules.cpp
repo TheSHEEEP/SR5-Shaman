@@ -134,5 +134,9 @@ MagicRules::initialize(const QString& p_jsonFile)
         }
 
         _typeDefinitions[currentType["unique_id"].toString()] = typeDef;
-    }
+    }// END magic types
+
+    // TODO: here
+    // TODO: modifiers of adept powers
+    // Check adpet cost with type()
 }

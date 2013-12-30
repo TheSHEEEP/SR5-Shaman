@@ -147,112 +147,1380 @@
     ],
     "spell_categories" : [
       { "unique_id" : "COMBAT",
-	"translations" : 
-	{ 
-	    "en" : "Combat Spells",
-	    "de" : "Kampfzauber"
-	}
+        "translations" : 
+        { 
+            "en" : "Combat Spells",
+            "de" : "Kampfzauber"
+        }
       },
       { "unique_id" : "DETECTION",
-	"translations" : 
-	{ 
-	    "en" : "Detection Spells",
-	    "de" : "Erkennungszauber"
-	}
+        "translations" : 
+        { 
+            "en" : "Detection Spells",
+            "de" : "Erkennungszauber"
+        }
       },
       { "unique_id" : "HEALTH",
-	"translations" : 
-	{ 
-	    "en" : "Health Spells",
-	    "de" : "Heilungszauber"
-	}
+        "translations" : 
+        { 
+            "en" : "Health Spells",
+            "de" : "Heilungszauber"
+        }
       },
       { "unique_id" : "ILLUSION",
-	"translations" : 
-	{ 
-	    "en" : "Illusion Spells",
-	    "de" : "Illusionszauber"
-	}
+        "translations" : 
+        { 
+            "en" : "Illusion Spells",
+            "de" : "Illusionszauber"
+        }
       },
       { "unique_id" : "MANIPULATION",
-	"translations" : 
-	{ 
-	    "en" : "Manipulation Spells",
-	    "de" : "Veränderungszauber"
-	}
+        "translations" : 
+        { 
+            "en" : "Manipulation Spells",
+            "de" : "Veränderungszauber"
+        }
       }
     ],
     "spells" : [
-      { "unique_id" 	: "ACID_STREAM",
-	"translations" : 
-	{ 
-	    "en" : "Acid Stream",
-	    "de" : "lalala"
-	},
-	"category"	: "COMBAT",
-	"type"		: "P",
-	"range"		: "LOS",
-	"damage"	: "P",
-	"duration"	: "I",
-	"drain"		: "F - 3",
-	"combat_types"	: [ "indirect", "elemental" ]
+      { "unique_id"     : "ACID_STREAM",
+        "translations" : 
+        { 
+            "en" : "Acid Stream",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 3",
+        "descriptors" : [ "indirect", "elemental" ]
       },
-      { "unique_id" 	: "TOXIC_WAVE",
-	"translations" : 
-	{ 
-	    "en" : "Toxic Wave",
-	    "de" : "lalala"
-	},
-	"category"	: "COMBAT",
-	"type"		: "P",
-	"range"		: "LOS(A)",
-	"damage"	: "P",
-	"duration"	: "I",
-	"drain"		: "F - 1",
-	"combat_types"	: [ "indirect", "elemental" ]
+      { "unique_id"     : "TOXIC_WAVE",
+        "translations" : 
+        { 
+            "en" : "Toxic Wave",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS(A)",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 1",
+        "descriptors" : [ "indirect", "elemental" ]
       },
-      { "unique_id" 	: "PUNCH",
-	"translations" : 
-	{ 
-	    "en" : "Punch",
-	    "de" : "lalala"
-	},
-	"category"	: "COMBAT",
-	"type"		: "P",
-	"range"		: "T",
-	"damage"	: "S",
-	"duration"	: "I",
-	"drain"		: "F - 6",
-	"combat_types"	: [ "indirect" ]
+      { "unique_id"     : "PUNCH",
+        "translations" : 
+        { 
+            "en" : "Punch",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "T",
+        "damage"      : "S",
+        "duration"    : "I",
+        "drain"       : "F - 6",
+        "descriptors" : [ "indirect" ]
       },
-      { "unique_id" 	: "CLOUT",
-	"translations" : 
-	{ 
-	    "en" : "Clout",
-	    "de" : "lalala"
-	},
-	"category"	: "COMBAT",
-	"type"		: "P",
-	"range"		: "LOS",
-	"damage"	: "S",
-	"duration"	: "I",
-	"drain"		: "F - 3",
-	"combat_types"	: [ "indirect" ]
+      { "unique_id"     : "CLOUT",
+        "translations" : 
+        { 
+            "en" : "Clout",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS",
+        "damage"      : "S",
+        "duration"    : "I",
+        "drain"       : "F - 3",
+        "descriptors" : [ "indirect" ]
       },
-      { "unique_id" 	: "BLAST",
-	"translations" : 
-	{ 
-	    "en" : "Blast",
-	    "de" : "lalala"
-	},
-	"category"	: "COMBAT",
-	"type"		: "P",
-	"range"		: "LOS(A)",
-	"damage"	: "S",
-	"duration"	: "I",
-	"drain"		: "F",
-	"combat_types"	: [ "indirect" ]
+      { "unique_id"     : "BLAST",
+        "translations" : 
+        { 
+            "en" : "Blast",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS(A)",
+        "damage"      : "S",
+        "duration"    : "I",
+        "drain"       : "F",
+        "descriptors" : [ "indirect" ]
+      },
+      { "unique_id"     : "DEATH_TOUCH",
+        "translations" : 
+        { 
+            "en" : "Death Touch",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "M",
+        "range"       : "T",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 6",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"     : "MANABOLT",
+        "translations" : 
+        { 
+            "en" : "Manabolt",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "M",
+        "range"       : "LOS",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 3",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"     : "MANABALL",
+        "translations" : 
+        { 
+            "en" : "Manaball",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "M",
+        "range"       : "LOS(A)",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"     : "FLAMETHROWER",
+        "translations" : 
+        { 
+            "en" : "Flamethrower",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 3",
+        "descriptors" : [ "indirect", "elemental" ]
+      },
+      { "unique_id"    : "FIREBALL",
+        "translations" : 
+        { 
+            "en" : "Fireball",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS(A)",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 1",
+        "descriptors" : [ "indirect", "elemental" ]
+      },
+      { "unique_id"    : "LIGHTNING_BOLT",
+        "translations" : 
+        { 
+            "en" : "Lightning Bolt",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 3",
+        "descriptors" : [ "indirect", "elemental" ]
+      },
+      { "unique_id"    : "BALL_LIGHTNING",
+        "translations" : 
+        { 
+            "en" : "Ball Lightning",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS(A)",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 1",
+        "descriptors" : [ "indirect", "elemental" ]
+      },
+      { "unique_id"    : "SHATTER",
+        "translations" : 
+        { 
+            "en" : "Shatter",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "T",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 6",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"    : "POWERBOLT",
+        "translations" : 
+        { 
+            "en" : "Powerbolt",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F - 3",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"    : "POWERBALL",
+        "translations" : 
+        { 
+            "en" : "Powerball",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "P",
+        "range"       : "LOS(A)",
+        "damage"      : "P",
+        "duration"    : "I",
+        "drain"       : "F",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"    : "KNOCKOUT",
+        "translations" : 
+        { 
+            "en" : "Knockout",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "M",
+        "range"       : "T",
+        "damage"      : "S",
+        "duration"    : "I",
+        "drain"       : "F - 6",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"    : "STUNBOLT",
+        "translations" : 
+        { 
+            "en" : "Stunbolt",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "M",
+        "range"       : "LOS",
+        "damage"      : "S",
+        "duration"    : "I",
+        "drain"       : "F - 3",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"    : "STUNBALL",
+        "translations" : 
+        { 
+            "en" : "Stunball",
+            "de" : "lalala"
+        },
+        "category"    : "COMBAT",
+        "type"        : "M",
+        "range"       : "LOS(A)",
+        "damage"      : "S",
+        "duration"    : "I",
+        "drain"       : "F",
+        "descriptors" : [ "direct" ]
+      },
+      { "unique_id"    : "ANALYZE_DEVICE",
+        "translations" : 
+        { 
+            "en" : "Analyze Device",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "P",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "active", "directional" ]
+      },
+      { "unique_id"    : "ANALYZE_MAGIC",
+        "translations" : 
+        { 
+            "en" : "Analyze Magic",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "P",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "active", "directional" ]
+      },
+      { "unique_id"    : "ANALYZE_TRUTH",
+        "translations" : 
+        { 
+            "en" : "Analyze Truth",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "P",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "active", "directional" ]
+      },
+      { "unique_id"    : "CLAIRAUDIENCE",
+        "translations" : 
+        { 
+            "en" : "Clairaudience",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "passive", "directional" ]
+      },
+      { "unique_id"    : "CLAIRVOYANCE",
+        "translations" : 
+        { 
+            "en" : "Clairvoyance",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "passive", "directional" ]
+      },
+      { "unique_id"    : "COMBAT_SENSE",
+        "translations" : 
+        { 
+            "en" : "Combat Sense",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F",
+        "descriptors"     : [ "active", "psychic" ]
+      },
+      { "unique_id"    : "DETECT_ENEMIES",
+        "translations" : 
+        { 
+            "en" : "Detect Enemies",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "active", "area" ]
+      },
+      { "unique_id"    : "DETECT_ENEMIES_EXTENDED",
+        "translations" : 
+        { 
+            "en" : "Detect Enemies (Extended)",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F",
+        "descriptors"     : [ "active", "extended area" ]
+      },
+      { "unique_id"    : "DETECT_INDIVIDUAL",
+        "translations" : 
+        { 
+            "en" : "Detect Individual",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "active", "area" ]
+      },
+      { "unique_id"    : "DETECT_LIFE",
+        "translations" : 
+        { 
+            "en" : "Detect Life",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "active", "area" ]
+      },
+      { "unique_id"    : "DETECT_LIFE_EXTENDED",
+        "translations" : 
+        { 
+            "en" : "Detect Life (Extended)",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "active", "extended area" ]
+      },
+      { "unique_id"    : "DETECT_LIFE_FORM",
+        "translations" : 
+        { 
+            "en" : "Detect [Life Form]",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "requires_custom" : "true",  
+        "descriptors"     : [ "active", "area" ]
+      },
+      { "unique_id"    : "DETECT_LIFE_FORM_EXTENDED",
+        "translations" : 
+        { 
+            "en" : "Detect [Life Form] (Extended)",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F",
+        "requires_custom" : "true",  
+        "descriptors"     : [ "active", "extended area" ]
+      },
+      { "unique_id"     : "DETECT_MAGIC",
+        "translations" : 
+        { 
+            "en" : "Detect Magic",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "active", "area" ]
+      },
+      { "unique_id"    : "DETECT_MAGIC_EXTENDED",
+        "translations" : 
+        { 
+            "en" : "Detect Magic (Extended)",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F",
+        "descriptors"     : [ "active", "extended area" ]
+      },
+      { "unique_id"    : "DETECT_OBJECT",
+        "translations" : 
+        { 
+            "en" : "Detect [Object]",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "requires_custom" : "true",  
+        "descriptors"     : [ "active", "area" ]
+      },
+      { "unique_id"    : "MINDLINK",
+        "translations" : 
+        { 
+            "en" : "Mindlink",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "active", "psychic" ]
+      },
+      { "unique_id"    : "MIND_PROBE",
+        "translations" : 
+        { 
+            "en" : "Mind Probe",
+            "de" : "lalala"
+        },
+        "category"        : "DETECTION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F",
+        "descriptors"     : [ "active", "directional" ]
+      },
+      { "unique_id"     : "ANTIDOTE",
+        "translations" : 
+        { 
+            "en" : "Antidote",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "P",
+        "drain"           : "F - 3",
+        "essence_effect"  : "false"
+      },
+      { "unique_id"    : "ANTIDOTE",
+        "translations" : 
+        { 
+            "en" : "Antidote",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "P",
+        "drain"           : "F - 4",
+        "essence_effect"  : "true"
+      },
+      { "unique_id"    : "DECREASE_ATTRIBUTE",
+        "translations" : 
+        { 
+            "en" : "Decrease [Attribute]",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "P",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "essence_effect"  : "true",
+        "requires_custom" : "true"
+      },
+      { "unique_id"    : "DETOX",
+        "translations" : 
+        { 
+            "en" : "Detox",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "P",
+        "drain"           : "F - 6",
+        "essence_effect"  : "false"
+      },
+      { "unique_id"    : "HEAL",
+        "translations" : 
+        { 
+            "en" : "Heal",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "P",
+        "drain"           : "F - 4",
+        "essence_effect"  : "true"
+      },
+      { "unique_id"    : "INCREASE_ATTRIBUTE",
+        "translations" : 
+        { 
+            "en" : "Increase [Attribute]",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "P",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "essence_effect"  : "true",
+        "requires_custom" : "true"
+      },
+      { "unique_id"    : "INCREASE_REFLEXES",
+        "translations" : 
+        { 
+            "en" : "Increase Reflexes",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "P",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F",
+        "essence_effect"  : "true"
+      },
+      { "unique_id"    : "OXYGENATE",
+        "translations" : 
+        { 
+            "en" : "Oxygenate",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "P",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 5",
+        "essence_effect"  : "false"
+      },
+      { "unique_id"    : "PROPHYLAXIS",
+        "translations" : 
+        { 
+            "en" : "Prophylaxis",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 4",
+        "essence_effect"  : "false"
+      },
+      { "unique_id"    : "RESIST_PAIN",
+        "translations" : 
+        { 
+            "en" : "Resist Pain",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "P",
+        "drain"           : "(Damage Value) - 5",
+        "essence_effect"  : "false"
+      },
+      { "unique_id"    : "STABILIZE",
+        "translations" : 
+        { 
+            "en" : "Stabilize",
+            "de" : "lalala"
+        },
+        "category"        : "HEALTH",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "P",
+        "drain"           : "F - 4",
+        "essence_effect"  : "false"
+      },
+      { "unique_id"     : "AGONY",
+        "translations" : 
+        { 
+            "en" : "Agony",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 4",
+        "descriptors"     : [ "realistic", "single-sense" ]
+      },
+      { "unique_id"     : "MASS_AGONY",
+        "translations" : 
+        { 
+            "en" : "Mass Agony",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "realistic", "single-sense", "area" ]
+      },
+      { "unique_id"    : "BUGS",
+        "translations" : 
+        { 
+            "en" : "Bugs",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "realistic", "multi-sense" ]
+      },
+      { "unique_id"     : "SWARM",
+        "translations" : 
+        { 
+            "en" : "Swarm",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "realistic", "multi-sense", "area" ]
+      },
+      { "unique_id"    : "CONFUSION",
+        "translations" : 
+        { 
+            "en" : "Confusion",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "realistic", "multi-sense" ]
+      },
+      { "unique_id"    : "MASS_CONFUSION",
+        "translations" : 
+        { 
+            "en" : "Mass Confusion",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "realistic", "multi-sense", "area" ]
+      },
+      { "unique_id"    : "CHAOS",
+        "translations" : 
+        { 
+            "en" : "Chaos",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "realistic", "multi-sense" ]
+      },
+      { "unique_id"    : "CHAOTIC_WORLD",
+        "translations" : 
+        { 
+            "en" : "Chaotic Worls",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F",
+        "descriptors"     : [ "realistic", "multi-sense", "area" ]
+      },
+      { "unique_id"    : "ENTERTAINMENT",
+        "translations" : 
+        { 
+            "en" : "Entertainment",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "obvious", "multi-sense", "area" ]
+      },
+      { "unique_id"    : "TRID ENTERTAINMENT",
+        "translations" : 
+        { 
+            "en" : "Trid Entertainment",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "obvious", "multi-sense", "area" ]
+      },
+      { "unique_id"    : "INVISIBILITY",
+        "translations" : 
+        { 
+            "en" : "Invisibility",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "realistic", "single-sense" ]
+      },
+      { "unique_id"    : "IMPROVED_INVISIBILITY",
+        "translations" : 
+        { 
+            "en" : "Improved Invisibility",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "realistic", "single-sense" ]
+      },
+      { "unique_id"    : "MASK",
+        "translations" : 
+        { 
+            "en" : "Mask",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "realistic", "multi-sense" ]
+      },
+      { "unique_id"    : "PHYSICAL_MASK",
+        "translations" : 
+        { 
+            "en" : "Physical Mask",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "P",
+        "range"           : "T",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "realistic", "multi-sense" ]
+      },
+      { "unique_id"    : "PHANTASM",
+        "translations" : 
+        { 
+            "en" : "Phantasm",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "realistic", "multi-sense", "area" ]
+      },
+      { "unique_id"    : "TRID_PHANTASM",
+        "translations" : 
+        { 
+            "en" : "Trid Phantasm",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F",
+        "descriptors"     : [ "realistic", "multi-sense", "area" ]
+      },
+      { "unique_id"    : "HUSH",
+        "translations" : 
+        { 
+            "en" : "Hush",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "realistic", "single-sense", "area" ]
+      },
+      { "unique_id"    : "SILENCE",
+        "translations" : 
+        { 
+            "en" : "Silence",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "realistic", "single-sense", "area" ]
+      },
+      { "unique_id"    : "STEALTH",
+        "translations" : 
+        { 
+            "en" : "Stealth",
+            "de" : "lalala"
+        },
+        "category"        : "ILLUSION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "realistic", "single-sense", "area" ]
+      },
+      { "unique_id"    : "ANIMATE",
+        "translations" : 
+        { 
+            "en" : "Animate",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "physical" ]
+      },
+      { "unique_id"    : "MASS_ANIMATE",
+        "translations" : 
+        { 
+            "en" : "Mass Animate",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F + 1",
+        "descriptors"     : [ "physical", "area" ]
+      },
+      { "unique_id"    : "ARMOR",
+        "translations" : 
+        { 
+            "en" : "Armor",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "physical" ]
+      },
+      { "unique_id"    : "CONTROL_ACTIONS",
+        "translations" : 
+        { 
+            "en" : "Control Actions",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "M",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "mental" ]
+      },
+      { "unique_id"    : "MOB_CONTROL",
+        "translations" : 
+        { 
+            "en" : "Mob Control",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F + 1",
+        "descriptors"     : [ "mental", "area" ]
+      },
+      { "unique_id"     : "CONTROL_THOUGHTS",
+        "translations" : 
+        { 
+            "en" : "Control Thoughts",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "M",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "mental" ]
+      },
+      { "unique_id"     : "MOB_MIND",
+        "translations" : 
+        { 
+            "en" : "Mob Mind",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F + 1",
+        "descriptors"     : [ "mental", "area" ]
+      },
+      { "unique_id"     : "FLING",
+        "translations" : 
+        { 
+            "en" : "Fling",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "I",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "physical", "damaging" ]
+      },
+      { "unique_id"     : "ICE_SHEET",
+        "translations" : 
+        { 
+            "en" : "Ice Sheet",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "I",
+        "drain"           : "F",
+        "descriptors"     : [ "environemntal", "area" ]
+      },
+      { "unique_id"     : "IGNITE",
+        "translations" : 
+        { 
+            "en" : "Ignite",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "P",
+        "drain"           : "F - 1",
+    "descriptors"     : [ "physical" ]
+      },
+      { "unique_id"     : "INFLUENCE",
+        "translations" : 
+        { 
+            "en" : "Influence",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "M",
+        "range"           : "LOS",
+        "duration"        : "P",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "mental" ]
+      },
+      { "unique_id"     : "LEVITATE",
+        "translations" : 
+        { 
+            "en" : "Levitate",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "physical" ]
+      },
+      { "unique_id"     : "LIGHT",
+        "translations" : 
+        { 
+            "en" : "Light",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 4",
+        "descriptors"     : [ "environmental", "area" ]
+      },
+      { "unique_id"     : "MAGIC_FINGERS",
+        "translations" : 
+        { 
+            "en" : "Magic Fingers",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "physical" ]
+      },
+      { "unique_id"     : "MANA_BARRIER",
+        "translations" : 
+        { 
+            "en" : "Mana Barrier",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "M",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "environmental", "area" ]
+      },
+      { "unique_id"     : "PHYSICAL_BARRIER",
+        "translations" : 
+        { 
+            "en" : "Physical Barrier",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 1",
+        "descriptors"     : [ "environmental", "area" ]
+      },
+      { "unique_id"     : "POLTERGEIST",
+        "translations" : 
+        { 
+            "en" : "Poltergeist",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 2",
+        "descriptors"     : [ "environmental", "area" ]
+      },
+      { "unique_id"     : "SHADOW",
+        "translations" : 
+        { 
+            "en" : "Shadow",
+            "de" : "lalala"
+        },
+        "category"        : "MANIPULATION",
+        "type"            : "P",
+        "range"           : "LOS(A)",
+        "duration"        : "S",
+        "drain"           : "F - 3",
+        "descriptors"     : [ "environmental", "area" ]
       }
-    ]
+    ],
+    "adept_powers" : [
+      { "unique_id"    : "ADRENALINE_BOOST",
+        "translations" :
+        {
+            "en"    : "Adrenaline Boost",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.25",
+        "activation"        : "free"
+      },
+      { "unique_id"    : "ASTRAL_PERCEPTION",
+        "translations" :
+        {
+            "en"    : "Astral Perception",
+            "de"    : "lalala"
+        },
+        "cost"              : "1",
+        "activation"        : "simple"
+      },
+      { "unique_id"    : "ADRENALINE_BOOST",
+        "translations" :
+        {
+            "en"    : "Adrenaline Boost",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.25",
+        "activation"        : "free"
+      },
+      { "unique_id"    : "ATTRIBUTE_BOOST",
+        "translations" :
+        {
+            "en"    : "Attribute Boost",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.25",
+        "requires_custom"   : "true",
+        "activation"        : "simple"
+      },
+      { "unique_id"    : "COMBAT_SENSE_ADEPT",
+        "translations" :
+        {
+            "en"    : "Combat Sense",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5"
+      },
+      { "unique_id"    : "CRITICAL_STRIKE",
+        "translations" :
+        {
+            "en"    : "Critical Strike",
+            "de"    : "lalala"
+        },
+        "cost"              : "0.25",
+        "requires_custom"   : "true"
+      },
+      { "unique_id"    : "DANGER_SENSE",
+        "translations" :
+        {
+            "en"    : "Danger Sense",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.25"
+      },
+      { "unique_id"    : "ENHANCED_PERCEPTION",
+        "translations" :
+        {
+            "en"    : "Enhanced Perception",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5"
+      },
+      { "unique_id"    : "ENHANCED_ACCURACY",
+        "translations" :
+        {
+            "en"    : "Enhanced Accuracy",
+            "de"    : "lalala"
+        },
+        "cost"              : "0.25",
+        "requires_custom"   : "true"
+      },
+      { "unique_id"    : "IMPROVED_ABILITY",
+        "translations" :
+        {
+            "en"    : "Improved Ability",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5",
+        "requires_custom"   : "true"
+      },
+      { "unique_id"    : "IMPROVED_PHYS_ATTRIBUTE",
+        "translations" :
+        {
+            "en"    : "Improved Physical Attribute",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "1",
+        "requires_custom"   : "true"
+      },
+      { "unique_id"    : "IMPROVED_POTENTIAL",
+        "translations" :
+        {
+            "en"    : "Improved Potential",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5",
+        "requires_custom"   : "true"
+      },
+      { "unique_id"    : "IMPROVED_REFLEXES",
+        "translations" :
+        {
+            "en"    : "Improved Reflexes",
+            "de"    : "lalala"
+        },
+        "cost"    : [ "1.5", "2.5", "3.5" ]
+      },
+      { "unique_id"    : "IMPROVED_SENSE",
+        "translations" :
+        {
+            "en"    : "Improved Sense",
+            "de"    : "lalala"
+        },
+        "cost"              : "0.25",
+        "requires_custom"   : "true"
+      },
+      { "unique_id"    : "KILLING_HANDS",
+        "translations" :
+        {
+            "en"    : "Adrenaline Boost",
+            "de"    : "lalala"
+        },
+        "cost"              : "0.5",
+        "activation"        : "free"
+      },
+      { "unique_id"    : "KINESICS",
+        "translations" :
+        {
+            "en"    : "Kinesics",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.25"
+      },
+      { "unique_id"    : "LIGHT_BODY",
+        "translations" :
+        {
+            "en"    : "Light Body",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.25"
+      },
+      { "unique_id"    : "MISSILE_PARRY",
+        "translations" :
+        {
+            "en"    : "Missile Parry",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.25",
+        "activation"        : "interrupt"
+      },
+      { "unique_id"    : "MYSTIC_ARMOR",
+        "translations" :
+        {
+            "en"    : "Mystic Armor",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5"
+      },
+      { "unique_id"    : "NATURAL_IMMUNITY",
+        "translations" :
+        {
+            "en"    : "Natural Immunity",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.25"
+      },
+      { "unique_id"    : "PAIN_RESISTANCE",
+        "translations" :
+        {
+            "en"    : "Pain Resistance",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5"
+      },
+      { "unique_id"    : "RAPID_HEALING",
+        "translations" :
+        {
+            "en"    : "Rapid Healing",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5"
+      },
+      { "unique_id"    : "SPELL_RESISTANCE",
+        "translations" :
+        {
+            "en"    : "Spell Resistance",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5"
+      },
+      { "unique_id"    : "TRACELESS_WALK",
+        "translations" :
+        {
+            "en"    : "Traceless Walk",
+            "de"    : "lalala"
+        },
+        "cost"         : "1"
+      },
+      { "unique_id"    : "VOICE_CONTROL",
+        "translations" :
+        {
+            "en"    : "Voice Control",
+            "de"    : "lalala"
+        },
+        "cost_per_level"    : "0.5"
+      },
+      { "unique_id"    : "WALL_RUNNING",
+        "translations" :
+        {
+            "en"    : "Wall Running",
+            "de"    : "lalala"
+        },
+        "cost"          : "0.5",
+        "activation"    : "simple"
+      }
     ]
 }
