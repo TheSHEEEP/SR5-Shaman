@@ -157,14 +157,14 @@
         "translations" : 
         { 
             "en" : "Detection Spells",
-            "de" : "Erkennungszauber"
+            "de" : "Wahrnehmungszauber"
         }
       },
       { "unique_id" : "HEALTH",
         "translations" : 
         { 
             "en" : "Health Spells",
-            "de" : "Heilungszauber"
+            "de" : "Heilzauber"
         }
       },
       { "unique_id" : "ILLUSION",
@@ -178,7 +178,7 @@
         "translations" : 
         { 
             "en" : "Manipulation Spells",
-            "de" : "Veränderungszauber"
+            "de" : "Manipulationszauber"
         }
       }
     ],
@@ -187,7 +187,7 @@
         "translations" : 
         { 
             "en" : "Acid Stream",
-            "de" : "lalala"
+            "de" : "Säurestrahl"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -201,7 +201,7 @@
         "translations" : 
         { 
             "en" : "Toxic Wave",
-            "de" : "lalala"
+            "de" : "Säurewelle"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -215,7 +215,7 @@
         "translations" : 
         { 
             "en" : "Punch",
-            "de" : "lalala"
+            "de" : "Schlag"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -229,7 +229,7 @@
         "translations" : 
         { 
             "en" : "Clout",
-            "de" : "lalala"
+            "de" : "Stoss"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -243,7 +243,7 @@
         "translations" : 
         { 
             "en" : "Blast",
-            "de" : "lalala"
+            "de" : "Druckwelle"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -257,7 +257,7 @@
         "translations" : 
         { 
             "en" : "Death Touch",
-            "de" : "lalala"
+            "de" : "Todeshand"
         },
         "category"    : "COMBAT",
         "type"        : "M",
@@ -271,7 +271,7 @@
         "translations" : 
         { 
             "en" : "Manabolt",
-            "de" : "lalala"
+            "de" : "Manablitz"
         },
         "category"    : "COMBAT",
         "type"        : "M",
@@ -285,7 +285,7 @@
         "translations" : 
         { 
             "en" : "Manaball",
-            "de" : "lalala"
+            "de" : "Manaball"
         },
         "category"    : "COMBAT",
         "type"        : "M",
@@ -299,7 +299,7 @@
         "translations" : 
         { 
             "en" : "Flamethrower",
-            "de" : "lalala"
+            "de" : "Flammenwerfer"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -313,7 +313,7 @@
         "translations" : 
         { 
             "en" : "Fireball",
-            "de" : "lalala"
+            "de" : "Feuerball"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -327,7 +327,7 @@
         "translations" : 
         { 
             "en" : "Lightning Bolt",
-            "de" : "lalala"
+            "de" : "Blitzstrahl"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -341,7 +341,7 @@
         "translations" : 
         { 
             "en" : "Ball Lightning",
-            "de" : "lalala"
+            "de" : "Kugelblitz"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -355,7 +355,7 @@
         "translations" : 
         { 
             "en" : "Shatter",
-            "de" : "lalala"
+            "de" : "Energieschlag"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -369,7 +369,7 @@
         "translations" : 
         { 
             "en" : "Powerbolt",
-            "de" : "lalala"
+            "de" : "Energieblitz"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -383,7 +383,7 @@
         "translations" : 
         { 
             "en" : "Powerball",
-            "de" : "lalala"
+            "de" : "Energieball"
         },
         "category"    : "COMBAT",
         "type"        : "P",
@@ -397,7 +397,7 @@
         "translations" : 
         { 
             "en" : "Knockout",
-            "de" : "lalala"
+            "de" : "Schockhand"
         },
         "category"    : "COMBAT",
         "type"        : "M",
@@ -411,7 +411,7 @@
         "translations" : 
         { 
             "en" : "Stunbolt",
-            "de" : "lalala"
+            "de" : "Betäubungsblitz"
         },
         "category"    : "COMBAT",
         "type"        : "M",
@@ -425,7 +425,7 @@
         "translations" : 
         { 
             "en" : "Stunball",
-            "de" : "lalala"
+            "de" : "Betäubungsball"
         },
         "category"    : "COMBAT",
         "type"        : "M",
@@ -439,7 +439,7 @@
         "translations" : 
         { 
             "en" : "Analyze Device",
-            "de" : "lalala"
+            "de" : "Gerät Analysieren"
         },
         "category"        : "DETECTION",
         "type"            : "P",
@@ -452,7 +452,7 @@
         "translations" : 
         { 
             "en" : "Analyze Magic",
-            "de" : "lalala"
+            "de" : "Magie Analysieren"
         },
         "category"        : "DETECTION",
         "type"            : "P",
@@ -465,7 +465,7 @@
         "translations" : 
         { 
             "en" : "Analyze Truth",
-            "de" : "lalala"
+            "de" : "Wahrheit Prüfen"
         },
         "category"        : "DETECTION",
         "type"            : "P",
@@ -478,7 +478,7 @@
         "translations" : 
         { 
             "en" : "Clairaudience",
-            "de" : "lalala"
+            "de" : "Hellhören"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -491,7 +491,7 @@
         "translations" : 
         { 
             "en" : "Clairvoyance",
-            "de" : "lalala"
+            "de" : "Hellsicht"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -504,7 +504,7 @@
         "translations" : 
         { 
             "en" : "Combat Sense",
-            "de" : "lalala"
+            "de" : "Kampfsinn"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -517,7 +517,7 @@
         "translations" : 
         { 
             "en" : "Detect Enemies",
-            "de" : "lalala"
+            "de" : "Feinde Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -530,7 +530,7 @@
         "translations" : 
         { 
             "en" : "Detect Enemies (Extended)",
-            "de" : "lalala"
+            "de" : "Erweitertes Feinde Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -543,7 +543,7 @@
         "translations" : 
         { 
             "en" : "Detect Individual",
-            "de" : "lalala"
+            "de" : "Individuum Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -556,7 +556,7 @@
         "translations" : 
         { 
             "en" : "Detect Life",
-            "de" : "lalala"
+            "de" : "Leben Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -569,7 +569,7 @@
         "translations" : 
         { 
             "en" : "Detect Life (Extended)",
-            "de" : "lalala"
+            "de" : "Erweitertes Leben Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -582,7 +582,7 @@
         "translations" : 
         { 
             "en" : "Detect [Life Form]",
-            "de" : "lalala"
+            "de" : "[Lebensform] Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -596,7 +596,7 @@
         "translations" : 
         { 
             "en" : "Detect [Life Form] (Extended)",
-            "de" : "lalala"
+            "de" : "Erweitertes [Lebensform] Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -610,7 +610,7 @@
         "translations" : 
         { 
             "en" : "Detect Magic",
-            "de" : "lalala"
+            "de" : "Magie Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -623,7 +623,7 @@
         "translations" : 
         { 
             "en" : "Detect Magic (Extended)",
-            "de" : "lalala"
+            "de" : "Erweitertes Magie Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -636,7 +636,7 @@
         "translations" : 
         { 
             "en" : "Detect [Object]",
-            "de" : "lalala"
+            "de" : "[Objekt] Entdecken"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -650,7 +650,7 @@
         "translations" : 
         { 
             "en" : "Mindlink",
-            "de" : "lalala"
+            "de" : "Telepathie"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -663,7 +663,7 @@
         "translations" : 
         { 
             "en" : "Mind Probe",
-            "de" : "lalala"
+            "de" : "Geistessonde"
         },
         "category"        : "DETECTION",
         "type"            : "M",
@@ -689,7 +689,20 @@
         "translations" : 
         { 
             "en" : "Antidote",
-            "de" : "lalala"
+            "de" : "Gegenmittel"
+        },
+        "category"        : "HEALTH",
+        "type"            : "M",
+        "range"           : "T",
+        "duration"        : "P",
+        "drain"           : "F - 4",
+        "essence_effect"  : "true"
+      },
+      { "unique_id"    : "CURE_SICKNESS",
+        "translations" : 
+        { 
+            "en" : "Cure Sickness",
+            "de" : "Krankheit Heilen"
         },
         "category"        : "HEALTH",
         "type"            : "M",
@@ -702,7 +715,7 @@
         "translations" : 
         { 
             "en" : "Decrease [Attribute]",
-            "de" : "lalala"
+            "de" : "[Attribut] Senken"
         },
         "category"        : "HEALTH",
         "type"            : "P",
@@ -716,7 +729,7 @@
         "translations" : 
         { 
             "en" : "Detox",
-            "de" : "lalala"
+            "de" : "Entgiftung"
         },
         "category"        : "HEALTH",
         "type"            : "M",
@@ -729,7 +742,7 @@
         "translations" : 
         { 
             "en" : "Heal",
-            "de" : "lalala"
+            "de" : "Heilen"
         },
         "category"        : "HEALTH",
         "type"            : "M",
@@ -742,7 +755,7 @@
         "translations" : 
         { 
             "en" : "Increase [Attribute]",
-            "de" : "lalala"
+            "de" : "[Attribut] Steigern"
         },
         "category"        : "HEALTH",
         "type"            : "P",
@@ -756,7 +769,7 @@
         "translations" : 
         { 
             "en" : "Increase Reflexes",
-            "de" : "lalala"
+            "de" : "Reflexe Steigern"
         },
         "category"        : "HEALTH",
         "type"            : "P",
@@ -769,7 +782,7 @@
         "translations" : 
         { 
             "en" : "Oxygenate",
-            "de" : "lalala"
+            "de" : "Sauerstoffmaske"
         },
         "category"        : "HEALTH",
         "type"            : "P",
@@ -782,7 +795,7 @@
         "translations" : 
         { 
             "en" : "Prophylaxis",
-            "de" : "lalala"
+            "de" : "Prophylaxe"
         },
         "category"        : "HEALTH",
         "type"            : "M",
@@ -795,7 +808,7 @@
         "translations" : 
         { 
             "en" : "Resist Pain",
-            "de" : "lalala"
+            "de" : "Schmerzresistenz"
         },
         "category"        : "HEALTH",
         "type"            : "M",
@@ -808,7 +821,7 @@
         "translations" : 
         { 
             "en" : "Stabilize",
-            "de" : "lalala"
+            "de" : "Stabilisieren"
         },
         "category"        : "HEALTH",
         "type"            : "M",
@@ -821,7 +834,7 @@
         "translations" : 
         { 
             "en" : "Agony",
-            "de" : "lalala"
+            "de" : "Schmerz"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -834,7 +847,7 @@
         "translations" : 
         { 
             "en" : "Mass Agony",
-            "de" : "lalala"
+            "de" : "Massenschmerz"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -847,7 +860,7 @@
         "translations" : 
         { 
             "en" : "Bugs",
-            "de" : "lalala"
+            "de" : "Viecher"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -860,7 +873,7 @@
         "translations" : 
         { 
             "en" : "Swarm",
-            "de" : "lalala"
+            "de" : "Schwarm"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -873,7 +886,7 @@
         "translations" : 
         { 
             "en" : "Confusion",
-            "de" : "lalala"
+            "de" : "Verwirrung"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -886,7 +899,7 @@
         "translations" : 
         { 
             "en" : "Mass Confusion",
-            "de" : "lalala"
+            "de" : "Massenverwirrung"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -899,7 +912,7 @@
         "translations" : 
         { 
             "en" : "Chaos",
-            "de" : "lalala"
+            "de" : "Chaos"
         },
         "category"        : "ILLUSION",
         "type"            : "P",
@@ -912,7 +925,7 @@
         "translations" : 
         { 
             "en" : "Chaotic Worls",
-            "de" : "lalala"
+            "de" : "Chaotische Welt"
         },
         "category"        : "ILLUSION",
         "type"            : "P",
@@ -925,7 +938,7 @@
         "translations" : 
         { 
             "en" : "Entertainment",
-            "de" : "lalala"
+            "de" : "Unterhaltung"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -938,7 +951,7 @@
         "translations" : 
         { 
             "en" : "Trid Entertainment",
-            "de" : "lalala"
+            "de" : "Trideo-Unterhaltung"
         },
         "category"        : "ILLUSION",
         "type"            : "P",
@@ -951,7 +964,7 @@
         "translations" : 
         { 
             "en" : "Invisibility",
-            "de" : "lalala"
+            "de" : "Unsichtbarkeit"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -964,7 +977,7 @@
         "translations" : 
         { 
             "en" : "Improved Invisibility",
-            "de" : "lalala"
+            "de" : "Verbesserte Unsichtbarkeit"
         },
         "category"        : "ILLUSION",
         "type"            : "P",
@@ -977,7 +990,7 @@
         "translations" : 
         { 
             "en" : "Mask",
-            "de" : "lalala"
+            "de" : "Maske"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -990,7 +1003,7 @@
         "translations" : 
         { 
             "en" : "Physical Mask",
-            "de" : "lalala"
+            "de" : "Physische Maske"
         },
         "category"        : "ILLUSION",
         "type"            : "P",
@@ -1003,7 +1016,7 @@
         "translations" : 
         { 
             "en" : "Phantasm",
-            "de" : "lalala"
+            "de" : "Trugbild"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -1016,7 +1029,7 @@
         "translations" : 
         { 
             "en" : "Trid Phantasm",
-            "de" : "lalala"
+            "de" : "Trideo-Trugbild"
         },
         "category"        : "ILLUSION",
         "type"            : "P",
@@ -1029,7 +1042,7 @@
         "translations" : 
         { 
             "en" : "Hush",
-            "de" : "lalala"
+            "de" : "Schweigen"
         },
         "category"        : "ILLUSION",
         "type"            : "M",
@@ -1042,7 +1055,7 @@
         "translations" : 
         { 
             "en" : "Silence",
-            "de" : "lalala"
+            "de" : "Stille"
         },
         "category"        : "ILLUSION",
         "type"            : "P",
@@ -1055,20 +1068,20 @@
         "translations" : 
         { 
             "en" : "Stealth",
-            "de" : "lalala"
+            "de" : "Leiser Schritt"
         },
         "category"        : "ILLUSION",
         "type"            : "P",
         "range"           : "LOS",
         "duration"        : "S",
-        "drain"           : "F - 1",
+        "drain"           : "F - 2",
         "descriptors"     : [ "realistic", "single-sense", "area" ]
       },
       { "unique_id"    : "ANIMATE",
         "translations" : 
         { 
             "en" : "Animate",
-            "de" : "lalala"
+            "de" : "Animate"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1081,7 +1094,7 @@
         "translations" : 
         { 
             "en" : "Mass Animate",
-            "de" : "lalala"
+            "de" : "Massenbelebung"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1094,7 +1107,7 @@
         "translations" : 
         { 
             "en" : "Armor",
-            "de" : "lalala"
+            "de" : "Panzerung"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1107,7 +1120,7 @@
         "translations" : 
         { 
             "en" : "Control Actions",
-            "de" : "lalala"
+            "de" : "Handlung Beherrschen"
         },
         "category"        : "MANIPULATION",
         "type"            : "M",
@@ -1120,7 +1133,7 @@
         "translations" : 
         { 
             "en" : "Mob Control",
-            "de" : "lalala"
+            "de" : "Mob-Kontrolle"
         },
         "category"        : "MANIPULATION",
         "type"            : "M",
@@ -1133,7 +1146,7 @@
         "translations" : 
         { 
             "en" : "Control Thoughts",
-            "de" : "lalala"
+            "de" : "Gedanken Beherrschen"
         },
         "category"        : "MANIPULATION",
         "type"            : "M",
@@ -1146,7 +1159,7 @@
         "translations" : 
         { 
             "en" : "Mob Mind",
-            "de" : "lalala"
+            "de" : "Mob-Bewusstsein"
         },
         "category"        : "MANIPULATION",
         "type"            : "M",
@@ -1159,7 +1172,7 @@
         "translations" : 
         { 
             "en" : "Fling",
-            "de" : "lalala"
+            "de" : "Schleuder"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1172,7 +1185,7 @@
         "translations" : 
         { 
             "en" : "Ice Sheet",
-            "de" : "lalala"
+            "de" : "Eisdecke"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1185,7 +1198,7 @@
         "translations" : 
         { 
             "en" : "Ignite",
-            "de" : "lalala"
+            "de" : "Entzünden"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1198,7 +1211,7 @@
         "translations" : 
         { 
             "en" : "Influence",
-            "de" : "lalala"
+            "de" : "Beeinflussen"
         },
         "category"        : "MANIPULATION",
         "type"            : "M",
@@ -1211,7 +1224,7 @@
         "translations" : 
         { 
             "en" : "Levitate",
-            "de" : "lalala"
+            "de" : "Levitieren"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1224,7 +1237,7 @@
         "translations" : 
         { 
             "en" : "Light",
-            "de" : "lalala"
+            "de" : "Licht"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1237,7 +1250,7 @@
         "translations" : 
         { 
             "en" : "Magic Fingers",
-            "de" : "lalala"
+            "de" : "Zauberfinger"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1250,7 +1263,7 @@
         "translations" : 
         { 
             "en" : "Mana Barrier",
-            "de" : "lalala"
+            "de" : "Manabarriere"
         },
         "category"        : "MANIPULATION",
         "type"            : "M",
@@ -1263,7 +1276,7 @@
         "translations" : 
         { 
             "en" : "Physical Barrier",
-            "de" : "lalala"
+            "de" : "Physische Barriere"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1276,7 +1289,7 @@
         "translations" : 
         { 
             "en" : "Poltergeist",
-            "de" : "lalala"
+            "de" : "Poltergeist"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1289,7 +1302,7 @@
         "translations" : 
         { 
             "en" : "Shadow",
-            "de" : "lalala"
+            "de" : "Schatten"
         },
         "category"        : "MANIPULATION",
         "type"            : "P",
@@ -1304,7 +1317,7 @@
         "translations" :
         {
             "en"    : "Adrenaline Boost",
-            "de"    : "lalala"
+            "de"    : "Adrenalinschub"
         },
         "cost_per_level"    : "0.25",
         "activation"        : "free"
@@ -1313,25 +1326,16 @@
         "translations" :
         {
             "en"    : "Astral Perception",
-            "de"    : "lalala"
+            "de"    : "Astrale Wahrnehmung"
         },
         "cost"              : "1",
         "activation"        : "simple"
-      },
-      { "unique_id"    : "ADRENALINE_BOOST",
-        "translations" :
-        {
-            "en"    : "Adrenaline Boost",
-            "de"    : "lalala"
-        },
-        "cost_per_level"    : "0.25",
-        "activation"        : "free"
       },
       { "unique_id"    : "ATTRIBUTE_BOOST",
         "translations" :
         {
             "en"    : "Attribute Boost",
-            "de"    : "lalala"
+            "de"    : "Attributsschub"
         },
         "cost_per_level"    : "0.25",
         "requires_custom"   : "true",
@@ -1341,7 +1345,7 @@
         "translations" :
         {
             "en"    : "Combat Sense",
-            "de"    : "lalala"
+            "de"    : "Kampfsinn"
         },
         "cost_per_level"    : "0.5"
       },
@@ -1349,7 +1353,7 @@
         "translations" :
         {
             "en"    : "Critical Strike",
-            "de"    : "lalala"
+            "de"    : "Kritischer Schlag"
         },
         "cost"              : "0.25",
         "requires_custom"   : "true"
@@ -1358,7 +1362,7 @@
         "translations" :
         {
             "en"    : "Danger Sense",
-            "de"    : "lalala"
+            "de"    : "Gefahrensinn"
         },
         "cost_per_level"    : "0.25"
       },
@@ -1366,7 +1370,7 @@
         "translations" :
         {
             "en"    : "Enhanced Perception",
-            "de"    : "lalala"
+            "de"    : "Verbesserte Wahrnehmung"
         },
         "cost_per_level"    : "0.5"
       },
@@ -1374,7 +1378,7 @@
         "translations" :
         {
             "en"    : "Enhanced Accuracy",
-            "de"    : "lalala"
+            "de"    : "Erhöhte Präzision"
         },
         "cost"              : "0.25",
         "requires_custom"   : "true"
@@ -1383,16 +1387,25 @@
         "translations" :
         {
             "en"    : "Improved Ability",
-            "de"    : "lalala"
+            "de"    : "Verbesserte Fertigkeit"
         },
         "cost_per_level"    : "0.5",
         "requires_custom"   : "true"
+      },
+      { "unique_id"    : "ASTRAL_PERCEPTION",
+        "translations" :
+        {
+            "en"    : "Astral Perception",
+            "de"    : "Astrale Wahrnehmung"
+        },
+        "cost"              : "1",
+        "activation"        : "simple"
       },
       { "unique_id"    : "IMPROVED_PHYS_ATTRIBUTE",
         "translations" :
         {
             "en"    : "Improved Physical Attribute",
-            "de"    : "lalala"
+            "de"    : "Gesteigertes Körperliches Attribut"
         },
         "cost_per_level"    : "1",
         "requires_custom"   : "true"
@@ -1401,7 +1414,7 @@
         "translations" :
         {
             "en"    : "Improved Potential",
-            "de"    : "lalala"
+            "de"    : "Erhöhtes Potenzial"
         },
         "cost_per_level"    : "0.5",
         "requires_custom"   : "true"
@@ -1410,15 +1423,15 @@
         "translations" :
         {
             "en"    : "Improved Reflexes",
-            "de"    : "lalala"
+            "de"    : "Gesteigerte Reflexe"
         },
         "cost"    : [ "1.5", "2.5", "3.5" ]
       },
-      { "unique_id"    : "IMPROVED_SENSE",
+      { "unique_id"    : "IMPROVED_SENSE_DIRECTION",
         "translations" :
         {
             "en"    : "Improved Sense",
-            "de"    : "lalala"
+            "de"    : "Geschärfter Sinn"
         },
         "cost"              : "0.25",
         "requires_custom"   : "true"
@@ -1427,7 +1440,7 @@
         "translations" :
         {
             "en"    : "Adrenaline Boost",
-            "de"    : "lalala"
+            "de"    : "Todeskralle"
         },
         "cost"              : "0.5",
         "activation"        : "free"
@@ -1436,7 +1449,7 @@
         "translations" :
         {
             "en"    : "Kinesics",
-            "de"    : "lalala"
+            "de"    : "Körpersprache"
         },
         "cost_per_level"    : "0.25"
       },
@@ -1444,7 +1457,7 @@
         "translations" :
         {
             "en"    : "Light Body",
-            "de"    : "lalala"
+            "de"    : "Leichter Körper"
         },
         "cost_per_level"    : "0.25"
       },
@@ -1452,7 +1465,7 @@
         "translations" :
         {
             "en"    : "Missile Parry",
-            "de"    : "lalala"
+            "de"    : "Geschossparade"
         },
         "cost_per_level"    : "0.25",
         "activation"        : "interrupt"
@@ -1461,7 +1474,7 @@
         "translations" :
         {
             "en"    : "Mystic Armor",
-            "de"    : "lalala"
+            "de"    : "Mytischer Panzer"
         },
         "cost_per_level"    : "0.5"
       },
@@ -1469,7 +1482,7 @@
         "translations" :
         {
             "en"    : "Natural Immunity",
-            "de"    : "lalala"
+            "de"    : "Natürliche Immunität"
         },
         "cost_per_level"    : "0.25"
       },
@@ -1477,7 +1490,7 @@
         "translations" :
         {
             "en"    : "Pain Resistance",
-            "de"    : "lalala"
+            "de"    : "Schmerzresistenz"
         },
         "cost_per_level"    : "0.5"
       },
@@ -1485,7 +1498,7 @@
         "translations" :
         {
             "en"    : "Rapid Healing",
-            "de"    : "lalala"
+            "de"    : "Beschleunigte heilung"
         },
         "cost_per_level"    : "0.5"
       },
@@ -1493,7 +1506,7 @@
         "translations" :
         {
             "en"    : "Spell Resistance",
-            "de"    : "lalala"
+            "de"    : "Magieresistenz"
         },
         "cost_per_level"    : "0.5"
       },
@@ -1501,7 +1514,7 @@
         "translations" :
         {
             "en"    : "Traceless Walk",
-            "de"    : "lalala"
+            "de"    : "Spurloser Schritt"
         },
         "cost"         : "1"
       },
@@ -1509,7 +1522,7 @@
         "translations" :
         {
             "en"    : "Voice Control",
-            "de"    : "lalala"
+            "de"    : "Stimmkontrolle"
         },
         "cost_per_level"    : "0.5"
       },
@@ -1517,7 +1530,7 @@
         "translations" :
         {
             "en"    : "Wall Running",
-            "de"    : "lalala"
+            "de"    : "Wandlaufen"
         },
         "cost"          : "0.5",
         "activation"    : "simple"
