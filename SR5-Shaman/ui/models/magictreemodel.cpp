@@ -1,13 +1,13 @@
-#include "skilltreemodel.h"
+#include "magictreemodel.h"
 
 #include "rules/rules.h"
 #include "data/appstatus.h"
 
 
 //---------------------------------------------------------------------------------
-SkillModelItem::SkillModelItem(SkillModelItem* p_parent)
+MagicModelItem::MagicModelItem(MagicModelItem* p_parent)
     : isCategory(false)
-    , type(SKILL_TYPE_INVALID)
+    , itemType(MAGICITEMTYPE_INVALID)
     , id("")
     , parent(p_parent)
 {
@@ -15,32 +15,24 @@ SkillModelItem::SkillModelItem(SkillModelItem* p_parent)
 }
 
 //---------------------------------------------------------------------------------
-SkillModelItem::SkillModelItem(const SkillModelItem& p_other)
+MagicModelItem::MagicModelItem(const MagicModelItem& p_other)
 {
     isCategory = p_other.isCategory;
-    type = p_other.type;
+    itemType = p_other.itemType;
     id = p_other.id;
     parent = p_other.parent;
     children = p_other.children;
 }
 
 //---------------------------------------------------------------------------------
-SkillModelItem::~SkillModelItem()
+MagicModelItem::~MagicModelItem()
 {
-    // Do not delete children if this is a group - group skills are deleted by the parent category
-    if (id != "" &&
-        !SKILL_RULES->getDefinition(id).isGroup)
-    {
-        for (unsigned int i = 0; i < children.size(); ++i)
-        {
-            delete children[i];
-        }
-    }
+
 }
 
 //---------------------------------------------------------------------------------
 bool
-SkillModelItem::hasChild(const QString& p_id) const
+MagicModelItem::hasChild(const QString& p_id) const
 {
     for (unsigned int i = 0; i < children.size(); ++i)
     {
@@ -53,8 +45,8 @@ SkillModelItem::hasChild(const QString& p_id) const
 }
 
 //---------------------------------------------------------------------------------
-SkillModelItem*
-SkillModelItem::getChild(const QString& p_id) const
+MagicModelItem*
+MagicModelItem::getChild(const QString& p_id) const
 {
     for (unsigned int i = 0; i < children.size(); ++i)
     {
@@ -67,73 +59,36 @@ SkillModelItem::getChild(const QString& p_id) const
 }
 
 //---------------------------------------------------------------------------------
-SkillTreeModel::SkillTreeModel()
+MagicTreeModel::MagicTreeModel()
 {
     // Construct root item
-    _rootItem = new SkillModelItem();
+    _rootItem = new MagicModelItem();
     _rootItem->id = "DEFINITION";
     _rootItem->parent = NULL;
 
     // Add categories
-    // THE ORDER IS VERY IMPORTANT HERE, DEPENDS ON THE SKILL TYPE ENUM
-    // Combat
-    SkillModelItem* category = new SkillModelItem(_rootItem);
+    // Spells
+    MagicModelItem* category = new MagicModelItem(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_COMBAT";
-    category->type = SKILL_TYPE_COMBAT;
+    category->id = "CATEGORY_SPELLS";
+    category->itemType = MAGICITEMTYPE_SPELL;
     _rootItem->children.push_back(category);
-    // Physical
-    category = new SkillModelItem(_rootItem);
+    // Adept powers
+    category = new MagicModelItem(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_PHYSICAL";
-    category->type = SKILL_TYPE_PHYSICAL;
+    category->id = "CATEGORY_ADEPT_POWERS";
+    category->itemType = MAGICITEMTYPE_ADEPT_POWER;
     _rootItem->children.push_back(category);
-    // Social
-    category = new SkillModelItem(_rootItem);
+    // Complex forms
+    category = new MagicModelItem(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_SOCIAL";
-    category->type = SKILL_TYPE_SOCIAL;
-    _rootItem->children.push_back(category);
-    // Magical
-    category = new SkillModelItem(_rootItem);
-    category->isCategory = true;
-    category->id = "CATEGORY_MAGIC";
-    category->type = SKILL_TYPE_MAGIC;
-    _rootItem->children.push_back(category);
-    // Resonance
-    category = new SkillModelItem(_rootItem);
-    category->isCategory = true;
-    category->id = "CATEGORY";
-    category->type = SKILL_TYPE_RESONANCE;
-    _rootItem->children.push_back(category);
-    // Technical
-    category = new SkillModelItem(_rootItem);
-    category->isCategory = true;
-    category->id = "CATEGORY_TECHNICAL";
-    category->type = SKILL_TYPE_TECHNICAL;
-    _rootItem->children.push_back(category);
-    // Vehicle
-    category = new SkillModelItem(_rootItem);
-    category->isCategory = true;
-    category->id = "CATEGORY_VEHICLE";
-    category->type = SKILL_TYPE_VEHICLE;
-    _rootItem->children.push_back(category);
-    // Knowledge
-    category = new SkillModelItem(_rootItem);
-    category->isCategory = true;
-    category->id = "CATEGORY_KNOWLEDGE";
-    category->type = SKILL_TYPE_KNOWLEDGE;
-    _rootItem->children.push_back(category);
-    // Groups - this is a workaround
-    category = new SkillModelItem(_rootItem);
-    category->isCategory = true;
-    category->id = "CATEGORY_GROUPS";
-    category->type = NUM_SKILL_TYPES;
+    category->id = "CATEGORY_COMPLEX_FORMS";
+    category->itemType = MAGICITEMTYPE_COMPLEX_FORM;
     _rootItem->children.push_back(category);
 }
 
 //---------------------------------------------------------------------------------
-SkillTreeModel::~SkillTreeModel()
+MagicTreeModel::~MagicTreeModel()
 {
     // Children will be deleted recursively
     delete _rootItem;
@@ -141,66 +96,41 @@ SkillTreeModel::~SkillTreeModel()
 
 //---------------------------------------------------------------------------------
 void
-SkillTreeModel::initialize()
+MagicTreeModel::initialize()
 {
-    // TODO: It sucks somehow that the tree model items and actual skill definition struct are different things.
-    //          Could this be improved?
-    //          One problem is that the skill definitions do not store categories.
-
-    // Get the skills from the rules
-    const QMap<QString, SkillDefinition*>& definitions  = SKILL_RULES->getAllDefinitions();
-    QMap<QString, SkillDefinition*>::const_iterator it;
-    SkillModelItem* category = NULL;
-    SkillModelItem* newItem = NULL;
-    SkillDefinition* skill = NULL;
-    SkillModelItem* groupCategory = _rootItem->children[_rootItem->children.size() - 1];
-    for (it = definitions.begin(); it != definitions.end(); ++it)
+    // Get the spell categories from the rules
+    const QMap<QString, SpellCategoryDefinition*>& spellCatDefs  = MAGIC_RULES->getAllSpellCategoryDefinitions();
+    QMap<QString, SpellDefinition*> spellDefs;
+    QMap<QString, SpellCategoryDefinition*>::const_iterator it;
+    QMap<QString, SpellDefinition*>::const_iterator spellIt;
+    MagicModelItem* topCategory = _rootItem->children[0];
+    MagicModelItem* spellCategory = NULL;
+    MagicModelItem* newItem = NULL;
+    SpellCategoryDefinition* spellCatDef = NULL;
+    for (it = spellCatDefs.begin(); it != spellCatDefs.end(); ++it)
     {
-        skill = *it;
-
-        // If this is a group, ignore it
-        if (skill->isGroup)
-        {
-            continue;
-        }
+        spellCatDef = *it;
 
         // Create the item
-        newItem = new SkillModelItem();
+        spellCategory = new MagicModelItem();
 
         // Get the correct category
         category = _rootItem->children[(*it)->type];
-        newItem->parent = category;
+        spellCategory->parent = topCategory;
 
         // Assign the definition id
-        newItem->id = it.key();
+        spellCategory->id = it.key();
 
         // Assign the type
-        newItem->type = (*it)->type;
+        spellCategory->itemType = MAGICITEMTYPE_SPELL;
 
-        // Is this also in a group?
-        if ((*it)->group != "none")
-        {
-            // Do we need to create the group?
-            SkillModelItem* groupItem;
-            if (!groupCategory->hasChild((*it)->group))
-            {
-                groupItem = new SkillModelItem(groupCategory);
-                groupItem->id = (*it)->group;
-                groupCategory->children.push_back(groupItem);
-            }
-            groupItem = groupCategory->getChild((*it)->group);
+        // Get all spells of this type and add it
+        spellDefs = MAGIC_RULES->getAllSpellDefinitionsByCategory(spellCategory->id);
 
-            // Duplicate the item - cannot have the same item in multiple parents, it seems
-            // TODO: Is there a better way to do this?
-            SkillModelItem* newItem2 = new SkillModelItem(*newItem);
-            newItem2->parent = groupItem;
+        // TODO: here
 
-            // Add to the group
-            groupItem->children.push_back(newItem2);
-        }
-
-        // Add to category
-        category->children.push_back(newItem);
+        // Add to spells category
+        topCategory->children.push_back(newItem);
     }
 }
 

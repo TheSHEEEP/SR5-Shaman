@@ -672,19 +672,6 @@
         "drain"           : "F",
         "descriptors"     : [ "active", "directional" ]
       },
-      { "unique_id"     : "ANTIDOTE",
-        "translations" : 
-        { 
-            "en" : "Antidote",
-            "de" : "lalala"
-        },
-        "category"        : "HEALTH",
-        "type"            : "M",
-        "range"           : "T",
-        "duration"        : "P",
-        "drain"           : "F - 3",
-        "essence_effect"  : "false"
-      },
       { "unique_id"    : "ANTIDOTE",
         "translations" : 
         { 
@@ -1205,7 +1192,7 @@
         "range"           : "LOS",
         "duration"        : "P",
         "drain"           : "F - 1",
-    "descriptors"     : [ "physical" ]
+        "descriptors"     : [ "physical" ]
       },
       { "unique_id"     : "INFLUENCE",
         "translations" : 

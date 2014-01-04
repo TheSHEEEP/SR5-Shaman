@@ -107,7 +107,7 @@ CharEditMagicTab::showEvent(QShowEvent* /*unused*/)
         int prio = CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC);
         if (magicTypeID != "")
         {
-            const MagicTypeDefinition& def = MAGIC_RULES->getDefinition(magicTypeID);
+            const MagicTypeDefinition& def = MAGIC_RULES->getMagicTypeDefinition(magicTypeID);
             ui->lblMagicTypeValue->setText(def.translations[APPSTATUS->getCurrentLocale()]);
 
             // Possibly show aspected frame
@@ -168,7 +168,7 @@ CharEditMagicTab::updateValues()
     if (CHARACTER_CHOICES->getIsMagicUser())
     {
         // Free skills
-        std::pair<int, int> freeSkills = MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
+        std::pair<int, int> freeSkills = MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
                                             .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)]
                                                 ->freeSkills;
         if (freeSkills.first < 0)
@@ -180,7 +180,7 @@ CharEditMagicTab::updateValues()
                                         .arg(freeSkills.first));
 
         // Free skill groups
-        freeSkills = MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
+        freeSkills = MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
                         .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)]
                             ->freeSkillGroup;
         if (freeSkills.first < 0)
@@ -233,7 +233,7 @@ CharEditMagicTab::showHideSkillsViews()
 {
     QString magicTypeID = CHARACTER_CHOICES->getMagicUserTypeID();
     int prio = CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC);
-    const MagicTypeDefinition& def = MAGIC_RULES->getDefinition(magicTypeID);
+    const MagicTypeDefinition& def = MAGIC_RULES->getMagicTypeDefinition(magicTypeID);
 
     // Possibly show free skills
     if (def.priorities.contains(prio))
@@ -306,7 +306,7 @@ CharEditMagicTab::showHideSkillsViews()
 
         // Clear the skills view if the free skills were reset
         const MagicTypePriorityDefinition* magicPrioDef =
-                MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
+                MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
                     .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)];
         if (CHARACTER_CHOICES->getAvailableFreeSkills(false) >= magicPrioDef->freeSkills.first &&
             CHARACTER_CHOICES->getAvailableFreeSkills(true) >= magicPrioDef->freeSkillGroup.first)

@@ -9,6 +9,8 @@
 #include <QJsonParseError>
 #include <QDebug>
 
+#include "data/appstatus.h"
+
 //---------------------------------------------------------------------------------
 MagicRules::MagicRules()
 {
@@ -30,6 +32,28 @@ MagicRules::~MagicRules()
 
         delete (*it);
     }
+    _typeDefinitions.clear();
+
+    QMap<QString, SpellCategoryDefinition*>::iterator it2;
+    for (it2 = _spellCategoryDefinitions.begin(); it2 != _spellCategoryDefinitions.end(); ++it2)
+    {
+        delete (*it2);
+    }
+    _spellCategoryDefinitions.clear();
+
+    QMap<QString, SpellDefinition*>::iterator it3;
+    for (it3 = _spellDefinitions.begin(); it3 != _spellDefinitions.end(); ++it3)
+    {
+        delete (*it3);
+    }
+    _spellDefinitions.clear();
+
+    QMap<QString, AdeptPowerDefinition*>::iterator it4;
+    for (it4 = _adeptPowerDefinitions.begin(); it4 != _adeptPowerDefinitions.end(); ++it4)
+    {
+        delete (*it4);
+    }
+    _adeptPowerDefinitions.clear();
 }
 
 //---------------------------------------------------------------------------------
@@ -136,7 +160,262 @@ MagicRules::initialize(const QString& p_jsonFile)
         _typeDefinitions[currentType["unique_id"].toString()] = typeDef;
     }// END magic types
 
-    // TODO: here
-    // TODO: modifiers of adept powers
-    // Check adpet cost with type()
+    // Parse spell category strings
+    QJsonArray categoryArray = doc.object().value("spell_categories").toArray();
+    QJsonObject currentCat;
+    SpellCategoryDefinition* spellCal = 0;
+    QString tempString;
+    for (int i = 0; i < categoryArray.size(); ++i)
+    {
+        currentCat = categoryArray.at(i).toObject();
+
+        // Make sure the definition doesn't already exist
+        if (_spellCategoryDefinitions.contains(currentCat["unique_id"].toString()))
+        {
+            qCritical() << "Spell category \"" << currentCat["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            return;
+        }
+
+        // Add spell definition
+        spellCal = new SpellCategoryDefinition();
+
+        // Translations
+        tempObject = currentSpell["translations"].toObject();
+        for (int j = 0; j < tempObject.keys().size(); ++j)
+        {
+            spellCal->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+        }
+
+        _spellCategoryDefinitions[currentCat["unique_id"].toString()] = spellCal;
+    }
+
+    // Parse each spell and add to the rules
+    QJsonArray spellsArray = doc.object().value("spells").toArray();
+    QJsonObject currentSpell;
+    SpellDefinition* spellDef = 0;
+    for (int i = 0; i < spellsArray.size(); ++i)
+    {
+        currentSpell = spellsArray.at(i).toObject();
+
+        // Make sure the definition doesn't already exist
+        if (_spellDefinitions.contains(currentSpell["unique_id"].toString()))
+        {
+            qCritical() << "Spell \"" << currentSpell["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            return;
+        }
+
+        // Add spell definition
+        spellDef = new SpellDefinition();
+
+        // Translations
+        tempObject = currentSpell["translations"].toObject();
+        for (int j = 0; j < tempObject.keys().size(); ++j)
+        {
+            spellDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+        }
+
+        // Category
+        spellDef->category = currentSpell["category"].toString();
+        if (!_spellCategoryDefinitions.contains(spellDef->category))
+        {
+            qCritical() << "Spell \"" << currentSpell["unique_id"].toString() << "\" of non existing category \""
+                           << spellDef->category << "\". Parsing aborted.";
+            return;
+        }
+
+        // Type
+        tempString = currentSpell["type"].toString();
+        if (tempString == "P")
+        {
+            spellDef->type = SPELLTYPE_PHYSICAL;
+        }
+        else if (tempString == "M")
+        {
+            spellDef->type = SPELLTYPE_MAGICAL;
+        }
+
+        // Range
+        tempString = currentSpell["range"].toString();
+        if (tempString == "T")
+        {
+            spellDef->range = SPELLRANGE_TOUCH;
+        }
+        else if (tempString == "LOS")
+        {
+            spellDef->range = SPELLRANGE_LOS;
+        }
+        else if (tempString == "LOS(A)")
+        {
+            spellDef->range = SPELLRANGE_LOS_AREA;
+        }
+
+        // Damage (optional)
+        if (currentSpell.contains("damage"))
+        {
+            tempString = currentSpell["damage"].toString();
+            if (tempString == "P")
+            {
+                spellDef->damageType = SPELLDAMAGE_PHYSICAL;
+            }
+            else if (tempString == "M")
+            {
+                spellDef->damageType = SPELLDAMAGE_MENTAL;
+            }
+        }
+
+        // Duration
+        tempString = currentSpell["duration"].toString();
+        if (tempString == "I")
+        {
+            spellDef->duration = SPELLDURATION_INSTANT;
+        }
+        else if (tempString == "S")
+        {
+            spellDef->duration = SPELLDURATION_SUSTAINED;
+        }
+        else if (tempString == "P")
+        {
+            spellDef->duration = SPELLDURATION_PERMANENT;
+        }
+
+        // Drain
+        spellDef->drain = currentSpell["drain"].toString();
+
+        // Descriptors (optional)
+        if (currentSpell.contains("descriptors"))
+        {
+            spellDef->descriptors = currentSpell["descriptors"].toArray().toVariantList().to;
+        }
+
+        // Does this spell require a custom choice?
+        if (currentSpell.contains("requires_custom"))
+        {
+            spellDef->requiresCustom = currentSpell["requires_custom"].toString() == "true";
+        }
+
+        // Is this spell affected by the essence value?
+        if (currentSpell.contains("essence_effect"))
+        {
+            spellDef->essenceEffect = currentSpell["essence_effect"].toString() == "true";
+        }
+
+        _spellDefinitions[currentSpell["unique_id"].toString()] = spellDef;
+    }// END spells
+
+    // Parse each adept power and add to the rules
+    QJsonArray powersArray = doc.object().value("adept_powers").toArray();
+    QJsonObject currentPower;
+    AdeptPowerDefinition* powerDef = 0;
+    for (int i = 0; i < spellsArray.size(); ++i)
+    {
+        currentPower = powersArray.at(i).toObject();
+
+        // Make sure the definition doesn't already exist
+        if (_adeptPowerDefinitions.contains(currentPower["unique_id"].toString()))
+        {
+            qCritical() << "Adept Power \"" << currentSpell["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            return;
+        }
+
+        // Add type definition
+        powerDef = new AdeptPowerDefinition();
+
+        // Translations
+        tempObject = currentPower["translations"].toObject();
+        for (int j = 0; j < tempObject.keys().size(); ++j)
+        {
+            powerDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+        }
+
+        // Cost
+        if (currentPower.contains("cost_per_level"))
+        {
+            powerDef->costType = COSTTYPE_PER_LEVEL;
+            powerDef->costArray.push_back(currentPower["cost_per_level"].toDouble());
+        }
+        else if (currentPower.contains("cost"))
+        {
+            // Normal cost or array
+            if (currentPower["cost"].type() == QJsonValue::Double)
+            {
+                powerDef->costType = COSTTYPE_NORMAL;
+                powerDef->costArray.push_back(currentPower["cost"].toDouble());
+            }
+            else
+            {
+                powerDef->costType = COSTTYPE_ARRAY;
+                tempArray = currentPower["cost"].toArray();
+
+                // Add each array entry
+                for (int j = 0; j < tempArray.size(); ++j)
+                {
+                    powerDef->costArray.push_back(tempArray[i].toDouble());
+                }
+            }
+        }
+
+        // Activation (optional)
+        if (currentPower.contains("activation"))
+        {
+            tempString = currentPower["activation"].toString();
+            if (tempString == "interrupt")
+            {
+                powerDef->activationType = ACTIVATIONTYPE_INTERRUPT;
+            }
+            else if (tempString == "free")
+            {
+                powerDef->activationType = ACTIVATIONTYPE_FREE;
+            }
+            else if (tempString == "simple")
+            {
+                powerDef->activationType = ACTIVATIONTYPE_SIMPLE;
+            }
+        }
+
+        // Does this power require a custom choice?
+        if (currentPower.contains("requires_custom"))
+        {
+            powerDef->requiresCustom = currentPower["requires_custom"].toString() == "true";
+        }
+
+        _adeptPowerDefinitions[currentPower["unique_id"].toString()] = powerDef;
+    } // END adept powers
+}
+
+//---------------------------------------------------------------------------------
+QMap<QString, SpellDefinition*>
+MagicRules::getAllSpellDefinitionsByCategory(const QString& p_uniqueID) const
+{
+    QMap<QString, SpellDefinition*> result;
+
+    // Sanity check - category exists
+    if (!_spellCategoryDefinitions.contains(p_uniqueID))
+    {
+        qWarning() << "Spell category \"" << p_uniqueID << "\" doesn't exist.";
+        return result;
+    }
+
+    // Iterate over all spells to get those of the passed category
+    QMap<QString, SpellDefinition*>::iterator it;
+    for (it = _spellDefinitions.begin(); it != _spellDefinitions.end(); ++it)
+    {
+        if ((*it)->category == p_uniqueID)
+        {
+            result[it.key()] == *it;
+        }
+    }
+
+    return result;
+}
+
+//---------------------------------------------------------------------------------
+QString
+MagicRules::getSpellCategoryTranslation(const QString& p_uniqueID) const
+{
+    if (!_spellCategoryDefinitions.contains(p_uniqueID))
+    {
+        return QObject::tr("Category not found: %1").arg(p_uniqueID);
+    }
+
+    return _spellCategoryDefinitions[p_uniqueID]->translations[APPSTATUS->getCurrentLocale()];
 }

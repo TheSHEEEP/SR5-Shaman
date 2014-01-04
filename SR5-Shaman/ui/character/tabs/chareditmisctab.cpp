@@ -49,7 +49,7 @@ CharEditMiscTab::initialize()
 
     // Initialize available magic user types
     ui->cbMagicType->blockSignals(true);
-    const QMap<QString, MagicTypeDefinition*>& magicTypeDefs = MAGIC_RULES->getAllDefinitions();
+    const QMap<QString, MagicTypeDefinition*>& magicTypeDefs = MAGIC_RULES->getAllMagicTypeDefinitions();
     QMap<QString, MagicTypeDefinition*>::const_iterator mtIt;
     for(mtIt = magicTypeDefs.begin(); mtIt != magicTypeDefs.end(); ++mtIt)
     {
@@ -293,7 +293,7 @@ CharEditMiscTab::on_cbMagicType_currentIndexChanged(int p_index)
     }
 
     // Fill priority selection
-    const MagicTypeDefinition& definition = MAGIC_RULES->getDefinition(type);
+    const MagicTypeDefinition& definition = MAGIC_RULES->getMagicTypeDefinition(type);
     if (definition.priorities.contains(0))
     {
         ui->cbMagicPriority->addItem("A", 0);

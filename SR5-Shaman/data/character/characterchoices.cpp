@@ -78,7 +78,7 @@ CharacterChoices::getSpentKarma() const
         if (getIsMagicUser() &&
             it.key() == "magic")
         {
-            valueWithoutKarma += MAGIC_RULES->getDefinition(getMagicUserTypeID())
+            valueWithoutKarma += MAGIC_RULES->getMagicTypeDefinition(getMagicUserTypeID())
                     .priorities[getPriorityIndex(PRIORITY_MAGIC)]->startingMagic;
         }
 
@@ -400,12 +400,12 @@ CharacterChoices::getAvailableFreeSkills(bool p_skillGroups) const
         std::pair<int, int> freeSkills;
         if (!p_skillGroups)
         {
-            freeSkills = MAGIC_RULES->getDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
+            freeSkills = MAGIC_RULES->getMagicTypeDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
                             ->freeSkills;
         }
         else
         {
-            freeSkills = MAGIC_RULES->getDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
+            freeSkills = MAGIC_RULES->getMagicTypeDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
                     ->freeSkillGroup;
         }
 
@@ -464,12 +464,12 @@ CharacterChoices::addFreeSkill(const QString& p_id, Priority p_source)
         int skillValue = 0;
         if (!skillDef.isGroup)
         {
-            skillValue = MAGIC_RULES->getDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
+            skillValue = MAGIC_RULES->getMagicTypeDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
                             ->freeSkills.second;
         }
         else
         {
-            skillValue = MAGIC_RULES->getDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
+            skillValue = MAGIC_RULES->getMagicTypeDefinition(getMagicUserTypeID()).priorities[getPriorityIndex(PRIORITY_MAGIC)]
                                         ->freeSkillGroup.second;
         }
 

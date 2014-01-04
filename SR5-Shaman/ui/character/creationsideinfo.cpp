@@ -100,7 +100,7 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
                     return;
                 }
                 const MagicTypeDefinition& magicType =
-                        MAGIC_RULES->getDefinition(CHARACTER_CHOICES->getMagicUserTypeID());
+                        MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID());
                 QString magicTypeName = magicType.translations[APPSTATUS->getCurrentLocale()];
                 p_label->setText(tr("Magic / Resonance") + " - " + magicTypeName);
             }
