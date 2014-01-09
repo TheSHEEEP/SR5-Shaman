@@ -54,6 +54,13 @@ MagicRules::~MagicRules()
         delete (*it4);
     }
     _adeptPowerDefinitions.clear();
+
+    QMap<QString, ComplexFormDefinition*>::iterator it5;
+    for (it5 = _complexFormDefinitions.begin(); it5 != _complexFormDefinitions.end(); ++it5)
+    {
+        delete (*it5);
+    }
+    _complexFormDefinitions.clear();
 }
 
 //---------------------------------------------------------------------------------
@@ -180,7 +187,7 @@ MagicRules::initialize(const QString& p_jsonFile)
         spellCal = new SpellCategoryDefinition();
 
         // Translations
-        tempObject = currentSpell["translations"].toObject();
+        tempObject = currentCat["translations"].toObject();
         for (int j = 0; j < tempObject.keys().size(); ++j)
         {
             spellCal->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
@@ -284,7 +291,12 @@ MagicRules::initialize(const QString& p_jsonFile)
         // Descriptors (optional)
         if (currentSpell.contains("descriptors"))
         {
-            spellDef->descriptors = currentSpell["descriptors"].toArray().toVariantList().to;
+            QVariantList list = currentSpell["descriptors"].toArray().toVariantList();
+            QListIterator<QVariant> i(list);
+            while (i.hasNext())
+            {
+                spellDef->descriptors << i.next().toString();
+            }
         }
 
         // Does this spell require a custom choice?
@@ -306,14 +318,14 @@ MagicRules::initialize(const QString& p_jsonFile)
     QJsonArray powersArray = doc.object().value("adept_powers").toArray();
     QJsonObject currentPower;
     AdeptPowerDefinition* powerDef = 0;
-    for (int i = 0; i < spellsArray.size(); ++i)
+    for (int i = 0; i < powersArray.size(); ++i)
     {
         currentPower = powersArray.at(i).toObject();
 
         // Make sure the definition doesn't already exist
         if (_adeptPowerDefinitions.contains(currentPower["unique_id"].toString()))
         {
-            qCritical() << "Adept Power \"" << currentSpell["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            qCritical() << "Adept Power \"" << currentPower["unique_id"].toString() << "\" already exists. Parsing aborted.";
             return;
         }
 
@@ -380,6 +392,77 @@ MagicRules::initialize(const QString& p_jsonFile)
 
         _adeptPowerDefinitions[currentPower["unique_id"].toString()] = powerDef;
     } // END adept powers
+
+    // Parse each complex form and add to the rules
+    QJsonArray formsArray = doc.object().value("complex_forms").toArray();
+    QJsonObject currentForm;
+    ComplexFormDefinition* formDef = 0;
+    for (int i = 0; i < formsArray.size(); ++i)
+    {
+        currentForm = formsArray.at(i).toObject();
+
+        // Make sure the definition doesn't already exist
+        if (_complexFormDefinitions.contains(currentForm["unique_id"].toString()))
+        {
+            qCritical() << "Complex Form \"" << currentForm["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            return;
+        }
+
+        // Add form definition
+        formDef = new ComplexFormDefinition();
+
+        // Translations
+        tempObject = currentForm["translations"].toObject();
+        for (int j = 0; j < tempObject.keys().size(); ++j)
+        {
+            formDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+        }
+
+        // Target
+        tempString = currentForm["target"].toString();
+        if (tempString == "persona")
+        {
+            formDef->targetType = TARGETTYPE_PERSONA;
+        }
+        else if (tempString == "device")
+        {
+            formDef->targetType = TARGETTYPE_DEVICE;
+        }
+        else if (tempString == "file")
+        {
+            formDef->targetType = TARGETTYPE_FILE;
+        }
+        else if (tempString == "sprite")
+        {
+            formDef->targetType = TARGETTYPE_SPRITE;
+        }
+
+        // Duration
+        tempString = currentForm["duration"].toString();
+        if (tempString == "I")
+        {
+            formDef->duration = SPELLDURATION_INSTANT;
+        }
+        else if (tempString == "S")
+        {
+            formDef->duration = SPELLDURATION_SUSTAINED;
+        }
+        else if (tempString == "P")
+        {
+            formDef->duration = SPELLDURATION_PERMANENT;
+        }
+
+        // Fading Value
+        formDef->fadingValue = currentForm["fading_value"].toString();
+
+        // Does this form require a custom choice?
+        if (currentForm.contains("requires_custom"))
+        {
+            formDef->requiresCustom = currentForm["requires_custom"].toString() == "true";
+        }
+
+        _complexFormDefinitions[currentForm["unique_id"].toString()] = formDef;
+    } // END complex forms
 }
 
 //---------------------------------------------------------------------------------
@@ -396,7 +479,7 @@ MagicRules::getAllSpellDefinitionsByCategory(const QString& p_uniqueID) const
     }
 
     // Iterate over all spells to get those of the passed category
-    QMap<QString, SpellDefinition*>::iterator it;
+    QMap<QString, SpellDefinition*>::const_iterator it;
     for (it = _spellDefinitions.begin(); it != _spellDefinitions.end(); ++it)
     {
         if ((*it)->category == p_uniqueID)

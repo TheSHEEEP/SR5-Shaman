@@ -115,7 +115,7 @@ MagicTreeModel::initialize()
         spellCategory = new MagicModelItem();
 
         // Get the correct category
-        category = _rootItem->children[(*it)->type];
+        topCategory = _rootItem->children[(*it)->type];
         spellCategory->parent = topCategory;
 
         // Assign the definition id

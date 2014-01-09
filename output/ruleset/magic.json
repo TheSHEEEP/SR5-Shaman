@@ -1522,5 +1522,149 @@
         "cost"          : "0.5",
         "activation"    : "simple"
       }
+    ],
+    "complex_forms" : [
+      { "unique_id"    : "CLEANER",
+        "translations" :
+        {
+            "en"    : "Cleaner",
+            "de"    : "Reiniger"
+        },
+        "target"          : "persona",
+        "duration"        : "P",   
+        "fading_value"    : "L + 1"
+      },
+      { "unique_id"    : "DIFFUSION_OF_MA",
+        "translations" :
+        {
+            "en"    : "Diffusion Of [Matrix Attribute]",
+            "de"    : "[Matrixattribut]-Senkung"
+        },
+        "target"          : "device",
+        "duration"        : "S",
+        "requires_custom" : "true",
+        "fading_value"    : "L + 1"
+      },
+      { "unique_id"    : "EDITOR",
+        "translations" :
+        {
+            "en"    : "Editor",
+            "de"    : "Editor"
+        },
+        "target"          : "file",
+        "duration"        : "P",   
+        "fading_value"    : "L + 2"
+      },
+      { "unique_id"    : "INFUSION_OF_MA",
+        "translations" :
+        {
+            "en"    : "Infusion Of [Matrix Attribute]",
+            "de"    : "[Matrixattribut]-Steigerung"
+        },
+        "target"          : "device",
+        "duration"        : "S",   
+        "requires_custom" : "true",
+        "fading_value"    : "L + 1"
+      },
+      { "unique_id"    : "STATIC_VEIL",
+        "translations" :
+        {
+            "en"    : "Static Veil",
+            "de"    : "Signalschleier"
+        },
+        "target"          : "persona",
+        "duration"        : "S",   
+        "fading_value"    : "L - 1"
+      },
+      { "unique_id"    : "PULSE_STORM",
+        "translations" :
+        {
+            "en"    : "Pulse Storm",
+            "de"    : "Signalsturm"
+        },
+        "target"          : "persona",
+        "duration"        : "I",   
+        "fading_value"    : "L"
+      },
+      { "unique_id"    : "PUPPETEER",
+        "translations" :
+        {
+            "en"    : "Puppeteer",
+            "de"    : "Puppenspieler"
+        },
+        "target"          : "device",
+        "duration"        : "I",   
+        "fading_value"    : "L + 4"
+      },
+      { "unique_id"    : "RESONANCE_CHANNEL",
+        "translations" :
+        {
+            "en"    : "Resonance Channel",
+            "de"    : "Resonanzkanal"
+        },
+        "target"          : "device",
+        "duration"        : "S",   
+        "fading_value"    : "L - 1"
+      },
+      { "unique_id"    : "RESONANCE_SPIKE",
+        "translations" :
+        {
+            "en"    : "Resonance Spike",
+            "de"    : "Resonanzspitze"
+        },
+        "target"          : "device",
+        "duration"        : "I",   
+        "fading_value"    : "L"
+      },
+      { "unique_id"    : "RESONANCE_VEIL",
+        "translations" :
+        {
+            "en"    : "Resonance Veil",
+            "de"    : "Resonanzillusion"
+        },
+        "target"          : "device",
+        "duration"        : "S",   
+        "fading_value"    : "L - 1"
+      },
+      { "unique_id"    : "STATIC_BOMB",
+        "translations" :
+        {
+            "en"    : "Static Bomb",
+            "de"    : "Resonanznebel"
+        },
+        "target"          : "persona",
+        "duration"        : "I",   
+        "fading_value"    : "L + 2"
+      },
+      { "unique_id"    : "STITCHES",
+        "translations" :
+        {
+            "en"    : "Stitches",
+            "de"    : "Zusammenflicken"
+        },
+        "target"          : "sprite",
+        "duration"        : "P",   
+        "fading_value"    : "L - 2"
+      },
+      { "unique_id"    : "TRANSCENDENT_GRID",
+        "translations" :
+        {
+            "en"    : "Transcendent Grid",
+            "de"    : "Metagitter"
+        },
+        "target"          : "persona",
+        "duration"        : "I",   
+        "fading_value"    : "L - 3"
+      },
+      { "unique_id"    : "TELLTALE",
+        "translations" :
+        {
+            "en"    : "Telltale",
+            "de"    : "Petze"
+        },
+        "target"          : "persona",
+        "duration"        : "P",   
+        "fading_value"    : "L - 2"
+      }
     ]
 }

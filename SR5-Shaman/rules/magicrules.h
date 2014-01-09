@@ -2,6 +2,7 @@
 #define MAGICRULES_H
 
 #include <QString>
+#include <QStringList>
 #include <QMap>
 #include <vector>
 #include <QObject>
@@ -139,6 +140,36 @@ struct AdeptPowerDefinition
     QString                             customString;
 };
 
+
+// Complex Form enums
+enum TargetType
+{
+    TARGETTYPE_INVALID = -1,
+    TARGETTYPE_PERSONA,
+    TARGETTYPE_DEVICE,
+    TARGETTYPE_FILE,
+    TARGETTYPE_SPRITE,
+    NUM_TARGETTYPES
+};
+
+/**
+ * @brief The definition of one complex form.
+ */
+struct ComplexFormDefinition
+{
+    ComplexFormDefinition()
+        : targetType(TARGETTYPE_INVALID)
+        , duration(SPELLDURATION_INVALID)
+    {}
+
+    QMap<QString, QString>              translations;
+    TargetType                          targetType;
+    SpellDuration                       duration;
+    QString                             fadingValue;
+    bool                                requiresCustom;
+    QString                             customString;
+};
+
 /**
  * @brief This class holds all information regarding magic specific rules.
  *          For example, this class holds all magic type definitions.
@@ -190,6 +221,11 @@ public:
     const QMap<QString, AdeptPowerDefinition*>& getAllAdeptPowerDefinitions() const;
 
     /**
+     * @brief Returns the map of complex forms definitions.
+     */
+    const QMap<QString, ComplexFormDefinition*>& getAllComplexFormDefinitions() const;
+
+    /**
      * @brief Returns the definition of the magic type with the passed ID.
      * @note    Does NOT check if the id exists. Use getAllDefinitions() for that.
      */
@@ -208,6 +244,12 @@ public:
     const AdeptPowerDefinition& getAdeptPowerDefinition(const QString& p_uniqueID) const;
 
     /**
+     * @brief Returns the definition of the complex form with the passed ID.
+     * @note    Does NOT check if the id exists. Use getAllDefinitions() for that.
+     */
+    const ComplexFormDefinition& getComplexFormDefinition(const QString& p_uniqueID) const;
+
+    /**
      * @brief Convenience function that returns the translation for the current locale.
      * @param p_uniqueID    The unique ID of the category.
      * @return
@@ -219,6 +261,7 @@ private:
     QMap<QString, SpellCategoryDefinition*> _spellCategoryDefinitions;
     QMap<QString, SpellDefinition*>         _spellDefinitions;
     QMap<QString, AdeptPowerDefinition*>    _adeptPowerDefinitions;
+    QMap<QString, ComplexFormDefinition*>   _complexFormDefinitions;
 };
 
 //---------------------------------------------------------------------------------
@@ -255,6 +298,14 @@ MagicRules::getAllAdeptPowerDefinitions() const
 
 //---------------------------------------------------------------------------------
 inline
+const QMap<QString, ComplexFormDefinition*>&
+MagicRules::getAllComplexFormDefinitions() const
+{
+    return _complexFormDefinitions;
+}
+
+//---------------------------------------------------------------------------------
+inline
 const MagicTypeDefinition&
 MagicRules::getMagicTypeDefinition(const QString& p_uniqueId) const
 {
@@ -275,6 +326,14 @@ const AdeptPowerDefinition&
 MagicRules::getAdeptPowerDefinition(const QString& p_uniqueId) const
 {
     return *(_adeptPowerDefinitions[p_uniqueId]);
+}
+
+//---------------------------------------------------------------------------------
+inline
+const ComplexFormDefinition&
+MagicRules::getComplexFormDefinition(const QString& p_uniqueId) const
+{
+    return *(_complexFormDefinitions[p_uniqueId]);
 }
 
 

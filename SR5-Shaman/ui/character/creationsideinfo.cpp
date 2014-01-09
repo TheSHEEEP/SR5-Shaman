@@ -75,6 +75,7 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
     // TODO: Show all information
     switch (p_prio)
     {
+    case PRIORITY_NUM_PRIORITIES:
     case PRIORITY_INVALID:
         p_label->setText("-");
         break;
