@@ -237,10 +237,13 @@ SkillTreeModel::flags(const QModelIndex& p_index) const
 QVariant
 SkillTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_role) const
 {
-    if (p_orientation == Qt::Horizontal && p_section == Qt::DisplayRole)
-        return QVariant("Wat");
+    if (p_role != Qt::DisplayRole)
+        return QVariant();
 
-    return QVariant("Hello");
+    if (p_orientation == Qt::Horizontal)
+        return QVariant("Name");
+
+    return QVariant();
 }
 
 //---------------------------------------------------------------------------------

@@ -135,7 +135,7 @@ struct AdeptPowerDefinition
     QMap<QString, QString>              translations;
     CostType                            costType;
     std::vector<float>                  costArray;
-    QString                             activationType;
+    ActivationType                      activationType;
     bool                                requiresCustom;
     QString                             customString;
 };

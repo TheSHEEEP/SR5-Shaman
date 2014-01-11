@@ -27,7 +27,11 @@ MagicModelItem::MagicModelItem(const MagicModelItem& p_other)
 //---------------------------------------------------------------------------------
 MagicModelItem::~MagicModelItem()
 {
-
+    for (unsigned int i = 0; i < children.size(); ++i)
+    {
+        delete children[i];
+    }
+    children.clear();
 }
 
 //---------------------------------------------------------------------------------
@@ -103,7 +107,7 @@ MagicTreeModel::initialize()
     QMap<QString, SpellDefinition*> spellDefs;
     QMap<QString, SpellCategoryDefinition*>::const_iterator it;
     QMap<QString, SpellDefinition*>::const_iterator spellIt;
-    MagicModelItem* topCategory = _rootItem->children[0];
+    MagicModelItem* topCategory = _rootItem->children[MAGICITEMTYPE_SPELL];
     MagicModelItem* spellCategory = NULL;
     MagicModelItem* newItem = NULL;
     SpellCategoryDefinition* spellCatDef = NULL;
@@ -115,7 +119,7 @@ MagicTreeModel::initialize()
         spellCategory = new MagicModelItem();
 
         // Get the correct category
-        topCategory = _rootItem->children[(*it)->type];
+        topCategory = _rootItem->children[MAGICITEMTYPE_SPELL];
         spellCategory->parent = topCategory;
 
         // Assign the definition id
@@ -124,19 +128,80 @@ MagicTreeModel::initialize()
         // Assign the type
         spellCategory->itemType = MAGICITEMTYPE_SPELL;
 
-        // Get all spells of this type and add it
+        // Get all spells of this type and add them
         spellDefs = MAGIC_RULES->getAllSpellDefinitionsByCategory(spellCategory->id);
-
-        // TODO: here
+        for (spellIt = spellDefs.begin(); spellIt != spellDefs.end(); ++spellIt)
+        {
+            newItem = new MagicModelItem();
+            newItem->id = spellIt.key();
+            newItem->isCategory = false;
+            newItem->itemType = MAGICITEMTYPE_SPELL;
+            newItem->parent = spellCategory;
+            spellCategory->children.push_back(newItem);
+        }
 
         // Add to spells category
+        topCategory->children.push_back(spellCategory);
+    }
+
+    // Get the adept powers from the rules
+    const QMap<QString, AdeptPowerDefinition*>& adeptDefs  = MAGIC_RULES->getAllAdeptPowerDefinitions();
+    QMap<QString, AdeptPowerDefinition*>::const_iterator it2;
+    topCategory = _rootItem->children[MAGICITEMTYPE_ADEPT_POWER];
+    newItem = NULL;
+    AdeptPowerDefinition* powerDef = NULL;
+    for (it2 = adeptDefs.begin(); it2 != adeptDefs.end(); ++it2)
+    {
+        powerDef = *it2;
+
+        // Create the item
+        newItem = new MagicModelItem();
+
+        // Get the correct category
+        topCategory = _rootItem->children[MAGICITEMTYPE_ADEPT_POWER];
+        newItem->parent = topCategory;
+
+        // Assign the definition id
+        newItem->id = it2.key();
+
+        // Assign the type
+        newItem->itemType = MAGICITEMTYPE_ADEPT_POWER;
+
+        // Add to adept powers category
+        topCategory->children.push_back(newItem);
+    }
+
+    // Get the complex forms from the rules
+    const QMap<QString, ComplexFormDefinition*>& formDefs  = MAGIC_RULES->getAllComplexFormDefinitions();
+    QMap<QString, ComplexFormDefinition*>::const_iterator it3;
+    topCategory = _rootItem->children[MAGICITEMTYPE_COMPLEX_FORM];
+    newItem = NULL;
+    ComplexFormDefinition* formDef = NULL;
+    for (it3 = formDefs.begin(); it3 != formDefs.end(); ++it3)
+    {
+        formDef = *it3;
+
+        // Create the item
+        newItem = new MagicModelItem();
+
+        // Get the correct category
+        topCategory = _rootItem->children[MAGICITEMTYPE_COMPLEX_FORM];
+        newItem->parent = topCategory;
+
+        // Assign the definition id
+        newItem->id = it3.key();
+
+        // Assign the type
+        newItem->itemType = MAGICITEMTYPE_COMPLEX_FORM;
+
+        // Add to adept powers category
         topCategory->children.push_back(newItem);
     }
 }
 
 //---------------------------------------------------------------------------------
 QVariant
-SkillTreeModel::data(const QModelIndex& p_index, int p_role) const
+MagicTreeModel::data(const QModelIndex& p_index, int p_role) const
 {
     // Validity checks
     if (!p_index.isValid())
@@ -145,7 +210,7 @@ SkillTreeModel::data(const QModelIndex& p_index, int p_role) const
     if (p_role != Qt::DisplayRole)
         return QVariant();
 
-    SkillModelItem* item = static_cast<SkillModelItem*>(p_index.internalPointer());
+    MagicModelItem* item = static_cast<MagicModelItem*>(p_index.internalPointer());
 
     QVariant result;
     result.setValue((void*)item);
@@ -154,7 +219,7 @@ SkillTreeModel::data(const QModelIndex& p_index, int p_role) const
 
 //---------------------------------------------------------------------------------
 Qt::ItemFlags
-SkillTreeModel::flags(const QModelIndex& p_index) const
+MagicTreeModel::flags(const QModelIndex& p_index) const
 {
     // Validity checks
     if (!p_index.isValid())
@@ -165,31 +230,34 @@ SkillTreeModel::flags(const QModelIndex& p_index) const
 
 //---------------------------------------------------------------------------------
 QVariant
-SkillTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_role) const
+MagicTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_role) const
 {
-    if (p_orientation == Qt::Horizontal && p_section == Qt::DisplayRole)
-        return QVariant("Wat");
+    if (p_role != Qt::DisplayRole)
+        return QVariant();
 
-    return QVariant("Hello");
+    if (p_orientation == Qt::Horizontal)
+        return QVariant("Name");
+
+    return QVariant();
 }
 
 //---------------------------------------------------------------------------------
 QModelIndex
-SkillTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) const
+MagicTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) const
 {
     // Validity checks
     if (p_parent.isValid() && p_parent.column() != 0)
             return QModelIndex();
 
     // Get parent item
-    SkillModelItem* parentItem;
+    MagicModelItem* parentItem;
     if (!p_parent.isValid())
         parentItem = _rootItem;
     else
-        parentItem = static_cast<SkillModelItem*>(p_parent.internalPointer());
+        parentItem = static_cast<MagicModelItem*>(p_parent.internalPointer());
 
     // Get correct child item and create model index
-    SkillModelItem* childItem = parentItem->children[p_row];
+    MagicModelItem* childItem = parentItem->children[p_row];
     if (childItem)
         return createIndex(p_row, 0, childItem);
     else
@@ -198,15 +266,15 @@ SkillTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) cons
 
 //---------------------------------------------------------------------------------
 QModelIndex
-SkillTreeModel::parent(const QModelIndex& p_index) const
+MagicTreeModel::parent(const QModelIndex& p_index) const
 {
     // Validity checks
     if (!p_index.isValid())
         return QModelIndex();
 
     // Get child and parent items
-    SkillModelItem* childItem = static_cast<SkillModelItem*>(p_index.internalPointer());
-    SkillModelItem* parentItem = childItem->parent;
+    MagicModelItem* childItem = static_cast<MagicModelItem*>(p_index.internalPointer());
+    MagicModelItem* parentItem = childItem->parent;
 
     if (parentItem == _rootItem)
         return QModelIndex();
@@ -218,18 +286,18 @@ SkillTreeModel::parent(const QModelIndex& p_index) const
 
 //---------------------------------------------------------------------------------
 int
-SkillTreeModel::rowCount(const QModelIndex& p_parent) const
+MagicTreeModel::rowCount(const QModelIndex& p_parent) const
 {
     // Validity checks
     if (p_parent.column() > 0)
         return 0;
 
     // Get parent item
-    SkillModelItem* parentItem;
+    MagicModelItem* parentItem;
     if (!p_parent.isValid())
         parentItem = _rootItem;
     else
-        parentItem = static_cast<SkillModelItem*>(p_parent.internalPointer());
+        parentItem = static_cast<MagicModelItem*>(p_parent.internalPointer());
 
     // Return size of children
     return parentItem->children.size();
@@ -237,7 +305,7 @@ SkillTreeModel::rowCount(const QModelIndex& p_parent) const
 
 //---------------------------------------------------------------------------------
 int
-SkillTreeModel::columnCount(const QModelIndex& p_parent) const
+MagicTreeModel::columnCount(const QModelIndex& p_parent) const
 {
     // TODO: This will probably be more as soon as we want to show more than just the name
     return 1;

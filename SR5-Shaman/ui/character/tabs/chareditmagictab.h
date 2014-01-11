@@ -9,6 +9,7 @@ class CharEditMagicTab;
 
 class SkillSortFilterProxyModel;
 class SkillDelegate;
+class MagicDelegate;
 
 /**
  * @brief This tab holds all information about the character's magic type, selection of magical / resonance skills
@@ -50,7 +51,7 @@ private:
     SkillDelegate*              _skillsAvailableDelegate;
     SkillSortFilterProxyModel*  _skillsFilter;
     SkillDelegate*              _skillsDelegate;
-
+    MagicDelegate*              _spellsAvailableDelegate;
 
     /**
      * @brief Updates all displayed values.
@@ -85,6 +86,13 @@ private slots:
      * @param p_previous    The previously selected item.
      */
     void handleSkillChanged(const QModelIndex& p_current, const QModelIndex& p_previous);
+
+    /**
+     * @brief Will enable/disable the remove or add spell button.
+     * @param p_current     The currently selected item.
+     * @param p_previous    The previously selected item.
+     */
+    void handleSpellChanged(const QModelIndex& p_current, const QModelIndex& p_previous);
 
     /**
      * @brief Will add the selected skill to the list of selected skills.

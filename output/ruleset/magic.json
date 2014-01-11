@@ -1379,15 +1379,6 @@
         "cost_per_level"    : "0.5",
         "requires_custom"   : "true"
       },
-      { "unique_id"    : "ASTRAL_PERCEPTION",
-        "translations" :
-        {
-            "en"    : "Astral Perception",
-            "de"    : "Astrale Wahrnehmung"
-        },
-        "cost"              : "1",
-        "activation"        : "simple"
-      },
       { "unique_id"    : "IMPROVED_PHYS_ATTRIBUTE",
         "translations" :
         {

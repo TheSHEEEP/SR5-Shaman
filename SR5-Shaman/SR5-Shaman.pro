@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     rules/skillrules.cpp \
     ui/models/skillsortfilterproxymodel.cpp \
     ui/models/skilldelegate.cpp \
-    ui/models/magictreemodel.cpp
+    ui/models/magictreemodel.cpp \
+    ui/models/magicdelegate.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwindow.h \
     rules/skillrules.h \
     ui/models/skillsortfilterproxymodel.h \
     ui/models/skilldelegate.h \
-    ui/models/magictreemodel.h
+    ui/models/magictreemodel.h \
+    ui/models/magicdelegate.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \

@@ -10,6 +10,8 @@
 #include "ui/models/skilltreemodel.h"
 #include "ui/models/skillsortfilterproxymodel.h"
 #include "ui/models/skilldelegate.h"
+#include "ui/models/magictreemodel.h"
+#include "ui/models/magicdelegate.h"
 
 //---------------------------------------------------------------------------------
 CharEditMagicTab::CharEditMagicTab(QWidget *parent)
@@ -19,6 +21,7 @@ CharEditMagicTab::CharEditMagicTab(QWidget *parent)
     , _skillsAvailableDelegate(NULL)
     , _skillsFilter(NULL)
     , _skillsDelegate(NULL)
+    , _spellsAvailableDelegate(NULL)
 {
     ui->setupUi(this);
 }
@@ -26,9 +29,7 @@ CharEditMagicTab::CharEditMagicTab(QWidget *parent)
 //---------------------------------------------------------------------------------
 CharEditMagicTab::~CharEditMagicTab()
 {
-    // Cannot delete the model I created, or it crashes..
-//    delete ((SkillSortFilterProxyModel*)ui->treeSkillsAvailable->model())->sourceModel();
-//    delete ui->treeSkillsAvailable->model();
+    // TODO: Created Models, filters, etc. should be deleted here. But doing so crashes the app. Huh.
     delete ui;
 }
 
@@ -55,6 +56,7 @@ CharEditMagicTab::initialize()
     // Delegate
     _skillsAvailableDelegate = new SkillDelegate();
     ui->treeSkillsAvailable->setItemDelegate(_skillsAvailableDelegate);
+    ui->treeSkillsAvailable->setHeaderHidden(true);
     // Handle selection & drag
     connect(ui->treeSkillsAvailable->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
                                                         SLOT(handleSkillChanged(QModelIndex,QModelIndex)));
@@ -75,10 +77,24 @@ CharEditMagicTab::initialize()
     // Delegate
     _skillsDelegate = new SkillDelegate();
     ui->treeSkills->setItemDelegate(_skillsDelegate);
+    ui->treeSkills->setHeaderHidden(true);
     // Handle selection & drag
     connect(ui->treeSkills->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
                                                SLOT(handleSkillChanged(QModelIndex,QModelIndex)));
 
+    // Available spells/powers/complex forms
+    MagicTreeModel* magicTreeModel = new MagicTreeModel();
+    magicTreeModel->initialize();
+    // Model & sorting
+    ui->treeSpellsAvailable->setModel(magicTreeModel);
+    ui->treeSpellsAvailable->setSortingEnabled(false);
+    // Delegate
+    _spellsAvailableDelegate = new MagicDelegate();
+    ui->treeSpellsAvailable->setItemDelegate(_spellsAvailableDelegate);
+    ui->treeSpellsAvailable->setHeaderHidden(true);
+    // Handle selection & drag
+    connect(ui->treeSpellsAvailable->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+                                                        SLOT(handleSpellChanged(QModelIndex,QModelIndex)));
 
     // Fill available aspects
     ui->cbAspect->blockSignals(true);
@@ -379,6 +395,13 @@ CharEditMagicTab::handleSkillChanged(const QModelIndex& p_current, const QModelI
 
     // It is a removable/addable item, so enable the button
     button->setEnabled(true);
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMagicTab::handleSpellChanged(const QModelIndex& p_current, const QModelIndex& p_previous)
+{
+
 }
 
 //---------------------------------------------------------------------------------
