@@ -11,6 +11,7 @@
 #include "ui/models/skillsortfilterproxymodel.h"
 #include "ui/models/skilldelegate.h"
 #include "ui/models/magictreemodel.h"
+#include "ui/models/magicsortfilterproxymodel.h"
 #include "ui/models/magicdelegate.h"
 
 //---------------------------------------------------------------------------------
@@ -21,6 +22,7 @@ CharEditMagicTab::CharEditMagicTab(QWidget *parent)
     , _skillsAvailableDelegate(NULL)
     , _skillsFilter(NULL)
     , _skillsDelegate(NULL)
+    , _spellsAvailableFilter(NULL)
     , _spellsAvailableDelegate(NULL)
 {
     ui->setupUi(this);
@@ -85,8 +87,15 @@ CharEditMagicTab::initialize()
     // Available spells/powers/complex forms
     MagicTreeModel* magicTreeModel = new MagicTreeModel();
     magicTreeModel->initialize();
+    // Filter
+    _spellsAvailableFilter = new MagicSortFilterProxyModel(ui->treeSkills);
+    _spellsAvailableFilter->setSourceModel(magicTreeModel);
+//    _spellsAvailableFilter->getFilterIDContains().clear();
+//    _spellsAvailableFilter->setFilterMask(MAGIC_FILTERMASK_ID_EQUALS);
+    _spellsAvailableFilter->setShowEmptyCategories(false);
+    _spellsAvailableFilter->applyFilter();
     // Model & sorting
-    ui->treeSpellsAvailable->setModel(magicTreeModel);
+    ui->treeSpellsAvailable->setModel(_spellsAvailableFilter);
     ui->treeSpellsAvailable->setSortingEnabled(false);
     // Delegate
     _spellsAvailableDelegate = new MagicDelegate();

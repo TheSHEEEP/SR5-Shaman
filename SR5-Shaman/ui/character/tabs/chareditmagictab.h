@@ -8,6 +8,7 @@ class CharEditMagicTab;
 }
 
 class SkillSortFilterProxyModel;
+class MagicSortFilterProxyModel;
 class SkillDelegate;
 class MagicDelegate;
 
@@ -51,6 +52,7 @@ private:
     SkillDelegate*              _skillsAvailableDelegate;
     SkillSortFilterProxyModel*  _skillsFilter;
     SkillDelegate*              _skillsDelegate;
+    MagicSortFilterProxyModel*  _spellsAvailableFilter;
     MagicDelegate*              _spellsAvailableDelegate;
 
     /**
