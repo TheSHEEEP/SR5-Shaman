@@ -24,6 +24,8 @@ CharEditMagicTab::CharEditMagicTab(QWidget *parent)
     , _skillsDelegate(NULL)
     , _spellsAvailableFilter(NULL)
     , _spellsAvailableDelegate(NULL)
+    , _spellsFilter(NULL)
+    , _spellsDelegate(NULL)
 {
     ui->setupUi(this);
 }
@@ -70,6 +72,7 @@ CharEditMagicTab::initialize()
     _skillsFilter = new SkillSortFilterProxyModel(ui->treeSkills);
     _skillsFilter->setSourceModel(skillTreeModel);
     _skillsFilter->getFilterIDContains().clear();
+    _skillsFilter->getFilterIDEquals().clear();
     _skillsFilter->setFilterMask(SKILL_FILTERMASK_ID_EQUALS);
     _skillsFilter->setShowEmptyCategories(false);
     _skillsFilter->applyFilter();
@@ -90,13 +93,15 @@ CharEditMagicTab::initialize()
     // Filter
     _spellsAvailableFilter = new MagicSortFilterProxyModel(ui->treeSkills);
     _spellsAvailableFilter->setSourceModel(magicTreeModel);
-//    _spellsAvailableFilter->getFilterIDContains().clear();
-//    _spellsAvailableFilter->setFilterMask(MAGIC_FILTERMASK_ID_EQUALS);
+    std::vector<MagicItemType> filterTypesSpells;
+    filterTypesSpells.push_back(MAGICITEMTYPE_INVALID);
+    _spellsAvailableFilter->setFilterTypes(filterTypesSpells);
+    _spellsAvailableFilter->setFilterMask(MAGIC_FILTERMASK_TYPE);
     _spellsAvailableFilter->setShowEmptyCategories(false);
     _spellsAvailableFilter->applyFilter();
     // Model & sorting
     ui->treeSpellsAvailable->setModel(_spellsAvailableFilter);
-    ui->treeSpellsAvailable->setSortingEnabled(false);
+    ui->treeSpellsAvailable->setSortingEnabled(true);
     // Delegate
     _spellsAvailableDelegate = new MagicDelegate();
     ui->treeSpellsAvailable->setItemDelegate(_spellsAvailableDelegate);
@@ -104,6 +109,28 @@ CharEditMagicTab::initialize()
     // Handle selection & drag
     connect(ui->treeSpellsAvailable->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
                                                         SLOT(handleSpellChanged(QModelIndex,QModelIndex)));
+
+    // Selected spells/powers/complex forms
+    magicTreeModel = new MagicTreeModel();
+    magicTreeModel->initialize();
+    // Filter
+    _spellsFilter = new MagicSortFilterProxyModel(ui->treeSpells);
+    _spellsFilter->setSourceModel(magicTreeModel);
+    _spellsFilter->getFilterIDContains().clear();
+    _spellsFilter->getFilterIDEquals().clear();
+    _spellsFilter->setFilterMask(MAGIC_FILTERMASK_ID_EQUALS);
+    _spellsFilter->setShowEmptyCategories(false);
+    _spellsFilter->applyFilter();
+    // Model & sorting
+    ui->treeSpells->setModel(_spellsFilter);
+    ui->treeSpells->setSortingEnabled(true);
+    // Delegate
+    _spellsDelegate = new MagicDelegate();
+    ui->treeSpells->setItemDelegate(_spellsDelegate);
+    ui->treeSpells->setHeaderHidden(true);
+    // Handle selection & drag
+    connect(ui->treeSpells->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+                                               SLOT(handleSpellChanged(QModelIndex,QModelIndex)));
 
     // Fill available aspects
     ui->cbAspect->blockSignals(true);
@@ -130,6 +157,8 @@ CharEditMagicTab::showEvent(QShowEvent* /*unused*/)
         // Show / hide / update different ui widgets
         QString magicTypeID = CHARACTER_CHOICES->getMagicUserTypeID();
         int prio = CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC);
+
+        // We have a magic user
         if (magicTypeID != "")
         {
             const MagicTypeDefinition& def = MAGIC_RULES->getMagicTypeDefinition(magicTypeID);
@@ -138,8 +167,12 @@ CharEditMagicTab::showEvent(QShowEvent* /*unused*/)
             // Possibly show aspected frame
             ui->frameAspected->setVisible(std::find(def.types.begin(), def.types.end(), "aspected") != def.types.end());
 
+            // Show or hide the free skills views
             showHideSkillsViews();
-        } // END we have a magic type
+
+            // Show or hide the spells views
+            showHideSpellsViews();
+        }
         else
         {
             ui->lblMagicTypeValue->setText(tr("None"));
@@ -192,10 +225,11 @@ CharEditMagicTab::updateValues()
 
     if (CHARACTER_CHOICES->getIsMagicUser())
     {
+        MagicTypePriorityDefinition* typePriority =
+                MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
+                    .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)];
         // Free skills
-        std::pair<int, int> freeSkills = MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
-                                            .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)]
-                                                ->freeSkills;
+        std::pair<int, int> freeSkills = typePriority->freeSkills;
         if (freeSkills.first < 0)
         {
             freeSkills.first = 0;
@@ -205,9 +239,7 @@ CharEditMagicTab::updateValues()
                                         .arg(freeSkills.first));
 
         // Free skill groups
-        freeSkills = MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
-                        .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)]
-                            ->freeSkillGroup;
+        freeSkills = typePriority->freeSkillGroup;
         if (freeSkills.first < 0)
         {
             freeSkills.first = 0;
@@ -217,11 +249,12 @@ CharEditMagicTab::updateValues()
                                         .arg(freeSkills.first));
 
         // Free spells / complex forms / powers
-        // TODO: Implement possibility to spend free spells / power points / resonance
-    //    ui->lblFreeSpellsValue->setText(QString("%1 / %2")
-    //                                .arg(CHARACTER_CHOICES->getAvailableAttributePoints())
-    //                                .arg(ATTRIBUTE_RULES->getNumFreebies(
-    //                                         CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES))));
+        float freeSpells = typePriority->freeSpells > typePriority->freePowerPoints ?
+                            typePriority->freeSpells :
+                            typePriority->freePowerPoints;
+        ui->lblFreeSpellsValue->setText(QString("%1 / %2")
+                                    .arg((int)CHARACTER_CHOICES->getAvailableFreeSpells())
+                                    .arg(freeSpells));
     }
 
     // Karma points
@@ -278,7 +311,6 @@ CharEditMagicTab::showHideSkillsViews()
         // Filter the kinds of skills we are to show
         if (showGroups || showSkills)
         {
-            // TODO: Mystical Adept is a special case not handled correctly here, need to have a look at the ruleset
             std::vector<SkillType>& filterTypes = _skillsAvailableFilter->getFilterTypes();
             filterTypes.clear();
             if (std::find(def.types.begin(), def.types.end(), "magic") != def.types.end())
@@ -289,7 +321,10 @@ CharEditMagicTab::showHideSkillsViews()
             {
                 filterTypes.push_back(SKILL_TYPE_RESONANCE);
             }
-            if (std::find(def.types.begin(), def.types.end(), "adept") != def.types.end())
+            // Mystical adepts are a special case as they do not get mundane skills for free
+            // TODO: Ugly hack. There should be a better way.
+            if (std::find(def.types.begin(), def.types.end(), "adept") != def.types.end() &&
+                magicTypeID != "MYSTIC_ADEPT")
             {
                 filterTypes.push_back(SKILL_TYPE_COMBAT);
                 filterTypes.push_back(SKILL_TYPE_PHYSICAL);
@@ -340,6 +375,53 @@ CharEditMagicTab::showHideSkillsViews()
             _skillsFilter->applyFilter();
         }
     } // END if we have free skills
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMagicTab::showHideSpellsViews()
+{
+    QString magicTypeID = CHARACTER_CHOICES->getMagicUserTypeID();
+    int prio = CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC);
+    const MagicTypeDefinition& def = MAGIC_RULES->getMagicTypeDefinition(magicTypeID);
+
+    // Possibly show spells
+    if (def.priorities.contains(prio))
+    {
+        // Filter the kinds of spells we are to show
+        std::vector<MagicItemType>& filterTypes = _spellsAvailableFilter->getFilterTypes();
+        filterTypes.clear();
+        if (std::find(def.types.begin(), def.types.end(), "magic") != def.types.end())
+        {
+            filterTypes.push_back(MAGICITEMTYPE_SPELL);
+        }
+        if (std::find(def.types.begin(), def.types.end(), "resonance") != def.types.end())
+        {
+            filterTypes.push_back(MAGICITEMTYPE_COMPLEX_FORM);
+        }
+        if (std::find(def.types.begin(), def.types.end(), "adept") != def.types.end())
+        {
+            filterTypes.push_back(MAGICITEMTYPE_ADEPT_POWER);
+        }
+
+        // Set Mask
+        int mask = MAGIC_FILTERMASK_TYPE;
+        _spellsAvailableFilter->setFilterMask(mask);
+
+        // Apply
+        _spellsAvailableFilter->applyFilter();
+    }
+
+    // Clear the spells view if the available spells were reset
+    const MagicTypePriorityDefinition* magicPrioDef =
+            MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
+                .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)];
+    if (CHARACTER_CHOICES->getAvailableFreeSpells() >= magicPrioDef->freeSpells &&
+        CHARACTER_CHOICES->getAvailableFreeSpells() >= magicPrioDef->freePowerPoints)
+    {
+        _spellsFilter->getFilterIDEquals().clear();
+        _spellsFilter->applyFilter();
+    }
 }
 
 //---------------------------------------------------------------------------------
@@ -410,7 +492,35 @@ CharEditMagicTab::handleSkillChanged(const QModelIndex& p_current, const QModelI
 void
 CharEditMagicTab::handleSpellChanged(const QModelIndex& p_current, const QModelIndex& p_previous)
 {
+    QItemSelectionModel* model = static_cast<QItemSelectionModel*>(sender());
+    bool isSpellsView = model == ui->treeSpells->selectionModel();
+    QPushButton* button = isSpellsView ? ui->btnRemoveSpell : ui->btnAddSpell;
 
+    // If this is adding and we have no more free skills, disable
+    if (!isSpellsView &&
+        CHARACTER_CHOICES->getAvailableFreeSpells() == 0)
+    {
+        button->setEnabled(false);
+        return;
+    }
+
+    // We somehow selected an invalid item
+    if (!p_current.isValid())
+    {
+        button->setEnabled(false);
+        return;
+    }
+
+    // If the item is a category, we can't remove/add it
+    MagicModelItem* item = static_cast<MagicModelItem*>(p_current.data().value<void*>());
+    if (item->isCategory)
+    {
+        button->setEnabled(false);
+        return;
+    }
+
+    // It is a removable/addable item, so enable the button
+    button->setEnabled(true);
 }
 
 //---------------------------------------------------------------------------------
@@ -481,4 +591,18 @@ CharEditMagicTab::on_btnRemoveSkill_clicked()
 
     // Update shown values
     updateValues();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMagicTab::on_btnAddSpell_clicked()
+{
+    // TODO: here
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMagicTab::on_btnRemoveSpell_clicked()
+{
+
 }

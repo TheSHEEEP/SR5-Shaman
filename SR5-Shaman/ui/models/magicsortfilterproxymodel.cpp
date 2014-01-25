@@ -128,6 +128,7 @@ MagicSortFilterProxyModel::filterAcceptsItem(MagicModelItem* p_item) const
         !p_item->isCategory &&
         _filterMask & MAGIC_FILTERMASK_TYPE)
     {
+        accept = false;
         int numFilters = _filterTypes.size();
         for (int i = 0; i < numFilters; ++i)
         {

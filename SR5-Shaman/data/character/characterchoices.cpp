@@ -503,3 +503,45 @@ CharacterChoices::removeFreeSkill(const QString& p_id)
     _skillIncreasesFreebies.remove(p_id);
 }
 
+//---------------------------------------------------------------------------------
+float
+CharacterChoices::getAvailableFreeSpells() const
+{
+    float maxFreeSpells = 0;
+
+    // Get free spells from magic user
+    if (getIsMagicUser())
+    {
+        const MagicTypeDefinition& def = MAGIC_RULES->getMagicTypeDefinition(getMagicUserTypeID());
+
+        // For magicians and technomancers, we get free spells
+        // This also works for mystical adepts, as those do not get any free power points
+        if (std::find(def.types.begin(), def.types.end(), "magic") != def.types.end() ||
+            std::find(def.types.begin(), def.types.end(), "resonance") != def.types.end())
+        {
+            maxFreeSpells = def.priorities[getPriorityIndex(PRIORITY_MAGIC)]->freeSpells;
+        }
+        // For adepts, we use power points
+        else
+        {
+            maxFreeSpells = def.priorities[getPriorityIndex(PRIORITY_MAGIC)]->freePowerPoints;
+        }
+    }
+
+    // Stop here when we have no free spells
+    if (maxFreeSpells <= 0.0f)
+    {
+        return 0.0f;
+    }
+
+    // Get the number of spent free spells
+    float spentSpells = 0;
+    QMap<QString, float>::const_iterator it;
+    for (it = _spellsFromFreebies.begin(); it != _spellsFromFreebies.end(); ++it)
+    {
+        spentSpells += *it;
+    }
+
+    return maxFreeSpells - spentSpells;
+}
+

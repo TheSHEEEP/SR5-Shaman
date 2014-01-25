@@ -199,6 +199,12 @@ public:
      */
     void resetFreeSkills();
 
+    /**
+     * @brief Returns the number of remaining free spells / complex forms / adept powers.
+     *          Return type is float as power points can be spent in half and quarter points.
+     */
+    float getAvailableFreeSpells() const;
+
 
 private:
     std::vector<Priority>     _selectedPriorities;
@@ -212,6 +218,8 @@ private:
     QMap<QString, int> _attributeIncreasesKarma;
     QMap<QString, int> _skillIncreasesFreebies;
     QMap<QString, int> _skillIncreasesKarma;
+    QMap<QString, float> _spellsFromFreebies;
+    QMap<QString, float> _spellsFromKarma;
 };
 
 

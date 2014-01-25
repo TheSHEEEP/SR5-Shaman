@@ -54,6 +54,8 @@ private:
     SkillDelegate*              _skillsDelegate;
     MagicSortFilterProxyModel*  _spellsAvailableFilter;
     MagicDelegate*              _spellsAvailableDelegate;
+    MagicSortFilterProxyModel*  _spellsFilter;
+    MagicDelegate*              _spellsDelegate;
 
     /**
      * @brief Updates all displayed values.
@@ -69,6 +71,11 @@ private:
      * @brief Checks if the skills views should be shown or hidden and updates them.
      */
     void showHideSkillsViews();
+
+    /**
+     * @brief Checks if the spells views should be shown or hidden and updates them.
+     */
+    void showHideSpellsViews();
 
 private slots:
     /**
@@ -100,7 +107,21 @@ private slots:
      * @brief Will add the selected skill to the list of selected skills.
      */
     void on_btnAddSkill_clicked();
+
+    /**
+     * @brief Will remove the selected skill from the list of selected skills.
+     */
     void on_btnRemoveSkill_clicked();
+
+    /**
+     * @brief Will add the selected spell to the list of selected spells.
+     */
+    void on_btnAddSpell_clicked();
+
+    /**
+     * @brief Will remove the selected spell from the list of selected spells.
+     */
+    void on_btnRemoveSpell_clicked();
 };
 
 #endif // CHAREDITMAGICTAB_H
