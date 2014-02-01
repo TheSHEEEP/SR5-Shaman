@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     // Init application
     QApplication a(argc, argv);
 
-    qRegisterMetaType<SkillModelItem>();
+    qRegisterMetaType<SkillDefinition>();
 
     QCoreApplication::setOrganizationName("SR5 Shaman Team");
     QCoreApplication::setOrganizationDomain("http://www.github.com");

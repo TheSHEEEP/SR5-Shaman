@@ -90,6 +90,7 @@ struct SpellDefinition
         , range(SPELLRANGE_INVALID)
         , damageType(SPELLDAMAGE_INVALID)
         , duration(SPELLDURATION_INVALID)
+        , isUserDefined(false)
     {}
 
     QMap<QString, QString>              translations;
@@ -102,6 +103,7 @@ struct SpellDefinition
     QStringList                         descriptors;
     bool                                requiresCustom;
     QString                             customString;
+    bool                                isUserDefined;
     bool                                essenceEffect;
 };
 

@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     ui/models/skilldelegate.cpp \
     ui/models/magictreemodel.cpp \
     ui/models/magicdelegate.cpp \
-    ui/models/magicsortfilterproxymodel.cpp
+    ui/models/magicsortfilterproxymodel.cpp \
+    ui/character/popups/customdescriptorpopup.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     ui/models/skilldelegate.h \
     ui/models/magictreemodel.h \
     ui/models/magicdelegate.h \
-    ui/models/magicsortfilterproxymodel.h
+    ui/models/magicsortfilterproxymodel.h \
+    ui/character/popups/customdescriptorpopup.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
@@ -77,7 +79,8 @@ FORMS    += mainwindow.ui \
     ui/character/creationsideinfo.ui \
     ui/character/tabs/chareditmisctab.ui \
     ui/character/tabs/chareditmagictab.ui \
-    ui/character/tabs/chareditattributetab.ui
+    ui/character/tabs/chareditattributetab.ui \
+    ui/character/popups/customdescriptorpopup.ui
 
 TRANSLATIONS = sr5shaman_de.ts
 

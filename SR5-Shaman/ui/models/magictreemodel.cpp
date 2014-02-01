@@ -310,7 +310,7 @@ MagicTreeModel::columnCount(const QModelIndex& p_parent) const
     // TODO: This will probably be more as soon as we want to show more than just the name
     return 1;
 //    if (p_parent.isValid())
-//        return static_cast<SkillModelItem*>(p_parent.internalPointer())->columnCount();
+//        return static_cast<SkillDefinition*>(p_parent.internalPointer())->columnCount();
 //    else
 //        return _rootItem->columnCount();
 }

@@ -25,7 +25,7 @@ void
 SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, const QModelIndex& p_index) const
 {
     // Get the item
-    SkillModelItem* item = static_cast<SkillModelItem*>(p_index.data().value<void*>());
+    SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
 
     // Get category name
     QString text = "";

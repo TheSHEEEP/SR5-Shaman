@@ -11,6 +11,7 @@ SkillSortFilterProxyModel::SkillSortFilterProxyModel(QObject* p_parent)
     , _showEmptyCategories(true)
     , _showSkillGroups(true)
     , _showNormalSkills(true)
+    , _showUserSkills(false)
     , _filterMask(0)
 {
 
@@ -49,7 +50,7 @@ SkillSortFilterProxyModel::lessThan(const QModelIndex& p_left, const QModelIndex
     // Check for skill group item, it must always be last
     if (p_left.isValid())
     {
-        SkillModelItem* item = (SkillModelItem*)p_left.internalPointer();
+        SkillDefinition* item = (SkillDefinition*)p_left.internalPointer();
         if (item->type == NUM_SKILL_TYPES)
         {
             return true;
@@ -57,7 +58,7 @@ SkillSortFilterProxyModel::lessThan(const QModelIndex& p_left, const QModelIndex
     }
     if (p_right.isValid())
     {
-        SkillModelItem* item = (SkillModelItem*)p_right.internalPointer();
+        SkillDefinition* item = (SkillDefinition*)p_right.internalPointer();
         if (item->type == NUM_SKILL_TYPES)
         {
             return false;
@@ -71,7 +72,7 @@ bool
 SkillSortFilterProxyModel::filterAcceptsRow(int p_row, const QModelIndex& p_parent) const
 {
     QModelIndex currentIndex = sourceModel()->index(p_row, 0, p_parent);
-    SkillModelItem* currentItem = static_cast<SkillModelItem*>(currentIndex.internalPointer());
+    SkillDefinition* currentItem = static_cast<SkillDefinition*>(currentIndex.internalPointer());
 
     // Check the item
     bool accept = filterAcceptsItem(currentItem);
@@ -85,7 +86,7 @@ SkillSortFilterProxyModel::filterAcceptsRow(int p_row, const QModelIndex& p_pare
         accept = false;
         for (int i = 0; i < numChildren; ++i)
         {
-            SkillModelItem* item = currentItem->children[i];
+            SkillDefinition* item = currentItem->children[i];
             if (filterAcceptsItem(item))
             {
                 accept = true;
@@ -100,7 +101,7 @@ SkillSortFilterProxyModel::filterAcceptsRow(int p_row, const QModelIndex& p_pare
 
 //---------------------------------------------------------------------------------
 bool
-SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
+SkillSortFilterProxyModel::filterAcceptsItem(SkillDefinition* p_item) const
 {
     bool accept = true;
 
@@ -110,18 +111,21 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
         return true;
     }
 
+    // User defined skills may or may not be shown
+    if (p_item->isUserDefined && !_showUserSkills)
+    {
+        return false;
+    }
+
     // Groups may or may not be shown
-    if (SKILL_RULES->getAllDefinitions().contains(p_item->id) &&
-        SKILL_RULES->getDefinition(p_item->id).isGroup &&
-        !_showSkillGroups)
+    if (p_item->isGroup && !_showSkillGroups)
     {
         return false;
     }
 
     // Non-skill-groups may or may not be shown
-    if (SKILL_RULES->getAllDefinitions().contains(p_item->id) &&
-        !SKILL_RULES->getDefinition(p_item->id).isGroup &&
-        (p_item->parent == NULL || (!p_item->parent->isCategory && !SKILL_RULES->getDefinition(p_item->parent->id).isGroup)) &&
+    if (!p_item->isGroup &&
+        (p_item->parent == NULL || (!p_item->parent->isCategory && !p_item->isGroup)) &&
         !_showNormalSkills)
     {
         return false;
@@ -145,7 +149,7 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
         // If this item is part of an accepted group, add it automatically
         // Even if it would not normally be accepted
         if (p_item->parent && !p_item->parent->isCategory &&
-            SKILL_RULES->getDefinition(p_item->parent->id).isGroup)
+            p_item->parent->isGroup)
         {
             for (int i = 0; i < numFilters; ++i)
             {
@@ -177,7 +181,7 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
         // If this item is part of an accepted group, add it automatically
         // Even if it would not normally be accepted
         if (p_item->parent && !p_item->parent->isCategory &&
-            SKILL_RULES->getDefinition(p_item->parent->id).isGroup)
+            p_item->parent->isGroup)
         {
             for (int i = 0; i < numFilters; ++i)
             {
@@ -211,7 +215,7 @@ SkillSortFilterProxyModel::filterAcceptsItem(SkillModelItem* p_item) const
             // If this item is part of an accepted group, accept it automatically
             // Even if it would not normally be accepted
             if (p_item->parent && !p_item->parent->isCategory &&
-                SKILL_RULES->getDefinition(p_item->parent->id).isGroup)
+                p_item->parent->isGroup)
             {
                 for (int i = 0; i < numFilters; ++i)
                 {

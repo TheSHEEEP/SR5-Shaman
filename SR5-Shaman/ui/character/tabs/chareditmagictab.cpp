@@ -13,6 +13,7 @@
 #include "ui/models/magictreemodel.h"
 #include "ui/models/magicsortfilterproxymodel.h"
 #include "ui/models/magicdelegate.h"
+#include "ui/character/popups/customdescriptorpopup.h"
 
 //---------------------------------------------------------------------------------
 CharEditMagicTab::CharEditMagicTab(QWidget *parent)
@@ -75,6 +76,7 @@ CharEditMagicTab::initialize()
     _skillsFilter->getFilterIDEquals().clear();
     _skillsFilter->setFilterMask(SKILL_FILTERMASK_ID_EQUALS);
     _skillsFilter->setShowEmptyCategories(false);
+    _skillsFilter->setShowUserSkills(true);
     _skillsFilter->applyFilter();
     // Model & sorting
     ui->treeSkills->setModel(_skillsFilter);
@@ -469,7 +471,7 @@ CharEditMagicTab::handleSkillChanged(const QModelIndex& p_current, const QModelI
     }
 
     // If the item is a category, we can't remove/add it
-    SkillModelItem* item = static_cast<SkillModelItem*>(p_current.data().value<void*>());
+    SkillDefinition* item = static_cast<SkillDefinition*>(p_current.data().value<void*>());
     if (item->isCategory)
     {
         button->setEnabled(false);
@@ -528,17 +530,36 @@ void
 CharEditMagicTab::on_btnAddSkill_clicked()
 {
     // Get the currently selected skill
-    SkillModelItem* item = static_cast<SkillModelItem*>(ui->treeSkillsAvailable->currentIndex().data().value<void*>());
+    SkillDefinition* item = static_cast<SkillDefinition*>(ui->treeSkillsAvailable->currentIndex().data().value<void*>());
+    QString id = item->id;
 
-    // Add the skill to the list (prevent double adding)
-    QStringList& filterIDs = _skillsFilter->getFilterIDEquals();
-    if (!filterIDs.contains(item->id))
+    // If this requires a custom choice, show the modal window
+    QString customValue = "";
+    if (SKILL_RULES->getDefinition(id).requiresCustom)
     {
-        filterIDs.push_back(item->id);
+        // Show the popup and get its result
+        CustomDescriptorPopup popup(NULL, SKILL_RULES->getDefinition(id).translations[APPSTATUS->getCurrentLocale()],
+                                    false, true);
+        int result = popup.exec();
+        if (result == QDialog::Rejected)
+        {
+            return;
+        }
+        customValue = popup.getCustomization();
+
+        // Construct a new custom skill (this will do nothing if it already exists)
+        id = SKILL_RULES->constructCustomizedSkill(id, customValue);
     }
 
     // Take note of the choice
-    CHARACTER_CHOICES->addFreeSkill(item->id, PRIORITY_MAGIC);
+    CHARACTER_CHOICES->addFreeSkill(id, PRIORITY_MAGIC);
+
+    // Add the skill to the list (prevent double adding)
+    QStringList& filterIDs = _skillsFilter->getFilterIDEquals();
+    if (!filterIDs.contains(id))
+    {
+        filterIDs.push_back(id);
+    }
 
     // Update the display
     _skillsFilter->applyFilter();
@@ -561,7 +582,7 @@ void
 CharEditMagicTab::on_btnRemoveSkill_clicked()
 {
     // Get the currently selected skill
-    SkillModelItem* item = static_cast<SkillModelItem*>(ui->treeSkills->currentIndex().data().value<void*>());
+    SkillDefinition* item = static_cast<SkillDefinition*>(ui->treeSkills->currentIndex().data().value<void*>());
 
     // Remove the skill from the list
     QStringList& filterIDs = _skillsFilter->getFilterIDEquals();

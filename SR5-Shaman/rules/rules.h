@@ -70,22 +70,22 @@ public:
     /**
      * @brief Returns a pointer to the metatype rules.
      */
-    const MetatypeRules* getMetatypeRules() const;
+    MetatypeRules* getMetatypeRules() const;
 
     /**
      * @brief Returns a pointer to the attribute rules.
      */
-    const AttributeRules* getAttributeRules() const;
+    AttributeRules* getAttributeRules() const;
 
     /**
      * @brief Returns a pointer to the magic rules.
      */
-    const MagicRules* getMagicRules() const;
+    MagicRules* getMagicRules() const;
 
     /**
      * @brief Returns a pointer to the skill rules.
      */
-    const SkillRules* getSkillRules() const;
+    SkillRules* getSkillRules() const;
 
 private:
     bool    _initialized;
@@ -98,7 +98,7 @@ private:
 
 //---------------------------------------------------------------------------------
 inline
-const MetatypeRules*
+MetatypeRules*
 Rules::getMetatypeRules() const
 {
     return _metatypeRules;
@@ -106,7 +106,7 @@ Rules::getMetatypeRules() const
 
 //---------------------------------------------------------------------------------
 inline
-const AttributeRules*
+AttributeRules*
 Rules::getAttributeRules() const
 {
     return _attributeRules;
@@ -114,7 +114,7 @@ Rules::getAttributeRules() const
 
 //---------------------------------------------------------------------------------
 inline
-const MagicRules*
+MagicRules*
 Rules::getMagicRules() const
 {
     return _magicRules;
@@ -122,7 +122,7 @@ Rules::getMagicRules() const
 
 //---------------------------------------------------------------------------------
 inline
-const SkillRules*
+SkillRules*
 Rules::getSkillRules() const
 {
     return _skillRules;

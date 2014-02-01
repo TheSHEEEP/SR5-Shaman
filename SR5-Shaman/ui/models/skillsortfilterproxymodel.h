@@ -10,7 +10,7 @@
 #define SKILL_FILTERMASK_ID_EQUALS      2  // Use the filterIDEquals (getFilterIDEquals) for filtering
 #define SKILL_FILTERMASK_TYPE           4  // Use the filterTypes (getFilterTypes) for filtering
 
-class SkillModelItem;
+class SkillDefinition;
 
 class SkillSortFilterProxyModel : public QSortFilterProxyModel
 {
@@ -47,6 +47,11 @@ public:
      * @brief If this is true, skill that are not inside  skill group will be shown.
      */
     void setShowNormalSkills(bool p_skillGroups);
+
+    /**
+     * @brief If this is true, user defined skills will be shown.
+     */
+    void setShowUserSkills(bool p_userSkills);
 
     /**
      * @brief Sets the filter mask to use.
@@ -109,6 +114,7 @@ private:
     bool        _showEmptyCategories;
     bool        _showSkillGroups;
     bool        _showNormalSkills;
+    bool        _showUserSkills;
     int         _filterMask;
 
     QStringList             _filterIDContains;
@@ -118,7 +124,7 @@ private:
     /**
      * @brief Checks the item according to the filters conditions.
      */
-    bool filterAcceptsItem(SkillModelItem* p_item) const;
+    bool filterAcceptsItem(SkillDefinition* p_item) const;
 };
 
 //---------------------------------------------------------------------------------
@@ -143,6 +149,14 @@ void
 SkillSortFilterProxyModel::setShowNormalSkills(bool p_normalSkills)
 {
     _showNormalSkills = p_normalSkills;
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+SkillSortFilterProxyModel::setShowUserSkills(bool p_userSkills)
+{
+    _showUserSkills = p_userSkills;
 }
 
 //---------------------------------------------------------------------------------

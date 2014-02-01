@@ -9,48 +9,6 @@
 #include "rules/skillrules.h"
 
 /**
- * @brief Helper class that holds a skill model item.
- */
-class SkillModelItem
-{
-public:
-    /**
-     * @brief Constructor.
-     */
-    SkillModelItem(SkillModelItem* p_parent = NULL);
-
-    /**
-     * @brief Copy constructor.
-     */
-    SkillModelItem(const SkillModelItem& p_other);
-
-    /**
-     * @brief Destructor.
-     */
-    ~SkillModelItem();
-
-    /**
-     * @brief Returns true if this item has a child with the passed value.
-     * @param p_id  The ID to look for.
-     */
-    bool hasChild(const QString& p_id) const;
-
-    /**
-     * @brief Returns the child with the passed value. Or NULL, if no child was found.
-     */
-    SkillModelItem* getChild(const QString& p_id) const;
-
-    bool                            isCategory;
-    SkillType                       type;
-    QString                         id; // Unique ID, use for lookup in skill rules
-
-    SkillModelItem*                 parent;
-    std::vector<SkillModelItem*>    children;
-};
-
-Q_DECLARE_METATYPE(SkillModelItem);
-
-/**
  * @brief This model is used to organize skills in a tree view.
  * @author  TheSHEEEP
  */
@@ -73,6 +31,12 @@ public:
      * @brief Will get all skills from the rules.
      */
     void initialize();
+
+    /**
+     * @brief Adds a skill to the model.
+     * @param p_id  The ID of the skill to add.
+     */
+    void addSkill(const QString& p_id);
 
     /**
      * @brief Returns the data of the passed model index.
@@ -116,7 +80,7 @@ public:
     int columnCount(const QModelIndex& p_parent = QModelIndex()) const;
 
 private:
-    SkillModelItem*     _rootItem;
+    SkillDefinition*     _rootItem;
 };
 
 #endif // SKILLTREEMODEL_H

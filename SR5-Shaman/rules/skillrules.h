@@ -33,22 +33,44 @@ enum KnowledgeType
 };
 
 /**
- * @brief The definition of one skill or skill group.
+ * @brief Helper class that holds a skill model item.
  */
-struct SkillDefinition
+class SkillDefinition
 {
-
 public:
     /**
      * @brief Constructor.
      */
-    SkillDefinition()
-        : isGroup(false), isLanguage(false), isUserDefined(false), requiresCustom(false)
-        , knowledgeType(KNOWLEDGE_TYPE_INVALID)
-        , custom("")
-        , attribute("")
-    {}
+    SkillDefinition(SkillDefinition* p_parent = NULL);
 
+    /**
+     * @brief Copy constructor.
+     */
+    SkillDefinition(const SkillDefinition& p_other);
+
+    /**
+     * @brief Destructor.
+     */
+    ~SkillDefinition();
+
+    /**
+     * @brief Returns true if this item has a child with the passed value.
+     * @param p_id  The ID to look for.
+     */
+    bool hasChild(const QString& p_id) const;
+
+    /**
+     * @brief Returns the child with the passed value. Or NULL, if no child was found.
+     */
+    SkillDefinition* getChild(const QString& p_id) const;
+
+    // Those two seem to be redundant, but are useful when this definition is used as
+    // a model item inside a View
+    SkillDefinition*                parent;
+    std::vector<SkillDefinition*>   children;
+
+    QString                         id;
+    bool                            isCategory;
     bool                            isGroup;
     bool                            isLanguage;
     bool                            isUserDefined;
@@ -61,6 +83,8 @@ public:
     QMap<QString, QString>          translations;
     QMap<QString, SkillDefinition*> groupSkills;
 };
+
+Q_DECLARE_METATYPE(SkillDefinition)
 
 /**
  * @brief This class holds all information regarding magic specific rules.
@@ -92,6 +116,11 @@ public:
     QString getTypeString(SkillType p_type) const;
 
     /**
+     * @return The root item of the model. Use this for display in trees, etc.
+     */
+    SkillDefinition* getModelRootItem();
+
+    /**
      * @brief Returns the map of metatype definitions.
      */
     const QMap<QString, SkillDefinition*>& getAllDefinitions() const;
@@ -110,9 +139,28 @@ public:
      */
     std::vector<std::pair<QString, SkillDefinition*> > getDefinitionsByType(SkillType p_type, bool p_onlyGroups) const;
 
+    /**
+     * @brief Will construct a new skill out of the passed skill and the customization.
+     *          A new skill will only be constructed if this specialization does not exist already.
+     * @param p_id          The ID of the original skill.
+     * @param p_customValue The custom value.
+     * @return The ID of the new skill.
+     */
+    QString constructCustomizedSkill(const QString &p_id, const QString &p_customValue);
+
 private:
     QMap<QString, SkillDefinition*>  _definitions;
+
+    SkillDefinition*    _rootItem;  // The root item of the skills, used to display in tree models
 };
+
+//---------------------------------------------------------------------------------
+inline
+SkillDefinition*
+SkillRules::getModelRootItem()
+{
+    return _rootItem;
+}
 
 //---------------------------------------------------------------------------------
 inline
