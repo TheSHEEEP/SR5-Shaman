@@ -67,12 +67,12 @@ public:
     /**
      * @brief This filter will only show items whose type is one of those in the passed vector.
      */
-    void setFilterTypes(const std::vector<MagicItemType>& p_filterTypes);
+    void setFilterTypes(const std::vector<MagicAbilityType>& p_filterTypes);
 
     /**
      * @brief Returns the filter for types.
      */
-    std::vector<MagicItemType>& getFilterTypes();
+    std::vector<MagicAbilityType>& getFilterTypes();
 
     /**
      * @brief Applies the filtering, updating all views using this.
@@ -98,14 +98,14 @@ private:
     bool        _showEmptyCategories;
     int         _filterMask;
 
-    QStringList                 _filterIDContains;
-    QStringList                 _filterIDEquals;
-    std::vector<MagicItemType>  _filterTypes;
+    QStringList                     _filterIDContains;
+    QStringList                     _filterIDEquals;
+    std::vector<MagicAbilityType>   _filterTypes;
 
     /**
      * @brief Checks the item according to the filters conditions.
      */
-    bool filterAcceptsItem(MagicModelItem* p_item) const;
+    bool filterAcceptsItem(MagicAbilityDefinition *p_item) const;
 };
 
 //---------------------------------------------------------------------------------
@@ -159,14 +159,14 @@ MagicSortFilterProxyModel::getFilterIDEquals()
 //---------------------------------------------------------------------------------
 inline
 void
-MagicSortFilterProxyModel::setFilterTypes(const std::vector<MagicItemType>& p_filterTypes)
+MagicSortFilterProxyModel::setFilterTypes(const std::vector<MagicAbilityType>& p_filterTypes)
 {
     _filterTypes = p_filterTypes;
 }
 
 //---------------------------------------------------------------------------------
 inline
-std::vector<MagicItemType>&
+std::vector<MagicAbilityType>&
 MagicSortFilterProxyModel::getFilterTypes()
 {
     return _filterTypes;

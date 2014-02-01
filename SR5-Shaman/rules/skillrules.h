@@ -33,7 +33,8 @@ enum KnowledgeType
 };
 
 /**
- * @brief Helper class that holds a skill model item.
+ * @brief This is the definition of a single skill.
+ *          Also has some additional functionality to serve as a model item for Views.
  */
 class SkillDefinition
 {

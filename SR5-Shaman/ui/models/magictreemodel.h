@@ -8,58 +8,6 @@
 
 #include "rules/magicrules.h"
 
-enum MagicItemType
-{
-    MAGICITEMTYPE_INVALID = -1,
-    MAGICITEMTYPE_SPELL,
-    MAGICITEMTYPE_ADEPT_POWER,
-    MAGICITEMTYPE_COMPLEX_FORM,
-    NUM_MAGICITEMTYPES
-};
-
-/**
- * @brief Helper class that holds a magic model item.
- *          This is used for spells, complex forms and adept powers.
- */
-class MagicModelItem
-{
-public:
-    /**
-     * @brief Constructor.
-     */
-    MagicModelItem(MagicModelItem* p_parent = NULL);
-
-    /**
-     * @brief Copy constructor.
-     */
-    MagicModelItem(const MagicModelItem& p_other);
-
-    /**
-     * @brief Destructor.
-     */
-    ~MagicModelItem();
-
-    /**
-     * @brief Returns true if this item has a child with the passed value.
-     * @param p_id  The ID to look for.
-     */
-    bool hasChild(const QString& p_id) const;
-
-    /**
-     * @brief Returns the child with the passed value. Or NULL, if no child was found.
-     */
-    MagicModelItem* getChild(const QString& p_id) const;
-
-    bool                            isCategory;
-    MagicItemType                   itemType;
-    QString                         id; // Unique ID, use for lookup in magic rules
-
-    MagicModelItem*                 parent;
-    std::vector<MagicModelItem*>    children;
-};
-
-Q_DECLARE_METATYPE(MagicModelItem);
-
 /**
  * @brief This model is used to organize skills in a tree view.
  * @author  TheSHEEEP
@@ -126,7 +74,7 @@ public:
     int columnCount(const QModelIndex& p_parent = QModelIndex()) const;
 
 private:
-    MagicModelItem*     _rootItem;
+    MagicAbilityDefinition*     _rootItem;
 };
 
 

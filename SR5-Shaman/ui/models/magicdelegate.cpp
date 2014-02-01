@@ -24,28 +24,28 @@ void
 MagicDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, const QModelIndex& p_index) const
 {
     // Get the item
-    MagicModelItem* item = static_cast<MagicModelItem*>(p_index.data().value<void*>());
+    MagicAbilityDefinition* item = static_cast<MagicAbilityDefinition*>(p_index.data().value<void*>());
 
     // Get category name
     QString text = "";
     if (item->id.startsWith("CATEGORY"))
     {
-        switch (item->itemType)
+        switch (item->abilityType)
         {
-        case MAGICITEMTYPE_INVALID:
-        case NUM_MAGICITEMTYPES:
+        case MAGICABILITYTYPE_INVALID:
+        case NUM_MAGICABILITYTYPES:
             text = tr("Invalid Magic Type for %1").arg(item->id);
             break;
 
-        case MAGICITEMTYPE_SPELL:
+        case MAGICABILITYTYPE_SPELL:
             text = tr("Spells");
             break;
 
-        case MAGICITEMTYPE_ADEPT_POWER:
+        case MAGICABILITYTYPE_ADEPT_POWER:
             text = tr("Adept Powers");
             break;
 
-        case MAGICITEMTYPE_COMPLEX_FORM:
+        case MAGICABILITYTYPE_COMPLEX_FORM:
             text = tr("Complex Forms");
             break;
         }
@@ -54,14 +54,14 @@ MagicDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
     // Get translation
     if (text == "")
     {
-        switch (item->itemType)
+        switch (item->abilityType)
         {
-        case MAGICITEMTYPE_INVALID:
-        case NUM_MAGICITEMTYPES:
+        case MAGICABILITYTYPE_INVALID:
+        case NUM_MAGICABILITYTYPES:
             text = tr("Invalid Magic Type for %1").arg(item->id);
             break;
 
-        case MAGICITEMTYPE_SPELL:
+        case MAGICABILITYTYPE_SPELL:
             // The spell category has sub-categories, so if it has children, it must be such a category
             if (item->children.size() > 0)
             {
@@ -69,16 +69,13 @@ MagicDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
             }
             else
             {
-                text = MAGIC_RULES->getSpellDefinition(item->id).translations[APPSTATUS->getCurrentLocale()];
+                text = item->translations[APPSTATUS->getCurrentLocale()];
             }
             break;
 
-        case MAGICITEMTYPE_ADEPT_POWER:
-            text = MAGIC_RULES->getAdeptPowerDefinition(item->id).translations[APPSTATUS->getCurrentLocale()];
-            break;
-
-        case MAGICITEMTYPE_COMPLEX_FORM:
-            text = MAGIC_RULES->getComplexFormDefinition(item->id).translations[APPSTATUS->getCurrentLocale()];
+        case MAGICABILITYTYPE_COMPLEX_FORM:
+        case MAGICABILITYTYPE_ADEPT_POWER:
+            text = item->translations[APPSTATUS->getCurrentLocale()];
             break;
         }
     }

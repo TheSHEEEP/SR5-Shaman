@@ -12,9 +12,95 @@
 #include "data/appstatus.h"
 
 //---------------------------------------------------------------------------------
-MagicRules::MagicRules()
+MagicAbilityDefinition::MagicAbilityDefinition(MagicAbilityDefinition* p_parent)
+    : parent(p_parent)
+    , id("")
+    , isCategory(false)
+    , requiresCustom(false), customString("")
+    , isUserDefined(false)
+    , abilityType(MAGICABILITYTYPE_INVALID)
+    , spell(NULL), adeptPower(NULL), complexForm(NULL)
+{
+    children.clear();
+}
+
+//---------------------------------------------------------------------------------
+MagicAbilityDefinition::MagicAbilityDefinition(const MagicAbilityDefinition& p_other)
+{
+    parent = p_other.parent;
+    id = p_other.id;
+    isCategory = p_other.isCategory;
+    requiresCustom = p_other.requiresCustom;
+    customString = p_other.customString;
+    isUserDefined = p_other.isUserDefined;
+    abilityType = p_other.abilityType;
+    spell = p_other.spell;
+    adeptPower = p_other.adeptPower;
+    complexForm = p_other.complexForm;
+    children = p_other.children;
+}
+
+//---------------------------------------------------------------------------------
+MagicAbilityDefinition::~MagicAbilityDefinition()
 {
 
+}
+
+//---------------------------------------------------------------------------------
+bool
+MagicAbilityDefinition::hasChild(const QString& p_id) const
+{
+    for (unsigned int i = 0; i < children.size(); ++i)
+    {
+        if (children[i]->id == p_id)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------------
+MagicAbilityDefinition*
+MagicAbilityDefinition::getChild(const QString& p_id) const
+{
+    for (unsigned int i = 0; i < children.size(); ++i)
+    {
+        if (children[i]->id == p_id)
+        {
+            return children[i];
+        }
+    }
+    return NULL;
+}
+
+//---------------------------------------------------------------------------------
+MagicRules::MagicRules()
+{
+    // Construct root item
+    _rootItem = new MagicAbilityDefinition();
+    _rootItem->id = "DEFINITION";
+    _rootItem->parent = NULL;
+
+    // Add categories
+    // Spells
+    MagicAbilityDefinition* category = new MagicAbilityDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_SPELLS";
+    category->abilityType = MAGICABILITYTYPE_SPELL;
+    _rootItem->children.push_back(category);
+    // Adept powers
+    category = new MagicAbilityDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_ADEPT_POWERS";
+    category->abilityType = MAGICABILITYTYPE_ADEPT_POWER;
+    _rootItem->children.push_back(category);
+    // Complex forms
+    category = new MagicAbilityDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_COMPLEX_FORMS";
+    category->abilityType = MAGICABILITYTYPE_COMPLEX_FORM;
+    _rootItem->children.push_back(category);
 }
 
 //---------------------------------------------------------------------------------
@@ -34,7 +120,7 @@ MagicRules::~MagicRules()
     }
     _typeDefinitions.clear();
 
-    QMap<QString, SpellCategoryDefinition*>::iterator it2;
+    QMap<QString, SpellDefinition*>::iterator it2;
     for (it2 = _spellCategoryDefinitions.begin(); it2 != _spellCategoryDefinitions.end(); ++it2)
     {
         delete (*it2);
@@ -170,30 +256,44 @@ MagicRules::initialize(const QString& p_jsonFile)
     // Parse spell category strings
     QJsonArray categoryArray = doc.object().value("spell_categories").toArray();
     QJsonObject currentCat;
-    SpellCategoryDefinition* spellCal = 0;
+    SpellDefinition* spellCat = NULL;
+    MagicAbilityDefinition* category = NULL;
+    MagicAbilityDefinition* abilityDef = NULL;
     QString tempString;
+    QString uniqueId = "";
     for (int i = 0; i < categoryArray.size(); ++i)
     {
         currentCat = categoryArray.at(i).toObject();
 
+        uniqueId = currentCat["unique_id"].toString();
+
         // Make sure the definition doesn't already exist
-        if (_spellCategoryDefinitions.contains(currentCat["unique_id"].toString()))
+        if (_spellCategoryDefinitions.contains(uniqueId))
         {
-            qCritical() << "Spell category \"" << currentCat["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            qCritical() << "Spell category \"" << uniqueId << "\" already exists. Parsing aborted.";
             return;
         }
 
+        // Get correct category
+        category = _rootItem->children[MAGICABILITYTYPE_SPELL];
+
         // Add spell definition
-        spellCal = new SpellCategoryDefinition();
+        abilityDef = new MagicAbilityDefinition(category);
+        abilityDef->id = uniqueId;
+        abilityDef->abilityType = MAGICABILITYTYPE_SPELL;
+        spellCat = new SpellDefinition();
+        abilityDef->spell = spellCat;
+        category->children.push_back(abilityDef);
 
         // Translations
         tempObject = currentCat["translations"].toObject();
         for (int j = 0; j < tempObject.keys().size(); ++j)
         {
-            spellCal->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+            abilityDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
         }
 
-        _spellCategoryDefinitions[currentCat["unique_id"].toString()] = spellCal;
+        _definitions[uniqueId] = abilityDef;
+        _spellCategoryDefinitions[uniqueId] = spellCat;
     }
 
     // Parse each spell and add to the rules
@@ -204,21 +304,27 @@ MagicRules::initialize(const QString& p_jsonFile)
     {
         currentSpell = spellsArray.at(i).toObject();
 
+        uniqueId = currentSpell["unique_id"].toString();
+
         // Make sure the definition doesn't already exist
-        if (_spellDefinitions.contains(currentSpell["unique_id"].toString()))
+        if (_spellDefinitions.contains(uniqueId))
         {
-            qCritical() << "Spell \"" << currentSpell["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            qCritical() << "Spell \"" << uniqueId << "\" already exists. Parsing aborted.";
             return;
         }
 
         // Add spell definition
+        abilityDef = new MagicAbilityDefinition();
+        abilityDef->id = uniqueId;
+        abilityDef->abilityType = MAGICABILITYTYPE_SPELL;
         spellDef = new SpellDefinition();
+        abilityDef->spell = spellCat;
 
         // Translations
         tempObject = currentSpell["translations"].toObject();
         for (int j = 0; j < tempObject.keys().size(); ++j)
         {
-            spellDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+            abilityDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
         }
 
         // Category
@@ -229,6 +335,11 @@ MagicRules::initialize(const QString& p_jsonFile)
                            << spellDef->category << "\". Parsing aborted.";
             return;
         }
+
+        // Get correct spell category and add to it
+        category = _definitions[spellDef->category];
+        abilityDef->parent = category;
+        category->children.push_back(abilityDef);
 
         // Type
         tempString = currentSpell["type"].toString();
@@ -302,7 +413,7 @@ MagicRules::initialize(const QString& p_jsonFile)
         // Does this spell require a custom choice?
         if (currentSpell.contains("requires_custom"))
         {
-            spellDef->requiresCustom = currentSpell["requires_custom"].toString() == "true";
+            abilityDef->requiresCustom = currentSpell["requires_custom"].toString() == "true";
         }
 
         // Is this spell affected by the essence value?
@@ -311,7 +422,8 @@ MagicRules::initialize(const QString& p_jsonFile)
             spellDef->essenceEffect = currentSpell["essence_effect"].toString() == "true";
         }
 
-        _spellDefinitions[currentSpell["unique_id"].toString()] = spellDef;
+        _definitions[uniqueId] = abilityDef;
+        _spellDefinitions[uniqueId] = spellDef;
     }// END spells
 
     // Parse each adept power and add to the rules
@@ -322,21 +434,32 @@ MagicRules::initialize(const QString& p_jsonFile)
     {
         currentPower = powersArray.at(i).toObject();
 
+        uniqueId = currentPower["unique_id"].toString();
+
         // Make sure the definition doesn't already exist
-        if (_adeptPowerDefinitions.contains(currentPower["unique_id"].toString()))
+        if (_adeptPowerDefinitions.contains(uniqueId))
         {
-            qCritical() << "Adept Power \"" << currentPower["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            qCritical() << "Adept Power \"" << uniqueId << "\" already exists. Parsing aborted.";
             return;
         }
 
         // Add type definition
+        abilityDef = new MagicAbilityDefinition();
+        abilityDef->id = uniqueId;
+        abilityDef->abilityType = MAGICABILITYTYPE_ADEPT_POWER;
         powerDef = new AdeptPowerDefinition();
+        abilityDef->adeptPower = powerDef;
+
+        // Get correct spell category and add to it
+        category = _rootItem->children[MAGICABILITYTYPE_ADEPT_POWER];
+        abilityDef->parent = category;
+        category->children.push_back(abilityDef);
 
         // Translations
         tempObject = currentPower["translations"].toObject();
         for (int j = 0; j < tempObject.keys().size(); ++j)
         {
-            powerDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+            abilityDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
         }
 
         // Cost
@@ -389,10 +512,11 @@ MagicRules::initialize(const QString& p_jsonFile)
         // Does this power require a custom choice?
         if (currentPower.contains("requires_custom"))
         {
-            powerDef->requiresCustom = currentPower["requires_custom"].toString() == "true";
+            abilityDef->requiresCustom = currentPower["requires_custom"].toString() == "true";
         }
 
-        _adeptPowerDefinitions[currentPower["unique_id"].toString()] = powerDef;
+        _definitions[uniqueId] = abilityDef;
+        _adeptPowerDefinitions[uniqueId] = powerDef;
     } // END adept powers
 
     // Parse each complex form and add to the rules
@@ -403,21 +527,32 @@ MagicRules::initialize(const QString& p_jsonFile)
     {
         currentForm = formsArray.at(i).toObject();
 
+        uniqueId = currentForm["unique_id"].toString();
+
         // Make sure the definition doesn't already exist
-        if (_complexFormDefinitions.contains(currentForm["unique_id"].toString()))
+        if (_complexFormDefinitions.contains(uniqueId))
         {
-            qCritical() << "Complex Form \"" << currentForm["unique_id"].toString() << "\" already exists. Parsing aborted.";
+            qCritical() << "Complex Form \"" << uniqueId << "\" already exists. Parsing aborted.";
             return;
         }
 
         // Add form definition
+        abilityDef = new MagicAbilityDefinition();
+        abilityDef->id = uniqueId;
+        abilityDef->abilityType = MAGICABILITYTYPE_COMPLEX_FORM;
         formDef = new ComplexFormDefinition();
+        abilityDef->complexForm = formDef;
+
+        // Get correct spell category and add to it
+        category = _rootItem->children[MAGICABILITYTYPE_COMPLEX_FORM];
+        abilityDef->parent = category;
+        category->children.push_back(abilityDef);
 
         // Translations
         tempObject = currentForm["translations"].toObject();
         for (int j = 0; j < tempObject.keys().size(); ++j)
         {
-            formDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+            abilityDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
         }
 
         // Target
@@ -460,10 +595,11 @@ MagicRules::initialize(const QString& p_jsonFile)
         // Does this form require a custom choice?
         if (currentForm.contains("requires_custom"))
         {
-            formDef->requiresCustom = currentForm["requires_custom"].toString() == "true";
+            abilityDef->requiresCustom = currentForm["requires_custom"].toString() == "true";
         }
 
-        _complexFormDefinitions[currentForm["unique_id"].toString()] = formDef;
+        _definitions[uniqueId] = abilityDef;
+        _complexFormDefinitions[uniqueId] = formDef;
     } // END complex forms
 }
 
@@ -497,10 +633,10 @@ MagicRules::getAllSpellDefinitionsByCategory(const QString& p_uniqueID) const
 QString
 MagicRules::getSpellCategoryTranslation(const QString& p_uniqueID) const
 {
-    if (!_spellCategoryDefinitions.contains(p_uniqueID))
+    if (!_definitions.contains(p_uniqueID))
     {
         return QObject::tr("Category not found: %1").arg(p_uniqueID);
     }
 
-    return _spellCategoryDefinitions[p_uniqueID]->translations[APPSTATUS->getCurrentLocale()];
+    return _definitions[p_uniqueID]->translations[APPSTATUS->getCurrentLocale()];
 }

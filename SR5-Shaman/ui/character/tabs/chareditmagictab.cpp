@@ -95,8 +95,8 @@ CharEditMagicTab::initialize()
     // Filter
     _spellsAvailableFilter = new MagicSortFilterProxyModel(ui->treeSkills);
     _spellsAvailableFilter->setSourceModel(magicTreeModel);
-    std::vector<MagicItemType> filterTypesSpells;
-    filterTypesSpells.push_back(MAGICITEMTYPE_INVALID);
+    std::vector<MagicAbilityType> filterTypesSpells;
+    filterTypesSpells.push_back(MAGICABILITYTYPE_INVALID);
     _spellsAvailableFilter->setFilterTypes(filterTypesSpells);
     _spellsAvailableFilter->setFilterMask(MAGIC_FILTERMASK_TYPE);
     _spellsAvailableFilter->setShowEmptyCategories(false);
@@ -391,19 +391,19 @@ CharEditMagicTab::showHideSpellsViews()
     if (def.priorities.contains(prio))
     {
         // Filter the kinds of spells we are to show
-        std::vector<MagicItemType>& filterTypes = _spellsAvailableFilter->getFilterTypes();
+        std::vector<MagicAbilityType>& filterTypes = _spellsAvailableFilter->getFilterTypes();
         filterTypes.clear();
         if (std::find(def.types.begin(), def.types.end(), "magic") != def.types.end())
         {
-            filterTypes.push_back(MAGICITEMTYPE_SPELL);
+            filterTypes.push_back(MAGICABILITYTYPE_SPELL);
         }
         if (std::find(def.types.begin(), def.types.end(), "resonance") != def.types.end())
         {
-            filterTypes.push_back(MAGICITEMTYPE_COMPLEX_FORM);
+            filterTypes.push_back(MAGICABILITYTYPE_COMPLEX_FORM);
         }
         if (std::find(def.types.begin(), def.types.end(), "adept") != def.types.end())
         {
-            filterTypes.push_back(MAGICITEMTYPE_ADEPT_POWER);
+            filterTypes.push_back(MAGICABILITYTYPE_ADEPT_POWER);
         }
 
         // Set Mask
@@ -514,7 +514,7 @@ CharEditMagicTab::handleSpellChanged(const QModelIndex& p_current, const QModelI
     }
 
     // If the item is a category, we can't remove/add it
-    MagicModelItem* item = static_cast<MagicModelItem*>(p_current.data().value<void*>());
+    MagicAbilityDefinition* item = static_cast<MagicAbilityDefinition*>(p_current.data().value<void*>());
     if (item->isCategory)
     {
         button->setEnabled(false);

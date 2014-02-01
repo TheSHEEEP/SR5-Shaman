@@ -51,7 +51,7 @@ bool
 MagicSortFilterProxyModel::filterAcceptsRow(int p_row, const QModelIndex& p_parent) const
 {
     QModelIndex currentIndex = sourceModel()->index(p_row, 0, p_parent);
-    MagicModelItem* currentItem = static_cast<MagicModelItem*>(currentIndex.internalPointer());
+    MagicAbilityDefinition* currentItem = static_cast<MagicAbilityDefinition*>(currentIndex.internalPointer());
 
     // Check the item
     bool accept = filterAcceptsItem(currentItem);
@@ -65,7 +65,7 @@ MagicSortFilterProxyModel::filterAcceptsRow(int p_row, const QModelIndex& p_pare
         accept = false;
         for (int i = 0; i < numChildren; ++i)
         {
-            MagicModelItem* item = currentItem->children[i];
+            MagicAbilityDefinition* item = currentItem->children[i];
             if (filterAcceptsItem(item))
             {
                 accept = true;
@@ -80,7 +80,7 @@ MagicSortFilterProxyModel::filterAcceptsRow(int p_row, const QModelIndex& p_pare
 
 //---------------------------------------------------------------------------------
 bool
-MagicSortFilterProxyModel::filterAcceptsItem(MagicModelItem* p_item) const
+MagicSortFilterProxyModel::filterAcceptsItem(MagicAbilityDefinition* p_item) const
 {
     bool accept = true;
 
@@ -132,7 +132,7 @@ MagicSortFilterProxyModel::filterAcceptsItem(MagicModelItem* p_item) const
         int numFilters = _filterTypes.size();
         for (int i = 0; i < numFilters; ++i)
         {
-            if (p_item->itemType == _filterTypes[i])
+            if (p_item->abilityType == _filterTypes[i])
             {
                 accept = true;
                 break;

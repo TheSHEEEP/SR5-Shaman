@@ -45,15 +45,7 @@ SkillDefinition::SkillDefinition(const SkillDefinition& p_other)
 //---------------------------------------------------------------------------------
 SkillDefinition::~SkillDefinition()
 {
-//    // Do not delete children if this is a group - group skills are deleted by the parent category
-//    if (id != "" &&
-//        !isGroup)
-//    {
-//        for (unsigned int i = 0; i < children.size(); ++i)
-//        {
-//            delete children[i];
-//        }
-//    }
+
 }
 
 //---------------------------------------------------------------------------------

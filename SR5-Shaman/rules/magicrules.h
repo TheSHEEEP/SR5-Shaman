@@ -73,14 +73,6 @@ enum SpellDuration
 };
 
 /**
- * @brief The definition of one spell category.
- */
-struct SpellCategoryDefinition
-{
-    QMap<QString, QString>              translations;
-};
-
-/**
  * @brief The definition of one spell.
  */
 struct SpellDefinition
@@ -90,10 +82,9 @@ struct SpellDefinition
         , range(SPELLRANGE_INVALID)
         , damageType(SPELLDAMAGE_INVALID)
         , duration(SPELLDURATION_INVALID)
-        , isUserDefined(false)
     {}
 
-    QMap<QString, QString>              translations;
+    bool                                isSpellCategory;
     QString                             category;
     SpellType                           type;
     SpellRange                          range;
@@ -101,9 +92,6 @@ struct SpellDefinition
     SpellDuration                       duration;
     QString                             drain;
     QStringList                         descriptors;
-    bool                                requiresCustom;
-    QString                             customString;
-    bool                                isUserDefined;
     bool                                essenceEffect;
 };
 
@@ -134,12 +122,9 @@ struct AdeptPowerDefinition
         : costType(COSTTYPE_INVALID)
     {}
 
-    QMap<QString, QString>              translations;
     CostType                            costType;
     std::vector<float>                  costArray;
     ActivationType                      activationType;
-    bool                                requiresCustom;
-    QString                             customString;
 };
 
 
@@ -164,13 +149,72 @@ struct ComplexFormDefinition
         , duration(SPELLDURATION_INVALID)
     {}
 
-    QMap<QString, QString>              translations;
     TargetType                          targetType;
     SpellDuration                       duration;
     QString                             fadingValue;
-    bool                                requiresCustom;
-    QString                             customString;
 };
+
+// Magic ability types
+enum MagicAbilityType
+{
+    MAGICABILITYTYPE_INVALID = -1,
+    MAGICABILITYTYPE_SPELL,
+    MAGICABILITYTYPE_ADEPT_POWER,
+    MAGICABILITYTYPE_COMPLEX_FORM,
+    NUM_MAGICABILITYTYPES
+};
+
+/**
+ * @brief This is the definition of a single magical ability.
+ *          It can be a spell, an adept power or a complex form, depending on its type.
+ *          Also has some additional functionality to serve as a model item for Views.
+ */
+class MagicAbilityDefinition
+{
+public:
+    /**
+     * @brief Constructor.
+     */
+    MagicAbilityDefinition(MagicAbilityDefinition* p_parent = NULL);
+
+    /**
+     * @brief Copy constructor.
+     */
+    MagicAbilityDefinition(const MagicAbilityDefinition& p_other);
+
+    /**
+     * @brief Destructor.
+     */
+    ~MagicAbilityDefinition();
+
+    /**
+     * @brief Returns true if this item has a child with the passed value.
+     * @param p_id  The ID to look for.
+     */
+    bool hasChild(const QString& p_id) const;
+
+    /**
+     * @brief Returns the child with the passed value. Or NULL, if no child was found.
+     */
+    MagicAbilityDefinition* getChild(const QString& p_id) const;
+
+    MagicAbilityDefinition*                 parent;
+    std::vector<MagicAbilityDefinition*>    children;
+
+    QString                         id;
+    bool                            isCategory;
+    bool                            requiresCustom;
+    QString                         customString;
+    bool                            isUserDefined;
+    QMap<QString, QString>          translations;
+
+    MagicAbilityType                abilityType;
+    SpellDefinition*                spell;
+    AdeptPowerDefinition*           adeptPower;
+    ComplexFormDefinition*          complexForm;
+};
+
+Q_DECLARE_METATYPE(MagicAbilityDefinition)
 
 /**
  * @brief This class holds all information regarding magic specific rules.
@@ -197,6 +241,11 @@ public:
     void initialize(const QString& p_jsonFile);
 
     /**
+     * @return The root item of the model. Use this for display in trees, etc.
+     */
+    MagicAbilityDefinition* getModelRootItem();
+
+    /**
      * @brief Returns the map of magic type definitions.
      */
     const QMap<QString, MagicTypeDefinition*>& getAllMagicTypeDefinitions() const;
@@ -204,7 +253,7 @@ public:
     /**
      * @brief Returns the map of spell category definitions.
      */
-    const QMap<QString, SpellCategoryDefinition*>& getAllSpellCategoryDefinitions() const;
+    const QMap<QString, SpellDefinition*>& getAllSpellCategoryDefinitions() const;
 
     /**
      * @brief Returns the map of spell definitions.
@@ -259,12 +308,24 @@ public:
     QString getSpellCategoryTranslation(const QString& p_uniqueID) const;
 
 private:
+    // Some redundant data here, but it makes access faster
+    QMap<QString, MagicAbilityDefinition*>  _definitions;
     QMap<QString, MagicTypeDefinition*>     _typeDefinitions;
-    QMap<QString, SpellCategoryDefinition*> _spellCategoryDefinitions;
+    QMap<QString, SpellDefinition*>         _spellCategoryDefinitions;
     QMap<QString, SpellDefinition*>         _spellDefinitions;
     QMap<QString, AdeptPowerDefinition*>    _adeptPowerDefinitions;
     QMap<QString, ComplexFormDefinition*>   _complexFormDefinitions;
+
+    MagicAbilityDefinition* _rootItem; // The root item of the magic abilities, used to display in tree models
 };
+
+//---------------------------------------------------------------------------------
+inline
+MagicAbilityDefinition*
+MagicRules::getModelRootItem()
+{
+    return _rootItem;
+}
 
 //---------------------------------------------------------------------------------
 inline
@@ -276,7 +337,7 @@ MagicRules::getAllMagicTypeDefinitions() const
 
 //---------------------------------------------------------------------------------
 inline
-const QMap<QString, SpellCategoryDefinition*>&
+const QMap<QString, SpellDefinition*>&
 MagicRules::getAllSpellCategoryDefinitions() const
 {
     return _spellCategoryDefinitions;
