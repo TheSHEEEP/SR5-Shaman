@@ -233,12 +233,6 @@ MagicRules::initialize(const QString& p_jsonFile)
                 prioDef->freeSkillGroup.second = tempObject2.value("free_skill_groups").toArray().at(1).toString().toInt();
             }
 
-            // Free power points
-            if (tempObject2.contains("free_power_points"))
-            {
-                prioDef->freePowerPoints = tempObject2.value("free_power_points").toString().toInt();
-            }
-
             // Store priority
             typeDef->priorities[tempObject.keys().at(j).toInt()] = prioDef;
         }
@@ -283,6 +277,7 @@ MagicRules::initialize(const QString& p_jsonFile)
         abilityDef->abilityType = MAGICABILITYTYPE_SPELL;
         spellCat = new SpellDefinition();
         abilityDef->spell = spellCat;
+        abilityDef->spell->isSpellCategory = true;
         category->children.push_back(abilityDef);
 
         // Translations
@@ -318,7 +313,7 @@ MagicRules::initialize(const QString& p_jsonFile)
         abilityDef->id = uniqueId;
         abilityDef->abilityType = MAGICABILITYTYPE_SPELL;
         spellDef = new SpellDefinition();
-        abilityDef->spell = spellCat;
+        abilityDef->spell = spellDef;
 
         // Translations
         tempObject = currentSpell["translations"].toObject();
@@ -639,4 +634,58 @@ MagicRules::getSpellCategoryTranslation(const QString& p_uniqueID) const
     }
 
     return _definitions[p_uniqueID]->translations[APPSTATUS->getCurrentLocale()];
+}
+
+//---------------------------------------------------------------------------------
+QString
+MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_customValue)
+{
+    // Construct new ID
+    const MagicAbilityDefinition& originalAbility = getDefinition(p_id);
+    QString newID = p_id + "_" + p_customValue;
+
+    // If a spell with that ID already exists, don't add it again
+    if (_definitions.find(newID) != _definitions.end())
+    {
+        return newID;
+    }
+
+    // Create the new spell
+    MagicAbilityDefinition* newAbility = new MagicAbilityDefinition();
+    newAbility->id = newID;
+    newAbility->customString = p_customValue;
+    newAbility->requiresCustom = false;
+    newAbility->isUserDefined = true;
+    newAbility->parent = originalAbility.parent;
+    newAbility->children = originalAbility.children;
+    newAbility->isCategory = originalAbility.isCategory;
+    newAbility->parent->children.push_back(newAbility);
+    newAbility->translations = originalAbility.translations;
+    QMap<QString, QString>::iterator it;
+    for (it = newAbility->translations.begin(); it != newAbility->translations.end(); ++it)
+    {
+        it.value().append(" (" + p_customValue + ")");
+    }
+    newAbility->abilityType = originalAbility.abilityType;
+    switch (newAbility->abilityType)
+    {
+        case MAGICABILITYTYPE_SPELL:
+            newAbility->spell = originalAbility.spell;
+            _spellDefinitions[newID] = newAbility->spell;
+        break;
+
+        case MAGICABILITYTYPE_ADEPT_POWER:
+            newAbility->adeptPower = originalAbility.adeptPower;
+            _adeptPowerDefinitions[newID] = newAbility->adeptPower;
+        break;
+
+        case MAGICABILITYTYPE_COMPLEX_FORM:
+            newAbility->complexForm = originalAbility.complexForm;
+            _complexFormDefinitions[newID] = newAbility->complexForm;
+        break;
+    }
+
+    // Add the skill
+    _definitions[newID] = newAbility;
+    return newID;
 }

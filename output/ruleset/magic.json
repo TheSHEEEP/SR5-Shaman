@@ -100,7 +100,6 @@
                 "1" :
                 {
                     "starting_magic"     : "6",
-                    "free_power_points"  : "6",
                     "free_skills"        : ["1", "4"]
                 },
                 "2" :

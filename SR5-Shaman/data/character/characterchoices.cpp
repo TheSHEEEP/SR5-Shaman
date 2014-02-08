@@ -504,6 +504,174 @@ CharacterChoices::removeFreeSkill(const QString& p_id)
 }
 
 //---------------------------------------------------------------------------------
+void
+CharacterChoices::addFreeSpell(const QString& p_id)
+{
+
+    // Sanity check - magic user
+    if (!getIsMagicUser())
+    {
+        qWarning() << QString("Could not add free spell %1. Character is no magic user.")
+                            .arg(p_id);
+        return;
+    }
+
+    // Get the spell definition
+    const MagicAbilityDefinition& spellDef = MAGIC_RULES->getDefinition(p_id);
+
+    // Prevent too many additions
+    float currentValue = 0.0f;
+    if (_spellsFromFreebies.contains(p_id))
+    {
+        currentValue = _spellsFromFreebies[p_id];
+
+        // Spells and complex forms can only be added once
+        if (spellDef.abilityType == MAGICABILITYTYPE_SPELL ||
+            spellDef.abilityType == MAGICABILITYTYPE_COMPLEX_FORM)
+        {
+            APPSTATUS->setStatusBarMessage(tr("Could not add free spell/complex form %1. Spell/complex form is already added as a free spell.")
+                                                .arg(p_id),
+                                           2.5f,
+                                           QColor(0, 0, 255));
+            return;
+        }
+        // Adept powers can only be added once, a certain number of times or unlimited
+        // all depending on the type.
+        else if (spellDef.abilityType == MAGICABILITYTYPE_ADEPT_POWER)
+        {
+            if (spellDef.adeptPower->costType == COSTTYPE_NORMAL ||
+                    (spellDef.adeptPower->costType == COSTTYPE_ARRAY &&
+                     _spellsFromFreebies[p_id] >= spellDef.adeptPower->costArray.back()))
+            {
+                APPSTATUS->setStatusBarMessage(tr("Could not add adept power %1. Power exceeds valid points.")
+                                                    .arg(p_id),
+                                               2.5f,
+                                               QColor(0, 0, 255));
+                return;
+            }
+        }
+    }
+
+    // Get the spell value
+    float spellValue = 0;
+    switch (spellDef.abilityType)
+    {
+        // Most spells just cost exactly 1 point
+        case MAGICABILITYTYPE_SPELL:
+        case MAGICABILITYTYPE_COMPLEX_FORM:
+        default:
+            spellValue = 1.0f;
+        break;
+
+        // Adept powers have varying cost types
+        case MAGICABILITYTYPE_ADEPT_POWER:
+            switch ( spellDef.adeptPower->costType)
+            {
+                case COSTTYPE_NORMAL:
+                case COSTTYPE_PER_LEVEL:
+                default:
+                    spellValue = spellDef.adeptPower->costArray.back();
+                break;
+
+                case COSTTYPE_ARRAY:
+                {
+                    // Get the next index cost
+                    for (unsigned int i = 0; i < spellDef.adeptPower->costArray.size(); ++i)
+                    {
+                        if (spellDef.adeptPower->costArray[i] > currentValue)
+                        {
+                            spellValue = spellDef.adeptPower->costArray[i];
+                            break;
+                        }
+                    }
+
+                    // If we reach this point and the value is still 0,
+                    // it means we already are at the max value
+                    if (spellValue <= 0.0f)
+                    {
+                        APPSTATUS->setStatusBarMessage(tr("Could not add adept power %1. Power exceeds valid points.")
+                                                            .arg(p_id),
+                                                       2.5f,
+                                                       QColor(0, 0, 255));
+                        return;
+                    }
+                }
+                break;
+            }
+        break;
+    }
+
+    // Get available free spell points
+    float availableFreePoints = 0.0f;
+    if (spellDef.abilityType == MAGICABILITYTYPE_SPELL || spellDef.abilityType == MAGICABILITYTYPE_COMPLEX_FORM)
+    {
+        availableFreePoints = getAvailableFreeSpells();
+    }
+    // If this an adept power, it is not really a free spell, but purchased from power points
+    if (spellDef.abilityType == MAGICABILITYTYPE_ADEPT_POWER)
+    {
+        availableFreePoints = getAvailablePowerPoints();
+    }
+
+    // No free skills available!
+    if (availableFreePoints - spellValue < 0.0f)
+    {
+        APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Not enough spell points remaining.")
+                                            .arg(p_id),
+                                       2.5f,
+                                       QColor(0, 0, 255));
+        return;
+    }
+
+    // Apply free skill
+    switch (spellDef.abilityType)
+    {
+        case MAGICABILITYTYPE_SPELL:
+        case MAGICABILITYTYPE_COMPLEX_FORM:
+        default:
+            _spellsFromFreebies[p_id] = spellValue;
+        break;
+
+        case MAGICABILITYTYPE_ADEPT_POWER:
+            switch (spellDef.adeptPower->costType)
+            {
+                case COSTTYPE_NORMAL:
+                case COSTTYPE_ARRAY:
+                default:
+                    _spellsFromFreebies[p_id] = spellValue;
+                break;
+
+                case COSTTYPE_PER_LEVEL:
+                    if (_spellsFromFreebies.contains(p_id))
+                    {
+                        _spellsFromFreebies[p_id] += spellValue;
+                    }
+                    else
+                    {
+                        _spellsFromFreebies[p_id] = spellValue;
+                    }
+                break;
+            }
+        break;
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::removeFreeSpell(const QString& p_id)
+{
+    // Check if the skill is actually there
+    if (!_spellsFromFreebies.contains(p_id))
+    {
+        qWarning() << QString("Could not remove free spell %1. Spell does not exist in freebies.")
+                            .arg(p_id);
+        return;
+    }
+
+    _spellsFromFreebies.remove(p_id);
+}
+
+//---------------------------------------------------------------------------------
 float
 CharacterChoices::getAvailableFreeSpells() const
 {
@@ -521,11 +689,6 @@ CharacterChoices::getAvailableFreeSpells() const
         {
             maxFreeSpells = def.priorities[getPriorityIndex(PRIORITY_MAGIC)]->freeSpells;
         }
-        // For adepts, we use power points
-        else
-        {
-            maxFreeSpells = def.priorities[getPriorityIndex(PRIORITY_MAGIC)]->freePowerPoints;
-        }
     }
 
     // Stop here when we have no free spells
@@ -539,9 +702,66 @@ CharacterChoices::getAvailableFreeSpells() const
     QMap<QString, float>::const_iterator it;
     for (it = _spellsFromFreebies.begin(); it != _spellsFromFreebies.end(); ++it)
     {
-        spentSpells += *it;
+        // Do not count adept powers, as those are subtracted from power points instead
+        const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(it.key());
+        if (def.abilityType != MAGICABILITYTYPE_ADEPT_POWER)
+        {
+            spentSpells += *it;
+        }
     }
 
     return maxFreeSpells - spentSpells;
+}
+
+//---------------------------------------------------------------------------------
+float
+CharacterChoices::getPowerPoints() const
+{
+    float value = 0.0f;
+
+    // Get free spells from magic user
+    if (getIsMagicUser())
+    {
+        const MagicTypeDefinition& def = MAGIC_RULES->getMagicTypeDefinition(getMagicUserTypeID());
+
+        // Only "pure" adepts get free power points equal to their magic rating
+        // Mystical adepts must purchase them
+        if (std::find(def.types.begin(), def.types.end(), "adept") != def.types.end() &&
+            std::find(def.types.begin(), def.types.end(), "magic") == def.types.end())
+        {
+            value = CHARACTER_VALUES->getAttribute("magic");
+        }
+    }
+
+    // TODO: Purchased power points
+
+    return value;
+}
+
+//---------------------------------------------------------------------------------
+float
+CharacterChoices::getAvailablePowerPoints() const
+{
+    float maxPowerPoints = getPowerPoints();
+
+    // Stop here when we have no power points
+    if (maxPowerPoints <= 0.0f)
+    {
+        return 0.0f;
+    }
+
+    // Get the number of spent power points
+    float spentPowerPoints = 0;
+    QMap<QString, float>::const_iterator it;
+    for (it = _spellsFromFreebies.begin(); it != _spellsFromFreebies.end(); ++it)
+    {
+        const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(it.key());
+        if (def.abilityType == MAGICABILITYTYPE_ADEPT_POWER)
+        {
+            spentPowerPoints += it.value();
+        }
+    }
+
+    return maxPowerPoints - spentPowerPoints;
 }
 

@@ -200,10 +200,36 @@ public:
     void resetFreeSkills();
 
     /**
-     * @brief Returns the number of remaining free spells / complex forms / adept powers.
-     *          Return type is float as power points can be spent in half and quarter points.
+     * @brief Adds the passed free spell/complex form/adept power.
+     * @param p_id      The ID of the spell.
+     */
+    void addFreeSpell(const QString& p_id);
+
+    /**
+     * @brief Removes the passed free spell/complex form/adept power.
+     * @param p_id  The ID of the spell.
+     */
+    void removeFreeSpell(const QString& p_id);
+
+    /**
+     * @brief Removes all free spells/complex forms/adept powers.
+     */
+    void resetFreeSpells();
+
+    /**
+     * @brief Returns the number of remaining free spells / complex forms.
      */
     float getAvailableFreeSpells() const;
+
+    /**
+     * @brief Returns the total number of power points for adept powers.
+     */
+    float getPowerPoints() const;
+
+    /**
+     * @brief Returns the number of remaining power points for adept powers.
+     */
+    float getAvailablePowerPoints() const;
 
 
 private:
@@ -358,6 +384,14 @@ void
 CharacterChoices::resetFreeSkills()
 {
     _skillIncreasesFreebies.clear();
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterChoices::resetFreeSpells()
+{
+    _spellsFromFreebies.clear();
 }
 
 #endif // CHARACTERDATA_H

@@ -1,6 +1,7 @@
 #include "magicsortfilterproxymodel.h"
 
 #include <iostream>
+#include <QDebug>
 
 #include "rules/rules.h"
 
@@ -57,19 +58,44 @@ MagicSortFilterProxyModel::filterAcceptsRow(int p_row, const QModelIndex& p_pare
     bool accept = filterAcceptsItem(currentItem);
 
     // We may hide a category if it is empty
-    if (accept && currentItem->isCategory && !_showEmptyCategories)
+    if (accept && !_showEmptyCategories &&
+            (currentItem->isCategory ||
+             (currentItem->abilityType == MAGICABILITYTYPE_SPELL && currentItem->spell->isSpellCategory)) )
     {
-        // Iterate over the children to find out if any will be accepted
-        // And if so, accept the category
         int numChildren = currentItem->children.size();
         accept = false;
-        for (int i = 0; i < numChildren; ++i)
+
+        // If this is the spell category, only show it if any of it's children have any valid children themselves
+        // TODO: Is there a quicker way to do this?
+        if (currentItem->id == "CATEGORY_SPELLS")
         {
-            MagicAbilityDefinition* item = currentItem->children[i];
-            if (filterAcceptsItem(item))
+            for (int i = 0; i < numChildren; ++i)
             {
-                accept = true;
-                break;
+                MagicAbilityDefinition* item = currentItem->children[i];
+                int numInnerChildren = item->children.size();
+                for (int j = 0; j < numInnerChildren; ++j)
+                {
+                    if (filterAcceptsItem(item->children[j]))
+                    {
+                        accept = true;
+                        break;
+                    }
+                }
+                if (accept) break;
+            }
+        }
+        else
+        {
+            // Iterate over the children to find out if any will be accepted
+            // And if so, accept the category
+            for (int i = 0; i < numChildren; ++i)
+            {
+                MagicAbilityDefinition* item = currentItem->children[i];
+                if (filterAcceptsItem(item))
+                {
+                    accept = true;
+                    break;
+                }
             }
         }
     }
@@ -85,7 +111,8 @@ MagicSortFilterProxyModel::filterAcceptsItem(MagicAbilityDefinition* p_item) con
     bool accept = true;
 
     // Categories are accepted by default
-    if (p_item->isCategory)
+    if (p_item->isCategory ||
+        (p_item->abilityType == MAGICABILITYTYPE_SPELL && p_item->spell->isSpellCategory))
     {
         return true;
     }

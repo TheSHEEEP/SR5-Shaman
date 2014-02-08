@@ -15,7 +15,6 @@ struct MagicTypePriorityDefinition
     MagicTypePriorityDefinition()
         : startingMagic(-1)
         , freeSpells(-1)
-        , freePowerPoints(-1)
     {
         freeSkills.first = -1;
         freeSkills.second = -1;
@@ -25,7 +24,6 @@ struct MagicTypePriorityDefinition
 
     int                 startingMagic;
     int                 freeSpells;
-    int                 freePowerPoints;
     std::pair<int, int> freeSkills;
     std::pair<int, int> freeSkillGroup;
 };
@@ -78,7 +76,8 @@ enum SpellDuration
 struct SpellDefinition
 {
     SpellDefinition()
-        : type(SPELLTYPE_INVALID)
+        : isSpellCategory(false)
+        , type(SPELLTYPE_INVALID)
         , range(SPELLRANGE_INVALID)
         , damageType(SPELLDAMAGE_INVALID)
         , duration(SPELLDURATION_INVALID)
@@ -283,6 +282,12 @@ public:
     const MagicTypeDefinition& getMagicTypeDefinition(const QString& p_uniqueId) const;
 
     /**
+     * @brief Returns the definition of the ability with the passed name.
+     * @note    Does NOT check if the id exists. Use getAllDefinitions() for that.
+     */
+    const MagicAbilityDefinition& getDefinition(const QString& p_uniqueID) const;
+
+    /**
      * @brief Returns the definition of the spell with the passed ID.
      * @note    Does NOT check if the id exists. Use getAllDefinitions() for that.
      */
@@ -306,6 +311,15 @@ public:
      * @return
      */
     QString getSpellCategoryTranslation(const QString& p_uniqueID) const;
+
+    /**
+     * @brief Will construct a new spell out of the passed spell and the customization.
+     *          A new spell will only be constructed if this specialization does not exist already.
+     * @param p_id          The ID of the original spell.
+     * @param p_customValue The custom value.
+     * @return The ID of the new spell.
+     */
+    QString constructCustomizedSpell(const QString &p_id, const QString &p_customValue);
 
 private:
     // Some redundant data here, but it makes access faster
@@ -373,6 +387,14 @@ const MagicTypeDefinition&
 MagicRules::getMagicTypeDefinition(const QString& p_uniqueId) const
 {
     return *(_typeDefinitions[p_uniqueId]);
+}
+
+//---------------------------------------------------------------------------------
+inline
+const MagicAbilityDefinition&
+MagicRules::getDefinition(const QString& p_uniqueID) const
+{
+    return *(_definitions[p_uniqueID]);
 }
 
 //---------------------------------------------------------------------------------

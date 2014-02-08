@@ -250,13 +250,16 @@ CharEditMagicTab::updateValues()
                                         .arg(CHARACTER_CHOICES->getAvailableFreeSkills(true))
                                         .arg(freeSkills.first));
 
-        // Free spells / complex forms / powers
-        float freeSpells = typePriority->freeSpells > typePriority->freePowerPoints ?
-                            typePriority->freeSpells :
-                            typePriority->freePowerPoints;
+        // Free spells / complex forms
+        float freeSpells = typePriority->freeSpells >= 0? typePriority->freeSpells : 0;
         ui->lblFreeSpellsValue->setText(QString("%1 / %2")
                                     .arg((int)CHARACTER_CHOICES->getAvailableFreeSpells())
                                     .arg(freeSpells));
+
+        // Power points
+        ui->lblPowerPointsValue->setText(QString("%1 / %2")
+                                    .arg((int)CHARACTER_CHOICES->getAvailablePowerPoints())
+                                    .arg((int)CHARACTER_CHOICES->getPowerPoints()));
     }
 
     // Karma points
@@ -279,10 +282,21 @@ CharEditMagicTab::checkContinue()
         }
         else
         {
-            ui->btnGuidedContinue->setEnabled(false);
-            ui->btnGuidedContinue->setText(tr("Select skills and spells / complex forms to continue"));
+            // Continue if all freebies were spent
+            if (CHARACTER_CHOICES->getAvailableFreeSpells() > 0.0f ||
+                CHARACTER_CHOICES->getAvailableFreeSkills(false) > 0 ||
+                CHARACTER_CHOICES->getAvailableFreeSkills(true) > 0)
+            {
+                ui->btnGuidedContinue->setEnabled(false);
+                ui->btnGuidedContinue->setText(tr("Select skills and spells / complex forms to continue"));
 
-            emit disableNext();
+                emit disableNext();
+            }
+            else
+            {
+                ui->btnGuidedContinue->setEnabled(true);
+                ui->btnGuidedContinue->setText(tr("Continue"));
+            }
         }
     }
 }
@@ -419,7 +433,7 @@ CharEditMagicTab::showHideSpellsViews()
             MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
                 .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)];
     if (CHARACTER_CHOICES->getAvailableFreeSpells() >= magicPrioDef->freeSpells &&
-        CHARACTER_CHOICES->getAvailableFreeSpells() >= magicPrioDef->freePowerPoints)
+        CHARACTER_CHOICES->getAvailablePowerPoints() >= CHARACTER_CHOICES->getPowerPoints())
     {
         _spellsFilter->getFilterIDEquals().clear();
         _spellsFilter->applyFilter();
@@ -515,7 +529,8 @@ CharEditMagicTab::handleSpellChanged(const QModelIndex& p_current, const QModelI
 
     // If the item is a category, we can't remove/add it
     MagicAbilityDefinition* item = static_cast<MagicAbilityDefinition*>(p_current.data().value<void*>());
-    if (item->isCategory)
+    if (item->isCategory ||
+        (item->abilityType == MAGICABILITYTYPE_SPELL && item->spell->isSpellCategory))
     {
         button->setEnabled(false);
         return;
@@ -535,10 +550,10 @@ CharEditMagicTab::on_btnAddSkill_clicked()
 
     // If this requires a custom choice, show the modal window
     QString customValue = "";
-    if (SKILL_RULES->getDefinition(id).requiresCustom)
+    if (item->requiresCustom)
     {
         // Show the popup and get its result
-        CustomDescriptorPopup popup(NULL, SKILL_RULES->getDefinition(id).translations[APPSTATUS->getCurrentLocale()],
+        CustomDescriptorPopup popup(NULL, item->translations[APPSTATUS->getCurrentLocale()],
                                     false, true);
         int result = popup.exec();
         if (result == QDialog::Rejected)
@@ -575,6 +590,8 @@ CharEditMagicTab::on_btnAddSkill_clicked()
 
     // Update shown values
     updateValues();
+
+    checkContinue();
 }
 
 //---------------------------------------------------------------------------------
@@ -612,18 +629,104 @@ CharEditMagicTab::on_btnRemoveSkill_clicked()
 
     // Update shown values
     updateValues();
+
+    checkContinue();
 }
 
 //---------------------------------------------------------------------------------
 void
 CharEditMagicTab::on_btnAddSpell_clicked()
 {
-    // TODO: here
+    // Get the currently selected skill
+    MagicAbilityDefinition* item = static_cast<MagicAbilityDefinition*>(
+                ui->treeSpellsAvailable->currentIndex().data().value<void*>());
+    QString id = item->id;
+
+    // If this requires a custom choice, show the modal window
+    QString customValue = "";
+    if (item->requiresCustom)
+    {
+        // Show the popup and get its result
+        CustomDescriptorPopup popup(NULL, item->translations[APPSTATUS->getCurrentLocale()],
+                                    false, true);
+        int result = popup.exec();
+        if (result == QDialog::Rejected)
+        {
+            return;
+        }
+        customValue = popup.getCustomization();
+
+        // Construct a new custom skill (this will do nothing if it already exists)
+        id = MAGIC_RULES->constructCustomizedSpell(id, customValue);
+    }
+
+    // Take note of the choice
+    CHARACTER_CHOICES->addFreeSpell(id);
+
+    // Add the spell to the list (prevent double adding)
+    QStringList& filterIDs = _spellsFilter->getFilterIDEquals();
+    if (!filterIDs.contains(id))
+    {
+        filterIDs.push_back(id);
+    }
+
+    // Update the display
+    _spellsFilter->applyFilter();
+    ui->treeSpells->expandAll();
+
+    // Disable the add button if we have no more free spells
+    // If this is adding and we have no more free spells, disable
+    if (CHARACTER_CHOICES->getAvailableFreeSpells() <= 0.0f &&
+        CHARACTER_CHOICES->getAvailableFreeSpells() <= 0.0f)
+    {
+        ui->btnAddSpell->setEnabled(false);
+    }
+
+    // TODO: Here
+    // TODO: Purchase power points from karma
+    // TODO: Purchase spells/complex forms from karma
+    // Update shown values
+    updateValues();
+
+    checkContinue();
 }
 
 //---------------------------------------------------------------------------------
 void
 CharEditMagicTab::on_btnRemoveSpell_clicked()
 {
+    // Get the currently selected spell
+    MagicAbilityDefinition* item = static_cast<MagicAbilityDefinition*>(
+                ui->treeSpells->currentIndex().data().value<void*>());
 
+    // Remove the spell from the list
+    QStringList& filterIDs = _spellsFilter->getFilterIDEquals();
+    for (int i = 0; i < filterIDs.size(); ++i)
+    {
+        if (filterIDs[i] == item->id)
+        {
+            filterIDs.removeAt(i);
+            break;
+        }
+    }
+
+    // Take note of the choice
+    CHARACTER_CHOICES->removeFreeSpell(item->id);
+
+    // Update the display
+    _spellsFilter->applyFilter();
+    ui->treeSpells->expandAll();
+
+    // Re-select the current skill from the available list to cause updating the add button
+    QModelIndex currentIndex(ui->treeSpellsAvailable->currentIndex());
+    ui->treeSpellsAvailable->setCurrentIndex(QModelIndex());
+    ui->treeSpellsAvailable->setCurrentIndex(currentIndex);
+
+    // As we have removed a spell, disable the remove button
+    ui->btnRemoveSpell->setEnabled(false);
+
+    // Update shown values
+    updateValues();
+
+    checkContinue();
 }
