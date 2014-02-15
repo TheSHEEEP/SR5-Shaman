@@ -1416,7 +1416,7 @@
       { "unique_id"    : "KILLING_HANDS",
         "translations" :
         {
-            "en"    : "Adrenaline Boost",
+            "en"    : "Killing Hands",
             "de"    : "Todeskralle"
         },
         "cost"              : "0.5",

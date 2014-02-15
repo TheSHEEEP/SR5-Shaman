@@ -42,6 +42,11 @@ public:
     // KARMA
     //*********************************************************************
     /**
+     * @brief sets the karma pool to the passed value.
+     */
+    void setKarmaPool(int p_value);
+
+    /**
      * @brief Increases the karma pool by the passed value.
      */
     void increaseKarmaPool(int p_increase);
@@ -88,10 +93,28 @@ public:
     int getPhysicalLimit() const;
     int getMentalLimit() const;
     int getSocialLimit() const;
+
+    //*********************************************************************
+    // SPELLS
+    //*********************************************************************
+    /**
+     * @param p_id  The unique ID of the adept power to look for.
+     * @return The level of the passed power, or 0 if the character does not have it.
+     */
+    int getAdeptPowerLevel(const QString& p_id) const;
+
 private:
     QSet<QString>   _validBaseAttributes;
     int             _karmaPool;
 };
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterValues::setKarmaPool(int p_value)
+{
+    _karmaPool = p_value;
+}
 
 //---------------------------------------------------------------------------------
 inline

@@ -95,6 +95,9 @@ public:
      */
     const QString& getNick() const;
 
+    //*********************************************************************
+    // MAGIC
+    //*********************************************************************
     /**
      * @brief Returns true if this character is a mgic user.
      */
@@ -116,6 +119,9 @@ public:
      */
     const QString& getMagicUserTypeID() const;
 
+    //*********************************************************************
+    // KARMA
+    //*********************************************************************
     /**
      * @brief Returns the total amount of karma spent.
      */
@@ -126,6 +132,9 @@ public:
      */
     int getAvailableKarma() const;
 
+    //*********************************************************************
+    // ATTRIBUTES
+    //*********************************************************************
     /**
      * @brief Increase the passed attribute by the passed amount (can also be used to decrease).
      * @param p_attribute   The name of the attribute to increase.
@@ -175,6 +184,9 @@ public:
      */
     void resetAttributeIncreases(const QString p_attribute, bool p_fromFreebies = true, bool p_fromKarma = true);
 
+    //*********************************************************************
+    // SKILLS
+    //*********************************************************************
     /**
      * @brief Returns the number of remaining free skills.
      * @param p_skillGroups If this is true, the number of remaining free skill groups will be returned instead.
@@ -199,6 +211,9 @@ public:
      */
     void resetFreeSkills();
 
+    //*********************************************************************
+    // SPELLS
+    //*********************************************************************
     /**
      * @brief Adds the passed free spell/complex form/adept power.
      * @param p_id      The ID of the spell.
@@ -222,9 +237,42 @@ public:
     float getAvailableFreeSpells() const;
 
     /**
+     * @brief Returns the number of spell/power points spent on the spell with the passed ID.
+     * @param p_id      The ID of the spell.
+     */
+    float getSpellFreebies(const QString& p_id);
+
+    //*********************************************************************
+    // POWER POINTS
+    //*********************************************************************
+    /**
      * @brief Returns the total number of power points for adept powers.
      */
     float getPowerPoints() const;
+
+    /**
+     * @brief Purchases power points to get to the target value.
+     * @param p_targetValue     The target value of purchased power points.
+     *                          For example, if 2 PP are already purchased and 4 is given to this function,
+     *                              2 PP will be purchased.
+     *                          You can set the purchased PP to a lower number, too, to regain karma.
+     */
+    void setPurchasePowerPoints(int p_targetValue);
+
+    /**
+     * @brief Resets all purchased adept powers.
+     */
+    void resetAdeptPowers();
+
+    /**
+     * @return The number of purchased power points (purchased from karma).
+     */
+    int getPurchasedPowerPoints() const;
+
+    /**
+     * @return The number of spent power points.
+     */
+    float getSpentPowerPoints() const;
 
     /**
      * @brief Returns the number of remaining power points for adept powers.
@@ -240,12 +288,14 @@ private:
     QString     _metatypeID;        // Corresponds to the unique ID of one metatype
     QString     _magicUserType;     // Corresponds to the unique ID of one magic user type
 
-    QMap<QString, int> _attributeIncreasesFreebies;
-    QMap<QString, int> _attributeIncreasesKarma;
-    QMap<QString, int> _skillIncreasesFreebies;
-    QMap<QString, int> _skillIncreasesKarma;
-    QMap<QString, float> _spellsFromFreebies;
-    QMap<QString, float> _spellsFromKarma;
+    QMap<QString, int>      _attributeIncreasesFreebies;
+    QMap<QString, int>      _attributeIncreasesKarma;
+    QMap<QString, int>      _skillIncreasesFreebies;
+    QMap<QString, int>      _skillIncreasesKarma;
+    QMap<QString, float>    _spellsFromFreebies;
+    QMap<QString, float>    _spellsFromKarma;
+    int                     _purchasedPowerPoints;
+
 };
 
 
@@ -392,6 +442,14 @@ void
 CharacterChoices::resetFreeSpells()
 {
     _spellsFromFreebies.clear();
+}
+
+//---------------------------------------------------------------------------------
+inline
+int
+CharacterChoices::getPurchasedPowerPoints() const
+{
+    return _purchasedPowerPoints;
 }
 
 #endif // CHARACTERDATA_H

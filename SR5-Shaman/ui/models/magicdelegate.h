@@ -29,6 +29,22 @@ public:
      * @param p_index   The model index to display.
      */
     void paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, const QModelIndex& p_index) const;
+
+    /**
+     * @param p_show    If this is true, the delegate will show the level of an adept power.
+     */
+    void setShowAdeptPowerLevel(bool p_show);
+
+private:
+    bool    _showAdeptPowerLevel;
 };
+
+//---------------------------------------------------------------------------------
+inline
+void
+MagicDelegate::setShowAdeptPowerLevel(bool p_show)
+{
+    _showAdeptPowerLevel = p_show;
+}
 
 #endif // MAGICDELEGATE_H

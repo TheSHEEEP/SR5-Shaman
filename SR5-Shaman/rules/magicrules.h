@@ -321,6 +321,11 @@ public:
      */
     QString constructCustomizedSpell(const QString &p_id, const QString &p_customValue);
 
+    /**
+     * @return The karma cost of one power point.
+     */
+    int getPowerPointPurchaseCost() const;
+
 private:
     // Some redundant data here, but it makes access faster
     QMap<QString, MagicAbilityDefinition*>  _definitions;
@@ -421,5 +426,12 @@ MagicRules::getComplexFormDefinition(const QString& p_uniqueId) const
     return *(_complexFormDefinitions[p_uniqueId]);
 }
 
-
+//---------------------------------------------------------------------------------
+inline
+int
+MagicRules::getPowerPointPurchaseCost() const
+{
+    // TODO: Make this configurable?
+    return 2;
+}
 #endif // MAGICRULES_H

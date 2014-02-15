@@ -5,6 +5,7 @@
 
 #include "data/appstatus.h"
 #include "data/character/characterchoices.h"
+#include "data/character/charactervalues.h"
 #include "ui/character/characterpreviewsideinfo.h"
 #include "ui/character/creationsideinfo.h"
 #include "ui/character/tabs/chareditmisctab.h"
@@ -119,6 +120,7 @@ MainSplitView::initializeCharacterCreation()
 
         // Set character default values
         CHARACTER_CHOICES->setIsMagicUser(false);
+        CHARACTER_VALUES->setKarmaPool(25);
 
         // Insert widgets into tab container
         // Step 1: Metatype & magic type

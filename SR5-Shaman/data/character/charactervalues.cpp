@@ -78,7 +78,7 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
 float
 CharacterValues::getEssence(bool p_withAugments) const
 {
-    // Sanity check 2 - metatype
+    // Sanity check - metatype
     if (CHARACTER_CHOICES->getMetatypeID() == "")
     {
         qWarning() << QString("Cannot calculate essence without a chosen metatype.");
@@ -93,4 +93,46 @@ CharacterValues::getEssence(bool p_withAugments) const
     // TODO: get augmentation influence
 
     return result;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterValues::getAdeptPowerLevel(const QString& p_id) const
+{
+    // Sanity check - magic user
+    if (!CHARACTER_CHOICES->getIsMagicUser())
+    {
+        qWarning() << QString("Character is not even a magic user! Asked for adept power level: %1").arg(p_id);
+        return 0;
+    }
+
+    // Get the spent freebies
+    float freebies = CHARACTER_CHOICES->getSpellFreebies(p_id);
+
+    // Calculate the level
+    int level = 0;
+    const AdeptPowerDefinition& def = MAGIC_RULES->getAdeptPowerDefinition(p_id);
+    switch (def.costType)
+    {
+    case COSTTYPE_ARRAY:
+    {
+        for (unsigned int i = 0; i < def.costArray.size(); ++i)
+        {
+            if (freebies == def.costArray[i])
+            {
+                level = i + 1;
+                break;
+            }
+        }
+        break;
+    }
+
+    case COSTTYPE_PER_LEVEL:
+        level = freebies / def.costArray.back();
+        break;
+    default:
+        level = 0;
+    }
+
+    return level;
 }

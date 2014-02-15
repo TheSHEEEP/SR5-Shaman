@@ -461,17 +461,17 @@ MagicRules::initialize(const QString& p_jsonFile)
         if (currentPower.contains("cost_per_level"))
         {
             powerDef->costType = COSTTYPE_PER_LEVEL;
-            powerDef->costArray.push_back(currentPower["cost_per_level"].toDouble());
+            powerDef->costArray.push_back(currentPower["cost_per_level"].toString().toDouble());
         }
         else if (currentPower.contains("cost"))
         {
             QJsonValue::Type type = currentPower["cost"].type();
 
             // Normal cost or array
-            if (type == QJsonValue::Double)
+            if (type != QJsonValue::Array)
             {
                 powerDef->costType = COSTTYPE_NORMAL;
-                powerDef->costArray.push_back(currentPower["cost"].toDouble());
+                powerDef->costArray.push_back(currentPower["cost"].toString().toDouble());
             }
             else
             {
@@ -481,7 +481,7 @@ MagicRules::initialize(const QString& p_jsonFile)
                 // Add each array entry
                 for (int j = 0; j < tempArray.size(); ++j)
                 {
-                    powerDef->costArray.push_back(tempArray[j].toDouble());
+                    powerDef->costArray.push_back(tempArray[j].toString().toDouble());
                 }
             }
         }

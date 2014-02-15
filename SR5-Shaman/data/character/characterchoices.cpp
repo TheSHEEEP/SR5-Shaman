@@ -13,6 +13,7 @@ CharacterChoices* CharacterChoices::_instance = 0;
 CharacterChoices::CharacterChoices()
     : _metatypeID("")
     , _magicUserType("")
+    , _purchasedPowerPoints(0)
 {
     _selectedPriorities.resize(5, PRIORITY_INVALID);
 }
@@ -91,6 +92,9 @@ CharacterChoices::getSpentKarma() const
         ++it;
     }
 
+    // From purchased power points
+    result += _purchasedPowerPoints * MAGIC_RULES->getPowerPointPurchaseCost();
+
     return result;
 }
 
@@ -156,6 +160,10 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
                 attemptedIncrease = -(*increaseIt);
                 (*increaseIt) = 0;
             }
+            else
+            {
+                attemptedIncrease = 0;
+            }
         }
 
         // Subtract from freebies
@@ -204,7 +212,8 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     int fromKarma = attemptedIncrease - actualFromFreebies;
 
     // If the available amount of freebies is lower than the input, try to get the rest from karma points
-    if (actualFromFreebies < p_fromFreebies)
+    if (actualFromFreebies > 0 &&
+        actualFromFreebies < p_fromFreebies)
     {
         fromKarma += p_fromFreebies - actualFromFreebies;
     }
@@ -553,7 +562,8 @@ CharacterChoices::addFreeSpell(const QString& p_id)
     }
 
     // Get the spell value
-    float spellValue = 0;
+    float influencingSpellValue = 0.0f;
+    float spellValue = 0.0f;
     switch (spellDef.abilityType)
     {
         // Most spells just cost exactly 1 point
@@ -575,6 +585,11 @@ CharacterChoices::addFreeSpell(const QString& p_id)
 
                 case COSTTYPE_ARRAY:
                 {
+                    if (_spellsFromFreebies.contains(p_id))
+                    {
+                        influencingSpellValue = currentValue;
+                    }
+
                     // Get the next index cost
                     for (unsigned int i = 0; i < spellDef.adeptPower->costArray.size(); ++i)
                     {
@@ -614,7 +629,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
     }
 
     // No free skills available!
-    if (availableFreePoints - spellValue < 0.0f)
+    if (availableFreePoints - (spellValue - influencingSpellValue) < 0.0f)
     {
         APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Not enough spell points remaining.")
                                             .arg(p_id),
@@ -715,6 +730,18 @@ CharacterChoices::getAvailableFreeSpells() const
 
 //---------------------------------------------------------------------------------
 float
+CharacterChoices::getSpellFreebies(const QString& p_id)
+{
+    if (!_spellsFromFreebies.contains(p_id))
+    {
+        return 0.0f;
+    }
+
+    return _spellsFromFreebies[p_id];
+}
+
+//---------------------------------------------------------------------------------
+float
 CharacterChoices::getPowerPoints() const
 {
     float value = 0.0f;
@@ -733,9 +760,102 @@ CharacterChoices::getPowerPoints() const
         }
     }
 
-    // TODO: Purchased power points
+    // Purchased power points
+    value += _purchasedPowerPoints;
 
     return value;
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::setPurchasePowerPoints(int p_targetValue)
+{
+    // If this is an increase, make sure we have enough karma
+    if (p_targetValue > _purchasedPowerPoints)
+    {
+        int cost = (p_targetValue - _purchasedPowerPoints) * MAGIC_RULES->getPowerPointPurchaseCost();
+        if (cost > getAvailableKarma())
+        {
+            APPSTATUS->setStatusBarMessage(tr("Not enough karma to purchase that many power points. Setting to max."),
+                                           2.5f,
+                                           QColor(0, 0, 255));
+
+            // Calculate maximum
+            p_targetValue--;
+            while (p_targetValue > _purchasedPowerPoints)
+            {
+                int cost = (p_targetValue - _purchasedPowerPoints) * MAGIC_RULES->getPowerPointPurchaseCost();
+                if (cost <= getAvailableKarma())
+                {
+                    break;
+                }
+                p_targetValue--;
+            }
+        }
+    }
+
+    _purchasedPowerPoints = p_targetValue;
+    if (_purchasedPowerPoints < 0)
+    {
+        APPSTATUS->setStatusBarMessage(tr("Can't purchase negative power points value: %1. Set to 0.")
+                                            .arg(p_targetValue),
+                                       2.5f,
+                                       QColor(0, 0, 255));
+        _purchasedPowerPoints = 0;
+    }
+    else if (_purchasedPowerPoints > CHARACTER_VALUES->getAttribute("magic"))
+    {
+        APPSTATUS->setStatusBarMessage(tr("Can't purchase more power points than magic attribute. Set to max."),
+                                       2.5f,
+                                       QColor(0, 0, 255));
+        _purchasedPowerPoints = CHARACTER_VALUES->getAttribute("magic");
+    }
+
+    // If we now have fewer points available than spent, reset all spent points
+    if (getPowerPoints() < getSpentPowerPoints())
+    {
+        resetAdeptPowers();
+    }
+}
+
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::resetAdeptPowers()
+{
+    QMap<QString, float>::iterator it;
+    for (it = _spellsFromFreebies.begin(); it != _spellsFromFreebies.end();)
+    {
+        const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(it.key());
+        if (def.abilityType == MAGICABILITYTYPE_ADEPT_POWER)
+        {
+            _spellsFromFreebies.erase(it++);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------
+float
+CharacterChoices::getSpentPowerPoints() const
+{
+    float spentPowerPoints = 0.0f;
+
+    // We only look at freebies here, as power points count as freebies
+    // They may still cost karma as power points can be bought with karma
+    QMap<QString, float>::const_iterator it;
+    for (it = _spellsFromFreebies.begin(); it != _spellsFromFreebies.end(); ++it)
+    {
+        const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(it.key());
+        if (def.abilityType == MAGICABILITYTYPE_ADEPT_POWER)
+        {
+            spentPowerPoints += it.value();
+        }
+    }
+    return spentPowerPoints;
 }
 
 //---------------------------------------------------------------------------------
@@ -750,18 +870,6 @@ CharacterChoices::getAvailablePowerPoints() const
         return 0.0f;
     }
 
-    // Get the number of spent power points
-    float spentPowerPoints = 0;
-    QMap<QString, float>::const_iterator it;
-    for (it = _spellsFromFreebies.begin(); it != _spellsFromFreebies.end(); ++it)
-    {
-        const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(it.key());
-        if (def.abilityType == MAGICABILITYTYPE_ADEPT_POWER)
-        {
-            spentPowerPoints += it.value();
-        }
-    }
-
-    return maxPowerPoints - spentPowerPoints;
+    return maxPowerPoints - getSpentPowerPoints();
 }
 

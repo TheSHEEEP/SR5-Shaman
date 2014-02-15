@@ -128,6 +128,7 @@ CharEditMagicTab::initialize()
     ui->treeSpells->setSortingEnabled(true);
     // Delegate
     _spellsDelegate = new MagicDelegate();
+    _spellsDelegate->setShowAdeptPowerLevel(true);
     ui->treeSpells->setItemDelegate(_spellsDelegate);
     ui->treeSpells->setHeaderHidden(true);
     // Handle selection & drag
@@ -174,11 +175,25 @@ CharEditMagicTab::showEvent(QShowEvent* /*unused*/)
 
             // Show or hide the spells views
             showHideSpellsViews();
+
+            // Enable the power point purchase if this is a mystic adept (is this the only case?)
+            if (std::find(def.types.begin(), def.types.end(), "magic") != def.types.end() &&
+                std::find(def.types.begin(), def.types.end(), "adept") != def.types.end())
+            {
+                ui->spinPurchasePP->setEnabled(true);
+                ui->spinPurchasePP->setMaximum(CHARACTER_VALUES->getAttribute("magic"));
+                ui->spinPurchasePP->setValue(CHARACTER_CHOICES->getPurchasedPowerPoints());
+            }
+            else
+            {
+                ui->spinPurchasePP->setEnabled(false);
+            }
         }
         else
         {
             ui->lblMagicTypeValue->setText(tr("None"));
             ui->frameFreeSkills->setVisible(false);
+            ui->spinPurchasePP->setEnabled(false);
         }
 
         // Update priority
@@ -258,7 +273,7 @@ CharEditMagicTab::updateValues()
 
         // Power points
         ui->lblPowerPointsValue->setText(QString("%1 / %2")
-                                    .arg((int)CHARACTER_CHOICES->getAvailablePowerPoints())
+                                    .arg(CHARACTER_CHOICES->getAvailablePowerPoints())
                                     .arg((int)CHARACTER_CHOICES->getPowerPoints()));
     }
 
@@ -729,4 +744,37 @@ CharEditMagicTab::on_btnRemoveSpell_clicked()
     updateValues();
 
     checkContinue();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMagicTab::on_spinPurchasePP_valueChanged(int p_value)
+{
+    // Try to set the purchased power points to the new value
+    CHARACTER_CHOICES->setPurchasePowerPoints(p_value);
+
+    // Re-set the value of the spin box, as it might have changed within setPurchasePowerPoints
+    ui->spinPurchasePP->blockSignals(true);
+    ui->spinPurchasePP->setValue(CHARACTER_CHOICES->getPurchasedPowerPoints());
+    ui->spinPurchasePP->blockSignals(false);
+
+    // It is possible that this was a decrease that lead to the adept powers being reset
+    // In that case, remove adept powers from the filter
+    if (CHARACTER_CHOICES->getAvailablePowerPoints() == CHARACTER_CHOICES->getPowerPoints())
+    {
+        QStringList& filter = _spellsFilter->getFilterIDEquals();
+        for (unsigned int i = 0; i < filter.size(); ++i)
+        {
+            const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(filter[i]);
+            if (def.abilityType == MAGICABILITYTYPE_ADEPT_POWER)
+            {
+                filter.erase(filter.begin() + i);
+                i--;
+            }
+        }
+        _spellsFilter->applyFilter();
+    }
+
+    // Update display
+    updateValues();
 }

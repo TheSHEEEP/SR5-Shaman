@@ -2,6 +2,8 @@
 #include "ui_creationinitializingwindow.h"
 
 #include "data/appstatus.h"
+#include "data/character/characterchoices.h"
+#include "data/character/charactervalues.h"
 
 //---------------------------------------------------------------------------------
 CreationInitializingWindow::CreationInitializingWindow(QWidget *parent)

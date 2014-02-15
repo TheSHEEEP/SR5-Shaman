@@ -3,11 +3,13 @@
 #include <QPainter>
 
 #include "data/appstatus.h"
+#include "data/character/charactervalues.h"
 #include "rules/rules.h"
 #include "ui/models/magictreemodel.h"
 
 //---------------------------------------------------------------------------------
 MagicDelegate::MagicDelegate()
+    : _showAdeptPowerLevel(false)
 {
 
 }
@@ -77,6 +79,17 @@ MagicDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
         case MAGICABILITYTYPE_ADEPT_POWER:
             text = item->translations[APPSTATUS->getCurrentLocale()];
             break;
+        }
+    }
+
+    // If this is an adept power, we may need to also show the level
+    if (!item->isCategory &&
+        item->abilityType == MAGICABILITYTYPE_ADEPT_POWER && _showAdeptPowerLevel)
+    {
+        int level = CHARACTER_VALUES->getAdeptPowerLevel(item->id);
+        if (level != 0)
+        {
+            text.append(QString(" (%1)").arg(level));
         }
     }
 

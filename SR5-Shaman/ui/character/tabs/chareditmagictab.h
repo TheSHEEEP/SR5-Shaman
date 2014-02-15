@@ -122,6 +122,12 @@ private slots:
      * @brief Will remove the selected spell from the list of selected spells.
      */
     void on_btnRemoveSpell_clicked();
+
+    /**
+     * @brief Will update the purchased power points.
+     *          Will reset the bought powers from karma if the value is set too low.
+     */
+    void on_spinPurchasePP_valueChanged(int p_value);
 };
 
 #endif // CHAREDITMAGICTAB_H
