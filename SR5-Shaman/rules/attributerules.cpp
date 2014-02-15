@@ -106,7 +106,7 @@ AttributeRules::calculateAttributeIncreaseCost(int p_oldValue, int p_newValue) c
     // Calculate the cost
     else
     {
-        for (int i = p_oldValue; i < p_newValue; ++i)
+        for (int i = p_newValue; i > p_oldValue; --i)
         {
             result += 5 * i;
         }

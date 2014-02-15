@@ -527,9 +527,10 @@ CharEditMagicTab::handleSpellChanged(const QModelIndex& p_current, const QModelI
     bool isSpellsView = model == ui->treeSpells->selectionModel();
     QPushButton* button = isSpellsView ? ui->btnRemoveSpell : ui->btnAddSpell;
 
-    // If this is adding and we have no more free skills, disable
+    // If this is adding and we have no more free skills or power points, disable
     if (!isSpellsView &&
-        CHARACTER_CHOICES->getAvailableFreeSpells() == 0)
+        CHARACTER_CHOICES->getAvailableFreeSpells() == 0 &&
+        CHARACTER_CHOICES->getAvailablePowerPoints() == 0)
     {
         button->setEnabled(false);
         return;
@@ -598,7 +599,8 @@ CharEditMagicTab::on_btnAddSkill_clicked()
     // Disable the add button if we have no more free skills
     // If this is adding and we have no more free skills, disable
     if (CHARACTER_CHOICES->getAvailableFreeSkills(false) == 0 &&
-        CHARACTER_CHOICES->getAvailableFreeSkills(true) == 0)
+        CHARACTER_CHOICES->getAvailableFreeSkills(true) == 0 &&
+        CHARACTER_CHOICES->getAvailablePowerPoints() == 0)
     {
         ui->btnAddSkill->setEnabled(false);
     }
