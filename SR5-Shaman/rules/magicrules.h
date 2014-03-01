@@ -164,6 +164,7 @@ enum MagicAbilityType
 };
 
 class CustomChoice;
+class Effect;
 
 /**
  * @brief This is the definition of a single magical ability.
@@ -207,6 +208,7 @@ public:
     bool                            requiresCustom;
     QString                         customString;
     CustomChoice*                   customChoices;
+    std::vector<Effect*>            effects;
     bool                            isUserDefined;
     QMap<QString, QString>          translations;
 

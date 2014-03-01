@@ -41,7 +41,10 @@ SOURCES += main.cpp\
     ui/models/magicsortfilterproxymodel.cpp \
     ui/character/popups/customdescriptorpopup.cpp \
     rules/misc/customchoice.cpp \
-    data/dictionary.cpp
+    data/dictionary.cpp \
+    rules/effects/effectregistry.cpp \
+    rules/effects/effect.cpp \
+    rules/effects/condition.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -71,7 +74,10 @@ HEADERS  += mainwindow.h \
     ui/models/magicsortfilterproxymodel.h \
     ui/character/popups/customdescriptorpopup.h \
     rules/misc/customchoice.h \
-    data/dictionary.h
+    data/dictionary.h \
+    rules/effects/effectregistry.h \
+    rules/effects/effect.h \
+    rules/effects/condition.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \

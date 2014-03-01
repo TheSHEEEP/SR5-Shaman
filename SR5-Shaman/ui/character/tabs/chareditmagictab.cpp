@@ -699,7 +699,7 @@ CharEditMagicTab::on_btnAddSpell_clicked()
     // Disable the add button if we have no more free spells
     // If this is adding and we have no more free spells, disable
     if (CHARACTER_CHOICES->getAvailableFreeSpells() <= 0.0f &&
-        CHARACTER_CHOICES->getAvailableFreeSpells() <= 0.0f)
+        CHARACTER_CHOICES->getAvailablePowerPoints() <= 0.0f)
     {
         ui->btnAddSpell->setEnabled(false);
     }

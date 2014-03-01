@@ -6,6 +6,7 @@
 
 #include "charactervalues.h"
 #include "data/appstatus.h"
+#include "rules/effects/effect.h"
 
 CharacterChoices* CharacterChoices::_instance = 0;
 
@@ -516,7 +517,6 @@ CharacterChoices::removeFreeSkill(const QString& p_id)
 void
 CharacterChoices::addFreeSpell(const QString& p_id)
 {
-
     // Sanity check - magic user
     if (!getIsMagicUser())
     {
@@ -668,6 +668,37 @@ CharacterChoices::addFreeSpell(const QString& p_id)
                 break;
             }
         break;
+    }
+
+    // Magic abilities can possibly have effects, so apply these
+    // First, check if all can be applied, as all have to be valid
+    bool allValid = true;
+    QString lastError = "";
+    for (unsigned int i = 0; i < spellDef.effects.size(); ++i)
+    {
+        // TODO: here
+        // If the spell is user defined, give the custom choice as target, otherwise, the ID
+        QString target = spellDef.isUserDefined ? spellDef.customString : spellDef.id;
+        if (!spellDef.effects[i]->canBeApplied(target))
+        {
+            allValid = false;
+            lastError = spellDef.effects[i]->getError();
+            APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Effect could not be applied: %2")
+                                                .arg(p_id)
+                                                .arg(lastError),
+                                           2.5f,
+                                           QColor(0, 0, 255));
+            break;
+        }
+    }
+
+    // Then, apply and add the effects
+    if (allValid)
+    {
+        for (unsigned int i = 0; i < spellDef.effects.size(); ++i)
+        {
+            EFFECT_REGISTRY->addActiveEffect(spellDef.effects[i]);
+        }
     }
 }
 

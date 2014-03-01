@@ -9,12 +9,14 @@
 #include "attributerules.h"
 #include "magicrules.h"
 #include "skillrules.h"
+#include "effects/effectregistry.h"
 
 // Helpful defines
 #define METATYPE_RULES Rules::getSingletonPtr()->getMetatypeRules()
 #define ATTRIBUTE_RULES Rules::getSingletonPtr()->getAttributeRules()
 #define MAGIC_RULES Rules::getSingletonPtr()->getMagicRules()
 #define SKILL_RULES Rules::getSingletonPtr()->getSkillRules()
+#define EFFECT_REGISTRY Rules::getSingletonPtr()->getEffectRegistry()
 
 /**
  * @brief The priorities of the character generation.
@@ -87,6 +89,11 @@ public:
      */
     SkillRules* getSkillRules() const;
 
+    /**
+     * @brief Returns a pointer to the skill rules.
+     */
+    EffectRegistry* getEffectRegistry() const;
+
 private:
     bool    _initialized;
 
@@ -94,6 +101,7 @@ private:
     AttributeRules*     _attributeRules;
     MagicRules*         _magicRules;
     SkillRules*         _skillRules;
+    EffectRegistry*     _skillRules;
 };
 
 //---------------------------------------------------------------------------------

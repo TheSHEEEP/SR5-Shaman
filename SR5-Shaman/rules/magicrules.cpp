@@ -516,6 +516,9 @@ MagicRules::initialize(const QString& p_jsonFile)
             }
         }
 
+        // Does this power have effects?
+        // TODO: here
+
         _definitions[uniqueId] = abilityDef;
         _adeptPowerDefinitions[uniqueId] = powerDef;
     } // END adept powers
