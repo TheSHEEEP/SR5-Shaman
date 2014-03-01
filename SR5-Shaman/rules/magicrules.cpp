@@ -10,13 +10,14 @@
 #include <QDebug>
 
 #include "data/appstatus.h"
+#include "rules/misc/customchoice.h"
 
 //---------------------------------------------------------------------------------
 MagicAbilityDefinition::MagicAbilityDefinition(MagicAbilityDefinition* p_parent)
     : parent(p_parent)
     , id("")
     , isCategory(false)
-    , requiresCustom(false), customString("")
+    , requiresCustom(false), customString(""), customChoices(NULL)
     , isUserDefined(false)
     , abilityType(MAGICABILITYTYPE_INVALID)
     , spell(NULL), adeptPower(NULL), complexForm(NULL)
@@ -32,6 +33,7 @@ MagicAbilityDefinition::MagicAbilityDefinition(const MagicAbilityDefinition& p_o
     isCategory = p_other.isCategory;
     requiresCustom = p_other.requiresCustom;
     customString = p_other.customString;
+    customChoices = p_other.customChoices;
     isUserDefined = p_other.isUserDefined;
     abilityType = p_other.abilityType;
     spell = p_other.spell;
@@ -43,7 +45,6 @@ MagicAbilityDefinition::MagicAbilityDefinition(const MagicAbilityDefinition& p_o
 //---------------------------------------------------------------------------------
 MagicAbilityDefinition::~MagicAbilityDefinition()
 {
-
 }
 
 //---------------------------------------------------------------------------------
@@ -508,6 +509,11 @@ MagicRules::initialize(const QString& p_jsonFile)
         if (currentPower.contains("requires_custom"))
         {
             abilityDef->requiresCustom = currentPower["requires_custom"].toString() == "true";
+            if (currentPower.contains("custom_choices"))
+            {
+                QJsonObject obj = currentPower["custom_choices"].toObject();
+                abilityDef->customChoices = new CustomChoice(&obj);
+            }
         }
 
         _definitions[uniqueId] = abilityDef;
@@ -638,7 +644,7 @@ MagicRules::getSpellCategoryTranslation(const QString& p_uniqueID) const
 
 //---------------------------------------------------------------------------------
 QString
-MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_customValue)
+MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_customValue, const QString &p_translation)
 {
     // Construct new ID
     const MagicAbilityDefinition& originalAbility = getDefinition(p_id);
@@ -655,6 +661,7 @@ MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_custo
     newAbility->id = newID;
     newAbility->customString = p_customValue;
     newAbility->requiresCustom = false;
+    newAbility->customChoices = originalAbility.customChoices;
     newAbility->isUserDefined = true;
     newAbility->parent = originalAbility.parent;
     newAbility->children = originalAbility.children;
@@ -664,7 +671,7 @@ MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_custo
     QMap<QString, QString>::iterator it;
     for (it = newAbility->translations.begin(); it != newAbility->translations.end(); ++it)
     {
-        it.value().append(" (" + p_customValue + ")");
+        it.value().append(" (" + p_translation + ")");
     }
     newAbility->abilityType = originalAbility.abilityType;
     switch (newAbility->abilityType)
@@ -682,6 +689,9 @@ MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_custo
         case MAGICABILITYTYPE_COMPLEX_FORM:
             newAbility->complexForm = originalAbility.complexForm;
             _complexFormDefinitions[newID] = newAbility->complexForm;
+        break;
+
+        default:
         break;
     }
 

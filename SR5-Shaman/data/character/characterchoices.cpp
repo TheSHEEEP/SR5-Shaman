@@ -376,7 +376,7 @@ void
 CharacterChoices::resetAttributeIncreases(const QString p_attribute, bool p_fromFreebies, bool p_fromKarma)
 {
     // Sanity check - attribute name
-    if (CHARACTER_VALUES->getValidBaseAttributes().find(p_attribute) == CHARACTER_VALUES->getValidBaseAttributes().end())
+    if (!ATTRIBUTE_RULES->isValidAttribute(p_attribute))
     {
         qWarning() << QString("Attribute \"%1\" is not a valid base attribute.")
                             .arg(p_attribute);

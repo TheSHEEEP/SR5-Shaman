@@ -2,6 +2,7 @@
 #define ATTRIBUTERULES_H
 
 #include <QString>
+#include <QSet>
 #include <vector>
 
 /**
@@ -47,6 +48,13 @@ public:
      * @param p_jsonFile    The JSON file to parse.
      */
     void initialize(const QString& p_jsonFile);
+
+    /**
+     * @brief Returns true if the passed attribute is a vlid attribute.
+     *         Example: "magic" or "strength" are valid
+     *                  "magc" or "intelligence" are invalid
+     */
+    bool isValidAttribute(const QString& p_attribute) const;
 
     /**
      * @brief Returns the number of free attribute points for the passed priority index.
@@ -130,6 +138,8 @@ public:
     MovementValues calculateMovement(int p_agility, const QString& p_metatypeID) const;
 
 private:
+    QSet<QString>   _validBaseAttributes;
+
     std::vector<int>    _freebiesPerPrio;
 };
 

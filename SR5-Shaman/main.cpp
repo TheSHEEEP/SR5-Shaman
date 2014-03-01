@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "rules/rules.h"
+#include "data/dictionary.h"
 #include "ui/models/skilltreemodel.h"
 
 static std::ofstream logFile;
@@ -66,6 +67,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("SR5 Shaman Team");
     QCoreApplication::setOrganizationDomain("http://www.github.com");
     QCoreApplication::setApplicationName("SR5 Shaman");
+
+    // Initialize dictionary
+    Dictionary::initialize("../../translations/translations.json");
 
     // Initialize rules
     Rules::getSingletonPtr()->initialize();

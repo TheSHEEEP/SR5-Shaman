@@ -36,14 +36,20 @@ public:
     /**
      * @brief Sets the choices to the passed string list.
      *          An empty item will automatically be added.
-     * @param p_choices The list of choices.
+     * @param p_choiceStrings   The list to display.
+     * @param p_choiceValues    The actual choice values. MUST be exactly as many as the choice strings.
      */
-    void setChoices(const QStringList& p_choices);
+    void setChoices(const QStringList& p_choiceStrings, const QStringList& p_choiceValues);
 
     /**
-     * @return The customization chosen by the user.
+     * @return The customization value chosen by the user.
      */
     QString getCustomization();
+
+    /**
+     * @return The translation/shown text of the customization chosen by the user.
+     */
+    QString getCustomizationString();
 
 private slots:
     /**
@@ -57,7 +63,9 @@ private slots:
     void on_btnCancel_clicked();
 
 private:
-    Ui::CustomDescriptorPopup *ui;
+    Ui::CustomDescriptorPopup* ui;
+
+    QStringList         _choiceValues;
 };
 
 #endif // CUSTOMDESCRIPTORPOPUP_H

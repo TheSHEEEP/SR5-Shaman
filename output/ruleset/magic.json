@@ -1376,7 +1376,21 @@
             "de"    : "Verbesserte Fertigkeit"
         },
         "cost_per_level"    : "0.5",
-        "requires_custom"   : "true"
+        "requires_custom"   : "true",
+        "custom_choices"    : {
+            "type"             : "skill_selection",
+            "groups_allowed"   : "false",
+            "categories"       : ["combat", "social", "physical", "vehicle"]
+        },
+        "effects" : [
+            {
+                "type"         : "increase_skill",
+                "skill"        : "selected",
+                "value"        : "1",
+                "max_value"    : "1.5 x pure_skill_value",
+                "conditions" : [ "skill_known" ]
+            }
+        ]
       },
       { "unique_id"    : "IMPROVED_PHYS_ATTRIBUTE",
         "translations" :
@@ -1385,7 +1399,19 @@
             "de"    : "Gesteigertes Körperliches Attribut"
         },
         "cost_per_level"    : "1",
-        "requires_custom"   : "true"
+        "requires_custom"   : "true",
+        "custom_choices"    : {
+            "type"             : "attribute_selection",
+            "attributes"       : ["body", "agility", "reaction", "strength"]
+        },
+        "effects" : [
+            {
+                "type"         : "increase_attribute",
+                "attribute"    : "selected",
+                "value"        : "1",
+                "max_value"    : "1.0 x augmented_maximum"
+            }
+        ]
       },
       { "unique_id"    : "IMPROVED_POTENTIAL",
         "translations" :

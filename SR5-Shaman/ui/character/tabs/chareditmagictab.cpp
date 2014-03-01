@@ -5,6 +5,7 @@
 
 #include "data/appstatus.h"
 #include "rules/rules.h"
+#include "rules/misc/customchoice.h"
 #include "data/character/characterchoices.h"
 #include "data/character/charactervalues.h"
 #include "ui/models/skilltreemodel.h"
@@ -666,6 +667,10 @@ CharEditMagicTab::on_btnAddSpell_clicked()
         // Show the popup and get its result
         CustomDescriptorPopup popup(NULL, item->translations[APPSTATUS->getCurrentLocale()],
                                     false, true);
+        if (item->customChoices)
+        {
+            item->customChoices->fillDescriptorPopup(&popup);
+        }
         int result = popup.exec();
         if (result == QDialog::Rejected)
         {
@@ -674,7 +679,7 @@ CharEditMagicTab::on_btnAddSpell_clicked()
         customValue = popup.getCustomization();
 
         // Construct a new custom skill (this will do nothing if it already exists)
-        id = MAGIC_RULES->constructCustomizedSpell(id, customValue);
+        id = MAGIC_RULES->constructCustomizedSpell(id, customValue, popup.getCustomizationString());
     }
 
     // Take note of the choice
@@ -699,9 +704,6 @@ CharEditMagicTab::on_btnAddSpell_clicked()
         ui->btnAddSpell->setEnabled(false);
     }
 
-    // TODO: Here
-    // TODO: Purchase power points from karma
-    // TODO: Purchase spells/complex forms from karma
     // Update shown values
     updateValues();
 
@@ -765,7 +767,7 @@ CharEditMagicTab::on_spinPurchasePP_valueChanged(int p_value)
     if (CHARACTER_CHOICES->getAvailablePowerPoints() == CHARACTER_CHOICES->getPowerPoints())
     {
         QStringList& filter = _spellsFilter->getFilterIDEquals();
-        for (unsigned int i = 0; i < filter.size(); ++i)
+        for (int i = 0; i < filter.size(); ++i)
         {
             const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(filter[i]);
             if (def.abilityType == MAGICABILITYTYPE_ADEPT_POWER)

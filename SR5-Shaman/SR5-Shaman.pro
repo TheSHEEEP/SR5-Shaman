@@ -39,7 +39,9 @@ SOURCES += main.cpp\
     ui/models/magictreemodel.cpp \
     ui/models/magicdelegate.cpp \
     ui/models/magicsortfilterproxymodel.cpp \
-    ui/character/popups/customdescriptorpopup.cpp
+    ui/character/popups/customdescriptorpopup.cpp \
+    rules/misc/customchoice.cpp \
+    data/dictionary.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -67,7 +69,9 @@ HEADERS  += mainwindow.h \
     ui/models/magictreemodel.h \
     ui/models/magicdelegate.h \
     ui/models/magicsortfilterproxymodel.h \
-    ui/character/popups/customdescriptorpopup.h
+    ui/character/popups/customdescriptorpopup.h \
+    rules/misc/customchoice.h \
+    data/dictionary.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \

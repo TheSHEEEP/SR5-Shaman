@@ -30,14 +30,33 @@ CustomDescriptorPopup::~CustomDescriptorPopup()
 
 //---------------------------------------------------------------------------------
 void
-CustomDescriptorPopup::setChoices(const QStringList& p_choices)
+CustomDescriptorPopup::setChoices(const QStringList& p_choices, const QStringList &p_choiceValues)
 {
     ui->cbSelection->addItems(p_choices);
+    _choiceValues = p_choiceValues;
+    if (_choiceValues.size() > 0)
+    {
+        ui->frameChoice->setVisible(true);
+        ui->frameCustom->setVisible(false);
+    }
 }
 
 //---------------------------------------------------------------------------------
 QString
 CustomDescriptorPopup::getCustomization()
+{
+    // Custom text has precedence
+    if (ui->leCustom->text().size() > 0)
+    {
+        return ui->leCustom->text();
+    }
+
+    return _choiceValues[ui->cbSelection->currentIndex()];
+}
+
+//---------------------------------------------------------------------------------
+QString
+CustomDescriptorPopup::getCustomizationString()
 {
     // Custom text has precedence
     if (ui->leCustom->text().size() > 0)

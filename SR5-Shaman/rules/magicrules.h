@@ -163,6 +163,8 @@ enum MagicAbilityType
     NUM_MAGICABILITYTYPES
 };
 
+class CustomChoice;
+
 /**
  * @brief This is the definition of a single magical ability.
  *          It can be a spell, an adept power or a complex form, depending on its type.
@@ -204,6 +206,7 @@ public:
     bool                            isCategory;
     bool                            requiresCustom;
     QString                         customString;
+    CustomChoice*                   customChoices;
     bool                            isUserDefined;
     QMap<QString, QString>          translations;
 
@@ -317,9 +320,10 @@ public:
      *          A new spell will only be constructed if this specialization does not exist already.
      * @param p_id          The ID of the original spell.
      * @param p_customValue The custom value.
+     * @param p_translation The translation to show.
      * @return The ID of the new spell.
      */
-    QString constructCustomizedSpell(const QString &p_id, const QString &p_customValue);
+    QString constructCustomizedSpell(const QString &p_id, const QString &p_customValue, const QString &p_translation);
 
     /**
      * @return The karma cost of one power point.

@@ -10,17 +10,6 @@ CharacterValues* CharacterValues::_instance = 0;
 CharacterValues::CharacterValues()
     : _karmaPool(0)
 {
-    // Sanity checkers
-    _validBaseAttributes.insert("body");
-    _validBaseAttributes.insert("agility");
-    _validBaseAttributes.insert("reaction");
-    _validBaseAttributes.insert("strength");
-    _validBaseAttributes.insert("willpower");
-    _validBaseAttributes.insert("logic");
-    _validBaseAttributes.insert("intuition");
-    _validBaseAttributes.insert("charisma");
-    _validBaseAttributes.insert("edge");
-    _validBaseAttributes.insert("magic");
 }
 
 //---------------------------------------------------------------------------------
@@ -37,7 +26,7 @@ int
 CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentations, bool p_withOther) const
 {
     // Sanity check - attribute name
-    if (_validBaseAttributes.find(p_attribute) == _validBaseAttributes.end())
+    if (!ATTRIBUTE_RULES->isValidAttribute(p_attribute))
     {
         qWarning() << QString("Attribute \"%1\" is not a valid base attribute.")
                             .arg(p_attribute);
@@ -65,11 +54,9 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
     // Add freebie & karma influences
     attribValue += CHARACTER_CHOICES->getAttributeIncreases(p_attribute);
 
-    // Add augmentation influences
-    // TODO: Add augmentation influences
-
-    // Add other influences
-    // TODO: Add other influences
+    // Add effects from augmentations, adept powers, qualities, etc.
+    // TODO: Here
+    // TODO: Add effects
 
     return attribValue;
 }

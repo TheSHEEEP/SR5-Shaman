@@ -14,7 +14,16 @@
 //---------------------------------------------------------------------------------
 AttributeRules::AttributeRules()
 {
-
+    _validBaseAttributes.insert("body");
+    _validBaseAttributes.insert("agility");
+    _validBaseAttributes.insert("reaction");
+    _validBaseAttributes.insert("strength");
+    _validBaseAttributes.insert("willpower");
+    _validBaseAttributes.insert("logic");
+    _validBaseAttributes.insert("intuition");
+    _validBaseAttributes.insert("charisma");
+    _validBaseAttributes.insert("edge");
+    _validBaseAttributes.insert("magic");
 }
 
 //---------------------------------------------------------------------------------
@@ -53,6 +62,12 @@ AttributeRules::initialize(const QString& p_jsonFile)
     _freebiesPerPrio.push_back(freebieArray.at(4).toVariant().toInt());
 }
 
+//---------------------------------------------------------------------------------
+bool
+AttributeRules::isValidAttribute(const QString& p_attribute) const
+{
+    return _validBaseAttributes.find(p_attribute) != _validBaseAttributes.end();
+}
 
 //---------------------------------------------------------------------------------
 int

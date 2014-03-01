@@ -74,11 +74,6 @@ public:
     int getAttribute(const QString& p_attribute, bool p_withAugmentations = true, bool p_withOther = true) const;
 
     /**
-     * @brief Returns a set containing all valid base attribute names.
-     */
-    const QSet<QString>& getValidBaseAttributes() const;
-
-    /**
      * @brief Returns the characters current essence value.
      * @param p_withAugments   If this is true, the augmentations will be considered.
      */
@@ -104,7 +99,6 @@ public:
     int getAdeptPowerLevel(const QString& p_id) const;
 
 private:
-    QSet<QString>   _validBaseAttributes;
     int             _karmaPool;
 };
 
@@ -130,14 +124,6 @@ int
 CharacterValues::getKarmaPool() const
 {
     return _karmaPool;
-}
-
-//---------------------------------------------------------------------------------
-inline
-const QSet<QString>&
-CharacterValues::getValidBaseAttributes() const
-{
-    return _validBaseAttributes;
 }
 
 #endif // CHARACTERVALUES_H
