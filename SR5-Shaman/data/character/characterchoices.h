@@ -188,6 +188,15 @@ public:
     // SKILLS
     //*********************************************************************
     /**
+     * @brief Returns the number of skill increases for the passed skill.
+     * @param p_attribute       The name of the skill to check.
+     * @param p_fromFreebies    If the increases from free attribute points should be counted.
+     * @param p_fromKarma       If the increases from karma points should be counted.
+     * @return  The number of skill increases.
+     */
+    int getSkillIncreases(const QString& p_skill, bool p_fromFreebies = true, bool p_fromKarma = true) const;
+
+    /**
      * @brief Returns the number of remaining free skills.
      * @param p_skillGroups If this is true, the number of remaining free skill groups will be returned instead.
      */
@@ -434,14 +443,6 @@ void
 CharacterChoices::resetFreeSkills()
 {
     _skillIncreasesFreebies.clear();
-}
-
-//---------------------------------------------------------------------------------
-inline
-void
-CharacterChoices::resetFreeSpells()
-{
-    _spellsFromFreebies.clear();
 }
 
 //---------------------------------------------------------------------------------

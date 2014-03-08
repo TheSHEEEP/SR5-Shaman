@@ -3,7 +3,7 @@
 
 #include "QString.h"
 
-class QJsonObject;
+class QJsonValueRef;
 class Effect;
 
 /**
@@ -24,9 +24,9 @@ public:
     /**
      * @brief Constructor.
      * @param p_parent      The parent effect. May be used in validation.
-     * @param p_jsonObject  The JSON object to construct the condition from.
+     * @param p_jsonObject  The JSON value to construct the condition from.
      */
-    Condition(Effect* p_parent, QJsonObject* p_jsonObject);
+    Condition(Effect* p_parent, QJsonValueRef* p_jsonObject);
 
     /**
      * @brief Destructor.
@@ -36,11 +36,25 @@ public:
     /**
      * @brief Returns true if the condition is fulfilled.
      */
-    bool isFullfilled() const;
+    bool isFulfilled();
+
+    /**
+     * @brief Returns the last fulfillment error.
+     */
+    const QString& getError() const;
 
 private:
     ConditionType   _conditionType;
     Effect*         _parent;
+    QString         _lastError;
 };
 
+
+//---------------------------------------------------------------------------------
+inline
+const QString&
+Condition::getError() const
+{
+    return _lastError;
+}
 #endif // CONDITION_H

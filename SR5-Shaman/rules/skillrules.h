@@ -112,6 +112,12 @@ public:
     void initialize(const QString& p_jsonFile);
 
     /**
+     * @brief Returns true if a skill with that ID exists.
+     * @param p_id  The ID to look for.
+     */
+    bool getIsValidSkill(const QString& p_id) const;
+
+    /**
      * @brief Returns the localized name of the passed type.
      */
     QString getTypeString(SkillType p_type) const;
@@ -127,7 +133,7 @@ public:
     const QMap<QString, SkillDefinition*>& getAllDefinitions() const;
 
     /**
-     * @brief Returns the definition of the metatype with the passed ID.
+     * @brief Returns the definition of the skill with the passed ID.
      * @note    Does NOT check if the id exists. Use getAllDefinitions() for that.
      */
     const SkillDefinition& getDefinition(const QString& p_uniqueId) const;
@@ -154,6 +160,15 @@ private:
 
     SkillDefinition*    _rootItem;  // The root item of the skills, used to display in tree models
 };
+
+
+//---------------------------------------------------------------------------------
+inline
+bool
+SkillRules::getIsValidSkill(const QString& p_id) const
+{
+    return _definitions.contains(p_id);
+}
 
 //---------------------------------------------------------------------------------
 inline

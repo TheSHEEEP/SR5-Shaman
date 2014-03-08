@@ -67,9 +67,9 @@ public:
      * @param p_attribute           The name of the attribute. Can be one of the following:
      *                              body, agility, reaction, strength, willpower, logic, intuition, charisma, edge
      *                              and magic (use magic if you need resonance).
-     * @param p_withAugmentations   If this is true, the augmentations will be considered.
+     * @param p_withAugmentations   If this is true, the augmentations (cyberware only) will be considered.
      * @param p_withOther           If this is true, other attribute sources will also be considered
-     *                              (like Adept Improved Attribute).
+     *                              (adept powers, qualities, etc.).
      */
     int getAttribute(const QString& p_attribute, bool p_withAugmentations = true, bool p_withOther = true) const;
 
@@ -97,6 +97,18 @@ public:
      * @return The level of the passed power, or 0 if the character does not have it.
      */
     int getAdeptPowerLevel(const QString& p_id) const;
+
+    //*********************************************************************
+    // SKILLS
+    //*********************************************************************
+    /**
+     * @brief Returns a skill value.
+     * @param p_attribute           The ID of the skill.
+     * @param p_withAugmentations   If this is true, the augmentations (cyberware only) will be considered.
+     * @param p_withOther           If this is true, other attribute sources will also be considered
+     *                              (adept powers, qualities, etc.).
+     */
+    int getSkill(const QString& p_skill, bool p_withAugmentations = true, bool p_withOther = true) const;
 
 private:
     int             _karmaPool;

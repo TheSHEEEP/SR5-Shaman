@@ -41,7 +41,7 @@ CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
     {
         QJsonArray attributes = jsonObject["attributes"].toArray();
 
-        for (unsigned int i = 0; i < attributes.size(); ++i)
+        for (int i = 0; i < attributes.size(); ++i)
         {
             QString attribute = attributes[i].toString();
 
@@ -72,7 +72,7 @@ CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
         std::vector<std::pair<QString,SkillDefinition*> > skills;
         skills.reserve(100);
         std::vector<std::pair<QString,SkillDefinition*> > tempSkills;
-        for (unsigned int i = 0; i < categoriesArray.size(); ++i)
+        for (int i = 0; i < categoriesArray.size(); ++i)
         {
             QString category = categoriesArray[i].toString();
 

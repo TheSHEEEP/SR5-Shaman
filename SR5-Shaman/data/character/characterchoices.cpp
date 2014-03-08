@@ -5,8 +5,8 @@
 #include <QColor>
 
 #include "charactervalues.h"
+#include "effectregistry.h"
 #include "data/appstatus.h"
-#include "rules/effects/effect.h"
 
 CharacterChoices* CharacterChoices::_instance = 0;
 
@@ -143,7 +143,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
         {
             APPSTATUS->setStatusBarMessage(tr("Trying to reduce %1 below natural minimum. Set to minimum.")
                                                 .arg(p_attribute),
-                                           2.5f, QColor(0, 0, 255));
+                                           3.5f, QColor(0, 0, 255));
             _attributeIncreasesFreebies[p_attribute] = 0;
             _attributeIncreasesKarma[p_attribute] = 0;
             return;
@@ -177,7 +177,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     if (wouldBeValue > naturalMax)
     {
         APPSTATUS->setStatusBarMessage(tr("Trying to increase %1 above natural maximum. Set to maximum.").arg(p_attribute),
-                                       2.5f,
+                                       3.5f,
                                        QColor(0, 0, 255));
         attemptedIncrease = naturalMax - valueCurrent;
         if (p_fromFreebies > attemptedIncrease)
@@ -243,7 +243,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     if (attemptedIncrease == 0)
     {
         APPSTATUS->setStatusBarMessage(tr("Not enough attribute or karma points to increase %1 further.").arg(p_attribute),
-                                       2.5f,
+                                       3.5f,
                                        QColor(0, 0, 255));
         return;
     }
@@ -397,6 +397,21 @@ CharacterChoices::resetAttributeIncreases(const QString p_attribute, bool p_from
     }
 }
 
+//---------------------------------------------------------------------------------
+int
+CharacterChoices::getSkillIncreases(const QString& p_skill, bool p_fromFreebies, bool p_fromKarma) const
+{
+    int result = 0;
+    if (p_fromFreebies && _skillIncreasesFreebies.find(p_skill) != _skillIncreasesFreebies.end())
+    {
+        result += _skillIncreasesFreebies[p_skill];
+    }
+    if (p_fromKarma && _skillIncreasesKarma.find(p_skill) != _skillIncreasesKarma.end())
+    {
+        result += _skillIncreasesKarma[p_skill];
+    }
+    return result;
+}
 
 //---------------------------------------------------------------------------------
 int
@@ -540,7 +555,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
         {
             APPSTATUS->setStatusBarMessage(tr("Could not add free spell/complex form %1. Spell/complex form is already added as a free spell.")
                                                 .arg(p_id),
-                                           2.5f,
+                                           3.5f,
                                            QColor(0, 0, 255));
             return;
         }
@@ -554,7 +569,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
             {
                 APPSTATUS->setStatusBarMessage(tr("Could not add adept power %1. Power exceeds valid points.")
                                                     .arg(p_id),
-                                               2.5f,
+                                               3.5f,
                                                QColor(0, 0, 255));
                 return;
             }
@@ -606,7 +621,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
                     {
                         APPSTATUS->setStatusBarMessage(tr("Could not add adept power %1. Power exceeds valid points.")
                                                             .arg(p_id),
-                                                       2.5f,
+                                                       3.5f,
                                                        QColor(0, 0, 255));
                         return;
                     }
@@ -633,9 +648,38 @@ CharacterChoices::addFreeSpell(const QString& p_id)
     {
         APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Not enough spell points remaining.")
                                             .arg(p_id),
-                                       2.5f,
+                                       3.5f,
                                        QColor(0, 0, 255));
         return;
+    }
+
+    // Magic abilities can possibly have effects, so apply these
+    // First, check if all can be applied, as all have to be valid
+    bool allValid = true;
+    QString lastError = "";
+    for (unsigned int i = 0; i < spellDef.effects.size(); ++i)
+    {
+        // If the spell is user defined, give the custom choice as target, otherwise, the ID
+        QString target = spellDef.isUserDefined ? spellDef.customString : spellDef.id;
+        if (!spellDef.effects[i]->canBeApplied(target))
+        {
+            allValid = false;
+            lastError = spellDef.effects[i]->getError();
+            APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Effect could not be applied: %2")
+                                                .arg(p_id)
+                                                .arg(lastError),
+                                           3.5f,
+                                           QColor(0, 0, 255));
+            return;
+        }
+    }
+    // Apply and add the effects
+    if (allValid)
+    {
+        for (unsigned int i = 0; i < spellDef.effects.size(); ++i)
+        {
+            EFFECT_REGISTRY->addActiveEffect(spellDef.effects[i]);
+        }
     }
 
     // Apply free skill
@@ -669,37 +713,6 @@ CharacterChoices::addFreeSpell(const QString& p_id)
             }
         break;
     }
-
-    // Magic abilities can possibly have effects, so apply these
-    // First, check if all can be applied, as all have to be valid
-    bool allValid = true;
-    QString lastError = "";
-    for (unsigned int i = 0; i < spellDef.effects.size(); ++i)
-    {
-        // TODO: here
-        // If the spell is user defined, give the custom choice as target, otherwise, the ID
-        QString target = spellDef.isUserDefined ? spellDef.customString : spellDef.id;
-        if (!spellDef.effects[i]->canBeApplied(target))
-        {
-            allValid = false;
-            lastError = spellDef.effects[i]->getError();
-            APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Effect could not be applied: %2")
-                                                .arg(p_id)
-                                                .arg(lastError),
-                                           2.5f,
-                                           QColor(0, 0, 255));
-            break;
-        }
-    }
-
-    // Then, apply and add the effects
-    if (allValid)
-    {
-        for (unsigned int i = 0; i < spellDef.effects.size(); ++i)
-        {
-            EFFECT_REGISTRY->addActiveEffect(spellDef.effects[i]);
-        }
-    }
 }
 
 //---------------------------------------------------------------------------------
@@ -715,6 +728,36 @@ CharacterChoices::removeFreeSpell(const QString& p_id)
     }
 
     _spellsFromFreebies.remove(p_id);
+
+    // If the removed spell had active effects, remove those, too
+    const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(p_id);
+    if (def.effects.size() > 0)
+    {
+        for (unsigned int i = 0; i < def.effects.size(); ++i)
+        {
+            EFFECT_REGISTRY->removeActiveEffect(def.effects[i]);
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::resetFreeSpells()
+{
+    for (int j = 0; j < _spellsFromFreebies.keys().size(); ++j)
+    {
+        // If the removed spell had active effects, remove those, too
+        const MagicAbilityDefinition& def = MAGIC_RULES->getDefinition(_spellsFromFreebies.keys()[j]);
+        if (def.effects.size() > 0)
+        {
+            for (unsigned int i = 0; i < def.effects.size(); ++i)
+            {
+                EFFECT_REGISTRY->removeActiveEffect(def.effects[i]);
+            }
+        }
+    }
+
+    _spellsFromFreebies.clear();
 }
 
 //---------------------------------------------------------------------------------
@@ -808,7 +851,7 @@ CharacterChoices::setPurchasePowerPoints(int p_targetValue)
         if (cost > getAvailableKarma())
         {
             APPSTATUS->setStatusBarMessage(tr("Not enough karma to purchase that many power points. Setting to max."),
-                                           2.5f,
+                                           3.5f,
                                            QColor(0, 0, 255));
 
             // Calculate maximum
@@ -830,14 +873,14 @@ CharacterChoices::setPurchasePowerPoints(int p_targetValue)
     {
         APPSTATUS->setStatusBarMessage(tr("Can't purchase negative power points value: %1. Set to 0.")
                                             .arg(p_targetValue),
-                                       2.5f,
+                                       3.5f,
                                        QColor(0, 0, 255));
         _purchasedPowerPoints = 0;
     }
     else if (_purchasedPowerPoints > CHARACTER_VALUES->getAttribute("magic"))
     {
         APPSTATUS->setStatusBarMessage(tr("Can't purchase more power points than magic attribute. Set to max."),
-                                       2.5f,
+                                       3.5f,
                                        QColor(0, 0, 255));
         _purchasedPowerPoints = CHARACTER_VALUES->getAttribute("magic");
     }

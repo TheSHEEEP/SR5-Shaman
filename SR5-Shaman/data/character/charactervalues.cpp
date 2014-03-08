@@ -3,6 +3,7 @@
 
 #include "rules/rules.h"
 #include "data/character/characterchoices.h"
+#include "data/character/effectregistry.h"
 
 CharacterValues* CharacterValues::_instance = 0;
 
@@ -55,8 +56,28 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
     attribValue += CHARACTER_CHOICES->getAttributeIncreases(p_attribute);
 
     // Add effects from augmentations, adept powers, qualities, etc.
-    // TODO: Here
-    // TODO: Add effects
+    if (p_withAugmentations || p_withOther)
+    {
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_ATTRIBUTE);
+        for (unsigned int i = 0; i < effects.size(); ++i)
+        {
+            Effect* effect = effects[i];
+            if (effect->getCurrentTarget() == p_attribute)
+            {
+                // From others
+                if (p_withOther && (effect->getSource().magicAbility))
+                {
+                    attribValue += effect->getValue().toInt();
+                }
+                // From cyberware
+                // TODO: Mind cyberware
+                else
+                {
+
+                }
+            }
+        }
+    }
 
     return attribValue;
 }
@@ -122,4 +143,44 @@ CharacterValues::getAdeptPowerLevel(const QString& p_id) const
     }
 
     return level;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterValues::getSkill(const QString& p_skill, bool p_withAugmentations, bool p_withOther) const
+{
+    // Sanity check - does the skill even exist?
+    if (!SKILL_RULES->getIsValidSkill(p_skill))
+    {
+        qWarning() << QString("There is no skill with ID %1").arg(p_skill);
+        return 0;
+    }
+
+    int skillValue = 0;
+
+    // Skill increases (via points or karma)
+    skillValue += CHARACTER_CHOICES->getSkillIncreases(p_skill);
+
+    // Add effects from augmentations, adept powers, qualities, etc.
+    if (p_withAugmentations || p_withOther)
+    {
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_SKILL);
+        for (unsigned int i = 0; i < effects.size(); ++i)
+        {
+            Effect* effect = effects[i];
+            // From others
+            if (p_withOther && (effect->getSource().magicAbility))
+            {
+                skillValue += effect->getValue().toInt();
+            }
+            // From cyberware
+            // TODO: Mind cyberware
+            else
+            {
+
+            }
+        }
+    }
+
+    return skillValue;
 }

@@ -101,10 +101,14 @@ void
 CharEditAttributeTab::updateSpinBoxText(QSpinBox* p_spinBox, const QString& p_attribute)
 {
     int currentValue = CHARACTER_VALUES->getAttribute(p_attribute, false, false);
+    int currentValueModified = CHARACTER_VALUES->getAttribute(p_attribute, true, true);
+    int difference = currentValueModified - currentValue;
     int maxValue = METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID()).attributesMax[p_attribute];
 
-    QString suffix = QString(" / %1").arg(maxValue);
-    // TODO: add augmentation/other influences here
+    QString suffix = QString(" %1 / %2%3")
+            .arg(difference > 0 ? QString("(+%1)").arg(difference) : "")
+            .arg(maxValue)
+            .arg((p_attribute != "magic" && p_attribute != "edge") ? QString(" (%1)").arg(maxValue + 4) : "");
 
     p_spinBox->blockSignals(true);
     p_spinBox->setValue(currentValue);

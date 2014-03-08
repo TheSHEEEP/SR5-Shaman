@@ -42,7 +42,7 @@ SOURCES += main.cpp\
     ui/character/popups/customdescriptorpopup.cpp \
     rules/misc/customchoice.cpp \
     data/dictionary.cpp \
-    rules/effects/effectregistry.cpp \
+    data/character/effectregistry.cpp \
     rules/effects/effect.cpp \
     rules/effects/condition.cpp
 
@@ -75,7 +75,7 @@ HEADERS  += mainwindow.h \
     ui/character/popups/customdescriptorpopup.h \
     rules/misc/customchoice.h \
     data/dictionary.h \
-    rules/effects/effectregistry.h \
+    data/character/effectregistry.h \
     rules/effects/effect.h \
     rules/effects/condition.h
 

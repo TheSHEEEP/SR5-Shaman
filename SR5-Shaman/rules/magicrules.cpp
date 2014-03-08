@@ -11,6 +11,7 @@
 
 #include "data/appstatus.h"
 #include "rules/misc/customchoice.h"
+#include "rules/effects/effect.h"
 
 //---------------------------------------------------------------------------------
 MagicAbilityDefinition::MagicAbilityDefinition(MagicAbilityDefinition* p_parent)
@@ -410,6 +411,11 @@ MagicRules::initialize(const QString& p_jsonFile)
         if (currentSpell.contains("requires_custom"))
         {
             abilityDef->requiresCustom = currentSpell["requires_custom"].toString() == "true";
+            if (currentSpell.contains("custom_choices"))
+            {
+                QJsonObject obj = currentSpell["custom_choices"].toObject();
+                abilityDef->customChoices = new CustomChoice(&obj);
+            }
         }
 
         // Is this spell affected by the essence value?
@@ -517,7 +523,17 @@ MagicRules::initialize(const QString& p_jsonFile)
         }
 
         // Does this power have effects?
-        // TODO: here
+        if (currentPower.contains("effects"))
+        {
+            tempArray = currentPower["effects"].toArray();
+            for (int j = 0; j < tempArray.size(); ++j)
+            {
+                QJsonValueRef obj = tempArray[j];
+                EffectSource source;
+                source.magicAbility = abilityDef;
+                abilityDef->effects.push_back(new Effect(&obj, source));
+            }
+        }
 
         _definitions[uniqueId] = abilityDef;
         _adeptPowerDefinitions[uniqueId] = powerDef;
@@ -600,6 +616,11 @@ MagicRules::initialize(const QString& p_jsonFile)
         if (currentForm.contains("requires_custom"))
         {
             abilityDef->requiresCustom = currentForm["requires_custom"].toString() == "true";
+            if (currentForm.contains("custom_choices"))
+            {
+                QJsonObject obj = currentForm["custom_choices"].toObject();
+                abilityDef->customChoices = new CustomChoice(&obj);
+            }
         }
 
         _definitions[uniqueId] = abilityDef;
@@ -661,6 +682,7 @@ MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_custo
 
     // Create the new spell
     MagicAbilityDefinition* newAbility = new MagicAbilityDefinition();
+    // Misc
     newAbility->id = newID;
     newAbility->customString = p_customValue;
     newAbility->requiresCustom = false;
@@ -670,12 +692,22 @@ MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_custo
     newAbility->children = originalAbility.children;
     newAbility->isCategory = originalAbility.isCategory;
     newAbility->parent->children.push_back(newAbility);
+    // Effects
+    for (unsigned int i = 0; i < originalAbility.effects.size(); ++i)
+    {
+        newAbility->effects.push_back(new Effect(*(originalAbility.effects[i])));
+        EffectSource source;
+        source.magicAbility = newAbility;
+        newAbility->effects.back()->setSource(source);
+    }
+    // Translations
     newAbility->translations = originalAbility.translations;
     QMap<QString, QString>::iterator it;
     for (it = newAbility->translations.begin(); it != newAbility->translations.end(); ++it)
     {
         it.value().append(" (" + p_translation + ")");
     }
+    // Types
     newAbility->abilityType = originalAbility.abilityType;
     switch (newAbility->abilityType)
     {
