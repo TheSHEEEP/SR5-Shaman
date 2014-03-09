@@ -113,5 +113,105 @@ Effect::canBeApplied(const QString& p_target)
         }
     }
 
+    // Check the limit
+    if (result && _limit != "")
+    {
+        result = limitIsMet();
+        if (!result)
+        {
+            _lastError = "Limit is exceeded.";
+        }
+    }
+
     return result;
+}
+
+//---------------------------------------------------------------------------------
+bool
+Effect::limitIsMet()
+{
+    // Get the would-be-value
+    float wouldBeValue;
+    switch (_effectType)
+    {
+    case EFFECTTYPE_INCREASE_SKILL:
+        wouldBeValue = CHARACTER_VALUES->getSkill(_currentTarget, true, true) + _value.toDouble();
+        break;
+
+    case EFFECTTYPE_INCREASE_ATTRIBUTE:
+        wouldBeValue = CHARACTER_VALUES->getAttribute(_currentTarget, true, true) + _value.toDouble();
+        break;
+
+    default:
+        wouldBeValue = 100000000.0f;
+    }
+
+    // Get the limit value
+    // Calculation does not follow algebra sign order, it is only from left to right
+    QStringList tokens = _limit.split(" ");
+    float limitValue = -1000.0f;
+    float previousValue = -1000.0f;
+    float currentValue = -1000.0f;
+    QString currentSign = "";
+    QString token = "";
+    for (int i = 0; i < tokens.size(); ++i)
+    {
+        token = tokens[i];
+
+        // Signs
+        if ((token == "+") || (token == "-") || (token == "*") || (token == "/"))
+        {
+            currentSign = token;
+        }
+        // Special values
+        else if (token == "augmented_maximum")
+        {
+            currentValue = CHARACTER_VALUES->getAttributeMax(_currentTarget) + 4;
+        }
+        else if (token == "pure_skill_value")
+        {
+            currentValue = CHARACTER_VALUES->getSkill(_currentTarget, false, false);
+        }
+        // Every else must be a number
+        else
+        {
+            currentValue = token.toDouble();
+        }
+
+        // If we have a previous value, a sign and a currentValue, we can do a calculation step
+        if (previousValue > -1000.0f && currentSign != "" && currentValue > -1000.0f)
+        {
+            // Calculate
+            if (currentSign == "+")
+            {
+                limitValue = previousValue + currentValue;
+            }
+            else if (currentSign == "-")
+            {
+                limitValue = previousValue - currentValue;
+            }
+            else if (currentSign == "*")
+            {
+                limitValue = previousValue * currentValue;
+            }
+            else if (currentSign == "/")
+            {
+                limitValue = previousValue * currentValue;
+            }
+
+            // Reset values
+            previousValue = limitValue;
+            currentSign = "";
+        }
+        else
+        {
+            if (previousValue <= -1000.0f)
+            {
+                previousValue = currentValue;
+            }
+        }
+        currentValue = -1000.0f;
+    } // END calculate limit
+
+    return wouldBeValue <= limitValue;
 }

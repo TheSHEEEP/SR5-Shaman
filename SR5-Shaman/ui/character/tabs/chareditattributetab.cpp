@@ -103,7 +103,7 @@ CharEditAttributeTab::updateSpinBoxText(QSpinBox* p_spinBox, const QString& p_at
     int currentValue = CHARACTER_VALUES->getAttribute(p_attribute, false, false);
     int currentValueModified = CHARACTER_VALUES->getAttribute(p_attribute, true, true);
     int difference = currentValueModified - currentValue;
-    int maxValue = METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID()).attributesMax[p_attribute];
+    int maxValue = CHARACTER_VALUES->getAttributeMax(p_attribute);
 
     QString suffix = QString(" %1 / %2%3")
             .arg(difference > 0 ? QString("(+%1)").arg(difference) : "")

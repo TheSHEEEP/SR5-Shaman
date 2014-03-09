@@ -83,6 +83,18 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
 }
 
 //---------------------------------------------------------------------------------
+int
+CharacterValues::getAttributeMax(const QString& p_attribute)
+{
+    // Get metatype maximal value
+    int attribMax = METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID()).attributesMax[p_attribute];
+
+    // TODO: Apply possible effects
+
+    return attribMax;
+}
+
+//---------------------------------------------------------------------------------
 float
 CharacterValues::getEssence(bool p_withAugments) const
 {

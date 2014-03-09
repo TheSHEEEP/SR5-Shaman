@@ -74,6 +74,13 @@ public:
     int getAttribute(const QString& p_attribute, bool p_withAugmentations = true, bool p_withOther = true) const;
 
     /**
+     * @brief Returns the maximum NATURAL value of the passed attribute.
+     *          This function si required as qualities may modify the value set in the metatype definition.
+     * @param p_attribute   The attribute to look for.
+     */
+    int getAttributeMax(const QString& p_attribute);
+
+    /**
      * @brief Returns the characters current essence value.
      * @param p_withAugments   If this is true, the augmentations will be considered.
      */

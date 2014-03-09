@@ -173,7 +173,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     } // END decrease
 
     // Check if an increase would be over the natural maximum
-    int naturalMax = METATYPE_RULES->getDefinition(getMetatypeID()).attributesMax[p_attribute];
+    int naturalMax = CHARACTER_VALUES->getAttributeMax(p_attribute);
     if (wouldBeValue > naturalMax)
     {
         APPSTATUS->setStatusBarMessage(tr("Trying to increase %1 above natural maximum. Set to maximum.").arg(p_attribute),

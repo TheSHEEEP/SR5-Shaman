@@ -60,6 +60,8 @@ public:
     /**
      * @brief Checks if the effect can applied to the target.
      *          Will check if conditions are fulfilled, limits not exceeded, etc.
+     * @note    This is the only function that sets the current target if the normal target is "selected"
+     *          or similar. It must be called before the effect is applied.
      * @param p_target  The target of the effect. May be a skill, an attribute, etc.
      * @return  True if the effect can be applied.
      */
@@ -106,6 +108,11 @@ protected:
 
     std::vector<Condition*>     _conditions;
 
+    /**
+     * @brief Returns true if the limit is still met if the effect was applied.
+     *          canBeApplied calls this automatically if required.
+     */
+    bool limitIsMet();
 };
 
 //---------------------------------------------------------------------------------

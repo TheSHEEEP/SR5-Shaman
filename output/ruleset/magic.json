@@ -1387,7 +1387,7 @@
                 "type"         : "increase_skill",
                 "skill"        : "selected",
                 "value"        : "1",
-                "limit"        : "1.5 x pure_skill_value",
+                "limit"        : "1.5 * pure_skill_value",
                 "conditions" : [ "skill_known" ]
             }
         ]
@@ -1409,7 +1409,7 @@
                 "type"         : "increase_attribute",
                 "attribute"    : "selected",
                 "value"        : "1",
-                "limit"        : "1.0 x augmented_maximum"
+                "limit"        : "1.0 * augmented_maximum"
             }
         ]
       },
