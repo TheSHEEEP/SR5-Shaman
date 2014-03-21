@@ -200,38 +200,41 @@ CharEditAttributeTab::updateDerivedValues(const QString& p_attribute, bool p_all
                                 .arg(CHARACTER_VALUES->getKarmaPool()));
 
     // Limits
+    int valueNorm = 0;
+    int valueMod = 0;
     if (p_all || isStrength || isBody || isReaction)
     {
-        ui->lblPhysicalLimitValue->setText(QString("%1")
-                                           .arg(ATTRIBUTE_RULES->calculatePhysicalLimit(
-                                                    CHARACTER_VALUES->getAttribute("strength"),
-                                                    CHARACTER_VALUES->getAttribute("body"),
-                                                    CHARACTER_VALUES->getAttribute("reaction"))));
+        valueNorm = CHARACTER_VALUES->getPhysicalLimit(false);
+        valueMod = CHARACTER_VALUES->getPhysicalLimit(true);
+        ui->lblPhysicalLimitValue->setText(QString("%1 %2")
+                                           .arg(valueNorm)
+                                           .arg(valueMod != valueNorm ? QString(" (+%1)").arg(valueMod - valueNorm) : ""));
     }
     if (p_all || isLogic || isIntuition || isWillpower)
     {
-        ui->lblMentalLimitValue->setText(QString("%1")
-                                           .arg(ATTRIBUTE_RULES->calculateMentalLimit(
-                                                    CHARACTER_VALUES->getAttribute("logic"),
-                                                    CHARACTER_VALUES->getAttribute("intuition"),
-                                                    CHARACTER_VALUES->getAttribute("willpower"))));
+        valueNorm = CHARACTER_VALUES->getMentalLimit(false);
+        valueMod = CHARACTER_VALUES->getMentalLimit(true);
+        ui->lblMentalLimitValue->setText(QString("%1 %2")
+                                         .arg(valueNorm)
+                                         .arg(valueMod != valueNorm ? QString(" (+%1)").arg(valueMod - valueNorm) : ""));
     }
     if (p_all || isCharisma || isWillpower)
     {
-        ui->lblSocialLimitValue->setText(QString("%1")
-                                           .arg(ATTRIBUTE_RULES->calculateSocialLimit(
-                                                    CHARACTER_VALUES->getAttribute("charisma"),
-                                                    CHARACTER_VALUES->getAttribute("willpower"),
-                                                    CHARACTER_VALUES->getEssence())));
+        valueNorm = CHARACTER_VALUES->getSocialLimit(false);
+        valueMod = CHARACTER_VALUES->getSocialLimit(true);
+        ui->lblSocialLimitValue->setText(QString("%1 %2")
+                                         .arg(valueNorm)
+                                         .arg(valueMod != valueNorm ? QString(" (+%1)").arg(valueMod - valueNorm) : ""));
     }
 
     // Initiatives
     if (p_all || isReaction || isIntuition)
     {
-        ui->lblIniValue->setText(QString("%1")
-                                     .arg(ATTRIBUTE_RULES->calculateInitiative(
+        ui->lblIniValue->setText(QString("%1 + %2D6")
+                                    .arg(ATTRIBUTE_RULES->calculateInitiative(
                                               CHARACTER_VALUES->getAttribute("intuition"),
-                                              CHARACTER_VALUES->getAttribute("reaction"))));
+                                              CHARACTER_VALUES->getAttribute("reaction")))
+                                    .arg(CHARACTER_VALUES->getInitiativeDice(true)));
     }
     if (p_all || isIntuition || isReaction)
     {

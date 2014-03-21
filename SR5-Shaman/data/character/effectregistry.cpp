@@ -28,7 +28,7 @@ EffectRegistry::removeActiveEffect(Effect* p_effect)
         if (_activeEffects[i] == p_effect)
         {
             _activeEffects.erase(_activeEffects.begin() + i);
-            break;
+            --i;
         }
     }
 }

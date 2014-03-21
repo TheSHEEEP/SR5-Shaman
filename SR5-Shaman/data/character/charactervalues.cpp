@@ -15,11 +15,83 @@ CharacterValues::CharacterValues()
 
 //---------------------------------------------------------------------------------
 int
-CharacterValues::getPhysicalLimit() const
+CharacterValues::getPhysicalLimit(bool p_modified) const
 {
-    return ATTRIBUTE_RULES->calculatePhysicalLimit(getAttribute("strength"),
-                                                   getAttribute("body"),
-                                                   getAttribute("reaction"));
+    // Calculate pure value
+    int valueNorm = ATTRIBUTE_RULES->calculatePhysicalLimit(getAttribute("strength"),
+                                                            getAttribute("body"),
+                                                            getAttribute("reaction"));
+
+    // Apply modifiers
+    int modifier = 0;
+    if (p_modified)
+    {
+        // Mind possible effects
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_POTENTIAL);
+        for (unsigned int i = 0; i < effects.size(); ++i)
+        {
+            if (effects[i]->getCurrentTarget() == "physical")
+            {
+                modifier += effects[i]->getValue().toInt();
+            }
+        }
+    }
+
+    return valueNorm + modifier;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterValues::getSocialLimit(bool p_modified) const
+{
+    // Calculate pure value
+    int valueNorm = ATTRIBUTE_RULES->calculateSocialLimit(getAttribute("charisma"),
+                                                            getAttribute("willpower"),
+                                                            getEssence());
+
+    // Apply modifiers
+    int modifier = 0;
+    if (p_modified)
+    {
+        // Mind possible effects
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_POTENTIAL);
+        for (unsigned int i = 0; i < effects.size(); ++i)
+        {
+            if (effects[i]->getCurrentTarget() == "social")
+            {
+                modifier += effects[i]->getValue().toInt();
+            }
+        }
+    }
+
+    return valueNorm + modifier;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterValues::getMentalLimit(bool p_modified) const
+{
+    // Calculate pure value
+    int valueNorm = ATTRIBUTE_RULES->calculateMentalLimit(getAttribute("logic"),
+                                                            getAttribute("intuition"),
+                                                            getAttribute("willpower"));
+
+    // Apply modifiers
+    int modifier = 0;
+    if (p_modified)
+    {
+        // Mind possible effects
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_POTENTIAL);
+        for (unsigned int i = 0; i < effects.size(); ++i)
+        {
+            if (effects[i]->getCurrentTarget() == "mental")
+            {
+                modifier += effects[i]->getValue().toInt();
+            }
+        }
+    }
+
+    return valueNorm + modifier;
 }
 
 //---------------------------------------------------------------------------------
@@ -195,4 +267,21 @@ CharacterValues::getSkill(const QString& p_skill, bool p_withAugmentations, bool
     }
 
     return skillValue;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterValues::getInitiativeDice(bool p_modified) const
+{
+    int value = 1;
+
+    if (p_modified)
+    {
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_INI_DICE);
+        for (unsigned int i = 0; i < effects.size(); ++i)
+        {
+            value += effects[i]->getValue().toInt();
+        }
+    }
+    return value;
 }

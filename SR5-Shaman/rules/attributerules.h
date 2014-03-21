@@ -82,11 +82,13 @@ public:
 
     /**
      * @brief Calculates and returns the physical limit for the given attributes.
+     * @param p_modified    If this is true, modifications like effects will also be added to the value.
      */
     int calculatePhysicalLimit(int p_strength, int p_body, int p_reaction) const;
 
     /**
      * @brief Calculates and returns the mental limit for the given attributes.
+     * @param p_modified    If this is true, modifications like effects will also be added to the value.
      */
     int calculateMentalLimit(int p_logic, int p_intuition, int p_willpower) const;
 

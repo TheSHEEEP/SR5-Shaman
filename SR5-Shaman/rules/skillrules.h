@@ -139,12 +139,20 @@ public:
     const SkillDefinition& getDefinition(const QString& p_uniqueId) const;
 
     /**
+     * @brief Returns the definitions of the skills that contain the passed part of the ID.
+     *          Useful to get all user defined skills of a type (like EXOTIC_MELEE_WEAPON).
+     */
+    std::vector<std::pair<QString, SkillDefinition*> > getDefinitionsContaining(const QString& p_idPart,
+                                                                                bool p_onlyGroups) const;
+
+    /**
      * @brief Returns the definitions in vector that fit the passed configuration.
      * @param p_type        The skill type to look for.
      * @param p_onlyGroups  If this is true, only skill groups will be returned.
      *                      If this is false, only skills that are not a group will be returned.
      */
-    std::vector<std::pair<QString, SkillDefinition*> > getDefinitionsByType(SkillType p_type, bool p_onlyGroups) const;
+    std::vector<std::pair<QString, SkillDefinition*> > getDefinitionsByType(SkillType p_type,
+                                                                            bool p_onlyGroups) const;
 
     /**
      * @brief Will construct a new skill out of the passed skill and the customization.

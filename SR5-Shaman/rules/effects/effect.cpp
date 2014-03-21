@@ -26,9 +26,42 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
     {
         _effectType = EFFECTTYPE_INCREASE_SKILL;
     }
+    else if (tempString == "allow_skill")
+    {
+        // TODO: Mind this when enabling skills
+        _effectType = EFFECTTYPE_ALLOW_SKILL;
+    }
     else if (tempString == "increase_attribute")
     {
         _effectType = EFFECTTYPE_INCREASE_ATTRIBUTE;
+    }
+    else if (tempString == "increase_damage_value")
+    {
+        // TODO: Mind this when calculating damage values of weapons
+        _effectType = EFFECTTYPE_INCREASE_DAMAGE_VALUE;
+    }
+    else if (tempString == "increase_accuracy")
+    {
+        // TODO: Mind this when calculating accuracy values of weapons
+        _effectType = EFFECTTYPE_INCREASE_ACCURACY;
+    }
+    else if (tempString == "increase_potential")
+    {
+        _effectType = EFFECTTYPE_INCREASE_POTENTIAL;
+    }
+    else if (tempString == "increase_initiative_dice")
+    {
+        _effectType = EFFECTTYPE_INCREASE_INI_DICE;
+    }
+    else if (tempString == "increase_armor")
+    {
+         // TODO: Mind this when calculating armor
+        _effectType = EFFECTTYPE_INCREASE_ARMOR;
+    }
+    else if (tempString == "move_wound_modifier")
+    {
+         // TODO: Mind this when calculating wound modifiers
+        _effectType = EFFECTTYPE_MOVE_WOUND_MODIFIERS;
     }
 
     // Common values
@@ -44,8 +77,13 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
     }
 
     // Type specific values
-    // Increase skill
-    if (_effectType == EFFECTTYPE_INCREASE_SKILL)
+    // The rather obscure fromUtf16 is used to do a deep copy of the string.
+    // If not done, the string will be "garbage collected" or something by Qt itself. Weird.
+    // Skill selection
+    if (_effectType == EFFECTTYPE_INCREASE_SKILL ||
+        _effectType == EFFECTTYPE_ALLOW_SKILL ||
+        _effectType == EFFECTTYPE_INCREASE_ACCURACY ||
+        _effectType == EFFECTTYPE_INCREASE_DAMAGE_VALUE)
     {
         _target = QString::fromUtf16(obj["skill"].toString().utf16());
         _currentTarget = _target;
@@ -54,6 +92,18 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
     else if (_effectType == EFFECTTYPE_INCREASE_ATTRIBUTE)
     {
         _target = QString::fromUtf16(obj["attribute"].toString().utf16());
+        _currentTarget = _target;
+    }
+    // Increase potential
+    else if (_effectType == EFFECTTYPE_INCREASE_POTENTIAL)
+    {
+        _target = QString::fromUtf16(obj["potential"].toString().utf16());
+        _currentTarget = _target;
+    }
+    // Wound modifier movement
+    else if (_effectType == EFFECTTYPE_MOVE_WOUND_MODIFIERS)
+    {
+        _target = QString::fromUtf16(obj["affects"].toString().utf16());
         _currentTarget = _target;
     }
 
@@ -135,11 +185,17 @@ Effect::limitIsMet()
     switch (_effectType)
     {
     case EFFECTTYPE_INCREASE_SKILL:
+    case EFFECTTYPE_INCREASE_DAMAGE_VALUE:
+    case EFFECTTYPE_INCREASE_ACCURACY:
         wouldBeValue = CHARACTER_VALUES->getSkill(_currentTarget, true, true) + _value.toDouble();
         break;
 
     case EFFECTTYPE_INCREASE_ATTRIBUTE:
         wouldBeValue = CHARACTER_VALUES->getAttribute(_currentTarget, true, true) + _value.toDouble();
+        break;
+
+    case EFFECTTYPE_INCREASE_INI_DICE:
+        wouldBeValue = CHARACTER_VALUES->getInitiativeDice(true) + _value.toDouble();
         break;
 
     default:
@@ -176,6 +232,13 @@ Effect::limitIsMet()
         else
         {
             currentValue = token.toDouble();
+        }
+
+        // Only one token is a special case
+        if (tokens.size() == 1)
+        {
+            limitValue = currentValue;
+            break;
         }
 
         // If we have a previous value, a sign and a currentValue, we can do a calculation step

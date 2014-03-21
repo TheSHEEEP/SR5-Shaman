@@ -10,6 +10,7 @@
 #include <QDebug>
 
 #include "rules/rules.h"
+#include "data/character/effectregistry.h"
 
 //---------------------------------------------------------------------------------
 AttributeRules::AttributeRules()
@@ -134,6 +135,7 @@ AttributeRules::calculateAttributeIncreaseCost(int p_oldValue, int p_newValue) c
 int
 AttributeRules::calculatePhysicalLimit(int p_strength, int p_body, int p_reaction) const
 {
+    // Formula
     float temp = (p_strength * 2.0f + p_body + p_reaction) / 3.0f;
     return temp + 0.5f;
 }
@@ -142,6 +144,7 @@ AttributeRules::calculatePhysicalLimit(int p_strength, int p_body, int p_reactio
 int
 AttributeRules::calculateMentalLimit(int p_logic, int p_intuition, int p_willpower) const
 {
+    // Formula
     float temp = (p_logic * 2.0f + p_intuition + p_willpower) / 3.0f;
     return temp + 0.5f;
 }
@@ -150,6 +153,7 @@ AttributeRules::calculateMentalLimit(int p_logic, int p_intuition, int p_willpow
 int
 AttributeRules::calculateSocialLimit(int p_charisma, int p_willpower, int p_essence) const
 {
+    // Formula
     float temp = (p_charisma * 2.0f + p_willpower + p_essence) / 3.0f;
     return temp + 0.5f;
 }

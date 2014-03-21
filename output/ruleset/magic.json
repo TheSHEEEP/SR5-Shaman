@@ -709,7 +709,11 @@
         "duration"        : "S",
         "drain"           : "F - 2",
         "essence_effect"  : "true",
-        "requires_custom" : "true"
+        "requires_custom" : "true",
+        "custom_choices"    : {
+            "type"             : "attribute_selection",
+            "attributes"       : ["body", "agility", "reaction", "strength", "willpower", "logic", "intuition", "charisma"]
+        }
       },
       { "unique_id"    : "DETOX",
         "translations" : 
@@ -749,7 +753,11 @@
         "duration"        : "S",
         "drain"           : "F - 3",
         "essence_effect"  : "true",
-        "requires_custom" : "true"
+        "requires_custom" : "true",
+        "custom_choices"    : {
+            "type"             : "attribute_selection",
+            "attributes"       : ["body", "agility", "reaction", "strength", "willpower", "logic", "intuition", "charisma"]
+        }
       },
       { "unique_id"    : "INCREASE_REFLEXES",
         "translations" : 
@@ -1315,7 +1323,13 @@
             "de"    : "Astrale Wahrnehmung"
         },
         "cost"              : "1",
-        "activation"        : "simple"
+        "activation"        : "simple",
+        "effects" : [
+            {
+                "type"         : "allow_skill",
+                "skill"        : "ASSENSING"
+            }
+        ]
       },
       { "unique_id"    : "ATTRIBUTE_BOOST",
         "translations" :
@@ -1325,6 +1339,10 @@
         },
         "cost_per_level"    : "0.25",
         "requires_custom"   : "true",
+        "custom_choices"    : {
+            "type"             : "attribute_selection",
+            "attributes"       : ["body", "agility", "reaction", "strength"]
+        },
         "activation"        : "simple"
       },
       { "unique_id"    : "COMBAT_SENSE_ADEPT",
@@ -1342,7 +1360,19 @@
             "de"    : "Kritischer Schlag"
         },
         "cost"              : "0.25",
-        "requires_custom"   : "true"
+        "requires_custom"   : "true",
+        "custom_choices"    : {
+            "type"              : "skill_selection",
+            "groups_allowed"    : "false",
+            "skills_containing" : ["UNARMED", "CLUBS", "BLADES", "EXOTIC_MELEE_WEAPON", "ASTRAL_COMBAT"]
+        },
+        "effects" : [
+            {
+                "type"         : "increase_damage_value",
+                "skill"        : "selected",
+                "value"        : "1"
+            }
+        ]
       },
       { "unique_id"    : "DANGER_SENSE",
         "translations" :
@@ -1367,7 +1397,19 @@
             "de"    : "Erhöhte Präzision"
         },
         "cost"              : "0.25",
-        "requires_custom"   : "true"
+        "requires_custom"   : "true",
+        "custom_choices"    : {
+            "type"              : "skill_selection",
+            "groups_allowed"    : "false",
+            "skills_containing" : ["PISTOLS", "CLUBS", "BLADES", "EXOTIC_MELEE_WEAPON", "EXOTIC_RANGED_WEAPON", "HEAVY_WEAPONS", "THRWOWING_WEAPONS", "LONGARMS", "AUTOMATICS", "ARCHERY"]
+        },
+        "effects" : [
+            {
+                "type"         : "increase_accuracy",
+                "skill"        : "selected",
+                "value"        : "1"
+            }
+        ]
       },
       { "unique_id"    : "IMPROVED_ABILITY",
         "translations" :
@@ -1420,7 +1462,17 @@
             "de"    : "Erhöhtes Potenzial"
         },
         "cost_per_level"    : "0.5",
-        "requires_custom"   : "true"
+        "requires_custom"   : "true",
+        "custom_choices"    : {
+            "type"             : "potential_selection"
+        },
+        "effects" : [
+            {
+                "type"         : "increase_potential",
+                "potential"    : "selected",
+                "value"        : "1"
+            }
+        ]
       },
       { "unique_id"    : "IMPROVED_REFLEXES",
         "translations" :
@@ -1428,16 +1480,52 @@
             "en"    : "Improved Reflexes",
             "de"    : "Gesteigerte Reflexe"
         },
-        "cost"    : [ "1.5", "2.5", "3.5" ]
+        "cost"    : [ "1.5", "2.5", "3.5" ],
+        "effects" : [
+            {
+                "type"         : "increase_attribute",
+                "attribute"    : "reaction",
+                "value"        : "1"
+            },
+            {
+                "type"         : "increase_initiative_dice",
+                "value"        : "1",
+                "limit"        : "5",
+                "conditions" : [ "only_initiative_increase" ]
+            }
+        ]
       },
       { "unique_id"    : "IMPROVED_SENSE_DIRECTION",
         "translations" :
         {
-            "en"    : "Improved Sense",
-            "de"    : "Geschärfter Sinn"
+            "en"    : "Improved Sense (Direction)",
+            "de"    : "Geschärfter Sinn (Richtungssinn)"
         },
-        "cost"              : "0.25",
-        "requires_custom"   : "true"
+        "cost"              : "0.25"
+      },
+      { "unique_id"    : "IMPROVED_SENSE_TACTILE",
+        "translations" :
+        {
+            "en"    : "Improved Sense (Tactile)",
+            "de"    : "Geschärfter Sinn (Tastsinn)"
+        },
+        "cost"              : "0.25"
+      },
+      { "unique_id"    : "IMPROVED_SENSE_SCALE",
+        "translations" :
+        {
+            "en"    : "Improved Sense (Human Scale)",
+            "de"    : "Geschärfter Sinn (Menschliche Waage)"
+        },
+        "cost"              : "0.25"
+      },
+      { "unique_id"    : "IMPROVED_SENSE_PITCH",
+        "translations" :
+        {
+            "en"    : "Improved Sense (Perfect Pitch)",
+            "de"    : "Geschärfter Sinn (Absolutes Gehör)"
+        },
+        "cost"              : "0.25"
       },
       { "unique_id"    : "KILLING_HANDS",
         "translations" :
@@ -1479,7 +1567,13 @@
             "en"    : "Mystic Armor",
             "de"    : "Mytischer Panzer"
         },
-        "cost_per_level"    : "0.5"
+        "cost_per_level"    : "0.5",
+        "effects" : [
+            {
+                "type"         : "increase_armor",
+                "value"        : "1"
+            }
+        ]
       },
       { "unique_id"    : "NATURAL_IMMUNITY",
         "translations" :
@@ -1495,7 +1589,14 @@
             "en"    : "Pain Resistance",
             "de"    : "Schmerzresistenz"
         },
-        "cost_per_level"    : "0.5"
+        "cost_per_level"    : "0.5",
+        "effects" : [
+            {
+                "type"         : "move_wound_modifier",
+                "value"        : "1",
+                "affects"      : "both"
+            }
+        ]
       },
       { "unique_id"    : "RAPID_HEALING",
         "translations" :
@@ -1527,7 +1628,14 @@
             "en"    : "Voice Control",
             "de"    : "Stimmkontrolle"
         },
-        "cost_per_level"    : "0.5"
+        "cost_per_level"    : "0.5",
+        "effects" : [
+            {
+                "type"         : "increase_potential",
+                "potential"    : "social",
+                "value"        : "1"
+            }
+        ]
       },
       { "unique_id"    : "WALL_RUNNING",
         "translations" :
@@ -1559,6 +1667,9 @@
         "target"          : "device",
         "duration"        : "S",
         "requires_custom" : "true",
+        "custom_choices"    : {
+            "type"             : "matrix_attribute_selection"
+        },
         "fading_value"    : "L + 1"
       },
       { "unique_id"    : "EDITOR",
@@ -1580,6 +1691,9 @@
         "target"          : "device",
         "duration"        : "S",   
         "requires_custom" : "true",
+        "custom_choices"    : {
+            "type"             : "matrix_attribute_selection"
+        },
         "fading_value"    : "L + 1"
       },
       { "unique_id"    : "STATIC_VEIL",

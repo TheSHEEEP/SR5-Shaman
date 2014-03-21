@@ -13,8 +13,11 @@ enum ConditionType
 {
     CONDITIONTYPE_INVALID = -1,
     CONDITIONTYPE_SKILL_KNOWN,
+    CONDITIONTYPE_ONLY_INI_INCREASE,
     NUM_CONDITIONTYPES
 };
+
+
 /**
  * @brief This class represents a single condition to be used in an effect.
  */

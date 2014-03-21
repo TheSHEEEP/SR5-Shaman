@@ -91,10 +91,21 @@ public:
     //-----------------------------------------------------------
     /**
      * @brief Returns the physical limit of the character.
+     * @param p_modified    If this is true, modifications like effects will also be added to the value.
      */
-    int getPhysicalLimit() const;
-    int getMentalLimit() const;
-    int getSocialLimit() const;
+    int getPhysicalLimit(bool p_modified = true) const;
+
+    /**
+     * @brief Returns the physical limit of the character.
+     * @param p_modified    If this is true, modifications like effects will also be added to the value.
+     */
+    int getMentalLimit(bool p_modified = true) const;
+
+    /**
+     * @brief Returns the physical limit of the character.
+     * @param p_modified    If this is true, modifications like effects will also be added to the value.
+     */
+    int getSocialLimit(bool p_modified = true) const;
 
     //*********************************************************************
     // SPELLS
@@ -116,6 +127,16 @@ public:
      *                              (adept powers, qualities, etc.).
      */
     int getSkill(const QString& p_skill, bool p_withAugmentations = true, bool p_withOther = true) const;
+
+
+    //*********************************************************************
+    // INITIATIVE
+    //*********************************************************************
+    /**
+     * @brief Returns the number of initiative dice this character has.
+     * @param p_modified    If modifications like effects should be considered.
+     */
+    int getInitiativeDice(bool p_modified = true) const;
 
 private:
     int             _karmaPool;
