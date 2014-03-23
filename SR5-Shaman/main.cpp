@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("SR5 Shaman");
 
     // Initialize dictionary
-    Dictionary::initialize("../../translations/translations.json");
+    Dictionary::initialize("../../language/dictionary.json");
 
     // Initialize rules
     Rules::getSingletonPtr()->initialize();

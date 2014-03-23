@@ -1,0 +1,16 @@
+{
+    "dictionary" : [
+        {   "key" : "CB_QUALITYMAX_TEXT",
+            "translations" : {
+                "en" : "QUALITIES: Only sum counts as limit",
+                "de" : "QUALITÄTEN: Nur die Summe zählt als Limit"
+            }
+        },
+        {   "key" : "CB_QUALITYMAX_TOOLTIP",
+            "translations" : {
+                "en" : "This means that you can have any number of qualities, as long as the sum of positive and negative qualities are never lower than -25 or higher than 25. \nExample: You can have positive qualities worth 145 if you have negative qualities worth at least 120.",
+                "de" : "Erlaubt, eine beliebige Anzahl an Qualitäten zu haben, so lange die Summe der positiven und negativen Qualitäten nicht niedriger als -25 und nicht höher als 25 ist. \nBeispiel: du kannst positive Qualitäten im Wert von 145 besitzen, wenn deine negativen Qualitäten mindestens 120 Punkte wert sind."
+            }
+        }
+    ]
+}

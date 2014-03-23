@@ -10,6 +10,15 @@
 #define CHARACTER_CHOICES CharacterChoices::getSingletonPtr()
 
 /**
+ * @brief This struct holds all information about house rules that are applied to this character.
+ *        Must be stored in the character as this is an information on character level.
+ */
+struct HouseRules
+{
+    bool qualityLimitSumCounts = false;
+};
+
+/**
  * @brief This singleton class holds all player choices of the character creation.
  *          Does NOT hold any information about rules.
  * @author  TheSHEEEP
@@ -288,6 +297,10 @@ public:
      */
     float getAvailablePowerPoints() const;
 
+    //*********************************************************************
+    // CREATION DATA
+    //*********************************************************************
+    HouseRules& getHouseRules();
 
 private:
     std::vector<Priority>     _selectedPriorities;
@@ -305,6 +318,7 @@ private:
     QMap<QString, float>    _spellsFromKarma;
     int                     _purchasedPowerPoints;
 
+    HouseRules  _houseRules;
 };
 
 
@@ -451,6 +465,14 @@ int
 CharacterChoices::getPurchasedPowerPoints() const
 {
     return _purchasedPowerPoints;
+}
+
+//---------------------------------------------------------------------------------
+inline
+HouseRules&
+CharacterChoices::getHouseRules()
+{
+    return _houseRules;
 }
 
 #endif // CHARACTERDATA_H

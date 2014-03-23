@@ -31,6 +31,11 @@ public:
      */
     void initialize();
 
+    /**
+     * @brief Applies the current language to this widget.
+     */
+    void applyTranslation();
+
 signals:
     void startCreation();
     void cancelCreation();
