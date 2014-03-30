@@ -41,6 +41,10 @@ Rules::initialize()
     _magicRules = new MagicRules();
     _magicRules->initialize("../../ruleset/magic.json");
 
+    // Read quality rules
+    _qualityRules = new QualityRules();
+    _qualityRules->initialize("../../ruleset/qualities.json");
+
     // Done!
     _initialized = true;
 }

@@ -1,18 +1,18 @@
-#ifndef MAGICTREEMODEL_H
-#define MAGICTREEMODEL_H
+#ifndef QUALITYTREEMODEL_H
+#define QUALITYTREEMODEL_H
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
 #include <vector>
 
-#include "rules/magicrules.h"
+#include "rules/qualityrules.h"
 
 /**
- * @brief This model is used to organize magic abilities in a tree view.
+ * @brief This model is used to organize qualities in a tree view.
  * @author  TheSHEEEP
  */
-class MagicTreeModel : public QAbstractItemModel
+class QualityTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -20,15 +20,15 @@ public:
     /**
      * @brief Constructor.
      */
-    MagicTreeModel();
+    QualityTreeModel();
 
     /**
      * @brief Destructor.
      */
-    ~MagicTreeModel();
+    ~QualityTreeModel();
 
     /**
-     * @brief Will get all spells, adept powers and complex forms from the rules.
+     * @brief Will get qualities from the rules.
      */
     void initialize();
 
@@ -74,8 +74,8 @@ public:
     int columnCount(const QModelIndex& p_parent = QModelIndex()) const;
 
 private:
-    MagicAbilityDefinition*     _rootItem;
+    QualityDefinition*     _rootItem;
 };
 
 
-#endif // MAGICTREEMODEL_H
+#endif // QUALITYTREEMODEL_H

@@ -1,30 +1,25 @@
-#include "magictreemodel.h"
-
-#include "rules/rules.h"
-#include "data/appstatus.h"
+#include "qualitytreemodel.h"
 
 //---------------------------------------------------------------------------------
-MagicTreeModel::MagicTreeModel()
+QualityTreeModel::QualityTreeModel()
 {
-
 }
 
 //---------------------------------------------------------------------------------
-MagicTreeModel::~MagicTreeModel()
+QualityTreeModel::~QualityTreeModel()
 {
-
 }
 
 //---------------------------------------------------------------------------------
 void
-MagicTreeModel::initialize()
+QualityTreeModel::initialize()
 {
-    _rootItem = MAGIC_RULES->getModelRootItem();
+    _rootItem = QUALITY_RULES->getModelRootItem();
 }
 
 //---------------------------------------------------------------------------------
 QVariant
-MagicTreeModel::data(const QModelIndex& p_index, int p_role) const
+QualityTreeModel::data(const QModelIndex& p_index, int p_role) const
 {
     // Validity checks
     if (!p_index.isValid())
@@ -33,7 +28,7 @@ MagicTreeModel::data(const QModelIndex& p_index, int p_role) const
     if (p_role != Qt::DisplayRole)
         return QVariant();
 
-    MagicAbilityDefinition* item = static_cast<MagicAbilityDefinition*>(p_index.internalPointer());
+    QualityDefinition* item = static_cast<QualityDefinition*>(p_index.internalPointer());
 
     QVariant result;
     result.setValue((void*)item);
@@ -42,7 +37,7 @@ MagicTreeModel::data(const QModelIndex& p_index, int p_role) const
 
 //---------------------------------------------------------------------------------
 Qt::ItemFlags
-MagicTreeModel::flags(const QModelIndex& p_index) const
+QualityTreeModel::flags(const QModelIndex& p_index) const
 {
     // Validity checks
     if (!p_index.isValid())
@@ -53,7 +48,7 @@ MagicTreeModel::flags(const QModelIndex& p_index) const
 
 //---------------------------------------------------------------------------------
 QVariant
-MagicTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_role) const
+QualityTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_role) const
 {
     if (p_role != Qt::DisplayRole)
         return QVariant();
@@ -66,21 +61,21 @@ MagicTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_r
 
 //---------------------------------------------------------------------------------
 QModelIndex
-MagicTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) const
+QualityTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) const
 {
     // Validity checks
     if (p_parent.isValid() && p_parent.column() != 0)
             return QModelIndex();
 
     // Get parent item
-    MagicAbilityDefinition* parentItem;
+    QualityDefinition* parentItem;
     if (!p_parent.isValid())
         parentItem = _rootItem;
     else
-        parentItem = static_cast<MagicAbilityDefinition*>(p_parent.internalPointer());
+        parentItem = static_cast<QualityDefinition*>(p_parent.internalPointer());
 
     // Get correct child item and create model index
-    MagicAbilityDefinition* childItem = parentItem->children[p_row];
+    QualityDefinition* childItem = parentItem->children[p_row];
     if (childItem)
         return createIndex(p_row, 0, childItem);
     else
@@ -89,15 +84,15 @@ MagicTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) cons
 
 //---------------------------------------------------------------------------------
 QModelIndex
-MagicTreeModel::parent(const QModelIndex& p_index) const
+QualityTreeModel::parent(const QModelIndex& p_index) const
 {
     // Validity checks
     if (!p_index.isValid())
         return QModelIndex();
 
     // Get child and parent items
-    MagicAbilityDefinition* childItem = static_cast<MagicAbilityDefinition*>(p_index.internalPointer());
-    MagicAbilityDefinition* parentItem = childItem->parent;
+    QualityDefinition* childItem = static_cast<QualityDefinition*>(p_index.internalPointer());
+    QualityDefinition* parentItem = childItem->parent;
 
     if (parentItem == _rootItem)
         return QModelIndex();
@@ -109,18 +104,18 @@ MagicTreeModel::parent(const QModelIndex& p_index) const
 
 //---------------------------------------------------------------------------------
 int
-MagicTreeModel::rowCount(const QModelIndex& p_parent) const
+QualityTreeModel::rowCount(const QModelIndex& p_parent) const
 {
     // Validity checks
     if (p_parent.column() > 0)
         return 0;
 
     // Get parent item
-    MagicAbilityDefinition* parentItem;
+    QualityDefinition* parentItem;
     if (!p_parent.isValid())
         parentItem = _rootItem;
     else
-        parentItem = static_cast<MagicAbilityDefinition*>(p_parent.internalPointer());
+        parentItem = static_cast<QualityDefinition*>(p_parent.internalPointer());
 
     // Return size of children
     return parentItem->children.size();
@@ -128,7 +123,7 @@ MagicTreeModel::rowCount(const QModelIndex& p_parent) const
 
 //---------------------------------------------------------------------------------
 int
-MagicTreeModel::columnCount(const QModelIndex& p_parent) const
+QualityTreeModel::columnCount(const QModelIndex& p_parent) const
 {
     // TODO: This will probably be more soon as we want to show more than just the name
     return 1;

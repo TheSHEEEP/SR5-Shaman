@@ -44,7 +44,12 @@ SOURCES += main.cpp\
     data/dictionary.cpp \
     data/character/effectregistry.cpp \
     rules/effects/effect.cpp \
-    rules/effects/condition.cpp
+    rules/effects/condition.cpp \
+    ui/character/tabs/chareditqualitytab.cpp \
+    ui/models/qualitytreemodel.cpp \
+    ui/models/qualitydelegate.cpp \
+    ui/models/qualitysortfilterproxymodel.cpp \
+    rules/qualityrules.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -77,7 +82,12 @@ HEADERS  += mainwindow.h \
     data/dictionary.h \
     data/character/effectregistry.h \
     rules/effects/effect.h \
-    rules/effects/condition.h
+    rules/effects/condition.h \
+    ui/character/tabs/chareditqualitytab.h \
+    ui/models/qualitytreemodel.h \
+    ui/models/qualitydelegate.h \
+    ui/models/qualitysortfilterproxymodel.h \
+    rules/qualityrules.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
@@ -90,7 +100,8 @@ FORMS    += mainwindow.ui \
     ui/character/tabs/chareditmisctab.ui \
     ui/character/tabs/chareditmagictab.ui \
     ui/character/tabs/chareditattributetab.ui \
-    ui/character/popups/customdescriptorpopup.ui
+    ui/character/popups/customdescriptorpopup.ui \
+    ui/character/tabs/chareditqualitytab.ui
 
 TRANSLATIONS = sr5shaman_de.ts
 

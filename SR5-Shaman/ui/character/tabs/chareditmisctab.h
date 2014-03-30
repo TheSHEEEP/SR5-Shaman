@@ -35,6 +35,11 @@ public:
     void initialize();
 
     /**
+     * @brief Applies the current translation to this tab.
+     */
+    void applyTranslation();
+
+    /**
      * @brief Will show/hide the elements specific to the guided creation.
      */
     virtual void showEvent(QShowEvent* /*unused*/);

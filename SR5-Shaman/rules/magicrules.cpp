@@ -41,6 +41,7 @@ MagicAbilityDefinition::MagicAbilityDefinition(const MagicAbilityDefinition& p_o
     adeptPower = p_other.adeptPower;
     complexForm = p_other.complexForm;
     children = p_other.children;
+    translations = p_other.translations;
 }
 
 //---------------------------------------------------------------------------------

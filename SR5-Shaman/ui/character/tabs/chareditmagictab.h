@@ -38,6 +38,11 @@ public:
     void initialize();
 
     /**
+     * @brief Applies the current translation to this tab.
+     */
+    void applyTranslation();
+
+    /**
      * @brief Will show/hide the elements specific to the guided creation.
      */
     virtual void showEvent(QShowEvent* /*unused*/);
@@ -128,6 +133,11 @@ private slots:
      *          Will reset the bought powers from karma if the value is set too low.
      */
     void on_spinPurchasePP_valueChanged(int p_value);
+
+    /**
+     * @brief Will hide/show the skills selection and resize the groupbox.
+     */
+    void handleSkillsBoxChecked(bool p_checked);
 };
 
 #endif // CHAREDITMAGICTAB_H

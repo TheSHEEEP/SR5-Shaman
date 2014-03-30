@@ -136,7 +136,7 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
             Effect* effect = effects[i];
             if (effect->getCurrentTarget() == p_attribute)
             {
-                // From others
+                // From effects
                 if (p_withOther && (effect->getSource().magicAbility))
                 {
                     attribValue += effect->getValue().toInt();

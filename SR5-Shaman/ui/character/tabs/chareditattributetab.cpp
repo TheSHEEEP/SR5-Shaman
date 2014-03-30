@@ -63,6 +63,15 @@ CharEditAttributeTab::initialize()
     ui->cbPriority->addItem(QString(" "), -1);
     ui->cbPriority->setCurrentIndex(5);
     ui->cbPriority->blockSignals(false);
+
+    // Apply translation
+    applyTranslation();
+}
+
+//---------------------------------------------------------------------------------
+CharEditAttributeTab::applyTranslation()
+{
+
 }
 
 //---------------------------------------------------------------------------------

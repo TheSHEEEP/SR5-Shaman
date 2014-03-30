@@ -9,11 +9,13 @@
 #include "attributerules.h"
 #include "magicrules.h"
 #include "skillrules.h"
+#include "qualityrules.h"
 
 // Helpful defines
 #define METATYPE_RULES Rules::getSingletonPtr()->getMetatypeRules()
 #define ATTRIBUTE_RULES Rules::getSingletonPtr()->getAttributeRules()
 #define MAGIC_RULES Rules::getSingletonPtr()->getMagicRules()
+#define QUALITY_RULES Rules::getSingletonPtr()->getQualityRules()
 #define SKILL_RULES Rules::getSingletonPtr()->getSkillRules()
 
 /**
@@ -87,6 +89,11 @@ public:
      */
     SkillRules* getSkillRules() const;
 
+    /**
+     * @brief Returns a pointer to the quality rules.
+     */
+    QualityRules* getQualityRules() const;
+
 private:
     bool    _initialized;
 
@@ -94,6 +101,7 @@ private:
     AttributeRules*     _attributeRules;
     MagicRules*         _magicRules;
     SkillRules*         _skillRules;
+    QualityRules*         _qualityRules;
 };
 
 //---------------------------------------------------------------------------------
@@ -126,6 +134,14 @@ SkillRules*
 Rules::getSkillRules() const
 {
     return _skillRules;
+}
+
+//---------------------------------------------------------------------------------
+inline
+QualityRules*
+Rules::getQualityRules() const
+{
+    return _qualityRules;
 }
 
 #endif // RULES_H

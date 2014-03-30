@@ -58,6 +58,15 @@ CharEditMiscTab::initialize()
     ui->cbMagicType->addItem("", "");
     ui->cbMagicType->setCurrentIndex(definitions.size());
     ui->cbMagicType->blockSignals(false);
+
+    // Apply translation
+    applyTranslation();
+}
+
+//---------------------------------------------------------------------------------
+CharEditMiscTab::applyTranslation()
+{
+
 }
 
 //---------------------------------------------------------------------------------

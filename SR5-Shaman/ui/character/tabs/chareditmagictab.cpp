@@ -148,6 +148,18 @@ CharEditMagicTab::initialize()
     ui->cbAspect->addItem(QString(" "), "INVALID");
     ui->cbAspect->setCurrentIndex(magicGroups.size());
     ui->cbAspect->blockSignals(false);
+
+    // Connect the skill view groupbox to the show/hide of its frame
+    connect(ui->groupBoxSkills, SIGNAL(clicked(bool)), SLOT(handleSkillsBoxChecked(bool)));
+
+    // Apply translation
+    applyTranslation();
+}
+
+//---------------------------------------------------------------------------------
+CharEditMagicTab::applyTranslation()
+{
+
 }
 
 //---------------------------------------------------------------------------------
@@ -382,7 +394,7 @@ CharEditMagicTab::showHideSkillsViews()
         }
 
         // Set visibility
-        ui->frameFreeSkills->setVisible(showGroups || showSkills);
+        ui->groupBoxSkills->setVisible(showGroups || showSkills);
 
         // Disable it if no aspect is selected
         if (ui->frameAspected->isVisible() &&
@@ -781,4 +793,18 @@ CharEditMagicTab::on_spinPurchasePP_valueChanged(int p_value)
 
     // Update display
     updateValues();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMagicTab::handleSkillsBoxChecked(bool p_checked)
+{
+    if (p_checked)
+    {
+        ui->groupBoxSkills->layout()->addWidget(ui->frameFreeSkills);
+    }
+    else
+    {
+        ui->groupBoxSkills->layout()->removeWidget(ui->frameFreeSkills);
+    }
 }
