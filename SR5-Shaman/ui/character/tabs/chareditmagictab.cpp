@@ -157,6 +157,7 @@ CharEditMagicTab::initialize()
 }
 
 //---------------------------------------------------------------------------------
+void
 CharEditMagicTab::applyTranslation()
 {
 

@@ -1,7 +1,7 @@
 #ifndef CONDITION_H
 #define CONDITION_H
 
-#include "QString.h"
+#include <QString>
 
 class QJsonValueRef;
 class Effect;
