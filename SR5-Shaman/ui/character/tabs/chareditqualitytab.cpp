@@ -11,7 +11,7 @@
 //---------------------------------------------------------------------------------
 CharEditQualityTab::CharEditQualityTab(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::CharacterQualityTab)
+    ui(new Ui::CharEditQualityTab)
 {
     ui->setupUi(this);
 }
@@ -23,6 +23,7 @@ CharEditQualityTab::~CharEditQualityTab()
 }
 
 //---------------------------------------------------------------------------------
+void
 CharEditQualityTab::initialize()
 {
     // Initialize the quality views
@@ -72,6 +73,7 @@ CharEditQualityTab::initialize()
 }
 
 //---------------------------------------------------------------------------------
+void
 CharEditQualityTab::applyTranslation()
 {
 

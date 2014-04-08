@@ -69,6 +69,7 @@ CharEditAttributeTab::initialize()
 }
 
 //---------------------------------------------------------------------------------
+void
 CharEditAttributeTab::applyTranslation()
 {
 

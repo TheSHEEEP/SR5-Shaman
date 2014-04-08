@@ -64,6 +64,7 @@ CharEditMiscTab::initialize()
 }
 
 //---------------------------------------------------------------------------------
+void
 CharEditMiscTab::applyTranslation()
 {
 
