@@ -8,6 +8,7 @@
 class Condition;
 class QJsonValueRef;
 class MagicAbilityDefinition;
+class QualityDefinition;
 
 /**
  * @brief The source of an effect.
@@ -19,9 +20,11 @@ struct EffectSource
      */
     EffectSource()
         : magicAbility(NULL)
+        , quality(NULL)
     {}
 
     MagicAbilityDefinition*     magicAbility;
+    QualityDefinition*          quality;
 };
 
 /**
@@ -31,7 +34,9 @@ enum EffectType
 {
     EFFECTTYPE_INVALID = -1,
     EFFECTTYPE_INCREASE_ATTRIBUTE,
+    EFFECTTYPE_INCREASE_ATTRIBUTE_MAX,
     EFFECTTYPE_INCREASE_SKILL,
+    EFFECTTYPE_INCREASE_SKILL_MAX,
     EFFECTTYPE_ALLOW_SKILL,
     EFFECTTYPE_INCREASE_DAMAGE_VALUE,
     EFFECTTYPE_INCREASE_ACCURACY,
@@ -39,6 +44,8 @@ enum EffectType
     EFFECTTYPE_INCREASE_INI_DICE,
     EFFECTTYPE_INCREASE_ARMOR,
     EFFECTTYPE_MOVE_WOUND_MODIFIERS,
+    EFFECTTYPE_ADD_FREE_LANGUAGES,
+    EFFECTTYPE_NONE,
     NUM_EFFECTTYPES
 };
 

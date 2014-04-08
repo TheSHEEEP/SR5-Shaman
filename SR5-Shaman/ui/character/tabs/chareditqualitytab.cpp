@@ -4,6 +4,10 @@
 #include <QItemSelectionModel>
 #include <QPushButton>
 
+#include "ui/models/qualitydelegate.h"
+#include "ui/models/qualitysortfilterproxymodel.h"
+#include "ui/models/qualitytreemodel.h"
+
 //---------------------------------------------------------------------------------
 CharEditQualityTab::CharEditQualityTab(QWidget *parent) :
     QWidget(parent),
@@ -21,7 +25,6 @@ CharEditQualityTab::~CharEditQualityTab()
 //---------------------------------------------------------------------------------
 CharEditQualityTab::initialize()
 {
-    // TODO: here
     // Initialize the quality views
     // Available qualities
     QualityTreeModel* qualityTreeModel = new QualityTreeModel();
@@ -79,8 +82,8 @@ void
 CharEditQualityTab::handleQualityChanged(const QModelIndex& p_current, const QModelIndex& p_previous)
 {
     QItemSelectionModel* model = static_cast<QItemSelectionModel*>(sender());
-    bool isQualityView = model == ui->treeQualities->selectionModel();
-    QPushButton* button = isQualityView ? ui->btnRemoveQuality : ui->btnAddQuality;
+    bool isSelectedQuality = model == ui->treeQualities->selectionModel();
+    QPushButton* button = isSelectedQuality ? ui->btnRemoveQuality : ui->btnAddQuality;
 }
 
 //---------------------------------------------------------------------------------

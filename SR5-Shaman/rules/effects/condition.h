@@ -1,7 +1,8 @@
 #ifndef CONDITION_H
 #define CONDITION_H
 
-#include "QString.h"
+#include <QString>
+#include <QStringList>
 
 class QJsonValueRef;
 class Effect;
@@ -14,6 +15,9 @@ enum ConditionType
     CONDITIONTYPE_INVALID = -1,
     CONDITIONTYPE_SKILL_KNOWN,
     CONDITIONTYPE_ONLY_INI_INCREASE,
+    CONDITIONTYPE_ONLY_ONCE,
+    CONDITIONTYPE_MUST_NOT_HAVE_QUALITIES,
+    CONDITIONTYPE_MUST_HAVE_ATTRIBUTE_VALUE,
     NUM_CONDITIONTYPES
 };
 
@@ -48,6 +52,7 @@ public:
 
 private:
     ConditionType   _conditionType;
+    QStringList     _values;
     Effect*         _parent;
     QString         _lastError;
 };

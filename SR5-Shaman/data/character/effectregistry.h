@@ -57,6 +57,12 @@ public:
      */
     std::vector<Effect*> getEffectsByType(EffectType p_type) const;
 
+    /**
+     * @brief Returns a vector with all active effects that have the passed source.
+     * @param p_source  The effect source to look for.
+     */
+    std::vector<Effect*> getEffectsBySource(EffectSource* p_source) const;
+
 private:
     std::vector<Effect*>    _activeEffects;
 };

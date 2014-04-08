@@ -11,6 +11,150 @@
                 "en" : "This means that you can have any number of qualities, as long as the sum of positive and negative qualities are never lower than -25 or higher than 25. \nExample: You can have positive qualities worth 145 if you have negative qualities worth at least 120.",
                 "de" : "Erlaubt, eine beliebige Anzahl an Qualitäten zu haben, so lange die Summe der positiven und negativen Qualitäten nicht niedriger als -25 und nicht höher als 25 ist. \nBeispiel: du kannst positive Qualitäten im Wert von 145 besitzen, wenn deine negativen Qualitäten mindestens 120 Punkte wert sind."
             }
+        },
+        {   "key" : "BRUTE_FORCE",
+            "translations" : {
+                "en" : "Brute Force",
+                "de" : "Brute Force"
+            }
+        },
+        {   "key" : "CHANGE_ICON",
+            "translations" : {
+                "en" : "Change Icon",
+                "de" : "Icon Verändern"
+            }
+        },
+        {   "key" : "CHECK_OVERWATCH_SCORE",
+            "translations" : {
+                "en" : "Check Overwatch Score",
+                "de" : "Overwatch-Wert Bestimmen"
+            }
+        },
+        {   "key" : "CONTROL_DEVICE",
+            "translations" : {
+                "en" : "Control Device",
+                "de" : "Gerät Steuern"
+            }
+        },
+        {   "key" : "CRACK_FILE",
+            "translations" : {
+                "en" : "Crack File",
+                "de" : "Datei Cracken"
+            }
+        },
+        {   "key" : "CRASH_PROGRAM",
+            "translations" : {
+                "en" : "Crash Program",
+                "de" : "Programm Abstürzen Lassen"
+            }
+        },
+        {   "key" : "DATA_SPIKE",
+            "translations" : {
+                "en" : "Data Spike",
+                "de" : "Datenspike"
+            }
+        },
+        {   "key" : "DISARM_DATA_BOMB",
+            "translations" : {
+                "en" : "Disarm Data Bomb",
+                "de" : "Datenbombe Legen"
+            }
+        },
+        {   "key" : "EDIT_FILE",
+            "translations" : {
+                "en" : "Edit File",
+                "de" : "Datei Editieren"
+            }
+        },
+        {   "key" : "ERASE_MARK",
+            "translations" : {
+                "en" : "Erase Mark",
+                "de" : "Marke Löschen"
+            }
+        },
+        {   "key" : "ERASE_MATRIX_SIGNATURE",
+            "translations" : {
+                "en" : "Erase Matrix Signature",
+                "de" : "Matrixsignatur Löschen"
+            }
+        },
+        {   "key" : "FORMAT_DEVICE",
+            "translations" : {
+                "en" : "Format Device",
+                "de" : "Gerät Formatieren"
+            }
+        },
+        {   "key" : "HACK_ON_THE_FLY",
+            "translations" : {
+                "en" : "Hack On The Fly",
+                "de" : "Eiliges Hacken"
+            }
+        },
+        {   "key" : "HIDE",
+            "translations" : {
+                "en" : "Hide",
+                "de" : "Verstecken"
+            }
+        },
+        {   "key" : "JACK_OUT",
+            "translations" : {
+                "en" : "Jack Out",
+                "de" : "Ausstöpseln"
+            }
+        },
+        {   "key" : "JAM_SIGNALS",
+            "translations" : {
+                "en" : "Jam Signals",
+                "de" : "Signal Stören"
+            }
+        },
+        {   "key" : "JUMP_INTO_RIGGED_DEVICE",
+            "translations" : {
+                "en" : "Jump Into Rigged Device",
+                "de" : "In Ein Gerät Springen"
+            }
+        },
+        {   "key" : "MATRIX_PERCEPTION",
+            "translations" : {
+                "en" : "Matrix Perception",
+                "de" : "Matrixwahrnehmung"
+            }
+        },
+        {   "key" : "MATRIX_SEARCH",
+            "translations" : {
+                "en" : "Matrix Search",
+                "de" : "Matrixsuche"
+            }
+        },
+        {   "key" : "REBOOT_DEVICE",
+            "translations" : {
+                "en" : "Reboot Device",
+                "de" : "Gerät Neu Starten"
+            }
+        },
+        {   "key" : "SET_DATA_BOMB",
+            "translations" : {
+                "en" : "Set Data Bomb",
+                "de" : "Datenbombe Legen"
+            }
+        },
+        {   "key" : "SNOOP",
+            "translations" : {
+                "en" : "Snoop",
+                "de" : "Übertragung Abfangen"
+            }
+        },
+        {   "key" : "SPOOF_COMMAND",
+            "translations" : {
+                "en" : "Spoof Command",
+                "de" : "Befehl Vortäuschen"
+            }
+        },
+        {   "key" : "TRACE_ICON",
+            "translations" : {
+                "en" : "Trace Icon",
+                "de" : "Icon Aufspüren"
+            }
         }
     ]
 }

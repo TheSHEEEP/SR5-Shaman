@@ -121,7 +121,7 @@ public:
     //*********************************************************************
     /**
      * @brief Returns a skill value.
-     * @param p_attribute           The ID of the skill.
+     * @param p_skill               The ID of the skill.
      * @param p_withAugmentations   If this is true, the augmentations (cyberware only) will be considered.
      * @param p_withOther           If this is true, other attribute sources will also be considered
      *                              (adept powers, qualities, etc.).
@@ -130,8 +130,8 @@ public:
 
     /**
      * @brief Returns the maximum value a skill can have.
-     *          The value differs for creating a character and updating a character.
-     * @param p_attribute           The ID of the skill.
+     *          The value differs between creating a character and updating a character.
+     * @param p_skill           The ID of the skill.
      */
     int getSkillMax(const QString& p_skill) const;
 

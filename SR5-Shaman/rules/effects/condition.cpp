@@ -18,10 +18,9 @@ Condition::Condition(Effect* p_parent, QJsonValueRef* p_jsonObject)
 {
     // A condition might be anything from a simple string to a more complex object
     QJsonValueRef val = *p_jsonObject;
-    QString tempString;
     if (val.type() == QJsonValue::String)
     {
-        tempString = val.toString();
+        QString tempString = val.toString();
         if (tempString == "skill_known")
         {
             _conditionType = CONDITIONTYPE_SKILL_KNOWN;
@@ -30,10 +29,29 @@ Condition::Condition(Effect* p_parent, QJsonValueRef* p_jsonObject)
         {
             _conditionType = CONDITIONTYPE_ONLY_INI_INCREASE;
         }
+        else if (tempString == "only_once")
+        {
+            _conditionType = CONDITIONTYPE_ONLY_ONCE;
+        }
     }
     else if (val.type() == QJsonValue::Object)
     {
-
+        QJsonObject tempObject = val.toObject();
+        QJsonArray tempArray;
+        if (tempObject.contains("must_not_have_qualities"))
+        {
+            _conditionType = CONDITIONTYPE_MUST_NOT_HAVE_QUALITIES;
+            tempArray = tempObject["must_not_have_qualities"].toArray();
+            for (int i = 0; i < tempArray.size(); ++i)
+            {
+                _values.push_back(tempArray[i].toString());
+            }
+        }
+        else if (tempObject.contains("must_have_attribute_value"))
+        {
+            _conditionType = CONDITIONTYPE_MUST_HAVE_ATTRIBUTE_VALUE;
+            _values.push_back(tempObject["must_have_attribute_value"].toString());
+        }
     }
 }
 
@@ -60,7 +78,7 @@ Condition::isFulfilled()
             _lastError = QObject::tr("Skill %1 not known to the character.").arg(targetSkill);
         }
     }
-    // Mustbe the only effect that increases initiative somehow
+    // Must be the only effect that increases initiative somehow
     else if (_conditionType == CONDITIONTYPE_ONLY_INI_INCREASE)
     {
         std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_INI_DICE);
@@ -73,6 +91,29 @@ Condition::isFulfilled()
         }
 
         return true;
+    }
+    // Can only be taken once
+    else if (_conditionType == CONDITIONTYPE_ONLY_ONCE)
+    {
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsBySource(_parent->getSource());
+        return effects.empty();
+    }
+    // Cannot be taken if another quality is present
+    else if (_conditionType == CONDITIONTYPE_MUST_NOT_HAVE_QUALITIES)
+    {
+        for (int i = 0; i < _values.size(); ++i)
+        {
+            if (CHARACTER_CHOICES->getQualities().contains(_values[i]))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    // Must have a positive attribute value
+    else if (_conditionType == CONDITIONTYPE_MUST_HAVE_ATTRIBUTE_VALUE)
+    {
+        return CHARACTER_VALUES->getAttribute(_values[0]) > 0;
     }
 
     return false;

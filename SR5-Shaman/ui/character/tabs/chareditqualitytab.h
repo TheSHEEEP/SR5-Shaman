@@ -6,6 +6,9 @@
 namespace Ui {
 class CharEditQualityTab;
 }
+class QualitySortFilterProxyModel;
+class QualityDelegate;
+
 
 class CharEditQualityTab : public QWidget
 {
@@ -52,6 +55,11 @@ private slots:
 
 private:
     Ui::CharEditQualityTab *ui;
+
+    QualitySortFilterProxyModel*  _qualitiesAvailableFilter;
+    QualityDelegate*              _qualitiesAvailableDelegate;
+    QualitySortFilterProxyModel*  _qualitiesFilter;
+    QualityDelegate*              _qualitiesDelegate;
 };
 
 #endif // CHAREDITQUALITYTAB_H

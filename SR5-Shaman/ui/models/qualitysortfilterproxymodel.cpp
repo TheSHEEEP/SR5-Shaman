@@ -53,44 +53,20 @@ QualitySortFilterProxyModel::filterAcceptsRow(int p_row, const QModelIndex& p_pa
     bool accept = filterAcceptsItem(currentItem);
 
     // We may hide a category if it is empty
-    if (accept && !_showEmptyCategories &&
-            (currentItem->isCategory ||
-             (currentItem->abilityType == MAGICABILITYTYPE_SPELL && currentItem->spell->isSpellCategory)) )
+    if (accept && !_showEmptyCategories && currentItem->isCategory )
     {
         int numChildren = currentItem->children.size();
         accept = false;
 
-        // If this is the spell category, only show it if any of it's children have any valid children themselves
-        // TODO: Is there a quicker way to do this?
-        if (currentItem->id == "CATEGORY_SPELLS")
+        // Iterate over the children to find out if any will be accepted
+        // And if so, accept the category
+        for (int i = 0; i < numChildren; ++i)
         {
-            for (int i = 0; i < numChildren; ++i)
+            QualityDefinition* item = currentItem->children[i];
+            if (filterAcceptsItem(item))
             {
-                MagicAbilityDefinition* item = currentItem->children[i];
-                int numInnerChildren = item->children.size();
-                for (int j = 0; j < numInnerChildren; ++j)
-                {
-                    if (filterAcceptsItem(item->children[j]))
-                    {
-                        accept = true;
-                        break;
-                    }
-                }
-                if (accept) break;
-            }
-        }
-        else
-        {
-            // Iterate over the children to find out if any will be accepted
-            // And if so, accept the category
-            for (int i = 0; i < numChildren; ++i)
-            {
-                MagicAbilityDefinition* item = currentItem->children[i];
-                if (filterAcceptsItem(item))
-                {
-                    accept = true;
-                    break;
-                }
+                accept = true;
+                break;
             }
         }
     }
@@ -106,15 +82,14 @@ QualitySortFilterProxyModel::filterAcceptsItem(QualityDefinition* p_item) const
     bool accept = true;
 
     // Categories are accepted by default
-    if (p_item->isCategory ||
-        (p_item->abilityType == MAGICABILITYTYPE_SPELL && p_item->spell->isSpellCategory))
+    if (p_item->isCategory)
     {
         return true;
     }
 
     // Accept items whose ID contains a substring
     if (!p_item->isCategory &&
-        _filterMask & MAGIC_FILTERMASK_ID_CONTAINS)
+        _filterMask & QUALITY_FILTERMASK_ID_CONTAINS)
     {
         accept = false;
         int numFilters = _filterIDContains.size();
@@ -131,30 +106,13 @@ QualitySortFilterProxyModel::filterAcceptsItem(QualityDefinition* p_item) const
     // Accept items whose ID is equal to one in our list
     if (accept &&
         !p_item->isCategory &&
-        _filterMask & MAGIC_FILTERMASK_ID_EQUALS)
+        _filterMask & QUALITY_FILTERMASK_ID_EQUALS)
     {
         accept = false;
         int numFilters = _filterIDEquals.size();
         for (int i = 0; i < numFilters; ++i)
         {
             if (p_item->id == _filterIDEquals[i])
-            {
-                accept = true;
-                break;
-            }
-        }
-    }
-
-    // Accept items that fit one of the filter types
-    if (accept &&
-        !p_item->isCategory &&
-        _filterMask & MAGIC_FILTERMASK_TYPE)
-    {
-        accept = false;
-        int numFilters = _filterTypes.size();
-        for (int i = 0; i < numFilters; ++i)
-        {
-            if (p_item->abilityType == _filterTypes[i])
             {
                 accept = true;
                 break;

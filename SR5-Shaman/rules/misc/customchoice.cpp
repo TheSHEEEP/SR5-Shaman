@@ -43,6 +43,10 @@ CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
     {
         _type = CHOICETYPE_MATRIX_ATTRIBUTE_SELECTION;
     }
+    else if (type == "custom_selection")
+    {
+        _type = CHOICETYPE_CUSTOM_SELECTION;
+    }
 
     // Attribute selection
     if (_type == CHOICETYPE_ATTRIBUTE_SELECTION)
@@ -162,6 +166,17 @@ CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
         _choiceValues.push_back("data processing");
         _choiceStrings.push_back(Dictionary::getTranslation("Firewall"));
         _choiceValues.push_back("firewall");
+    }
+
+    // Custom selection
+    if (_type == CHOICETYPE_CUSTOM_SELECTION)
+    {
+        QJsonArray array = jsonObject["strings"].toArray();
+        for (int i = 0; i < array.size(); ++i)
+        {
+            _choiceStrings.push_back(Dictionary::getTranslation(array[i].toString()));
+            _choiceValues.push_back(array[i].toString());
+        }
     }
 }
 

@@ -1,5 +1,7 @@
 #include "qualitydelegate.h"
 
+#include "rules/qualityrules.h"
+
 //---------------------------------------------------------------------------------
 QualityDelegate::QualityDelegate()
     : _showQualityLevel(false)
@@ -22,7 +24,6 @@ QualityDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option
 
     // Get the name
     QString text = "a";
-
 
     // Call painter methods for drawing
     p_painter->save();

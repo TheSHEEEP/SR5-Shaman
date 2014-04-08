@@ -6,8 +6,10 @@
 #include <vector>
 #include <QObject>
 
+class Effect;
+
 /**
- * @brief This is the definition of a single skill.
+ * @brief This is the definition of a single quality.
  *          Also has some additional functionality to serve as a model item for Views.
  */
 class QualityDefinition
@@ -46,9 +48,11 @@ public:
 
     QString                         id;
     bool                            isCategory;
+    bool                            isPositive;
     bool                            isUserDefined;
     bool                            requiresCustom;
     QString                         custom;     // This can be used for further definition, like the name defined by the user
+    std::vector<Effect*>            effects;
     QMap<QString, QString>          translations;
 };
 
@@ -98,8 +102,7 @@ public:
      * @brief Returns the definitions of the qualities that contain the passed part of the ID.
      *          Useful to get all user defined qualities of a type.
      */
-    std::vector<std::pair<QString, QualityDefinition*> > getDefinitionsContaining(const QString& p_idPart,
-                                                                                    bool p_onlyGroups) const;
+    std::vector<std::pair<QString, QualityDefinition*> > getDefinitionsContaining(const QString& p_idPart) const;
 
     /**
      * @brief Will construct a new quality out of the passed quality and the customization.

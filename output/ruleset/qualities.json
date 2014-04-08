@@ -1,4 +1,144 @@
 {
     "qualities" : [
+        { "unique_id"    : "AMBIDEXTROUS",
+            "translations" : 
+            { 
+                "en" : "Ambidextrous",
+                "de" : "Beidhändigkeit"
+            },
+            "positive"        : "true",
+            "cost"            : "4"
+        },
+        { "unique_id"    : "ANALYTICAL_MIND",
+            "translations" : 
+            { 
+                "en" : "Analytical Mind",
+                "de" : "Analytischer Geist"
+            },
+            "positive"        : "true",
+            "cost"            : "5"
+        },
+        { "unique_id"    : "APTITUDE",
+            "translations" : 
+            { 
+                "en" : "Aptitude",
+                "de" : "Talentiert"
+            },
+            "positive"        : "true",
+            "cost"            : "14"
+        },
+        { "unique_id"    : "ASTRAL_CHAMELEON",
+            "translations" : 
+            { 
+                "en" : "Astral Chameleon",
+                "de" : "Astrales Chamäleon"
+            },
+            "positive"        : "true",
+            "cost"            : "10",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_have_attribute_value" : "magic" }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "BILINGUAL",
+            "translations" : 
+            { 
+                "en" : "Bilingual",
+                "de" : "Zweisprachig"
+            },
+            "positive"        : "true",
+            "cost"            : "5",
+            "effects" : [
+                {
+                    "type"         : "add_free_languages",
+                    "value"        : "1"
+                }
+            ]
+        },
+        { "unique_id"    : "BLANDNESS",
+            "translations" : 
+            { 
+                "en" : "Blandness",
+                "de" : "Unauffälligkeit"
+            },
+            "positive"        : "true",
+            "cost"            : "8"
+        },
+        { "unique_id"    : "CATLIKE",
+            "translations" : 
+            { 
+                "en" : "Catlike",
+                "de" : "Katzenhaft"
+            },
+            "positive"        : "true",
+            "cost"            : "7",
+            "effects" : [
+                {
+                    "type"         : "increase_skill",
+                    "skill"        : "SNEAKING",
+                    "value"        : "2"
+                }
+            ]
+        },
+        { "unique_id"    : "CODESLINGER",
+            "translations" : 
+            { 
+                "en" : "Codeslinger",
+                "de" : "Programmiergenie"
+            },
+            "positive"        : "true",
+            "cost"            : "10",
+            "requires_custom"   : "true",
+            "custom_choices"    : {
+                "type"             : "custom_selection",
+                "strings"          : ["BRUTE_FORCE", "CHANGE_ICON", "CHECK_OVERWATCH_SCORE", "CONTROL_DEVICE", "CRACK_FILE", "CRASH_PROGRAM", 
+                                    "DATA_SPIKE", "DISARM_DATA_BOMB", "EDIT_FILE", "ERASE_MARK", "ERASE_MATRIX_SIGNATURE", "FORMAT_DEVICE", 
+                                    "HACK_ON_THE_FLY", "HIDE", "JACK_OUT", "JAM_SIGNALS", "JUMP_INTO_RIGGED_DEVICE", "MATRIX_PERCEPTION", 
+                                    "MATRIX_SEARCH", "REBOOT_DEVICE", "SET_DATA_BOMB", "SNOOP", "SPOOF_COMMAND", "TRACE_ICON"]
+            }
+        },
+        { "unique_id"    : "DOUBLE-JOINTED",
+            "translations" : 
+            { 
+                "en" : "Double-Jointed",
+                "de" : "Gummigelenke"
+            },
+            "positive"        : "true",
+            "cost"            : "6",
+            "effects" : [
+                {
+                    "type"         : "increase_skill",
+                    "skill"        : "ESCAPE_ARTIST",
+                    "value"        : "2"
+                }
+            ]
+        },
+        { "unique_id"    : "EXCEPTIONAL_ATTRIBUTE",
+            "translations" : 
+            { 
+                "en" : "Exceptional Attribute",
+                "de" : "Aussergewöhnliches Attribut"
+            },
+            "positive"        : "true",
+            "cost"            : "14",
+            "requires_custom"   : "true",
+            "custom_choices"    : {
+                "type"             : "skill_selection",
+                "groups_allowed"   : "false",
+                "categories"       : ["combat", "social", "physical", "vehicle", "magic", "resonance"]
+            },
+            "effects" : [
+                {
+                    "type"         : "increase_skill_max",
+                    "attribute"    : "selected",
+                    "value"        : "1",
+                    "conditions" : [ "only_once" ]
+                }
+            ]
+        }
     ]
 }

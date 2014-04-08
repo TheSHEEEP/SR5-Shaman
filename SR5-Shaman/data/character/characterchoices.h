@@ -298,6 +298,14 @@ public:
     float getAvailablePowerPoints() const;
 
     //*********************************************************************
+    // QUALITIES
+    //*********************************************************************
+    /**
+     * @brief Returns all qualities the character has.
+     */
+    const QSet<QString>& getQualities() const;
+
+    //*********************************************************************
     // CREATION DATA
     //*********************************************************************
     HouseRules& getHouseRules();
@@ -316,6 +324,7 @@ private:
     QMap<QString, int>      _skillIncreasesKarma;
     QMap<QString, float>    _spellsFromFreebies;
     QMap<QString, float>    _spellsFromKarma;
+    QSet<QString>           _qualities;
     int                     _purchasedPowerPoints;
 
     HouseRules  _houseRules;
@@ -473,6 +482,14 @@ HouseRules&
 CharacterChoices::getHouseRules()
 {
     return _houseRules;
+}
+
+//---------------------------------------------------------------------------------
+inline
+const QSet<QString>&
+CharacterChoices::getQualities() const
+{
+    return _qualities;
 }
 
 #endif // CHARACTERDATA_H

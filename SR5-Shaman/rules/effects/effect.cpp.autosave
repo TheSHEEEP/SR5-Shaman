@@ -209,7 +209,11 @@ Effect::limitIsMet()
     case EFFECTTYPE_INCREASE_ACCURACY:
         wouldBeValue = CHARACTER_VALUES->getSkill(_currentTarget, true, true) + _value.toDouble();
         break;
-
+        
+    case EFFECTTYPE_INCREASE_SKILL_MAX:
+        wouldBeValue = CHARACTER_VALUES->getSkillMax(_currentTarget) + _value.toDouble();
+        break;
+        
     case EFFECTTYPE_INCREASE_ATTRIBUTE:
         wouldBeValue = CHARACTER_VALUES->getAttribute(_currentTarget, true, true) + _value.toDouble();
         break;

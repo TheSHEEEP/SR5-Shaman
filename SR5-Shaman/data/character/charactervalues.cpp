@@ -4,6 +4,7 @@
 #include "rules/rules.h"
 #include "data/character/characterchoices.h"
 #include "data/character/effectregistry.h"
+#include "data/appstatus.h"
 
 CharacterValues* CharacterValues::_instance = 0;
 
@@ -267,6 +268,26 @@ CharacterValues::getSkill(const QString& p_skill, bool p_withAugmentations, bool
     }
 
     return skillValue;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterValues::getSkillMax(const QString& p_skill) const
+{
+    int maxValue = 0;
+    if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION)
+    {
+        maxValue = 6;
+    }
+
+    // Mind effects
+    std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_SKILL_MAX);
+    for (unsigned int i = 0; i < effects.size(); ++i)
+    {
+        maxValue += effects[i]->getValue().toInt();
+    }
+
+    return maxValue;
 }
 
 //---------------------------------------------------------------------------------
