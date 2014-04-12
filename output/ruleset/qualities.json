@@ -25,7 +25,20 @@
                 "de" : "Talentiert"
             },
             "positive"        : "true",
-            "cost"            : "14"
+            "cost"            : "14",
+            "custom_choices"    : {
+                "type"             : "skill_selection",
+                "groups_allowed"   : "false",
+                "categories"       : ["combat", "social", "physical", "vehicle", "magic", "resonance"]
+            },
+            "effects" : [
+                {
+                    "type"         : "increase_skill_max",
+                    "attribute"    : "selected",
+                    "value"        : "1",
+                    "conditions" : [ "only_once" ]
+                }
+            ]
         },
         { "unique_id"    : "ASTRAL_CHAMELEON",
             "translations" : 
@@ -127,18 +140,202 @@
             "cost"            : "14",
             "requires_custom"   : "true",
             "custom_choices"    : {
-                "type"             : "skill_selection",
-                "groups_allowed"   : "false",
-                "categories"       : ["combat", "social", "physical", "vehicle", "magic", "resonance"]
+                "type"             : "attribute_selection",
+                "attributes"       : ["body", "agility", "reaction", "strength", "willpower", "logic", "intuition", "charisma"]
             },
             "effects" : [
                 {
-                    "type"         : "increase_skill_max",
+                    "type"         : "increase_attribute_max",
                     "attribute"    : "selected",
                     "value"        : "1",
-                    "conditions" : [ "only_once" ]
+                    "conditions" : [ 
+                        "only_once",
+                        { "must_not_have_qualities" : [ "LUCKY" ] }
+                    ]
                 }
             ]
-        }
+        },
+        { "unique_id"    : "FIRST_IMPRESSION",
+            "translations" : 
+            { 
+                "en" : "First Impression",
+                "de" : "Soziales Chamäleon"
+            },
+            "positive"        : "true",
+            "cost"            : "11"
+        },
+        { "unique_id"    : "FOCUSED_CONCENTRATION",
+            "translations" : 
+            { 
+                "en" : "Focused Concentration",
+                "de" : "Erhöhte Konzentrationsfähigkeit"
+            },
+            "positive"        : "true",
+            "cost_per_level"  : "4",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "max_level" : "6" },
+                        { "must_be_magic_type" : [ "magic", "resonance" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "GEARHEAD",
+            "translations" : 
+            { 
+                "en" : "Gearhead",
+                "de" : "Rennpilot"
+            },
+            "positive"        : "true",
+            "cost"            : "11"
+        },
+        { "unique_id"    : "GUTS",
+            "translations" : 
+            { 
+                "en" : "Guts",
+                "de" : "Mut"
+            },
+            "positive"        : "true",
+            "cost"            : "10"
+        },
+        { "unique_id"    : "HIGH_PAIN_TOLERANCE",
+            "translations" : 
+            { 
+                "en" : "High Pain Tolerance",
+                "de" : "Hohe Schmerztoleranz"
+            },
+            "positive"        : "true",
+            "cost_per_level"  : "7",
+            "effects" : [
+                {
+                    "type"         : "move_wound_modifier",
+                    "value"        : "1",
+                    "affects"      : "both",
+                    "conditions" : [ 
+                        { "max_level" : "3" },
+                        "exclusive_effect"
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "HOME_GROUND",
+            "translations" : 
+            { 
+                "en" : "Home Ground",
+                "de" : "Vertrautes Terrain"
+            },
+            "positive"        : "true",
+            "cost"            : "10",
+            "requires_custom"   : "true",
+            "custom_choices"    : {
+                "type"             : "custom_selection",
+                "strings"          : [ "ASTRAL_ACCLIMATION", "YOU_KNOW_A_GUY", "DIGITAL_TURF", "THE_TRANSPORTER", "ON_THE_LAM",
+                                         "STREET_POLITICS" ]
+            }
+        },
+        { "unique_id"    : "HUMAN_LOOKING",
+            "translations" : 
+            { 
+                "en" : "Human-Looking",
+                "de" : "Menschliches Aussehen"
+            },
+            "positive"        : "true",
+            "cost"            : "6",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_be_metatype" : [ "ELF", "DWARF", "ORC" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "INDOMITABLE",
+            "translations" : 
+            { 
+                "en" : "Indomitable",
+                "de" : "Durchsetzungskraft"
+            },
+            "positive"        : "true",
+            "cost_per_level"  : "8",
+            "custom_choices"    : {
+                "type"             : "potential_selection"
+            },
+            "effects" : [
+                {
+                    "type"         : "increase_potential",
+                    "potential"    : "selected",
+                    "value"        : "1",
+                    "conditions" : [ 
+                        { "max_level_with_customs" : "3" },
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "JURYRIGGER",
+            "translations" : 
+            { 
+                "en" : "Juryrigger",
+                "de" : "Technisches Improvisationstalent"
+            },
+            "positive"        : "true",
+            "cost"            : "10"
+        },
+        { "unique_id"    : "LUCKY",
+            "translations" : 
+            { 
+                "en" : "Lucky",
+                "de" : "Glück"
+            },
+            "positive"        : "true",
+            "cost"            : "12",
+            "effects" : [
+                {
+                    "type"         : "increase_attribute_max",
+                    "attribute"    : "edge",
+                    "value"        : "1",
+                    "conditions" : [ 
+                        { "must_not_have_qualities" : [ "EXCEPTIONAL_ATTRIBUTE" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "MAGIC_RESISTANCE",
+            "translations" : 
+            { 
+                "en" : "Magic Resistance",
+                "de" : "Magieresistenz"
+            },
+            "positive"        : "true",
+            "cost_per_level"  : "6",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "max_level" : "4" },
+                        "must_be_mundane"
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "MENTOR_SPIRIT",
+            "translations" : 
+            { 
+                "en" : "Mentor Spirit",
+                "de" : "Schutzgeist"
+            },
+            "positive"        : "true",
+            "cost"            : "5",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_be_magic_type" : [ "magic" ] }
+                    ]
+                }
+            ]
+        },
     ]
 }

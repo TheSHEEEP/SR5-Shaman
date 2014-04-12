@@ -306,3 +306,18 @@ CharacterValues::getInitiativeDice(bool p_modified) const
     }
     return value;
 }
+
+//---------------------------------------------------------------------------------
+int
+CharacterValues::getQualityLevel(const QString& p_quality) const
+{
+    const QMap<QString, int>& qualities = CHARACTER_CHOICES->getQualities();
+
+    // If the character has the quality, return its level
+    int level = 0;
+    if (qualities.contains(p_quality))
+    {
+        level = qualities[p_quality];
+    }
+    return level;
+}

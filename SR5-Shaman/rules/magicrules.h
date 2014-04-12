@@ -34,8 +34,8 @@ struct MagicTypePriorityDefinition
 struct MagicTypeDefinition
 {
     QMap<QString, QString>                  translations;
-    std::vector<QString>                    types;
-    QMap<int, MagicTypePriorityDefinition*>  priorities;
+    QStringList                             types;
+    QMap<int, MagicTypePriorityDefinition*> priorities;
 };
 
 // Spell enums
@@ -210,6 +210,7 @@ public:
     CustomChoice*                   customChoices;
     std::vector<Effect*>            effects;
     bool                            isUserDefined;
+    QString                         base;
     QMap<QString, QString>          translations;
 
     MagicAbilityType                abilityType;
@@ -281,6 +282,12 @@ public:
     const QMap<QString, ComplexFormDefinition*>& getAllComplexFormDefinitions() const;
 
     /**
+     * @brief Returns the definitions of the magic abilities that contain the passed part of the ID.
+     *          Useful to get all user defined abilities of a type.
+     */
+    std::vector<std::pair<QString, MagicAbilityDefinition*> > getDefinitionsContaining(const QString& p_idPart) const;
+
+    /**
      * @brief Returns the definition of the magic type with the passed ID.
      * @note    Does NOT check if the id exists. Use getAllDefinitions() for that.
      */
@@ -326,6 +333,12 @@ public:
      * @return The ID of the new spell.
      */
     QString constructCustomizedSpell(const QString &p_id, const QString &p_customValue, const QString &p_translation);
+
+    /**
+     * @brief Returns a list with all IDs of custom versions of the passed ability.
+     * @param p_id  The ID to look for. Can be the base or a custom ability itself.
+     */
+    QStringList getCustomVersions(const QString& p_id) const;
 
     /**
      * @return The karma cost of one power point.

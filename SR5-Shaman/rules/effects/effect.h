@@ -23,6 +23,17 @@ struct EffectSource
         , quality(NULL)
     {}
 
+    /**
+     * @brief Returns the ID of the source.
+     */
+    const QString& getID() const;
+
+    /**
+     * Comparison operators.
+     */
+    bool operator==(const EffectSource& p_other) const;
+    bool operator!=(const EffectSource& p_other) const;
+
     MagicAbilityDefinition*     magicAbility;
     QualityDefinition*          quality;
 };

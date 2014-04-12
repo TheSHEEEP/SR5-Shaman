@@ -155,6 +155,42 @@
                 "en" : "Trace Icon",
                 "de" : "Icon Aufspüren"
             }
-        }
+        },
+        {   "key" : "ASTRAL_ACCLIMATION",
+            "translations" : {
+                "en" : "Astral Acclimation",
+                "de" : "Astrale Akklimatisierung"
+            }
+        },
+        {   "key" : "YOU_KNOW_A_GUY",
+            "translations" : {
+                "en" : "You Know A Guy",
+                "de" : "Gute Bekannte"
+            }
+        },
+        {   "key" : "DIGITAL_TURF",
+            "translations" : {
+                "en" : "Digital Turf",
+                "de" : "Digitales Territorium"
+            }
+        },
+        {   "key" : "THE_TRANSPORTER",
+            "translations" : {
+                "en" : "The Transporter",
+                "de" : "Transporter"
+            }
+        },
+        {   "key" : "ON_THE_LAM",
+            "translations" : {
+                "en" : "On The Lam",
+                "de" : "Unauffindbar"
+            }
+        },
+        {   "key" : "STREET_POLITICS",
+            "translations" : {
+                "en" : "Street Politics",
+                "de" : "Straßenpolitik"
+            }
+        },
     ]
 }

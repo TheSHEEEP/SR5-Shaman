@@ -20,6 +20,7 @@ MagicAbilityDefinition::MagicAbilityDefinition(MagicAbilityDefinition* p_parent)
     , isCategory(false)
     , requiresCustom(false), customString(""), customChoices(NULL)
     , isUserDefined(false)
+    , base("")
     , abilityType(MAGICABILITYTYPE_INVALID)
     , spell(NULL), adeptPower(NULL), complexForm(NULL)
 {
@@ -36,6 +37,7 @@ MagicAbilityDefinition::MagicAbilityDefinition(const MagicAbilityDefinition& p_o
     customString = p_other.customString;
     customChoices = p_other.customChoices;
     isUserDefined = p_other.isUserDefined;
+    base = p_other.base;
     abilityType = p_other.abilityType;
     spell = p_other.spell;
     adeptPower = p_other.adeptPower;
@@ -656,6 +658,25 @@ MagicRules::getAllSpellDefinitionsByCategory(const QString& p_uniqueID) const
 }
 
 //---------------------------------------------------------------------------------
+std::vector<std::pair<QString, MagicAbilityDefinition*> >
+MagicRules::getDefinitionsContaining(const QString& p_idPart) const
+{
+    std::vector<std::pair<QString, MagicAbilityDefinition*> > result;
+
+    // Iterate over all definitions to find those that fit the parameters
+    QMap<QString, MagicAbilityDefinition*>::const_iterator it;
+    for (it = _definitions.begin(); it != _definitions.end(); ++it)
+    {
+        if (it.value()->id.contains(p_idPart))
+        {
+            result.push_back(std::make_pair(it.key(), it.value()));
+        }
+    }
+
+    return result;
+}
+
+//---------------------------------------------------------------------------------
 QString
 MagicRules::getSpellCategoryTranslation(const QString& p_uniqueID) const
 {
@@ -689,6 +710,7 @@ MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_custo
     newAbility->requiresCustom = false;
     newAbility->customChoices = originalAbility.customChoices;
     newAbility->isUserDefined = true;
+    newAbility->base = originalAbility.id;
     newAbility->parent = originalAbility.parent;
     newAbility->children = originalAbility.children;
     newAbility->isCategory = originalAbility.isCategory;
@@ -734,4 +756,21 @@ MagicRules::constructCustomizedSpell(const QString &p_id, const QString &p_custo
     // Add the skill
     _definitions[newID] = newAbility;
     return newID;
+}
+
+//---------------------------------------------------------------------------------
+QStringList
+MagicRules::getCustomVersions(const QString& p_id) const
+{
+    // Get the base ID
+    const QString& base = _definitions[p_id]->base != "" ? _definitions[p_id]->base : p_id;
+
+    // Look for all custom versions
+    QStringList result;
+    std::vector<std::pair<QString, MagicAbilityDefinition*> > definitions = getDefinitionsContaining(base);
+    for (unsigned int i = 0; i < definitions.size(); ++i)
+    {
+        result.push_back(definitions[i].first);
+    }
+    return result;
 }

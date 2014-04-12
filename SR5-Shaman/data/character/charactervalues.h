@@ -145,6 +145,18 @@ public:
      */
     int getInitiativeDice(bool p_modified = true) const;
 
+
+    //*********************************************************************
+    // QUALITIES
+    //*********************************************************************
+    /**
+     * @brief Returns the level the character has in the passed quality.
+     * @param p_quality The ID of the quality to look for.
+     * @return  0 if the character does not have the quality.
+     *          Otherwise, the level of the quality (1 for qualities that do not have levels).
+     */
+    int getQualityLevel(const QString& p_quality) const;
+
 private:
     int             _karmaPool;
 };

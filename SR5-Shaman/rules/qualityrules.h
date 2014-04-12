@@ -52,6 +52,7 @@ public:
     bool                            isUserDefined;
     bool                            requiresCustom;
     QString                         custom;     // This can be used for further definition, like the name defined by the user
+    QString                         base;
     std::vector<Effect*>            effects;
     QMap<QString, QString>          translations;
 };
@@ -112,6 +113,12 @@ public:
      * @return The ID of the new quality.
      */
     QString constructCustomizedQuality(const QString &p_id, const QString &p_customValue);
+
+    /**
+     * @brief Returns a list with all IDs of custom versions of the passed quality.
+     * @param p_id  The ID to look for. Can be the base or a custom ability itself.
+     */
+    QStringList getCustomVersions(const QString& p_id) const;
 
 private:
     QMap<QString, QualityDefinition*>  _definitions;

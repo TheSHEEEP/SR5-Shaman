@@ -1491,7 +1491,7 @@
                 "type"         : "increase_initiative_dice",
                 "value"        : "1",
                 "limit"        : "5",
-                "conditions" : [ "only_initiative_increase" ]
+                "conditions" : [ "exclusive_effect" ]
             }
         ]
       },
@@ -1594,7 +1594,10 @@
             {
                 "type"         : "move_wound_modifier",
                 "value"        : "1",
-                "affects"      : "both"
+                "affects"      : "both",
+                "conditions"   : [
+                    "exclusive_effect"
+                ]
             }
         ]
       },

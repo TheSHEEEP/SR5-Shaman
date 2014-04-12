@@ -11,6 +11,29 @@
 #include "data/character/characterchoices.h"
 
 //---------------------------------------------------------------------------------
+const QString&
+EffectSource::getID() const
+{
+    if (magicAbility) return magicAbility->id;
+    if (quality) return quality->id;
+}
+
+//---------------------------------------------------------------------------------
+bool
+EffectSource::operator==(const EffectSource& p_other) const
+{
+    return (magicAbility == p_other.magicAbility) &&
+            (quality == p_other.quality);
+}
+
+//---------------------------------------------------------------------------------
+bool
+EffectSource::operator!=(const EffectSource& p_other) const
+{
+    return !((*this) == p_other);
+}
+
+//---------------------------------------------------------------------------------
 Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
     : _effectType(EFFECTTYPE_INVALID)
     , _source(p_source)

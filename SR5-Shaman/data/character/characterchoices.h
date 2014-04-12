@@ -303,7 +303,7 @@ public:
     /**
      * @brief Returns all qualities the character has.
      */
-    const QSet<QString>& getQualities() const;
+    const QMap<QString, int>& getQualities() const;
 
     //*********************************************************************
     // CREATION DATA
@@ -324,7 +324,7 @@ private:
     QMap<QString, int>      _skillIncreasesKarma;
     QMap<QString, float>    _spellsFromFreebies;
     QMap<QString, float>    _spellsFromKarma;
-    QSet<QString>           _qualities;
+    QMap<QString, int>      _qualities;
     int                     _purchasedPowerPoints;
 
     HouseRules  _houseRules;
@@ -486,7 +486,7 @@ CharacterChoices::getHouseRules()
 
 //---------------------------------------------------------------------------------
 inline
-const QSet<QString>&
+const QMap<QString, int>&
 CharacterChoices::getQualities() const
 {
     return _qualities;

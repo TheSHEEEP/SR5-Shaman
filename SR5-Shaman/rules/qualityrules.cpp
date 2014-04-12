@@ -16,7 +16,7 @@ QualityDefinition::QualityDefinition(QualityDefinition* p_parent)
     : parent(p_parent)
     , id("")
     , isCategory(false), isPositive(false), isUserDefined(false), requiresCustom(false)
-    , custom("")
+    , custom(""), base("")
 {
     children.clear();
 }
@@ -26,6 +26,7 @@ QualityDefinition::QualityDefinition(const QualityDefinition& p_other)
 {
     parent = p_other.parent;
     id = p_other.id;
+    base = p_other.base;
     isPositive = p_other.isPositive;
     isUserDefined = p_other.isUserDefined;
     isCategory = p_other.isCategory;
@@ -217,6 +218,7 @@ QualityRules::constructCustomizedSkill(const QString& p_id, const QString& p_cus
     newQuality->custom = p_customValue;
     newQuality->requiresCustom = false;
     newQuality->isUserDefined = true;
+    newQuality->base = originalQuality.id;
     newQuality->parent = originalQuality.parent;
     newQuality->children = originalQuality.children;
     newQuality->isCategory = originalQuality.isCategory;
@@ -240,4 +242,21 @@ QualityRules::constructCustomizedSkill(const QString& p_id, const QString& p_cus
     // Add the skill
     _definitions[newID] = newQuality;
     return newID;
+}
+
+//---------------------------------------------------------------------------------
+QStringList
+QualityRules::getCustomVersions(const QString& p_id) const
+{
+    // Get the base ID
+    const QString& base = _definitions[p_id]->base != "" ? _definitions[p_id]->base : p_id;
+
+    // Look for all custom versions
+    QStringList result;
+    std::vector<std::pair<QString, QualityDefinition*> > definitions = getDefinitionsContaining(base);
+    for (unsigned int i = 0; i < definitions.size(); ++i)
+    {
+        result.push_back(definitions[i].first);
+    }
+    return result;
 }
