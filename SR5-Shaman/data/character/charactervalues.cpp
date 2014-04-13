@@ -70,6 +70,27 @@ CharacterValues::getSocialLimit(bool p_modified) const
 
 //---------------------------------------------------------------------------------
 int
+CharacterValues::getMemory(bool p_modified = true) const
+{
+    // Get base value
+    int value = ATTRIBUTE_RULES->calculateMemory(getAttribute("logic"),
+                                                 getAttribute("willpower"));
+
+    // Get modifications
+    if (p_modified)
+    {
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_MEMORY);
+        for (unsigned int i = 0; i < effects.size(); ++i)
+        {
+            value += effects[i]->getValue().toInt();
+        }
+    }
+
+    return value;
+}
+
+//---------------------------------------------------------------------------------
+int
 CharacterValues::getMentalLimit(bool p_modified) const
 {
     // Calculate pure value

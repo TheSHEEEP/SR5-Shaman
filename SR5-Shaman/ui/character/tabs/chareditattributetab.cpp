@@ -281,10 +281,11 @@ CharEditAttributeTab::updateDerivedValues(const QString& p_attribute, bool p_all
     // Memory
     if (p_all || isLogic || isIntuition)
     {
-        ui->lblMemoryValue->setText(QString("%1")
-                                     .arg(ATTRIBUTE_RULES->calculateMemory(
-                                              CHARACTER_VALUES->getAttribute("logic"),
-                                              CHARACTER_VALUES->getAttribute("intuition"))));
+        valueNorm = CHARACTER_VALUES->getMemory(false);
+        valueMod = CHARACTER_VALUES->getMemory(true);
+        ui->lblMemoryValue->setText(QString("%1 %2")
+                                         .arg(valueNorm)
+                                         .arg(valueMod != valueNorm ? QString(" (+%1)").arg(valueMod - valueNorm) : ""));
     }
 
     // Lift & carry limits

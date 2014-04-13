@@ -192,5 +192,17 @@
                 "de" : "Straßenpolitik"
             }
         },
+        {   "key" : "PATHOGENS",
+            "translations" : {
+                "en" : "Pathogens",
+                "de" : "Pathogene"
+            }
+        },
+        {   "key" : "TOXINS",
+            "translations" : {
+                "en" : "Toxins",
+                "de" : "Toxine"
+            }
+        }
     ]
 }

@@ -107,6 +107,12 @@ public:
      */
     int getSocialLimit(bool p_modified = true) const;
 
+    /**
+     * @brief Returns the memory check pool of the character.
+     * @param p_modified    If this is true, modifications like effects will also be added to the value.
+     */
+    int getMemory(bool p_modified = true) const;
+
     //*********************************************************************
     // SPELLS
     //*********************************************************************

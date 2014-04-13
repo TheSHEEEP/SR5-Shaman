@@ -100,6 +100,10 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
          // TODO: Mind this when calculating free languages
         _effectType = EFFECTTYPE_ADD_FREE_LANGUAGES;
     }
+    else if (tempString == "increase_memory")
+    {
+        _effectType = EFFECTTYPE_INCREASE_MEMORY;
+    }
     else if (tempString == "none")
     {
         _effectType = EFFECTTYPE_NONE;

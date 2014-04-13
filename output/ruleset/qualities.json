@@ -260,6 +260,7 @@
             },
             "positive"        : "true",
             "cost_per_level"  : "8",
+            "requires_custom"   : "true",
             "custom_choices"    : {
                 "type"             : "potential_selection"
             },
@@ -337,5 +338,127 @@
                 }
             ]
         },
+        { "unique_id"    : "NATURAL_ATHLETE",
+            "translations" : 
+            { 
+                "en" : "Natural Athlete",
+                "de" : "Bewegungstalent"
+            },
+            "positive"        : "true",
+            "cost"            : "7",
+            "effects" : [
+                {
+                    "type"         : "increase_skill",
+                    "skill"        : "RUNNING",
+                    "value"        : "2"
+                },
+                {
+                    "type"         : "increase_skill",
+                    "skill"        : "GYMNASTICS",
+                    "value"        : "2"
+                }
+            ]
+        },
+        { "unique_id"    : "NATURAL_HARDENING",
+            "translations" : 
+            { 
+                "en" : "Natural Hardening",
+                "de" : "Natürliche Härte"
+            },
+            "positive"        : "true",
+            "cost"            : "10"
+        },
+        { "unique_id"    : "NATURAL_IMMUNITY",
+            "translations" : 
+            { 
+                "en" : "Natural Immunity",
+                "de" : "Natürliche Immunität"
+            },
+            "positive"        : "true",
+            "cost"            : [ "4", "10" ],
+            "requires_custom"   : "true"
+        },
+        { "unique_id"    : "PHOTOGRAPHIC_MEMORY",
+            "translations" : 
+            { 
+                "en" : "Photographic Memory",
+                "de" : "Fotografisches Gedächtnis"
+            },
+            "positive"        : "true",
+            "cost"            : "6",
+            "effects" : [
+                {
+                    "type"         : "increase_memory",
+                    "value"        : "2"
+                }
+            ]
+        },
+        { "unique_id"    : "QUICK_HEALER",
+            "translations" : 
+            { 
+                "en" : "Quick Healer",
+                "de" : "Schnellheilung"
+            },
+            "positive"        : "true",
+            "cost"            : "3"
+        },
+        { "unique_id"    : "RESISTANCE_TO_PATHOGENS_I",
+            "translations" : 
+            { 
+                "en" : "Resistance To Pathogens/Toxins",
+                "de" : "Pathogen- Und Toxinresistenz"
+            },
+            "positive"        : "true",
+            "cost"            : "4",
+            "requires_custom"   : "true",
+            "custom_choices"    : {
+                "type"             : "custom_selection",
+                "strings"          : [ "PATHOGENS", "TOXINS"]
+            },
+        },
+        { "unique_id"    : "SPIRIT_AFFINITY",
+            "translations" : 
+            { 
+                "en" : "Spirit Affinity",
+                "de" : "Freundliche Geister"
+            },
+            "positive"        : "true",
+            "cost"            : "7",
+            "requires_custom"   : "true",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_be_magic_type" : [ "magic" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "TOUGHNESS",
+            "translations" : 
+            { 
+                "en" : "Toughness",
+                "de" : "Zähigkeit"
+            },
+            "positive"        : "true",
+            "cost"            : "9"
+        },
+        { "unique_id"    : "WILL_TO_LIVE",
+            "translations" : 
+            { 
+                "en" : "Will To Live",
+                "de" : "Überlebenswille"
+            },
+            "positive"        : "true",
+            "cost_per_level"  : "3",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "max_level" : "3" }
+                    ]
+                }
+            ]
+        }
     ]
 }
