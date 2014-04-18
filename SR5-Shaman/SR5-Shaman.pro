@@ -109,4 +109,6 @@ OTHER_FILES += \
     sr5shaman_de.ts
 
 RESOURCES += \
-    resources/resources.qrc
+    resources/resources.qrc \
+    stylesheets/qdarkstyle/style.qrc \
+    stylesheets/darkOrange/darkOrange.qrc

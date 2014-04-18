@@ -100,6 +100,7 @@ QPushButton
     border-style: solid;
     border-radius: 6;
     padding: 3px;
+    font-size: 12px;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -153,7 +154,7 @@ QComboBox::drop-down
 
 QComboBox::down-arrow
 {
-     image: url(../../stylesheets/darkOrange_down_arrow.png);
+     image: url(:/darkOrange_icons/rc/down_arrow.png);
 }
 
 QGroupBox:focus
@@ -329,7 +330,7 @@ QMainWindow::separator:hover
 QToolBar::handle
 {
      spacing: 3px; /* spacing between items in the tool bar */
-     background: url(../../stylesheets/darkOrange_handle.png);
+     background: url(:/darkOrange_icons/rc/handle.png);
 }
 
 QMenu::separator
@@ -449,7 +450,7 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
 
 QCheckBox::indicator:checked
 {
-    image:url(../../stylesheets/darkOrange_checkbox.png);
+    image:url(:/darkOrange_icons/rc/checkbox.png);
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled

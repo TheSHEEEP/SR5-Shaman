@@ -45,10 +45,14 @@ AppLayoutSettings::initialize()
     // THEME
     // Add themes
     _themes["Default"] = "";
-    _themes["Dark Orange"] = "../../stylesheets/darkOrange.qss";
+    _themes["Dark Orange"] = ":stylesheets/darkOrange/darkOrange.qss";
+    _themes["Dark"] = "../../stylesheets/dark.qss";
+    _themes["Darkstyle"] = ":stylesheets/qdarkstyle/style.qss";
 
     // Set CB choices
     ui->cbTheme->addItem("Default", "Default");
+    ui->cbTheme->addItem("Dark", "Dark");
+    ui->cbTheme->addItem("Darkstyle", "Darkstyle");
     ui->cbTheme->addItem("Dark Orange", "Dark Orange");
 
     // Get the stored theme
