@@ -1,5 +1,7 @@
 #include "qualitytreemodel.h"
 
+#include "rules/rules.h"
+
 //---------------------------------------------------------------------------------
 QualityTreeModel::QualityTreeModel()
 {

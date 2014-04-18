@@ -1,4 +1,5 @@
 #include "qualitydelegate.h"
+#include <QPainter>
 
 #include "rules/qualityrules.h"
 

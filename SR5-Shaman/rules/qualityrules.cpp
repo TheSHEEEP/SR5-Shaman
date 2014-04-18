@@ -96,7 +96,7 @@ QualityRules::QualityRules()
 QualityRules::~QualityRules()
 {
     // Clean definitions
-    QMap<QString, SkillDefinition*>::iterator it;
+    QMap<QString, QualityDefinition*>::iterator it;
     for (it = _definitions.begin(); it != _definitions.end(); ++it)
     {
         delete (*it);
@@ -134,7 +134,7 @@ QualityRules::initialize(const QString& p_jsonFile)
     QString group = "";
     QString uniqueId = "";
     QString type = "";
-    for (int i = 0; i < skillsArray.size(); ++i)
+    for (int i = 0; i < qualitiesArray.size(); ++i)
     {
         currentQuality = qualitiesArray.at(i).toObject();
 
@@ -200,7 +200,7 @@ QualityRules::getDefinitionsContaining(const QString& p_idPart) const
 
 //---------------------------------------------------------------------------------
 QString
-QualityRules::constructCustomizedSkill(const QString& p_id, const QString& p_customValue)
+QualityRules::constructCustomizedQuality(const QString& p_id, const QString& p_customValue)
 {
     // Construct new ID
     const QualityDefinition& originalQuality = getDefinition(p_id);
@@ -222,7 +222,7 @@ QualityRules::constructCustomizedSkill(const QString& p_id, const QString& p_cus
     newQuality->parent = originalQuality.parent;
     newQuality->children = originalQuality.children;
     newQuality->isCategory = originalQuality.isCategory;
-    _rootItem->children[newQuality->type]->children.push_back(newQuality);
+    originalQuality.parent->children.push_back(newQuality);
     // Translations
     newQuality->translations = originalQuality.translations;
     QMap<QString, QString>::iterator it;

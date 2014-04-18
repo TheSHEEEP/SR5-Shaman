@@ -4,6 +4,7 @@
 #include <QSettings>
 #include <QFont>
 #include <QFontDatabase>
+#include <QFile>
 
 //---------------------------------------------------------------------------------
 AppLayoutSettings::AppLayoutSettings(QWidget *parent) :
@@ -20,9 +21,44 @@ AppLayoutSettings::~AppLayoutSettings()
 }
 
 //---------------------------------------------------------------------------------
+void applyStylesheet(const QString& p_sheet)
+{
+    if (p_sheet != "")
+    {
+        QFile file(p_sheet);
+        if(file.open(QFile::ReadOnly))
+        {
+           QString styleSheet = QLatin1String(file.readAll());
+           qApp->setStyleSheet(styleSheet);
+        }
+    }
+    else
+    {
+        qApp->setStyleSheet("");
+    }
+}
+
+//---------------------------------------------------------------------------------
 void
 AppLayoutSettings::initialize()
 {
+    // THEME
+    // Add themes
+    _themes["Default"] = "";
+    _themes["Dark Orange"] = "../../stylesheets/darkOrange.qss";
+
+    // Set CB choices
+    ui->cbTheme->addItem("Default", "Default");
+    ui->cbTheme->addItem("Dark Orange", "Dark Orange");
+
+    // Get the stored theme
+    QString storedTheme = _settings.value("preferences/layout/theme", "Default").toString();
+
+    // Apply the theme
+    applyStylesheet(_themes[storedTheme]);
+    ui->cbTheme->setCurrentIndex(ui->cbTheme->findData(storedTheme));
+
+    // FONTS -----------------------------------------------------
     // Add fonts
     QFontDatabase database;
     _fontIDs["Bog Stand"] = database.addApplicationFont(":/Fonts/Bog Stand");
@@ -34,6 +70,7 @@ AppLayoutSettings::initialize()
     _fontIDs["Pakenham"] = database.addApplicationFont(":/Fonts/Pakenham");
     _fontIDs["Teen"] = database.addApplicationFont(":/Fonts/Teen");
     _fontIDs["Zeroes Three"] = database.addApplicationFont(":/Fonts/Zeroes Three");
+    _fontIDs["Default"] = database.addApplicationFont(":/Fonts/Zeroes Three");
 
     // Set the stored font
     QString storedFont =
@@ -69,12 +106,22 @@ AppLayoutSettings::initialize()
     ui->cbFont->addItem("Zeroes Three", "Zeroes Three");
     ui->cbFont->setCurrentIndex(ui->cbFont->findData(storedFont));
 
-    // Setup font sizes
-    ui->spinFontSize->setValue(_settings.value("preferences/layout/fontSize", 10).toInt());
-
     // Register slots
+    connect(ui->cbTheme, SIGNAL(currentIndexChanged(QString)), SLOT(handleThemeChange(QString)));
     connect(ui->cbFont, SIGNAL(currentIndexChanged(QString)), SLOT(handleFontNameChange(QString)));
     connect(ui->spinFontSize, SIGNAL(valueChanged(int)), SLOT(handleFontSizeChange(int)));
+}
+
+//---------------------------------------------------------------------------------
+void
+AppLayoutSettings::handleThemeChange(QString p_newCaption)
+{
+    // Store
+    _settings.setValue("preferences/layout/theme", p_newCaption);
+
+    // Apply the theme
+    applyStylesheet(_themes[p_newCaption]);
+    ui->cbTheme->setCurrentIndex(ui->cbTheme->findData(p_newCaption));
 }
 
 //---------------------------------------------------------------------------------

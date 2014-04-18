@@ -35,6 +35,12 @@ public:
 
 private slots:
     /**
+     * @brief Switches to the selected theme.
+     * @param p_newCaption  The new caption of the combo box.
+     */
+    void handleThemeChange(QString p_newCaption);
+
+    /**
      * @brief Switches to the selected font.
      * @param p_newCaption  The new caption of the combo box.
      */
@@ -49,8 +55,9 @@ private slots:
 private:
     Ui::AppLayoutSettings *ui;
 
-    QSettings           _settings;
-    QMap<QString,int>   _fontIDs;
+    QSettings               _settings;
+    QMap<QString,int>       _fontIDs;
+    QMap<QString,QString>   _themes;
 };
 
 #endif // APPLAYOUTSETTINGS_H

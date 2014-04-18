@@ -70,7 +70,7 @@ CharacterValues::getSocialLimit(bool p_modified) const
 
 //---------------------------------------------------------------------------------
 int
-CharacterValues::getMemory(bool p_modified = true) const
+CharacterValues::getMemory(bool p_modified) const
 {
     // Get base value
     int value = ATTRIBUTE_RULES->calculateMemory(getAttribute("logic"),

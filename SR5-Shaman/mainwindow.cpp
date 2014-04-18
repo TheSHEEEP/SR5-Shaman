@@ -61,7 +61,7 @@ MainWindow::initialize()
     int targetWidth = 1280;
     int targetHeight = 800;
     float step = 0.9f;
-    while (desktopWidth < targetWidth && desktopHeight < targetHeight)
+    while (desktopWidth < targetWidth || desktopHeight < targetHeight)
     {
         targetWidth = (targetWidth * step) + 0.5f;
         targetHeight = (targetHeight * step) + 0.5f;

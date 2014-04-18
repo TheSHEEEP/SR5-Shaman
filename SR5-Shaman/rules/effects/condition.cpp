@@ -25,10 +25,6 @@ Condition::Condition(Effect* p_parent, QJsonValueRef* p_jsonObject)
         {
             _conditionType = CONDITIONTYPE_SKILL_KNOWN;
         }
-        else if (tempString == "only_initiative_increase")
-        {
-            _conditionType = CONDITIONTYPE_ONLY_INI_INCREASE;
-        }
         else if (tempString == "only_once")
         {
             _conditionType = CONDITIONTYPE_ONLY_ONCE;
@@ -122,7 +118,7 @@ Condition::isFulfilled()
         // Now look through all effects to check if one source has the same ID
         for (unsigned int i = 0; i < effects.size(); ++i)
         {
-            if (effects[i]->getSource.getID().contains(_parent->getSource().getID()))
+            if (effects[i]->getSource().getID().contains(_parent->getSource().getID()))
             {
                 return false;
             }
@@ -133,7 +129,7 @@ Condition::isFulfilled()
     else if (_conditionType == CONDITIONTYPE_MUST_NOT_HAVE_QUALITIES)
     {
         const QMap<QString, int>& qualities = CHARACTER_CHOICES->getQualities();
-        const QMap<QString, int>::iterator it;
+        QMap<QString, int>::const_iterator it;
         for (it = qualities.begin(); it != qualities.end(); ++it)
         {
             for (int i = 0; i < _values.size(); ++i)
@@ -195,7 +191,7 @@ Condition::isFulfilled()
         if (_parent->getSource().magicAbility)
         {
             // Get all custom versions
-            QStringList customVersions = MAGIC_RULES->getCustomVersions(_parent->getSource().magicAbility);
+            QStringList customVersions = MAGIC_RULES->getCustomVersions(_parent->getSource().magicAbility->id);
 
             for (int i = 0; i < customVersions.size(); ++i)
             {
@@ -206,7 +202,7 @@ Condition::isFulfilled()
         else if (_parent->getSource().quality)
         {
             // Get all custom versions
-            QStringList customVersions = QUALITY_RULES->getCustomVersions(_parent->getSource().quality);
+            QStringList customVersions = QUALITY_RULES->getCustomVersions(_parent->getSource().quality->id);
 
             for (int i = 0; i < customVersions.size(); ++i)
             {

@@ -58,7 +58,7 @@ EffectRegistry::getEffectsBySource(EffectSource* p_source) const
     {
         for (unsigned int i = 0; i < _activeEffects.size(); ++i)
         {
-            if (_activeEffects[i]->getSource()->magicAbility == p_source->magicAbility)
+            if (_activeEffects[i]->getSource().magicAbility == p_source->magicAbility)
             {
                 effects.push_back(_activeEffects[i]);
             }
@@ -68,7 +68,7 @@ EffectRegistry::getEffectsBySource(EffectSource* p_source) const
     {
         for (unsigned int i = 0; i < _activeEffects.size(); ++i)
         {
-            if (_activeEffects[i]->getSource()->quality == p_source->quality)
+            if (_activeEffects[i]->getSource().quality == p_source->quality)
             {
                 effects.push_back(_activeEffects[i]);
             }
