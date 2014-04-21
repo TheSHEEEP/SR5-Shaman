@@ -11,7 +11,10 @@
 
 #define ADD_SKILL_BY_TYPE(theType) \
     tempSkills = SKILL_RULES->getDefinitionsByType(theType, false); \
-    skills.insert(skills.end(), tempSkills.begin(), tempSkills.end());\
+    if (!_groupsOnly) \
+    { \
+        skills.insert(skills.end(), tempSkills.begin(), tempSkills.end());\
+    } \
     if (_groupsAllowed)\
     {\
         tempSkills = SKILL_RULES->getDefinitionsByType(theType, true);\
@@ -21,7 +24,7 @@
 //---------------------------------------------------------------------------------
 CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
     : _type(CHOICETYPE_INVALID)
-    , _groupsAllowed(false)
+    , _groupsAllowed(false), _groupsOnly(false)
 {
     QJsonObject jsonObject = *p_jsonObject;
 
@@ -77,6 +80,13 @@ CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
         if (jsonObject.contains("groups_allowed"))
         {
             _groupsAllowed = jsonObject["groups_allowed"].toString() == "true";
+        }
+
+        // Are ONLY groups allowed?
+        _groupsOnly = false;
+        if (jsonObject.contains("groups_only"))
+        {
+            _groupsOnly = jsonObject["groups_only"].toString() == "true";
         }
 
         // Get the categories

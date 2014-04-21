@@ -35,7 +35,7 @@
       </layout>
      </item>
      <item>
-      <spacer name="verticalSpacer">
+      <spacer name="verticalSpacer_2">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -152,7 +152,84 @@
       </layout>
      </item>
      <item>
-      <spacer name="verticalSpacer_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QFrame" name="frameLevelSelect">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QLabel" name="lblLevel">
+              <property name="text">
+               <string>Select level:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="sliderLevel">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>4</number>
+              </property>
+              <property name="pageStep">
+               <number>4</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBothSides</enum>
+              </property>
+              <property name="tickInterval">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblLevelValue">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>12</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>

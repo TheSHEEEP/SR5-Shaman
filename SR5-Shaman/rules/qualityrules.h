@@ -6,6 +6,8 @@
 #include <vector>
 #include <QObject>
 
+#include "commonrules.h"
+
 class Effect;
 
 /**
@@ -49,6 +51,8 @@ public:
     QString                         id;
     bool                            isCategory;
     bool                            isPositive;
+    CostType                        costType;
+    std::vector<float>              costArray;
     bool                            isUserDefined;
     bool                            requiresCustom;
     QString                         custom;     // This can be used for further definition, like the name defined by the user

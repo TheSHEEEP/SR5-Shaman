@@ -7,6 +7,8 @@
 #include <vector>
 #include <QObject>
 
+#include "commonrules.h"
+
 /**
  * @brief The definition of one magic type priority.
  */
@@ -92,24 +94,6 @@ struct SpellDefinition
     QString                             drain;
     QStringList                         descriptors;
     bool                                essenceEffect;
-};
-
-// Adept Power enums
-enum CostType
-{
-    COSTTYPE_INVALID = -1,
-    COSTTYPE_PER_LEVEL,
-    COSTTYPE_NORMAL,
-    COSTTYPE_ARRAY,
-    NUM_COSTTYPES
-};
-enum ActivationType
-{
-    ACTIVATIONTYPE_INVALID = -1,
-    ACTIVATIONTYPE_INTERRUPT,
-    ACTIVATIONTYPE_FREE,
-    ACTIVATIONTYPE_SIMPLE,
-    NUM_ACTIVATIONTYPES
 };
 
 /**

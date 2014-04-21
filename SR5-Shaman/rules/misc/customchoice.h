@@ -48,6 +48,7 @@ private:
 
     ChoiceType      _type;
     bool            _groupsAllowed;
+    bool            _groupsOnly;
     QStringList     _choiceStrings;
     QStringList     _choiceValues;
 };

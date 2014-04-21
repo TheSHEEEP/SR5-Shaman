@@ -54,6 +54,11 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
         // TODO: Mind this when handling skills
         _effectType = EFFECTTYPE_INCREASE_SKILL_MAX;
     }
+    else if (tempString == "disable_skill_group")
+    {
+        // TODO: Mind this when handling skills
+        _effectType = EFFECTTYPE_DISABLE_SKILL_GROUP;
+    }
     else if (tempString == "allow_skill")
     {
         // TODO: Mind this when enabling skills
@@ -104,6 +109,11 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
     {
         _effectType = EFFECTTYPE_INCREASE_MEMORY;
     }
+    else if (tempString == "increase_notoriety")
+    {
+        // TODO: Mind this when calculating notoriety
+        _effectType = EFFECTTYPE_INCREASE_NOTORIETY;
+    }
     else if (tempString == "none")
     {
         _effectType = EFFECTTYPE_NONE;
@@ -127,6 +137,7 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
     // Skill selection
     if (_effectType == EFFECTTYPE_INCREASE_SKILL ||
         _effectType == EFFECTTYPE_INCREASE_SKILL_MAX ||
+        _effectType == EFFECTTYPE_DISABLE_SKILL_GROUP ||
         _effectType == EFFECTTYPE_ALLOW_SKILL ||
         _effectType == EFFECTTYPE_INCREASE_ACCURACY ||
         _effectType == EFFECTTYPE_INCREASE_DAMAGE_VALUE)

@@ -79,7 +79,10 @@
                 "de" : "Unauffälligkeit"
             },
             "positive"        : "true",
-            "cost"            : "8"
+            "cost"            : "8",
+            "effects"   : [
+                { "must_not_have_qualities" : [ "DISTINCTIVE_STYLE" ] }
+            ]
         },
         { "unique_id"    : "CATLIKE",
             "translations" : 
@@ -456,6 +459,201 @@
                     "type"         : "none",
                     "conditions" : [ 
                         { "max_level" : "3" }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "ADDICTION",
+            "translations" : 
+            { 
+                "en" : "Addiction",
+                "de" : "Abhängigkeit"
+            },
+            "positive"        : "false",
+            "cost"            : [ "4", "9", "20", "25"],
+            "requires_custom"   : "true"
+        },
+        { "unique_id"    : "ALLERGY_UNCOMMON",
+            "translations" : 
+            { 
+                "en" : "Allergy (Uncommon)",
+                "de" : "Allergie (Seltenes)"
+            },
+            "positive"        : "false",
+            "cost"            : [ "5", "10", "15", "20"],
+            "requires_custom"   : "true"
+        },
+        { "unique_id"    : "ALLERGY_COMMON",
+            "translations" : 
+            { 
+                "en" : "Allergy (Common)",
+                "de" : "Allergie (Häufiges)"
+            },
+            "positive"        : "false",
+            "cost"            : [ "10", "15", "20", "25"],
+            "requires_custom"   : "true"
+        },
+        { "unique_id"    : "ASTRAL_BEACON",
+            "translations" : 
+            { 
+                "en" : "Astral Beacon",
+                "de" : "Astrales Leuchtfeuer"
+            },
+            "positive"        : "false",
+            "cost"            : "10",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_be_magic_type" : [ "magic", "adept" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "BAD_LUCK",
+            "translations" : 
+            { 
+                "en" : "Bad Luck",
+                "de" : "Unglück"
+            },
+            "positive"        : "false",
+            "cost"            : "12"
+        },
+        { "unique_id"    : "BAD_REP",
+            "translations" : 
+            { 
+                "en" : "Bad Rep",
+                "de" : "Berüchtigt"
+            },
+            "positive"        : "false",
+            "cost"            : "7",
+            "effects" : [
+                {
+                    "type"         : "increase_notoriety",
+                    "value"        : "3"
+                }
+            ]
+        },
+        { "unique_id"    : "CODE_OF_HONOR",
+            "translations" : 
+            { 
+                "en" : "Code Of Honor",
+                "de" : "Ehrenkodex"
+            },
+            "positive"        : "false",
+            "cost"            : "15",
+            "requires_custom"   : "true"
+        },
+        { "unique_id"    : "CODEBLOCK",
+            "translations" : 
+            { 
+                "en" : "Codeblock",
+                "de" : "Programmierniete"
+            },
+            "positive"        : "false",
+            "cost"            : "10",
+            "requires_custom"   : "true",
+            "custom_choices"    : {
+                "type"             : "custom_selection",
+                "strings"          : ["BRUTE_FORCE", "CHANGE_ICON", "CHECK_OVERWATCH_SCORE", "CONTROL_DEVICE", "CRACK_FILE", "CRASH_PROGRAM", 
+                                    "DATA_SPIKE", "DISARM_DATA_BOMB", "EDIT_FILE", "ERASE_MARK", "ERASE_MATRIX_SIGNATURE", "FORMAT_DEVICE", 
+                                    "HACK_ON_THE_FLY", "HIDE", "JACK_OUT", "JAM_SIGNALS", "JUMP_INTO_RIGGED_DEVICE", "MATRIX_PERCEPTION", 
+                                    "MATRIX_SEARCH", "REBOOT_DEVICE", "SET_DATA_BOMB", "SNOOP", "SPOOF_COMMAND", "TRACE_ICON"]
+            }
+        },
+        { "unique_id"    : "COMBAT_PARALYSIS",
+            "translations" : 
+            { 
+                "en" : "Combat Paralysis",
+                "de" : "Kampflähmung"
+            },
+            "positive"        : "false",
+            "cost"            : "12"
+        },
+        { "unique_id"    : "DEPENDENTS",
+            "translations" : 
+            { 
+                "en" : "Dependents",
+                "de" : "Verpflichtungen"
+            },
+            "positive"        : "false",
+            "cost"            : [ "3", "6", "9"],
+            "requires_custom"   : "true"
+        },
+        { "unique_id"    : "DISTINCTIVE_STYLE",
+            "translations" : 
+            { 
+                "en" : "Distinctive Style",
+                "de" : "Auffälliger Stil"
+            },
+            "positive"        : "false",
+            "cost"            : "5",
+            "requires_custom"   : "true",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        "only_once",
+                        { "must_not_have_qualities" : [ "BLANDNESS" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "ELF_POSER",
+            "translations" : 
+            { 
+                "en" : "Elf Poser",
+                "de" : "Elfenposer"
+            },
+            "positive"        : "false",
+            "cost"            : "6",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_be_metatype" : [ "HUMAN" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "GREMLINS",
+            "translations" : 
+            { 
+                "en" : "Gremlins",
+                "de" : "Gremlins"
+            },
+            "positive"        : "false",
+            "cost_per_level"  : "4",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "max_level" : "4" }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "INCOMPETENT",
+            "translations" : 
+            { 
+                "en" : "Incompetent",
+                "de" : "Inkompetenz"
+            },
+            "positive"        : "false",
+            "cost"            : "5",
+            "requires_custom"   : "true",
+            "custom_choices"    : {
+                "type"             : "skill_selection",
+                "groups_allowed"   : "true",
+                "only_groups"      : "true",
+                "categories"       : ["combat", "social", "physical", "vehicle", "magic", "resonance"]
+            },
+            "effects" : [
+                {
+                    "type"         : "disable_skill_group",
+                    "skill"        : "selected",
+                    "conditions" : [ 
+                        "only_once"
                     ]
                 }
             ]

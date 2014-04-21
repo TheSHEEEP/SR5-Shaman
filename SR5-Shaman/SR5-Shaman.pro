@@ -87,7 +87,8 @@ HEADERS  += mainwindow.h \
     ui/models/qualitytreemodel.h \
     ui/models/qualitydelegate.h \
     ui/models/qualitysortfilterproxymodel.h \
-    rules/qualityrules.h
+    rules/qualityrules.h \
+    rules/commonrules.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
@@ -112,3 +113,5 @@ RESOURCES += \
     resources/resources.qrc \
     stylesheets/qdarkstyle/style.qrc \
     stylesheets/darkOrange/darkOrange.qrc
+
+QMAKE_CXXFLAGS += -Wno-ignored-qualifiers

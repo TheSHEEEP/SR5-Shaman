@@ -675,28 +675,74 @@ CharEditMagicTab::on_btnAddSpell_clicked()
 
     // If this requires a custom choice, show the modal window
     QString customValue = "";
-    if (item->requiresCustom)
+    bool needsLevel = (item->abilityType == MAGICABILITYTYPE_ADEPT_POWER
+                       &&
+                       (item->adeptPower->costType == COSTTYPE_ARRAY ||
+                       item->adeptPower->costType == COSTTYPE_PER_LEVEL));
+    int numAdds = 0;
+    if (item->requiresCustom || needsLevel)
     {
-        // Show the popup and get its result
+        // Create the popup and fill it
         CustomDescriptorPopup popup(NULL, item->translations[APPSTATUS->getCurrentLocale()],
-                                    false, true);
+                                    false, item->requiresCustom, needsLevel);
         if (item->customChoices)
         {
             item->customChoices->fillDescriptorPopup(&popup);
         }
+        if (needsLevel)
+        {
+            // The cost array can be used as-is
+            if (item->adeptPower->costType == COSTTYPE_ARRAY)
+            {
+                popup.setLevels(item->adeptPower->costArray);
+            }
+            // The maximum level must be calculated here
+            else if (item->adeptPower->costType == COSTTYPE_PER_LEVEL)
+            {
+                std::vector<float> levels;
+                int maxLevel = CHARACTER_VALUES->getAttribute("magic");
+                for (int i = 1; i <= maxLevel; ++i)
+                {
+                    levels.push_back(i * item->adeptPower->costArray[0]);
+                }
+                popup.setLevels(levels);
+            }
+        }
+
+        // Execute the popup
         int result = popup.exec();
         if (result == QDialog::Rejected)
         {
             return;
         }
-        customValue = popup.getCustomization();
 
-        // Construct a new custom skill (this will do nothing if it already exists)
-        id = MAGIC_RULES->constructCustomizedSpell(id, customValue, popup.getCustomizationString());
+        // Gather data
+        if (item->requiresCustom)
+        {
+            // Construct a new custom skill (this will do nothing if it already exists)
+            customValue = popup.getCustomization();
+            id = MAGIC_RULES->constructCustomizedSpell(id, customValue, popup.getCustomizationString());
+        }
+        if (needsLevel)
+        {
+            numAdds = popup.getLevel() + 1;
+        }
     }
 
     // Take note of the choice
-    CHARACTER_CHOICES->addFreeSpell(id);
+    if (!needsLevel)
+    {
+        CHARACTER_CHOICES->addFreeSpell(id);
+    }
+    else
+    {
+        // If this was a levelled selection, add the spell the selected number of times
+        CHARACTER_CHOICES->removeFreeSpell(id);
+        for (int i = 0; i < numAdds; ++i)
+        {
+            CHARACTER_CHOICES->addFreeSpell(id);
+        }
+    }
 
     // Add the spell to the list (prevent double adding)
     QStringList& filterIDs = _spellsFilter->getFilterIDEquals();

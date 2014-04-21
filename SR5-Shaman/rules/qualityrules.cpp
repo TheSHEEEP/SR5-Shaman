@@ -131,9 +131,8 @@ QualityRules::initialize(const QString& p_jsonFile)
     QJsonArray tempArray;
     QJsonObject tempObject;
     QualityDefinition* category = NULL;
-    QString group = "";
     QString uniqueId = "";
-    QString type = "";
+    QString tempString = "";
     for (int i = 0; i < qualitiesArray.size(); ++i)
     {
         currentQuality = qualitiesArray.at(i).toObject();
@@ -159,7 +158,37 @@ QualityRules::initialize(const QString& p_jsonFile)
         }
 
         // Positive or negative
-        // TODO: here
+        tempString = currentQuality["positive"].toString();
+        qualityDef->isPositive = (tempString == "true");
+
+        // Cost
+        if (currentQuality.contains("cost_per_level"))
+        {
+            qualityDef->costType = COSTTYPE_PER_LEVEL;
+            qualityDef->costArray.push_back(currentQuality["cost_per_level"].toString().toDouble());
+        }
+        else if (currentQuality.contains("cost"))
+        {
+            QJsonValue::Type type = currentQuality["cost"].type();
+
+            // Normal cost or array
+            if (type != QJsonValue::Array)
+            {
+                qualityDef->costType = COSTTYPE_NORMAL;
+                qualityDef->costArray.push_back(currentQuality["cost"].toString().toDouble());
+            }
+            else
+            {
+                qualityDef->costType = COSTTYPE_ARRAY;
+                tempArray = currentQuality["cost"].toArray();
+
+                // Add each array entry
+                for (int j = 0; j < tempArray.size(); ++j)
+                {
+                    qualityDef->costArray.push_back(tempArray[j].toString().toDouble());
+                }
+            }
+        }
 
         // Get the correct category
         category = _rootItem->children[qualityDef->isPositive ? 0 : 1];
