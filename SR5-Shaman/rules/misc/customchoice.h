@@ -5,6 +5,7 @@
 
 class CustomDescriptorPopup;
 class QJsonObject;
+class SkillDefinition;
 
 
 /**
@@ -42,15 +43,24 @@ public:
     /**
      * @brief Will fill the passed CustomDescriptorPopup with its values.
      */
-    void fillDescriptorPopup(CustomDescriptorPopup* p_popup);
+    void fillDescriptorPopup(CustomDescriptorPopup* p_popup) const;
 
 private:
 
     ChoiceType      _type;
     bool            _groupsAllowed;
     bool            _groupsOnly;
+    int             _minRating;
     QStringList     _choiceStrings;
     QStringList     _choiceValues;
+
+    /**
+     * @brief Will throw out each skill in the vector that does not at least have the minimum
+     *          skill rating.
+     * @param p_rating  The minimal rating the skill must have.
+     * @param p_skills  The vector of skills to filter.
+     */
+    void filterByMinRating(int p_rating, std::vector<std::pair<QString,SkillDefinition*> >& p_skills);
 };
 
 #endif // CUSTOMCHOICE_H

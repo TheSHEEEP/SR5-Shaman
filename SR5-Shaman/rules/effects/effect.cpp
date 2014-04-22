@@ -54,6 +54,11 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
         // TODO: Mind this when handling skills
         _effectType = EFFECTTYPE_INCREASE_SKILL_MAX;
     }
+    else if (tempString == "multiply_skill_category_cost")
+    {
+        // TODO: Mind this when handling skills
+        _effectType = EFFECTTYPE_MULTIPLY_SKILL_CATEGORY_COST;
+    }
     else if (tempString == "disable_skill_group")
     {
         // TODO: Mind this when handling skills
@@ -100,6 +105,11 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
          // TODO: Mind this when calculating wound modifiers
         _effectType = EFFECTTYPE_MOVE_WOUND_MODIFIERS;
     }
+    else if (tempString == "increase_wound_modifier_section_length")
+    {
+         // TODO: Mind this when calculating wound modifiers
+        _effectType = EFFECTTYPE_INCREASE_WOUND_MODIFIERS_SECTION_LENGTH;
+    }
     else if (tempString == "add_free_languages")
     {
          // TODO: Mind this when calculating free languages
@@ -113,6 +123,16 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
     {
         // TODO: Mind this when calculating notoriety
         _effectType = EFFECTTYPE_INCREASE_NOTORIETY;
+    }
+    else if (tempString == "multiply_cyberware_essence_loss")
+    {
+        // TODO: Mind this when calculating essence cost of cyberware
+        _effectType = EFFECTTYPE_MULTIPLY_CYBERWARE_ESSENCE_LOSS;
+    }
+    else if (tempString == "disable_bioware")
+    {
+        // TODO: Mind this when selecting gear
+        _effectType = EFFECTTYPE_DISABLE_BIOWARE;
     }
     else if (tempString == "none")
     {
@@ -134,7 +154,7 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
     // Type specific values
     // The rather obscure fromUtf16 is used to do a deep copy of the string.
     // If not done, the string will be "garbage collected" or something by Qt itself. Weird.
-    // Skill selection
+    // Skills
     if (_effectType == EFFECTTYPE_INCREASE_SKILL ||
         _effectType == EFFECTTYPE_INCREASE_SKILL_MAX ||
         _effectType == EFFECTTYPE_DISABLE_SKILL_GROUP ||
@@ -145,7 +165,13 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
         _target = QString::fromUtf16(obj["skill"].toString().utf16());
         _currentTarget = _target;
     }
-    // Increase attribute
+    // Skill category
+    else if (_effectType == EFFECTTYPE_MULTIPLY_SKILL_CATEGORY_COST)
+    {
+        _target = QString::fromUtf16(obj["category"].toString().utf16());
+        _currentTarget = _target;
+    }
+    // Attributes
     else if (_effectType == EFFECTTYPE_INCREASE_ATTRIBUTE ||
              _effectType == EFFECTTYPE_INCREASE_ATTRIBUTE_MAX)
     {
@@ -159,7 +185,8 @@ Effect::Effect(QJsonValueRef* p_jsonObject, const EffectSource& p_source)
         _currentTarget = _target;
     }
     // Wound modifier movement
-    else if (_effectType == EFFECTTYPE_MOVE_WOUND_MODIFIERS)
+    else if (_effectType == EFFECTTYPE_MOVE_WOUND_MODIFIERS ||
+             _effectType == EFFECTTYPE_INCREASE_WOUND_MODIFIERS_SECTION_LENGTH)
     {
         _target = QString::fromUtf16(obj["affects"].toString().utf16());
         _currentTarget = _target;

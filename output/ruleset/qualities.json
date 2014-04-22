@@ -273,7 +273,7 @@
                     "potential"    : "selected",
                     "value"        : "1",
                     "conditions" : [ 
-                        { "max_level_with_customs" : "3" },
+                        { "max_level_with_customs" : "3" }
                     ]
                 }
             ]
@@ -417,7 +417,7 @@
             "custom_choices"    : {
                 "type"             : "custom_selection",
                 "strings"          : [ "PATHOGENS", "TOXINS"]
-            },
+            }
         },
         { "unique_id"    : "SPIRIT_AFFINITY",
             "translations" : 
@@ -655,6 +655,234 @@
                     "conditions" : [ 
                         "only_once"
                     ]
+                }
+            ]
+        },
+        { "unique_id"    : "INSOMNIA",
+            "translations" : 
+            { 
+                "en" : "Insomnia",
+                "de" : "Schlaflosigkeit"
+            },
+            "positive"        : "false",
+            "cost"            : [ "10", "15" ]
+        },
+        { "unique_id"    : "LOSS_OF_CONFIDENCE",
+            "translations" : 
+            { 
+                "en" : "Loss Of Confidence",
+                "de" : "Verunsichert"
+            },
+            "positive"        : "false",
+            "cost"            : "10",
+            "requires_custom"   : "true",
+            "custom_choices"    : {
+                "type"             : "skill_selection",
+                "groups_allowed"   : "false",
+                "categories"       : ["combat", "social", "physical", "vehicle", "magic", "resonance"],
+                "min_rating"       : "4"
+            },
+            "effects" : [
+                {
+                    "type"         : "increase_skill",
+                    "skill"        : "selected",
+                    "value"        : "-2",
+                    "conditions" : [ 
+                        { "min_skill_rating" : "4" }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "LOW_PAIN_TOLERANCE",
+            "translations" : 
+            { 
+                "en" : "Low Pain Tolerance",
+                "de" : "Niedrige Schmerztoleranz"
+            },
+            "positive"        : "false",
+            "cost"            : "9",
+            "effects" : [
+                {
+                    "type"         : "increase_wound_modifier_section_length",
+                    "affects"      : "both",
+                    "value"        : "-1"
+                }
+            ]
+        },
+        { "unique_id"    : "ORK_POSER",
+            "translations" : 
+            { 
+                "en" : "Ork Poser",
+                "de" : "Orkposer"
+            },
+            "positive"        : "false",
+            "cost"            : "6",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_be_metatype" : [ "HUMAN", "ELF" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "PREJUDICTED_COMMON",
+            "translations" : 
+            { 
+                "en" : "Prejudiced (Common)",
+                "de" : "Vorurteile (Weit verbreitet)"
+            },
+            "positive"        : "false",
+            "cost"            : [ "5", "7", "10" ],
+            "requires_custom" : "true"
+        },
+        { "unique_id"    : "PREJUDICTED_SPECIFIC",
+            "translations" : 
+            { 
+                "en" : "Prejudiced (Specific)",
+                "de" : "Vorurteile (Besondere Zielgruppe)"
+            },
+            "positive"        : "false",
+            "cost"            : [ "3", "5", "8" ],
+            "requires_custom" : "true"
+        },
+        { "unique_id"    : "SCORCHED_BTL",
+            "translations" : 
+            { 
+                "en" : "Scorched (BTL)",
+                "de" : "Gezeichnet (BTL)"
+            },
+            "positive"        : "false",
+            "cost"            : "10",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_have_quality_at_level" : [ "ADDICTION", "1" ] },
+                        { "must_have_gear_of_type" : "datajack"}
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "SCORCHED_IC",
+            "translations" : 
+            { 
+                "en" : "Scorched (ICs)",
+                "de" : "Gezeichnet (ICs)"
+            },
+            "positive"        : "false",
+            "cost"            : "10",
+            "requires_custom"   : "true",
+            "custom_choices"    : {
+                "type"             : "custom_selection",
+                "strings"          : [ "BLACK_IC", "PSYCHOTROPIC_IC" ]
+            },
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "one_of" : [ 
+                            { "must_be_magic_type" : [ "resonance" ] },
+                            "must_be_decker"
+                        ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "SENSITIVE_SYSTEM",
+            "translations" : 
+            { 
+                "en" : "Sensitive System",
+                "de" : "Immunabstoßung"
+            },
+            "positive"        : "false",
+            "cost"            : "12",
+            "effects" : [
+                {
+                    "type"         : "multiply_cyberware_essence_loss",
+                    "value"        : "2.0"
+                },
+                {
+                    "type"         : "disable_bioware"
+                }
+            ]
+        },
+        { "unique_id"    : "SIMSENSE_VERTIGO",
+            "translations" : 
+            { 
+                "en" : "Simsense Vertigo",
+                "de" : "Simsinn-Desorientierung"
+            },
+            "positive"        : "false",
+            "cost"            : "5"
+        },
+        { "unique_id"    : "SINNER",
+            "translations" : 
+            { 
+                "en" : "Sinner",
+                "de" : "Sin-Mensch"
+            },
+            "positive"        : "false",
+            "cost"            : [ "5", "10", "15", "25" ],
+            "requires_custom" : "true",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        "only_once"
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "SOCIAL_STRESS",
+            "translations" : 
+            { 
+                "en" : "Social Stress",
+                "de" : "Sozialstress"
+            },
+            "positive"        : "false",
+            "cost"            : "8",
+            "requires_custom" : "true"
+        },
+        { "unique_id"    : "SPIRIT_BANE",
+            "translations" : 
+            { 
+                "en" : "Spirit Bane",
+                "de" : "Feindliche Geister"
+            },
+            "positive"        : "false",
+            "cost"            : "7",
+            "requires_custom" : "true",
+            "effects" : [
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_be_magic_type" : [ "magic" ] }
+                    ]
+                }
+            ]
+        },
+        { "unique_id"    : "UNCOUTH",
+            "translations" : 
+            { 
+                "en" : "Uncouth",
+                "de" : "Ungehobelt"
+            },
+            "positive"        : "false",
+            "cost"            : "14",
+            "effects" : [
+                {
+                    "type"         : "multiply_skill_category_cost",
+                    "category"     : "social",
+                    "value"        : "2.0"
+                },
+                {
+                    "type"         : "disable_skill_group",
+                    "skill"        : "ACTING"
+                },
+                {
+                    "type"         : "disable_skill_group",
+                    "skill"        : "INFLUENCE"
                 }
             ]
         }

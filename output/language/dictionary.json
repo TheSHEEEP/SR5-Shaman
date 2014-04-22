@@ -203,6 +203,104 @@
                 "en" : "Toxins",
                 "de" : "Toxine"
             }
-        }
+        },
+        {
+            "key" : "COND_SKILL_NOT_KNOWN",
+            "translations" : {
+                "en" : "Skill %1 not known to the character.",
+                "de" : "Die Fertigkeit %1 ist dem Charakter nicht bekannt."
+            }
+        },
+        {
+            "key" : "COND_SKILL_BELOW_MIN_RATING",
+            "translations" : {
+                "en" : "Skill %1 is below the minimum rating of %2.",
+                "de" : "Die Fertigkeit %1 ist unter dem Minimum von %2."
+            }
+        },
+        {
+            "key" : "COND_ONLY_ONCE",
+            "translations" : {
+                "en" : "%1 may only be taken once.",
+                "de" : "%1 darf nur einmal gewählt werden."
+            }
+        },
+        {
+            "key" : "COND_QUAL_IS_PRESENT",
+            "translations" : {
+                "en" : "%1 may not be taken if quality %2 is present.",
+                "de" : "%1 darf nicht gewählt werden, wenn die Qualität %2 aktiv ist."
+            }
+        },
+        {
+            "key" : "COND_ATTR_MUST_BE_POSITIVE",
+            "translations" : {
+                "en" : "Attribute %1 must have a positive value.",
+                "de" : "Attribut %1 muss einen positiven Wert haben."
+            }
+        },
+        {
+            "key" : "COND_MUST_BE_MAGIC_TYPE",
+            "translations" : {
+                "en" : "Character must be one of the following magic types: %1.",
+                "de" : "Der Charakter muss einer der folgenden Magietypen sein: %1."
+            }
+        },
+        {
+            "key" : "COND_MAXIMUM_LEVEL",
+            "translations" : {
+                "en" : "%1 has a maximum level of %2.",
+                "de" : "%1 darf maximal auf Stufe %2 sein."
+            }
+        },
+        {
+            "key" : "COND_EXCLUSIVE_EFFECT",
+            "translations" : {
+                "en" : "Only one source may apply this effect.",
+                "de" : "Nur eine Quelle darf diesen Effekt anwenden."
+            }
+        },
+        {
+            "key" : "COND_MUST_BE_METATYPE",
+            "translations" : {
+                "en" : "Character must be one of the following meta types: %1.",
+                "de" : "Der Charakter muss einer der folgenden Metatypen sein: %1."
+            }
+        },
+        {
+            "key" : "COND_MUST_BE_MUNDANE",
+            "translations" : {
+                "en" : "The character must not be a magic user.",
+                "de" : "Der Charakter darf kein Magienutzer sein."
+            }
+        },
+        {
+            "key" : "COND_MUST_BE_DCKER",
+            "translations" : {
+                "en" : "The character must be a decker (have a combined value of at least 12 in decker skills).",
+                "de" : "Der Charakter muss ein Decker sein (mind. 12 Punkte insgesamt in Decker-Fertigkeiten)."
+            }
+        },
+        {
+            "key" : "COND_QUAL_LEVEL_IS_NOT_PRESENT",
+            "translations" : {
+                "en" : "Quality %1 must be present with level of at least %2.",
+                "de" : "Die Qualität %1 mit mindestens Stufe %2 muss vorhanden sein."
+            }
+        },
+        {
+            "key" : "BLACK_IC",
+            "translations" : {
+                "en" : "Black IC",
+                "de" : "Schwarzes IC"
+            }
+        },
+        {
+            "key" : "PSYCHOTROPIC_IC",
+            "translations" : {
+                "en" : "Psychotropic IC",
+                "de" : "Psychotropes IC"
+            }
+        },
     ]
 }

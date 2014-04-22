@@ -7,10 +7,12 @@
 #include "rules/rules.h"
 #include "data/dictionary.h"
 #include "data/appstatus.h"
+#include "data/character/charactervalues.h"
 #include "ui/character/popups/customdescriptorpopup.h"
 
 #define ADD_SKILL_BY_TYPE(theType) \
     tempSkills = SKILL_RULES->getDefinitionsByType(theType, false); \
+    filterByMinRating(_minRating, tempSkills); \
     if (!_groupsOnly) \
     { \
         skills.insert(skills.end(), tempSkills.begin(), tempSkills.end());\
@@ -25,6 +27,7 @@
 CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
     : _type(CHOICETYPE_INVALID)
     , _groupsAllowed(false), _groupsOnly(false)
+    , _minRating(0)
 {
     QJsonObject jsonObject = *p_jsonObject;
 
@@ -87,6 +90,13 @@ CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
         if (jsonObject.contains("groups_only"))
         {
             _groupsOnly = jsonObject["groups_only"].toString() == "true";
+        }
+
+        // Do we have a minimum skill level?
+        _minRating = 0;
+        if (jsonObject.contains("min_rating"))
+        {
+            _minRating = jsonObject["min_rating"].toString().toInt();
         }
 
         // Get the categories
@@ -196,4 +206,19 @@ CustomChoice::fillDescriptorPopup(CustomDescriptorPopup* p_popup)
 {
     p_popup->setChoices(_choiceStrings, _choiceValues);
 }
+
+//---------------------------------------------------------------------------------
+void
+CustomChoice::filterByMinRating(int p_rating, std::vector<std::pair<QString,SkillDefinition*> >& p_skills) const
+{
+    for (unsigned int i = 0; i < p_skills.size(); ++i)
+    {
+        if (CHARACTER_VALUES->getSkill(((SkillDefinition*)p_skills[i].second)->id) < p_rating)
+        {
+            p_skills.erase(p_skills.begin() + i);
+            --i;
+        }
+    }
+}
+
 

@@ -14,7 +14,9 @@ enum ConditionType
 {
     CONDITIONTYPE_INVALID = -1,
     CONDITIONTYPE_SKILL_KNOWN,
+    CONDITIONTYPE_MIN_SKILL_RATING,
     CONDITIONTYPE_ONLY_ONCE,
+    CONDITIONTYPE_MUST_HAVE_QUALITY_AT_LEVEL,
     CONDITIONTYPE_MUST_NOT_HAVE_QUALITIES,
     CONDITIONTYPE_MUST_HAVE_ATTRIBUTE_VALUE,
     CONDITIONTYPE_MUST_BE_MAGIC_TYPE,
@@ -23,6 +25,9 @@ enum ConditionType
     CONDITIONTYPE_EXCLUSIVE_EFFECT,
     CONDITIONTYPE_MUST_BE_METATYPE,
     CONDITIONTYPE_MUST_BE_MUNDANE,
+    CONDITIONTYPE_MUST_BE_DECKER,
+    CONDITIONTYPE_MUST_HAVE_GEAR_OF_TYPE,
+    CONDITIONTYPE_ONE_OF,
     NUM_CONDITIONTYPES
 };
 
@@ -56,10 +61,11 @@ public:
     const QString& getError() const;
 
 private:
-    ConditionType   _conditionType;
-    QStringList     _values;
-    Effect*         _parent;
-    QString         _lastError;
+    ConditionType           _conditionType;
+    QStringList             _values;
+    std::vector<Condition*> _subConditions;
+    Effect*                 _parent;
+    QString                 _lastError;
 };
 
 
