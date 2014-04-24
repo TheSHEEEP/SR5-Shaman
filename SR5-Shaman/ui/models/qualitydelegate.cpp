@@ -2,6 +2,9 @@
 #include <QPainter>
 
 #include "rules/qualityrules.h"
+#include "data/dictionary.h"
+#include "data/appstatus.h"
+#include "data/character/charactervalues.h"
 
 //---------------------------------------------------------------------------------
 QualityDelegate::QualityDelegate()
@@ -24,7 +27,30 @@ QualityDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option
     QualityDefinition* item = static_cast<QualityDefinition*>(p_index.data().value<void*>());
 
     // Get the name
-    QString text = "a";
+    QString text = "";
+    if (item->isCategory)
+    {
+        if (item->id.contains("CATEGORY_POSITIVE"))
+        {
+            text = Dictionary::getTranslation("CATEGORY_POSITIVE");
+        }
+        else
+        {
+            text = Dictionary::getTranslation("CATEGORY_NEGATIVE");
+        }
+    }
+    else
+    {
+        text = item->translations[APPSTATUS->getCurrentLocale()];
+    }
+
+    // If the quality has levels, show the levels
+    if (_showQualityLevel &&
+        (item->costType == COSTTYPE_ARRAY || item->costType == COSTTYPE_PER_LEVEL))
+    {
+        int level = CHARACTER_VALUES->getQualityLevel(item->id);
+        text.append(QString(" (%1)").arg(level));
+    }
 
     // Call painter methods for drawing
     p_painter->save();

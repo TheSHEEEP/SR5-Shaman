@@ -1,6 +1,8 @@
 #include "customdescriptorpopup.h"
 #include "ui_customdescriptorpopup.h"
 
+#include "data/dictionary.h"
+
 //---------------------------------------------------------------------------------
 CustomDescriptorPopup::CustomDescriptorPopup(QWidget* p_parent, const QString& p_target,
                                              bool p_showSelection, bool p_showCustom, bool p_showLevelSelection)
@@ -40,6 +42,25 @@ CustomDescriptorPopup::setChoices(const QStringList& p_choices, const QStringLis
         ui->frameChoice->setVisible(true);
         ui->frameCustom->setVisible(false);
     }
+    else
+    {
+        ui->frameChoice->setVisible(false);
+        ui->frameCustom->setVisible(false);
+        ui->btnOk->setEnabled(false);
+        ui->btnOk->setText(Dictionary::getTranslation("NOT_POSSIBLE"));
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+CustomDescriptorPopup::setLevels(const std::vector<int>& p_levels)
+{
+    std::vector<float> temp;
+    for (unsigned int i = 0; i < p_levels.size(); ++i)
+    {
+        temp.push_back(p_levels[i]);
+    }
+    setLevels(temp);
 }
 
 //---------------------------------------------------------------------------------
@@ -53,7 +74,16 @@ CustomDescriptorPopup::setLevels(const std::vector<float>& p_levels)
     ui->sliderLevel->setMaximum(_levels.size() - 1);
     ui->sliderLevel->setTickInterval(1);
     ui->sliderLevel->setValue(0);
-    ui->lblLevelValue->setText(QString("%1").arg(_levels[0]));
+    if (_levels.size() > 0)
+    {
+        ui->lblLevelValue->setText(QString("%1").arg(_levels[0]));
+    }
+    else
+    {
+        ui->lblLevelValue->setText(Dictionary::getTranslation("NOT_POSSIBLE"));
+        ui->btnOk->setEnabled(false);
+        ui->btnOk->setText(Dictionary::getTranslation("NOT_POSSIBLE"));
+    }
 }
 
 //---------------------------------------------------------------------------------
@@ -114,5 +144,10 @@ CustomDescriptorPopup::on_btnCancel_clicked()
 void
 CustomDescriptorPopup::on_sliderLevel_valueChanged(int value)
 {
+    if (value >= _levels.size())
+    {
+        return;
+    }
+
     ui->lblLevelValue->setText(QString("%1").arg(_levels[value]));
 }

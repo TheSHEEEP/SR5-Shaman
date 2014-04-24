@@ -35,6 +35,15 @@ public:
      */
     void applyTranslation();
 
+    /**
+     * @brief Will show/hide the elements specific to the guided creation.
+     */
+    virtual void showEvent(QShowEvent* /*unused*/);
+
+signals:
+    void guidedNextStep();
+    void disableNext();
+
 private slots:
     /**
      * @brief Will enable/disable the add/remove buttons depending on the current selection.
@@ -53,6 +62,8 @@ private slots:
      */
     void on_btnAddQuality_clicked();
 
+    void on_btnGuidedContinue_clicked();
+
 private:
     Ui::CharEditQualityTab *ui;
 
@@ -60,6 +71,11 @@ private:
     QualityDelegate*              _qualitiesAvailableDelegate;
     QualitySortFilterProxyModel*  _qualitiesFilter;
     QualityDelegate*              _qualitiesDelegate;
+
+    /**
+     * @brief Updates all displayed values.
+     */
+    void updateValues();
 };
 
 #endif // CHAREDITQUALITYTAB_H

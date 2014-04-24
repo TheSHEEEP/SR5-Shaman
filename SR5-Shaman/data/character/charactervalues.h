@@ -77,8 +77,9 @@ public:
      * @brief Returns the maximum NATURAL value of the passed attribute.
      *          This function si required as qualities may modify the value set in the metatype definition.
      * @param p_attribute   The attribute to look for.
+     * @param p_effects     If effects increasing the attribute max should also be taken into account.
      */
-    int getAttributeMax(const QString& p_attribute);
+    int getAttributeMax(const QString& p_attribute, bool p_effects = true);
 
     /**
      * @brief Returns the characters current essence value.

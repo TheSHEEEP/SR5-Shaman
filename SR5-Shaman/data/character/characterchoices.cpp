@@ -7,6 +7,7 @@
 #include "charactervalues.h"
 #include "effectregistry.h"
 #include "data/appstatus.h"
+#include "data/dictionary.h"
 
 CharacterChoices* CharacterChoices::_instance = 0;
 
@@ -50,7 +51,7 @@ CharacterChoices::setPriority(int p_priorityIndex, Priority p_prio)
         setIsMagicUser(false);
     }
 
-    // If this is a "downgrade" we possibly need to clean up spent points
+    // If this is a "downgrade" we possibly need to clean up spent points, spells, etc.
     if (oldPrioIndex < p_priorityIndex)
     {
         if (p_prio == PRIORITY_ATTRIBUTES)
@@ -60,6 +61,12 @@ CharacterChoices::setPriority(int p_priorityIndex, Priority p_prio)
         else if (p_prio == PRIORITY_METATYPE)
         {
             cleanUpSpentAttributes(true);
+        }
+        else if (p_prio == PRIORITY_MAGIC)
+        {
+            cleanUpSpentAttributes(true);
+            resetFreeSkills();
+            resetFreeSpells();
         }
     }
 }
@@ -96,6 +103,9 @@ CharacterChoices::getSpentKarma() const
     // From purchased power points
     result += _purchasedPowerPoints * MAGIC_RULES->getPowerPointPurchaseCost();
 
+    // From qualities
+    result += getQualitiesKarma(true);
+
     return result;
 }
 
@@ -103,7 +113,7 @@ CharacterChoices::getSpentKarma() const
 int
 CharacterChoices::getAvailableKarma() const
 {
-    return CHARACTER_VALUES->getKarmaPool() - getSpentKarma();
+    return CHARACTER_VALUES->getKarmaPool() - getSpentKarma() + getQualitiesKarma(false);
 }
 
 //---------------------------------------------------------------------------------
@@ -143,7 +153,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
         {
             APPSTATUS->setStatusBarMessage(tr("Trying to reduce %1 below natural minimum. Set to minimum.")
                                                 .arg(p_attribute),
-                                           3.5f, QColor(0, 0, 255));
+                                           5.0f, QColor(0, 0, 255));
             _attributeIncreasesFreebies[p_attribute] = 0;
             _attributeIncreasesKarma[p_attribute] = 0;
             return;
@@ -177,7 +187,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     if (wouldBeValue > naturalMax)
     {
         APPSTATUS->setStatusBarMessage(tr("Trying to increase %1 above natural maximum. Set to maximum.").arg(p_attribute),
-                                       3.5f,
+                                       5.0f,
                                        QColor(0, 0, 255));
         attemptedIncrease = naturalMax - valueCurrent;
         if (p_fromFreebies > attemptedIncrease)
@@ -243,7 +253,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     if (attemptedIncrease == 0)
     {
         APPSTATUS->setStatusBarMessage(tr("Not enough attribute or karma points to increase %1 further.").arg(p_attribute),
-                                       3.5f,
+                                       5.0f,
                                        QColor(0, 0, 255));
         return;
     }
@@ -520,8 +530,6 @@ CharacterChoices::removeFreeSkill(const QString& p_id)
     // Check if the skill is actually there
     if (!_skillIncreasesFreebies.contains(p_id))
     {
-        qWarning() << QString("Could not remove free skill %1. Skill does not exist in freebies.")
-                            .arg(p_id);
         return;
     }
 
@@ -529,7 +537,19 @@ CharacterChoices::removeFreeSkill(const QString& p_id)
 }
 
 //---------------------------------------------------------------------------------
-void
+QStringList
+CharacterChoices::getChosenFreeSkills()
+{
+    QStringList result;
+    for (int i = 0; i < _skillIncreasesFreebies.keys().size(); ++i)
+    {
+        result.push_back(_skillIncreasesFreebies.keys()[i]);
+    }
+    return result;
+}
+
+//---------------------------------------------------------------------------------
+bool
 CharacterChoices::addFreeSpell(const QString& p_id)
 {
     // Sanity check - magic user
@@ -537,7 +557,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
     {
         qWarning() << QString("Could not add free spell %1. Character is no magic user.")
                             .arg(p_id);
-        return;
+        return false;
     }
 
     // Get the spell definition
@@ -555,9 +575,9 @@ CharacterChoices::addFreeSpell(const QString& p_id)
         {
             APPSTATUS->setStatusBarMessage(tr("Could not add free spell/complex form %1. Spell/complex form is already added as a free spell.")
                                                 .arg(p_id),
-                                           3.5f,
+                                           5.0f,
                                            QColor(0, 0, 255));
-            return;
+            return false;
         }
         // Adept powers can only be added once, a certain number of times or unlimited
         // all depending on the type.
@@ -569,9 +589,9 @@ CharacterChoices::addFreeSpell(const QString& p_id)
             {
                 APPSTATUS->setStatusBarMessage(tr("Could not add adept power %1. Power exceeds valid points.")
                                                     .arg(p_id),
-                                               3.5f,
+                                               5.0f,
                                                QColor(0, 0, 255));
-                return;
+                return false;
             }
         }
     }
@@ -621,9 +641,9 @@ CharacterChoices::addFreeSpell(const QString& p_id)
                     {
                         APPSTATUS->setStatusBarMessage(tr("Could not add adept power %1. Power exceeds valid points.")
                                                             .arg(p_id),
-                                                       3.5f,
+                                                       5.0f,
                                                        QColor(0, 0, 255));
-                        return;
+                        return false;
                     }
                 }
                 break;
@@ -648,9 +668,9 @@ CharacterChoices::addFreeSpell(const QString& p_id)
     {
         APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Not enough spell points remaining.")
                                             .arg(p_id),
-                                       3.5f,
+                                       5.0f,
                                        QColor(0, 0, 255));
-        return;
+        return false;
     }
 
     // Magic abilities can possibly have effects, so apply these
@@ -665,12 +685,12 @@ CharacterChoices::addFreeSpell(const QString& p_id)
         {
             allValid = false;
             lastError = spellDef.effects[i]->getError();
-            APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Effect could not be applied: %2")
+            APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Effect could not be applied:\n%2")
                                                 .arg(p_id)
                                                 .arg(lastError),
-                                           3.5f,
+                                           5.0f,
                                            QColor(0, 0, 255));
-            return;
+            return false;
         }
     }
     // Apply and add the effects
@@ -713,6 +733,8 @@ CharacterChoices::addFreeSpell(const QString& p_id)
             }
         break;
     }
+
+    return true;
 }
 
 //---------------------------------------------------------------------------------
@@ -722,8 +744,6 @@ CharacterChoices::removeFreeSpell(const QString& p_id)
     // Check if the skill is actually there
     if (!_spellsFromFreebies.contains(p_id))
     {
-        qWarning() << QString("Could not remove free spell %1. Spell does not exist in freebies.")
-                            .arg(p_id);
         return;
     }
 
@@ -815,6 +835,18 @@ CharacterChoices::getSpellFreebies(const QString& p_id)
 }
 
 //---------------------------------------------------------------------------------
+QStringList
+CharacterChoices::getChosenFreeSpells()
+{
+    QStringList result;
+    for (int i = 0; i < _spellsFromFreebies.keys().size(); ++i)
+    {
+        result.push_back(_spellsFromFreebies.keys()[i]);
+    }
+    return result;
+}
+
+//---------------------------------------------------------------------------------
 float
 CharacterChoices::getPowerPoints() const
 {
@@ -851,7 +883,7 @@ CharacterChoices::setPurchasePowerPoints(int p_targetValue)
         if (cost > getAvailableKarma())
         {
             APPSTATUS->setStatusBarMessage(tr("Not enough karma to purchase that many power points. Setting to max."),
-                                           3.5f,
+                                           5.0f,
                                            QColor(0, 0, 255));
 
             // Calculate maximum
@@ -873,14 +905,14 @@ CharacterChoices::setPurchasePowerPoints(int p_targetValue)
     {
         APPSTATUS->setStatusBarMessage(tr("Can't purchase negative power points value: %1. Set to 0.")
                                             .arg(p_targetValue),
-                                       3.5f,
+                                       5.0f,
                                        QColor(0, 0, 255));
         _purchasedPowerPoints = 0;
     }
     else if (_purchasedPowerPoints > CHARACTER_VALUES->getAttribute("magic"))
     {
         APPSTATUS->setStatusBarMessage(tr("Can't purchase more power points than magic attribute. Set to max."),
-                                       3.5f,
+                                       5.0f,
                                        QColor(0, 0, 255));
         _purchasedPowerPoints = CHARACTER_VALUES->getAttribute("magic");
     }
@@ -945,5 +977,237 @@ CharacterChoices::getAvailablePowerPoints() const
     }
 
     return maxPowerPoints - getSpentPowerPoints();
+}
+
+//---------------------------------------------------------------------------------
+bool
+CharacterChoices::addQuality(const QString& p_id)
+{
+    const QualityDefinition& def = QUALITY_RULES->getDefinition(p_id);
+
+    // Check if the quality is already present
+    int currentLevel = 0;
+    int costAlreadyPaid = 0;
+    if (_qualities.contains(p_id))
+    {
+        currentLevel = _qualities[p_id];
+
+        // Quality is not levelled and already present - stop!
+        if (def.costType == COSTTYPE_NORMAL)
+        {
+            APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_ADDED_ALREADY")
+                                                .arg(p_id),
+                                           5.0f, QColor(0, 0, 255));
+            return false;
+        }
+        else if (def.costType == COSTTYPE_ARRAY)
+        {
+            costAlreadyPaid = def.costArray[currentLevel - 1];
+        }
+        else
+        {
+            costAlreadyPaid = def.costArray[0] * currentLevel;
+        }
+    }
+    int wouldBeLevel = currentLevel + 1;
+
+    // Calculate the actual karma cost
+    int karmaCost = 0;
+    if (def.costType == COSTTYPE_ARRAY)
+    {
+        karmaCost = def.costArray[wouldBeLevel - 1];
+    }
+    // Calculation is the same for per_level and normal as normal is always level 1
+    else
+    {
+        karmaCost = def.costArray[0] * wouldBeLevel;
+    }
+    karmaCost -= costAlreadyPaid;
+
+    // On postive quality: Do we have enough karma?
+    if (def.isPositive && CHARACTER_CHOICES->getAvailableKarma() < karmaCost)
+    {
+        APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_KARMA")
+                                            .arg(p_id)
+                                            .arg(wouldBeLevel),
+                                       5.0f, QColor(0, 0, 255));
+        return false;
+    }
+
+    // Do we have too many qualities already?
+    // Core-rule: Only 25 may be gained from / spent on qualities
+    if (!CHARACTER_CHOICES->getHouseRules().qualityLimitSumCounts)
+    {
+        if (def.isPositive &&
+            (getQualitiesKarma(true) + karmaCost) > 25)
+        {
+            APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_KARMA_LIMIT_POS")
+                                                .arg(p_id),
+                                           5.0f, QColor(0, 0, 255));
+            return false;
+        }
+        else if (!def.isPositive &&
+                 (getQualitiesKarma(false) + karmaCost) > 25)
+        {
+            APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_KARMA_LIMIT_NEG")
+                                                .arg(p_id),
+                                           5.0f, QColor(0, 0, 255));
+            return false;
+        }
+    }
+    // House rule: Only the sum counts
+    else
+    {
+        int wouldBeBalance = getQualitiesKarma(true) - getQualitiesKarma(false);
+        wouldBeBalance += def.isPositive ? karmaCost : -karmaCost;
+        if (wouldBeBalance < -25 || wouldBeBalance > 25)
+        {
+            APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_KARMA_BALANCE")
+                                                .arg(p_id),
+                                           5.0f, QColor(0, 0, 255));
+            return false;
+        }
+    }
+
+    // Effects
+    // First, check if all can be applied, as all have to be valid
+    bool allValid = true;
+    QString lastError = "";
+    for (unsigned int i = 0; i < def.effects.size(); ++i)
+    {
+        // If the spell is user defined, give the custom choice as target, otherwise, the ID
+        QString target = def.isUserDefined ? def.customString : def.id;
+        if (!def.effects[i]->canBeApplied(target))
+        {
+            allValid = false;
+            lastError = def.effects[i]->getError();
+            APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_EFFECT")
+                                                .arg(p_id)
+                                                .arg(lastError),
+                                           5.0f,
+                                           QColor(0, 0, 255));
+            return false;
+        }
+    }
+    // Apply and add the effects
+    if (allValid)
+    {
+        for (unsigned int i = 0; i < def.effects.size(); ++i)
+        {
+            EFFECT_REGISTRY->addActiveEffect(def.effects[i]);
+        }
+    }
+
+    // Add the quality
+    _qualities[p_id] = wouldBeLevel;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::removeQuality(const QString& p_id)
+{
+    // Check if the quality is actually there
+    if (!_qualities.contains(p_id))
+    {
+        return;
+    }
+
+    _qualities.remove(p_id);
+
+    // If the removed quality had active effects, remove those, too
+    const QualityDefinition& def = QUALITY_RULES->getDefinition(p_id);
+    if (def.effects.size() > 0)
+    {
+        for (unsigned int i = 0; i < def.effects.size(); ++i)
+        {
+            EFFECT_REGISTRY->removeActiveEffect(def.effects[i]);
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------
+bool
+CharacterChoices::validateQualities()
+{
+    bool allValid = true;
+
+    // Remove all qualities, then re-add them to make sure they are all still valid
+    qDebug() << "Validating qualities.";
+    QMap<QString, int> temp = _qualities;
+    resetQualities();
+    QMap<QString, int>::iterator it;
+    for (it = temp.begin(); it != temp.end(); ++it)
+    {
+        for (int i = 0; i < it.value(); ++i)
+        {
+            if (!addQuality(it.key()))
+            {
+                allValid = false;
+            }
+        }
+    }
+
+    if (allValid)
+    {
+        qDebug() << "All qualities are still valid.";
+    }
+    else
+    {
+        qDebug() << "Some qualities were invalid.";
+    }
+
+    return allValid;
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::resetQualities()
+{
+    for (int j = 0; j < _qualities.keys().size(); ++j)
+    {
+        // If the removed quality had active effects, remove those, too
+        const QualityDefinition& def = QUALITY_RULES->getDefinition(_qualities.keys()[j]);
+        if (def.effects.size() > 0)
+        {
+            for (unsigned int i = 0; i < def.effects.size(); ++i)
+            {
+                EFFECT_REGISTRY->removeActiveEffect(def.effects[i]);
+            }
+        }
+    }
+
+    _qualities.clear();
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterChoices::getQualitiesKarma(bool p_positive) const
+{
+    int result = 0;
+
+    // Get all qualities that are either positive or negative
+    QMap<QString, int>::const_iterator it;
+    for(it = _qualities.begin(); it != _qualities.end(); ++it)
+    {
+        const QualityDefinition& def = QUALITY_RULES->getDefinition(it.key());
+        if (def.isPositive == p_positive)
+        {
+            // Get the cost, depending on the cost type and level
+            if (def.costType == COSTTYPE_ARRAY)
+            {
+                result += def.costArray[it.value() - 1];
+            }
+            // Cost per level and normal cost can use the same calculation
+            // As the level for normal cost is always 1
+            else
+            {
+                result += def.costArray[0] * it.value();
+            }
+        }
+    }
+
+    return result;
 }
 

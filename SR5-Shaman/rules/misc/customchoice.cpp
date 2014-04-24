@@ -202,7 +202,7 @@ CustomChoice::CustomChoice(QJsonObject* p_jsonObject)
 
 //---------------------------------------------------------------------------------
 void
-CustomChoice::fillDescriptorPopup(CustomDescriptorPopup* p_popup)
+CustomChoice::fillDescriptorPopup(CustomDescriptorPopup* p_popup) const
 {
     p_popup->setChoices(_choiceStrings, _choiceValues);
 }

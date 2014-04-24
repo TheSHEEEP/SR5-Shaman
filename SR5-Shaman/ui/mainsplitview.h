@@ -11,6 +11,7 @@ class CreationSideInfo;
 class CharEditMiscTab;
 class CharEditAttributeTab;
 class CharEditMagicTab;
+class CharEditQualityTab;
 
 /**
  * @brief This class manages the main split view between the character preview and
@@ -71,6 +72,7 @@ private:
     CharEditMiscTab*        _tabCharEditMisc;
     CharEditAttributeTab*   _tabCharEditAttribute;
     CharEditMagicTab*       _tabCharEditMagic;
+    CharEditQualityTab*     _tabCharEditQuality;
 
 private:
     /**

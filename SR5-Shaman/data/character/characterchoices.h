@@ -229,14 +229,20 @@ public:
      */
     void resetFreeSkills();
 
+    /**
+     * @brief Returns a list with the IDs of chosen free skills.
+     */
+    QStringList getChosenFreeSkills();
+
     //*********************************************************************
     // SPELLS
     //*********************************************************************
     /**
      * @brief Adds the passed free spell/complex form/adept power.
      * @param p_id      The ID of the spell.
+     * @return True if the adding worked out.
      */
-    void addFreeSpell(const QString& p_id);
+    bool addFreeSpell(const QString& p_id);
 
     /**
      * @brief Removes the passed free spell/complex form/adept power.
@@ -259,6 +265,11 @@ public:
      * @param p_id      The ID of the spell.
      */
     float getSpellFreebies(const QString& p_id);
+
+    /**
+     * @brief Returns a list with the IDs of chosen free spells.
+     */
+    QStringList getChosenFreeSpells();
 
     //*********************************************************************
     // POWER POINTS
@@ -304,6 +315,37 @@ public:
      * @brief Returns all qualities the character has.
      */
     const QMap<QString, int>& getQualities() const;
+
+    /**
+     * @brief Tries to add the quality with the passed ID.
+     * @param p_id  The ID of the quality to add.
+     */
+    bool addQuality(const QString& p_id);
+
+    /**
+     * @brief Removes the passed quality and disables the effects.
+     * @param p_id  The ID of the quality to remove.
+     */
+    void removeQuality(const QString& p_id);
+
+    /**
+     * @brief Checks if all qualities are still valid and removed those that are not.
+     * @return True if all qualities are still valid,
+     *          false if at leats one was invalid and removed.
+     */
+    bool validateQualities();
+
+    /**
+     * @brief Removes all selected qualities and their effects.
+     */
+    void resetQualities();
+
+    /**
+     * @brief Returns the amount of karma gained from/spent on qualities.
+     * @param p_positive    If true, the karma spent on positive qualities is returned.
+     *                      If false, karma gained from negative qualities is returned.
+     */
+    int getQualitiesKarma(bool p_positive) const;
 
     //*********************************************************************
     // CREATION DATA

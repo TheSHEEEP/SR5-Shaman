@@ -46,6 +46,13 @@ public:
     Condition(Effect* p_parent, QJsonValueRef* p_jsonObject);
 
     /**
+     * @brief Copy constructor (kind of).
+     * @param p_other   The condition to copy from.
+     * @param p_parent  The new parent.
+     */
+    Condition(const Condition* p_other, Effect* p_parent);
+
+    /**
      * @brief Destructor.
      */
     ~Condition();
@@ -54,6 +61,16 @@ public:
      * @brief Returns true if the condition is fulfilled.
      */
     bool isFulfilled();
+
+    /**
+     * @brief Returns the type of the condition.
+     */
+    ConditionType getType() const;
+
+    /**
+     * @brief Returns the type of the condition.
+     */
+    const QStringList& getValues() const;
 
     /**
      * @brief Returns the last fulfillment error.
@@ -76,4 +93,21 @@ Condition::getError() const
 {
     return _lastError;
 }
+
+//---------------------------------------------------------------------------------
+inline
+ConditionType
+Condition::getType() const
+{
+    return _conditionType;
+}
+
+//---------------------------------------------------------------------------------
+inline
+const QStringList&
+Condition::getValues() const
+{
+    return _values;
+}
+
 #endif // CONDITION_H

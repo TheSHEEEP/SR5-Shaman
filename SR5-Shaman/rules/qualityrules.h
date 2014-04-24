@@ -9,6 +9,7 @@
 #include "commonrules.h"
 
 class Effect;
+class CustomChoice;
 
 /**
  * @brief This is the definition of a single quality.
@@ -52,10 +53,11 @@ public:
     bool                            isCategory;
     bool                            isPositive;
     CostType                        costType;
-    std::vector<float>              costArray;
+    std::vector<int>                costArray;
     bool                            isUserDefined;
     bool                            requiresCustom;
-    QString                         custom;     // This can be used for further definition, like the name defined by the user
+    QString                         customString;
+    CustomChoice*                   customChoices;
     QString                         base;
     std::vector<Effect*>            effects;
     QMap<QString, QString>          translations;
@@ -114,9 +116,10 @@ public:
      *          A new quality will only be constructed if this specialization does not exist already.
      * @param p_id          The ID of the original quality.
      * @param p_customValue The custom value.
+     * @param p_translation The translation to show.
      * @return The ID of the new quality.
      */
-    QString constructCustomizedQuality(const QString &p_id, const QString &p_customValue);
+    QString constructCustomizedQuality(const QString &p_id, const QString &p_customValue, const QString &p_translation);
 
     /**
      * @brief Returns a list with all IDs of custom versions of the passed quality.

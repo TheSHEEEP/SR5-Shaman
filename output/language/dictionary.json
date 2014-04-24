@@ -268,6 +268,13 @@
             }
         },
         {
+            "key" : "COND_MUST_BE_MAGE",
+            "translations" : {
+                "en" : "The character must be a magic user.",
+                "de" : "Der Charakter muss ein Magienutzer sein."
+            }
+        },
+        {
             "key" : "COND_MUST_BE_MUNDANE",
             "translations" : {
                 "en" : "The character must not be a magic user.",
@@ -275,10 +282,24 @@
             }
         },
         {
-            "key" : "COND_MUST_BE_DCKER",
+            "key" : "COND_MUST_BE_DECKER",
             "translations" : {
                 "en" : "The character must be a decker (have a combined value of at least 12 in decker skills).",
                 "de" : "Der Charakter muss ein Decker sein (mind. 12 Punkte insgesamt in Decker-Fertigkeiten)."
+            }
+        },
+        {
+            "key" : "COND_ONE_OF",
+            "translations" : {
+                "en" : "One of the following must be fulfilled: ",
+                "de" : "Eine der folgenden Bedingungen muss efüllt werden: "
+            }
+        },
+        {
+            "key" : "COND_ONE_OF_OR",
+            "translations" : {
+                "en" : " Or: \n",
+                "de" : " Oder: \n"
             }
         },
         {
@@ -302,5 +323,96 @@
                 "de" : "Psychotropes IC"
             }
         },
+        {
+            "key" : "CATEGORY_POSITIVE",
+            "translations" : {
+                "en" : "Positive Qualities",
+                "de" : "Vorteile"
+            }
+        },
+        {
+            "key" : "CATEGORY_NEGATIVE",
+            "translations" : {
+                "en" : "Negative Qualities",
+                "de" : "Nachteile"
+            }
+        },
+        {
+            "key" : "ADD_QUALITY_ADDED_ALREADY",
+            "translations" : {
+                "en" : "Cannot add quality %1. It is already present!",
+                "de" : "Qualität %1 kann nicht hinzugefügt werden. Sie ist bereits vorhanden!"
+            }
+        },
+        {
+            "key" : "ADD_QUALITY_KARMA",
+            "translations" : {
+                "en" : "Cannot add quality %1 at level %2. Not enough karma!",
+                "de" : "Qualität %1 auf Stufe %2 kann nicht hinzugefügt werden. Nicht genug Karma!"
+            }
+        },
+        {
+            "key" : "ADD_QUALITY_KARMA_LIMIT_POS",
+            "translations" : {
+                "en" : "Cannot add quality %1. Only 25 karma may be spent on positive qualities.",
+                "de" : "Qualität %1 kann nicht hinzugefügt werden. Nur 25 Karma dürfen für Vorteile ausgegeben werden."
+            }
+        },
+        {
+            "key" : "ADD_QUALITY_KARMA_LIMIT_NEG",
+            "translations" : {
+                "en" : "Cannot add quality %1. Only 25 karma may be gained from negative qualities.",
+                "de" : "Qualität %1 kann nicht hinzugefügt werden. Nur 25 Karma dürfen durch Nachteile erhalten werden."
+            }
+        },
+        {
+            "key" : "ADD_QUALITY_KARMA_BALANCE",
+            "translations" : {
+                "en" : "Cannot add quality %1. The sum of positive and negative qualities must be between -25 and 25.",
+                "de" : "Qualität %1 kann nicht hinzugefügt werden. Die Karma-Balance aus Vorteilen und Nachteilen muss zwischen -25 und 25 liegen."
+            }
+        },
+        {
+            "key" : "ADD_QUALITY_EFFECT",
+            "translations" : {
+                "en" : "Cannot add quality %1. Effect could not be applied: \n%2",
+                "de" : "Qualität %1 kann nicht hinzugefügt werden. Effekt kann nicht angewendet werden: \n%2"
+            }
+        },
+        {
+            "key" : "TAB_1_NAME_TYPES",
+            "translations" : {
+                "en" : "Step 1: Name, Metatype & Magic Type",
+                "de" : "Schritt 1: Name, Metatyp & Magietyp"
+            }
+        },
+        {
+            "key" : "TAB_2_ATTRIBUTES",
+            "translations" : {
+                "en" : "Step 2: Attributes",
+                "de" : "Schritt 2: Attribute"
+            }
+        },
+        {
+            "key" : "TAB_3_MAGIC_RESONANCE",
+            "translations" : {
+                "en" : "Step 3: Magic / Resonance",
+                "de" : "Schritt 3: Magie / Resonanz"
+            }
+        },
+        {
+            "key" : "TAB_4_QUALITIES",
+            "translations" : {
+                "en" : "Step 4: Qualities",
+                "de" : "Schritt 4: Qualities"
+            }
+        },
+        {
+            "key" : "NOT_POSSIBLE",
+            "translations" : {
+                "en" : "Not possible",
+                "de" : "Nicht möglich"
+            }
+        }
     ]
 }

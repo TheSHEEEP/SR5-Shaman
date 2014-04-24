@@ -178,12 +178,23 @@ CharacterValues::getAttribute(const QString& p_attribute, bool p_withAugmentatio
 
 //---------------------------------------------------------------------------------
 int
-CharacterValues::getAttributeMax(const QString& p_attribute)
+CharacterValues::getAttributeMax(const QString& p_attribute, bool p_effects)
 {
     // Get metatype maximal value
     int attribMax = METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID()).attributesMax[p_attribute];
 
-    // TODO: Apply possible effects
+    // Apply effects
+    if (p_effects)
+    {
+        std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_ATTRIBUTE_MAX);
+        for (unsigned int i = 0; i < effects.size(); ++i)
+        {
+            if (effects[i]->getCurrentTarget() == p_attribute)
+            {
+                attribMax += effects[i]->getValue().toInt();
+            }
+        }
+    }
 
     return attribMax;
 }

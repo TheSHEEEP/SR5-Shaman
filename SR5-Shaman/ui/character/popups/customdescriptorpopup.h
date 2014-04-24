@@ -51,6 +51,7 @@ public:
      * @param p_levels
      */
     void setLevels(const std::vector<float>& p_levels);
+    void setLevels(const std::vector<int>& p_levels);
 
     /**
      * @brief Returns the selected level (starting at 0).

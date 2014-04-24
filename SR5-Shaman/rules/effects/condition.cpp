@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonParseError>
+#include <QDebug>
 #include "effect.h"
 #include "rules/rules.h"
 #include "data/character/charactervalues.h"
@@ -122,6 +123,19 @@ Condition::Condition(Effect* p_parent, QJsonValueRef* p_jsonObject)
 }
 
 //---------------------------------------------------------------------------------
+Condition::Condition(const Condition* p_other, Effect* p_parent)
+{
+    _conditionType = p_other->_conditionType;
+    _values = p_other->_values;
+    _parent = p_parent;
+    _lastError = p_other->_lastError;
+    for (unsigned int i = 0; i < p_other->_subConditions.size(); ++i)
+    {
+        _subConditions.push_back(new Condition(p_other->_subConditions[i], p_parent));
+    }
+}
+
+//---------------------------------------------------------------------------------
 Condition::~Condition()
 {
     for (unsigned int i = 0; i < _subConditions.size(); ++i)
@@ -175,11 +189,23 @@ Condition::isFulfilled()
     {
         std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(_parent->getType());
 
-        // Now look through all effects to check if one source has the same ID
+        // Now look through all effects to check if one source is related
         for (unsigned int i = 0; i < effects.size(); ++i)
         {
-            if (effects[i]->getSource().getID().contains(_parent->getSource().getID()))
+            if (effects[i]->getSource().isRelatedWith(_parent->getSource()))
             {
+                // Exception: If it has the EXACT same ID
+                // AND is levelled, then it is a valid replacement
+                qDebug() << effects[i]->getSource().getID();
+                qDebug() << _parent->getSource().getID();
+                qDebug() << effects[i]->getSource().getCostType();
+                qDebug() << COSTTYPE_ARRAY << " " << COSTTYPE_PER_LEVEL;
+                if (effects[i]->getSource().getID() == _parent->getSource().getID() &&
+                    (effects[i]->getSource().getCostType() == COSTTYPE_ARRAY ||
+                     effects[i]->getSource().getCostType() == COSTTYPE_PER_LEVEL))
+                {
+                    continue;
+                }
                 _lastError = Dictionary::getTranslation("COND_ONLY_ONCE")
                                                         .arg(_parent->getSource().getID());
                 return false;
@@ -242,6 +268,7 @@ Condition::isFulfilled()
     {
         if (!CHARACTER_CHOICES->getIsMagicUser())
         {
+            _lastError = Dictionary::getTranslation("COND_MUST_BE_MAGE");
             return false;
         }
 
@@ -388,7 +415,7 @@ Condition::isFulfilled()
         }
     }
     // Must have a gear of a certain type
-    else if (_conditionType == CONDITIONTYPE_MUST_BE_MUNDANE)
+    else if (_conditionType == CONDITIONTYPE_MUST_HAVE_GEAR_OF_TYPE)
     {
         // TODO: Implement gear
         return true;
@@ -396,6 +423,7 @@ Condition::isFulfilled()
     // Must have a gear of a certain type
     else if (_conditionType == CONDITIONTYPE_ONE_OF)
     {
+        _lastError = Dictionary::getTranslation("COND_ONE_OF");
         for (unsigned int i = 0; i < _subConditions.size(); ++i)
         {
             if (_subConditions[i]->isFulfilled())
@@ -405,7 +433,7 @@ Condition::isFulfilled()
             else
             {
                 _lastError.append(_subConditions[i]->getError());
-                _lastError.append("\n");
+                _lastError.append(Dictionary::getTranslation("COND_ONE_OF_OR"));
             }
         }
     }

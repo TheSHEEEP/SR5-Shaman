@@ -133,7 +133,8 @@ CharEditAttributeTab::updateSpinBoxText(QSpinBox* p_spinBox, const QString& p_at
 void
 CharEditAttributeTab::updateValues()
 {
-    if (!isEnabled())
+    if (!isEnabled() ||
+        CHARACTER_CHOICES->getPriorityIndex(PRIORITY_ATTRIBUTES) == -1)
     {
         return;
     }

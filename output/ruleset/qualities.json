@@ -26,6 +26,7 @@
             },
             "positive"        : "true",
             "cost"            : "14",
+            "requires_custom" : "true",
             "custom_choices"    : {
                 "type"             : "skill_selection",
                 "groups_allowed"   : "false",
@@ -81,7 +82,12 @@
             "positive"        : "true",
             "cost"            : "8",
             "effects"   : [
-                { "must_not_have_qualities" : [ "DISTINCTIVE_STYLE" ] }
+                {
+                    "type"         : "none",
+                    "conditions" : [ 
+                        { "must_not_have_qualities" : [ "DISTINCTIVE_STYLE" ] }
+                    ]
+                }
             ]
         },
         { "unique_id"    : "CATLIKE",
@@ -645,7 +651,7 @@
             "custom_choices"    : {
                 "type"             : "skill_selection",
                 "groups_allowed"   : "true",
-                "only_groups"      : "true",
+                "groups_only"      : "true",
                 "categories"       : ["combat", "social", "physical", "vehicle", "magic", "resonance"]
             },
             "effects" : [

@@ -60,7 +60,7 @@ private:
      * @param p_rating  The minimal rating the skill must have.
      * @param p_skills  The vector of skills to filter.
      */
-    void filterByMinRating(int p_rating, std::vector<std::pair<QString,SkillDefinition*> >& p_skills);
+    void filterByMinRating(int p_rating, std::vector<std::pair<QString,SkillDefinition*> >& p_skills) const;
 };
 
 #endif // CUSTOMCHOICE_H

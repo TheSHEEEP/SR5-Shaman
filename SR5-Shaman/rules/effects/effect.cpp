@@ -10,12 +10,68 @@
 #include "data/character/charactervalues.h"
 #include "data/character/characterchoices.h"
 
+QString EffectSource::_nothing = "";
+
 //---------------------------------------------------------------------------------
 const QString&
 EffectSource::getID() const
 {
     if (magicAbility) return magicAbility->id;
     if (quality) return quality->id;
+    return _nothing;
+}
+
+//---------------------------------------------------------------------------------
+const QString&
+EffectSource::getBaseID() const
+{
+    if (magicAbility) return magicAbility->base;
+    if (quality) return quality->base;
+    return _nothing;
+}
+
+//---------------------------------------------------------------------------------
+CostType
+EffectSource::getCostType() const
+{
+    if (magicAbility &&
+        magicAbility->adeptPower)
+    {
+        return magicAbility->adeptPower->costType;
+    }
+    if (quality)
+    {
+        return quality->costType;
+    }
+
+    return COSTTYPE_INVALID;
+}
+
+//---------------------------------------------------------------------------------
+bool
+EffectSource::isRelatedWith(const EffectSource& p_other) const
+{
+    // Equal
+    if (getID() == p_other.getID())
+    {
+        return true;
+    }
+
+    // A and B have the same base
+    if (getBaseID() != "" && p_other.getBaseID() != "" &&
+        getBaseID().contains(p_other.getBaseID()))
+    {
+        return true;
+    }
+
+    // B is based on A or A on B
+    if (p_other.getID().contains(getID()) ||
+        getID().contains(p_other.getID()))
+    {
+        return true;
+    }
+
+    return false;
 }
 
 //---------------------------------------------------------------------------------
@@ -214,7 +270,10 @@ Effect::Effect(const Effect& p_other)
     _limit = p_other._limit;
     _target = p_other._target;
     _currentTarget = _target;
-    _conditions = p_other._conditions;
+    for (unsigned int i = 0; i < p_other._conditions.size(); ++i)
+    {
+        _conditions.push_back(new Condition(p_other._conditions[i], this));
+    }
 }
 
 //---------------------------------------------------------------------------------

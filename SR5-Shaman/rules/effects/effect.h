@@ -4,6 +4,7 @@
 #include <vector>
 #include <QString>
 #include <QVariant>
+#include "rules/commonrules.h"
 
 class Condition;
 class QJsonValueRef;
@@ -29,6 +30,25 @@ struct EffectSource
     const QString& getID() const;
 
     /**
+     * @brief Returns the ID of the base of the source (useful for customized).
+     *          Returns "" if the source has no base.
+     */
+    const QString& getBaseID() const;
+
+    /**
+     * @brief Returns the cost type of the source.
+     *          Returns COSTTYPE_INVALID if this is not applicable.
+     */
+    CostType getCostType() const;
+
+    /**
+     * @brief Returns true if this source is related with the passed source.
+     *          This is the case if both have the same ID,
+     *          or if one is based upon the other.
+     */
+    bool isRelatedWith(const EffectSource& p_other) const;
+
+    /**
      * Comparison operators.
      */
     bool operator==(const EffectSource& p_other) const;
@@ -36,6 +56,9 @@ struct EffectSource
 
     MagicAbilityDefinition*     magicAbility;
     QualityDefinition*          quality;
+
+private:
+    static QString  _nothing;
 };
 
 /**
@@ -129,6 +152,11 @@ public:
      */
     const QVariant& getValue() const;
 
+    /**
+     * @brief Returns the vector of conditions.
+     */
+    const std::vector<Condition*>& getConditions() const;
+
 protected:
     EffectType      _effectType;
     EffectSource    _source;
@@ -193,6 +221,14 @@ const QVariant&
 Effect::getValue() const
 {
     return _value;
+}
+
+//---------------------------------------------------------------------------------
+inline
+const std::vector<Condition*>&
+Effect::getConditions() const
+{
+    return _conditions;
 }
 
 #endif // EFFECT_H

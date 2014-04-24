@@ -114,4 +114,4 @@ RESOURCES += \
     stylesheets/qdarkstyle/style.qrc \
     stylesheets/darkOrange/darkOrange.qrc
 
-QMAKE_CXXFLAGS += -Wno-ignored-qualifiers
+QMAKE_CXXFLAGS += -Wno-ignored-qualifiers -Wno-unused-parameter -std=gnu++11

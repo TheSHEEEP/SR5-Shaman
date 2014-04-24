@@ -10,13 +10,15 @@
 #include <QDebug>
 #include <QString>
 #include "rules/effects/effect.h"
+#include "rules/misc/customchoice.h"
 
 //---------------------------------------------------------------------------------
 QualityDefinition::QualityDefinition(QualityDefinition* p_parent)
     : parent(p_parent)
     , id("")
     , isCategory(false), isPositive(false), isUserDefined(false), requiresCustom(false)
-    , custom(""), base("")
+    , customString(""), customChoices(NULL)
+    , base("")
 {
     children.clear();
 }
@@ -31,7 +33,7 @@ QualityDefinition::QualityDefinition(const QualityDefinition& p_other)
     isUserDefined = p_other.isUserDefined;
     isCategory = p_other.isCategory;
     requiresCustom = p_other.requiresCustom;
-    custom = p_other.custom;
+    customChoices = p_other.customChoices;
     children = p_other.children;
     translations = p_other.translations;
 }
@@ -155,6 +157,11 @@ QualityRules::initialize(const QString& p_jsonFile)
         if (currentQuality.contains("requires_custom"))
         {
             qualityDef->requiresCustom = currentQuality["requires_custom"].toString() == "true";
+            if (currentQuality.contains("custom_choices"))
+            {
+                QJsonObject obj = currentQuality["custom_choices"].toObject();
+                qualityDef->customChoices = new CustomChoice(&obj);
+            }
         }
 
         // Positive or negative
@@ -165,7 +172,7 @@ QualityRules::initialize(const QString& p_jsonFile)
         if (currentQuality.contains("cost_per_level"))
         {
             qualityDef->costType = COSTTYPE_PER_LEVEL;
-            qualityDef->costArray.push_back(currentQuality["cost_per_level"].toString().toDouble());
+            qualityDef->costArray.push_back(currentQuality["cost_per_level"].toString().toInt());
         }
         else if (currentQuality.contains("cost"))
         {
@@ -175,7 +182,7 @@ QualityRules::initialize(const QString& p_jsonFile)
             if (type != QJsonValue::Array)
             {
                 qualityDef->costType = COSTTYPE_NORMAL;
-                qualityDef->costArray.push_back(currentQuality["cost"].toString().toDouble());
+                qualityDef->costArray.push_back(currentQuality["cost"].toString().toInt());
             }
             else
             {
@@ -185,8 +192,21 @@ QualityRules::initialize(const QString& p_jsonFile)
                 // Add each array entry
                 for (int j = 0; j < tempArray.size(); ++j)
                 {
-                    qualityDef->costArray.push_back(tempArray[j].toString().toDouble());
+                    qualityDef->costArray.push_back(tempArray[j].toString().toInt());
                 }
+            }
+        }
+
+        // Effects
+        if (currentQuality.contains("effects"))
+        {
+            tempArray = currentQuality["effects"].toArray();
+            for (int j = 0; j < tempArray.size(); ++j)
+            {
+                QJsonValueRef obj = tempArray[j];
+                EffectSource source;
+                source.quality = qualityDef;
+                qualityDef->effects.push_back(new Effect(&obj, source));
             }
         }
 
@@ -229,7 +249,8 @@ QualityRules::getDefinitionsContaining(const QString& p_idPart) const
 
 //---------------------------------------------------------------------------------
 QString
-QualityRules::constructCustomizedQuality(const QString& p_id, const QString& p_customValue)
+QualityRules::constructCustomizedQuality(const QString& p_id, const QString& p_customValue,
+                                         const QString& p_translation)
 {
     // Construct new ID
     const QualityDefinition& originalQuality = getDefinition(p_id);
@@ -244,20 +265,24 @@ QualityRules::constructCustomizedQuality(const QString& p_id, const QString& p_c
     // Create the new quality
     QualityDefinition* newQuality = new QualityDefinition();
     newQuality->id = newID;
-    newQuality->custom = p_customValue;
+    newQuality->customString = p_customValue;
+    newQuality->customChoices = originalQuality.customChoices;
     newQuality->requiresCustom = false;
     newQuality->isUserDefined = true;
+    newQuality->isPositive = originalQuality.isPositive;
     newQuality->base = originalQuality.id;
     newQuality->parent = originalQuality.parent;
     newQuality->children = originalQuality.children;
     newQuality->isCategory = originalQuality.isCategory;
+    newQuality->costType = originalQuality.costType;
+    newQuality->costArray = originalQuality.costArray;
     originalQuality.parent->children.push_back(newQuality);
     // Translations
     newQuality->translations = originalQuality.translations;
     QMap<QString, QString>::iterator it;
     for (it = newQuality->translations.begin(); it != newQuality->translations.end(); ++it)
     {
-        it.value().append(" (" + p_customValue + ")");
+        it.value().append(" (" + p_translation + ")");
     }
     // Effects
     for (unsigned int i = 0; i < originalQuality.effects.size(); ++i)

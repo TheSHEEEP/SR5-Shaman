@@ -121,7 +121,7 @@
             <item>
              <widget class="QLabel" name="lblSelectionCustom">
               <property name="text">
-               <string>Set customizatio to:</string>
+               <string>Set customization to:</string>
               </property>
              </widget>
             </item>
@@ -196,7 +196,7 @@
             <item>
              <widget class="QLabel" name="lblLevelValue">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>

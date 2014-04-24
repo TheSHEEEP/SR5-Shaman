@@ -6,11 +6,13 @@
 #include "data/appstatus.h"
 #include "data/character/characterchoices.h"
 #include "data/character/charactervalues.h"
+#include "data/dictionary.h"
 #include "ui/character/characterpreviewsideinfo.h"
 #include "ui/character/creationsideinfo.h"
 #include "ui/character/tabs/chareditmisctab.h"
 #include "ui/character/tabs/chareditattributetab.h"
 #include "ui/character/tabs/chareditmagictab.h"
+#include "ui/character/tabs/chareditqualitytab.h"
 
 //---------------------------------------------------------------------------------
 MainSplitView::MainSplitView(QWidget *parent)
@@ -22,6 +24,8 @@ MainSplitView::MainSplitView(QWidget *parent)
     , _creationSideInfo(0)
     , _tabCharEditMisc(0)
     , _tabCharEditAttribute(0)
+    , _tabCharEditMagic(0)
+    , _tabCharEditQuality(0)
 {
     ui->setupUi(this);
 }
@@ -44,6 +48,7 @@ MainSplitView::~MainSplitView()
         delete _tabCharEditMisc;
         delete _tabCharEditAttribute;
         delete _tabCharEditMagic;
+        delete _tabCharEditQuality;
     }
 }
 
@@ -80,6 +85,11 @@ MainSplitView::initialize()
     _tabCharEditMagic->initialize();
     connect(_tabCharEditMagic, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
     connect(_tabCharEditMagic, SIGNAL(disableNext()), SLOT(handleDisableNext()));
+
+    _tabCharEditQuality = new CharEditQualityTab();
+    _tabCharEditQuality->initialize();
+    connect(_tabCharEditQuality, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
+    connect(_tabCharEditQuality, SIGNAL(disableNext()), SLOT(handleDisableNext()));
 }
 
 //---------------------------------------------------------------------------------
@@ -124,14 +134,17 @@ MainSplitView::initializeCharacterCreation()
 
         // Insert widgets into tab container
         // Step 1: Metatype & magic type
-        ui->charTabs->addTab(_tabCharEditMisc, tr("Step 1: Metatype and Magic Type"));
+        ui->charTabs->addTab(_tabCharEditMisc, Dictionary::getTranslation("TAB_1_NAME_TYPES"));
         _tabCharEditMisc->setEnabled(true);
         // Step 2: Attributes
-        ui->charTabs->addTab(_tabCharEditAttribute, tr("Step 2: Attributes"));
+        ui->charTabs->addTab(_tabCharEditAttribute, Dictionary::getTranslation("TAB_2_ATTRIBUTES"));
         _tabCharEditAttribute->setEnabled(false);
         // Step 3: Magic / Resonance
-        ui->charTabs->addTab(_tabCharEditMagic, tr("Step 3: Magic / Resonance"));
+        ui->charTabs->addTab(_tabCharEditMagic, Dictionary::getTranslation("TAB_3_MAGIC_RESONANCE"));
         _tabCharEditMagic->setEnabled(false);
+        // Step 4: Qualities
+        ui->charTabs->addTab(_tabCharEditQuality, Dictionary::getTranslation("TAB_4_QUALITIES"));
+        _tabCharEditQuality->setEnabled(false);
         ui->charTabs->setCurrentIndex(0);
     }
 }

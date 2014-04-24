@@ -207,7 +207,9 @@ CharEditMagicTab::showEvent(QShowEvent* /*unused*/)
         {
             ui->lblMagicTypeValue->setText(tr("None"));
             ui->frameFreeSkills->setVisible(false);
+            ui->groupBoxSkills->setVisible(false);
             ui->spinPurchasePP->setEnabled(false);
+            ui->frameAspected->setVisible(false);
         }
 
         // Update priority
@@ -396,6 +398,7 @@ CharEditMagicTab::showHideSkillsViews()
 
         // Set visibility
         ui->groupBoxSkills->setVisible(showGroups || showSkills);
+        ui->frameFreeSkills->setVisible(showGroups || showSkills);
 
         // Disable it if no aspect is selected
         if (ui->frameAspected->isVisible() &&
@@ -409,16 +412,14 @@ CharEditMagicTab::showHideSkillsViews()
             ui->frameFreeSkills->setEnabled(true);
         }
 
-        // Clear the skills view if the free skills were reset
-        const MagicTypePriorityDefinition* magicPrioDef =
-                MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
-                    .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)];
-        if (CHARACTER_CHOICES->getAvailableFreeSkills(false) >= magicPrioDef->freeSkills.first &&
-            CHARACTER_CHOICES->getAvailableFreeSkills(true) >= magicPrioDef->freeSkillGroup.first)
+        // Reset the skills view
+        _skillsFilter->getFilterIDEquals().clear();
+        QStringList skills = CHARACTER_CHOICES->getChosenFreeSkills();
+        for (int i = 0; i < skills.size(); ++i)
         {
-            _skillsFilter->getFilterIDEquals().clear();
-            _skillsFilter->applyFilter();
+            _skillsFilter->getFilterIDEquals().push_back(skills[i]);
         }
+        _skillsFilter->applyFilter();
     } // END if we have free skills
 }
 
@@ -457,16 +458,14 @@ CharEditMagicTab::showHideSpellsViews()
         _spellsAvailableFilter->applyFilter();
     }
 
-    // Clear the spells view if the available spells were reset
-    const MagicTypePriorityDefinition* magicPrioDef =
-            MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID())
-                .priorities[CHARACTER_CHOICES->getPriorityIndex(PRIORITY_MAGIC)];
-    if (CHARACTER_CHOICES->getAvailableFreeSpells() >= magicPrioDef->freeSpells &&
-        CHARACTER_CHOICES->getAvailablePowerPoints() >= CHARACTER_CHOICES->getPowerPoints())
+    // Reset the spells view
+    _spellsFilter->getFilterIDEquals().clear();
+    QStringList spells = CHARACTER_CHOICES->getChosenFreeSpells();
+    for (int i = 0; i < spells.size(); ++i)
     {
-        _spellsFilter->getFilterIDEquals().clear();
-        _spellsFilter->applyFilter();
+        _spellsFilter->getFilterIDEquals().push_back(spells[i]);
     }
+    _spellsFilter->applyFilter();
 }
 
 //---------------------------------------------------------------------------------
@@ -732,7 +731,10 @@ CharEditMagicTab::on_btnAddSpell_clicked()
     // Take note of the choice
     if (!needsLevel)
     {
-        CHARACTER_CHOICES->addFreeSpell(id);
+        if (!CHARACTER_CHOICES->addFreeSpell(id))
+        {
+            return;
+        }
     }
     else
     {
@@ -740,7 +742,12 @@ CharEditMagicTab::on_btnAddSpell_clicked()
         CHARACTER_CHOICES->removeFreeSpell(id);
         for (int i = 0; i < numAdds; ++i)
         {
-            CHARACTER_CHOICES->addFreeSpell(id);
+            bool result = CHARACTER_CHOICES->addFreeSpell(id);
+            // If the first add does not work out, stop here
+            if (i == 0 && !result)
+            {
+                return;
+            }
         }
     }
 
