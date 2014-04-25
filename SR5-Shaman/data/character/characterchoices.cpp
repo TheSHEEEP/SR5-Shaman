@@ -153,7 +153,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
         {
             APPSTATUS->setStatusBarMessage(tr("Trying to reduce %1 below natural minimum. Set to minimum.")
                                                 .arg(p_attribute),
-                                           5.0f, QColor(0, 0, 255));
+                                           5.0f, APPSTATUS->getHelperColors().statusBarMessage);
             _attributeIncreasesFreebies[p_attribute] = 0;
             _attributeIncreasesKarma[p_attribute] = 0;
             return;
@@ -188,7 +188,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     {
         APPSTATUS->setStatusBarMessage(tr("Trying to increase %1 above natural maximum. Set to maximum.").arg(p_attribute),
                                        5.0f,
-                                       QColor(0, 0, 255));
+                                       APPSTATUS->getHelperColors().statusBarMessage);
         attemptedIncrease = naturalMax - valueCurrent;
         if (p_fromFreebies > attemptedIncrease)
         {
@@ -254,7 +254,7 @@ CharacterChoices::increaseAttribute(const QString& p_attribute, int p_increase, 
     {
         APPSTATUS->setStatusBarMessage(tr("Not enough attribute or karma points to increase %1 further.").arg(p_attribute),
                                        5.0f,
-                                       QColor(0, 0, 255));
+                                       APPSTATUS->getHelperColors().statusBarMessage);
         return;
     }
 
@@ -576,7 +576,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
             APPSTATUS->setStatusBarMessage(tr("Could not add free spell/complex form %1. Spell/complex form is already added as a free spell.")
                                                 .arg(p_id),
                                            5.0f,
-                                           QColor(0, 0, 255));
+                                           APPSTATUS->getHelperColors().statusBarMessage);
             return false;
         }
         // Adept powers can only be added once, a certain number of times or unlimited
@@ -590,7 +590,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
                 APPSTATUS->setStatusBarMessage(tr("Could not add adept power %1. Power exceeds valid points.")
                                                     .arg(p_id),
                                                5.0f,
-                                               QColor(0, 0, 255));
+                                               APPSTATUS->getHelperColors().statusBarMessage);
                 return false;
             }
         }
@@ -642,7 +642,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
                         APPSTATUS->setStatusBarMessage(tr("Could not add adept power %1. Power exceeds valid points.")
                                                             .arg(p_id),
                                                        5.0f,
-                                                       QColor(0, 0, 255));
+                                                       APPSTATUS->getHelperColors().statusBarMessage);
                         return false;
                     }
                 }
@@ -669,7 +669,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
         APPSTATUS->setStatusBarMessage(tr("Could not add free spell %1. Not enough spell points remaining.")
                                             .arg(p_id),
                                        5.0f,
-                                       QColor(0, 0, 255));
+                                       APPSTATUS->getHelperColors().statusBarMessage);
         return false;
     }
 
@@ -689,7 +689,7 @@ CharacterChoices::addFreeSpell(const QString& p_id)
                                                 .arg(p_id)
                                                 .arg(lastError),
                                            5.0f,
-                                           QColor(0, 0, 255));
+                                           APPSTATUS->getHelperColors().statusBarMessage);
             return false;
         }
     }
@@ -884,7 +884,7 @@ CharacterChoices::setPurchasePowerPoints(int p_targetValue)
         {
             APPSTATUS->setStatusBarMessage(tr("Not enough karma to purchase that many power points. Setting to max."),
                                            5.0f,
-                                           QColor(0, 0, 255));
+                                           APPSTATUS->getHelperColors().statusBarMessage);
 
             // Calculate maximum
             p_targetValue--;
@@ -906,14 +906,14 @@ CharacterChoices::setPurchasePowerPoints(int p_targetValue)
         APPSTATUS->setStatusBarMessage(tr("Can't purchase negative power points value: %1. Set to 0.")
                                             .arg(p_targetValue),
                                        5.0f,
-                                       QColor(0, 0, 255));
+                                       APPSTATUS->getHelperColors().statusBarMessage);
         _purchasedPowerPoints = 0;
     }
     else if (_purchasedPowerPoints > CHARACTER_VALUES->getAttribute("magic"))
     {
         APPSTATUS->setStatusBarMessage(tr("Can't purchase more power points than magic attribute. Set to max."),
                                        5.0f,
-                                       QColor(0, 0, 255));
+                                       APPSTATUS->getHelperColors().statusBarMessage);
         _purchasedPowerPoints = CHARACTER_VALUES->getAttribute("magic");
     }
 
@@ -997,7 +997,7 @@ CharacterChoices::addQuality(const QString& p_id)
         {
             APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_ADDED_ALREADY")
                                                 .arg(p_id),
-                                           5.0f, QColor(0, 0, 255));
+                                           5.0f, APPSTATUS->getHelperColors().statusBarMessage);
             return false;
         }
         else if (def.costType == COSTTYPE_ARRAY)
@@ -1030,7 +1030,7 @@ CharacterChoices::addQuality(const QString& p_id)
         APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_KARMA")
                                             .arg(p_id)
                                             .arg(wouldBeLevel),
-                                       5.0f, QColor(0, 0, 255));
+                                       5.0f, APPSTATUS->getHelperColors().statusBarMessage);
         return false;
     }
 
@@ -1043,7 +1043,7 @@ CharacterChoices::addQuality(const QString& p_id)
         {
             APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_KARMA_LIMIT_POS")
                                                 .arg(p_id),
-                                           5.0f, QColor(0, 0, 255));
+                                           5.0f, APPSTATUS->getHelperColors().statusBarMessage);
             return false;
         }
         else if (!def.isPositive &&
@@ -1051,7 +1051,7 @@ CharacterChoices::addQuality(const QString& p_id)
         {
             APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_KARMA_LIMIT_NEG")
                                                 .arg(p_id),
-                                           5.0f, QColor(0, 0, 255));
+                                           5.0f, APPSTATUS->getHelperColors().statusBarMessage);
             return false;
         }
     }
@@ -1064,7 +1064,7 @@ CharacterChoices::addQuality(const QString& p_id)
         {
             APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("ADD_QUALITY_KARMA_BALANCE")
                                                 .arg(p_id),
-                                           5.0f, QColor(0, 0, 255));
+                                           5.0f, APPSTATUS->getHelperColors().statusBarMessage);
             return false;
         }
     }
@@ -1085,7 +1085,7 @@ CharacterChoices::addQuality(const QString& p_id)
                                                 .arg(p_id)
                                                 .arg(lastError),
                                            5.0f,
-                                           QColor(0, 0, 255));
+                                           APPSTATUS->getHelperColors().statusBarMessage);
             return false;
         }
     }

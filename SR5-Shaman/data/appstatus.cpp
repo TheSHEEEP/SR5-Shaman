@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QString>
+#include <QSettings>
 
 AppStatus* AppStatus::_instance = 0;
 
@@ -20,7 +21,8 @@ AppStatus::AppStatus()
 void
 AppStatus::setStatusBarMessage(const QString& p_message, float p_seconds)
 {
-    setStatusBarMessage(p_message, p_seconds, QColor(0, 0, 0));
+    setStatusBarMessage(p_message, p_seconds,
+                        QSettings().value("preferences/layout/colorCbFree", QColor(0, 0, 0)).value<QColor>());
 }
 
 //---------------------------------------------------------------------------------

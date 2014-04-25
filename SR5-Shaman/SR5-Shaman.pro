@@ -112,6 +112,7 @@ OTHER_FILES += \
 RESOURCES += \
     resources/resources.qrc \
     stylesheets/qdarkstyle/style.qrc \
-    stylesheets/darkOrange/darkOrange.qrc
+    stylesheets/darkOrange/darkOrange.qrc \
+    stylesheets/dark/dark.qrc
 
 QMAKE_CXXFLAGS += -Wno-ignored-qualifiers -Wno-unused-parameter -std=gnu++11

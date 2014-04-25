@@ -4,6 +4,11 @@
 	border: 1px solid #5A5A5A;
 }
 
+QWidget:disabled
+{
+    color: #777777;
+}
+
 QWidget::item:selected {
 	background: #3D7848;
 }
@@ -12,26 +17,26 @@ QCheckBox, QRadioButton {
 	border: none;
 }
 
-QRadioButton::indicator, QCheckBox::indicator {
+QRadioButton::indicator,QGroupBox::indicator, QCheckBox::indicator {
 	width: 13px;
 	height: 13px;
 }
 
-QRadioButton::indicator::unchecked, QCheckBox::indicator::unchecked {
+QRadioButton::indicator::unchecked, QGroupBox::indicator:unchecked, QCheckBox::indicator::unchecked {
 	border: 1px solid #5A5A5A;
 	background: none;
 }
 
-QRadioButton::indicator:unchecked:hover, QCheckBox::indicator:unchecked:hover {
+QRadioButton::indicator:unchecked:hover, QGroupBox::indicator:unchecked:hover, QCheckBox::indicator:unchecked:hover {
 	border: 1px solid #DDDDDD;
 }
 
-QRadioButton::indicator::checked, QCheckBox::indicator::checked {
+QRadioButton::indicator:checked, QGroupBox::indicator:checked, QCheckBox::indicator:checked {
 	border: 1px solid #5A5A5A;
 	background: #5A5A5A;
 }
 
-QRadioButton::indicator:checked:hover, QCheckBox::indicator:checked:hover {
+QRadioButton::indicator:checked:hover, QGroupBox::indicator:checked:hover, QCheckBox::indicator:checked:hover {
 	border: 1px solid #DDDDDD;
 	background: #DDDDDD;
 }
@@ -156,6 +161,16 @@ QTableView {
 	gridline-color: #5A5A5A;
 }
 
+QTabWidget:focus
+{
+    border: none;
+}
+
+QTabWidget::pane 
+{
+    border: 1px solid #5A5A5A;
+}
+
 QTabBar {
 	margin-left: 2px;
 }
@@ -254,4 +269,30 @@ QProgressBar::chunk {
 
 QMenu::separator {
 	background: #353535;
+}
+
+QMenuBar::item
+{
+    background: transparent;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+       border-image: none;
+       image: url(:/dark_icons/rc/branch-closed.png);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  {
+       border-image: none;
+       image: url(:/dark_icons/rc/branch-open.png);
+}
+
+/* This is parsed by the SR5-Shamen.
+    !!!!! All values MUST have three digits (easier RegExp) !!!!!!*/
+CustomText
+{
+    color: rgb(221, 221, 221); /* cb free */
+    color: rgb(221, 000, 000); /* cb taken */
+    color: rgb(255, 170, 000); /* status bar hint */
 }

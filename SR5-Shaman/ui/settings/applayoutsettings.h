@@ -58,6 +58,11 @@ private:
     QSettings               _settings;
     QMap<QString,int>       _fontIDs;
     QMap<QString,QString>   _themes;
+
+    /**
+     * @brief Applies the passed stylesheet file.
+     */
+    void applyStylesheet(const QString& p_sheet);
 };
 
 #endif // APPLAYOUTSETTINGS_H

@@ -24,6 +24,11 @@ QWidget:item:selected
     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
 }
 
+QMenuBar 
+{
+   background-color: #323232;
+}
+
 QMenuBar::item
 {
     background: transparent;
@@ -160,6 +165,29 @@ QComboBox::down-arrow
 QGroupBox:focus
 {
 border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
+}
+
+QGroupBox::indicator{
+    color: #b1b1b1;
+    background-color: #323232;
+    border: 1px solid #b1b1b1;
+    width: 9px;
+    height: 9px;
+}
+
+QGroupBox::indicator:hover
+{
+    border: 1px solid #ffaa00;
+}
+
+QGroupBox::indicator:checked
+{
+    image:url(:/darkOrange_icons/rc/checkbox.png);
+}
+
+QGroupBox::indicator:disabled
+{
+    border: 1px solid #444;
 }
 
 QTextEdit:focus
@@ -456,4 +484,25 @@ QCheckBox::indicator:checked
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {
     border: 1px solid #444;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+       border-image: none;
+       image: url(:/darkOrange_icons/rc/branch-closed.png);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  {
+       border-image: none;
+       image: url(:/darkOrange_icons/rc/branch-open.png);
+}
+
+/* This is parsed by the SR5-Shamen.
+    !!!!! All values MUST have three digits !!!!!!*/
+CustomText
+{
+    color: rgb(177, 177, 177); /* cb free */
+    color: rgb(177, 000, 000); /* cb taken */
+    color: rgb(255, 170, 000); /* status bar hint */
 }

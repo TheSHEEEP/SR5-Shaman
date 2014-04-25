@@ -4,8 +4,10 @@
 #include <QComboBox>
 #include <QListView>
 #include <QEvent>
+#include <QSettings>
 
 #include "data/character/characterchoices.h"
+#include "data/appstatus.h"
 
 //---------------------------------------------------------------------------------
 PriorityEventFilter::PriorityEventFilter()
@@ -47,7 +49,7 @@ PriorityEventFilter::eventFilter(QObject* p_obj, QEvent* p_event)
                 checkIndex != currentIndex)
             {
                 // Set the color
-                color.setRed(255);
+                color = APPSTATUS->getHelperColors().cbTaken;
 
                 // Set the suffix
                 suffix = tr(" ... Taken by ");
@@ -78,6 +80,10 @@ PriorityEventFilter::eventFilter(QObject* p_obj, QEvent* p_event)
                     break;
                 }
             } // END index taken
+            else
+            {
+                color = APPSTATUS->getHelperColors().cbFree;
+            }
 
             // Change the text
             QString previousText = box->itemText(i);
@@ -91,8 +97,8 @@ PriorityEventFilter::eventFilter(QObject* p_obj, QEvent* p_event)
 
         } // END item iteration
 
-        box->view()->adjustSize();
-        box->updateGeometry();
+        // box->view()->adjustSize();
+        // box->updateGeometry();
         box->adjustSize();
     } // END if mouse pressed event
 

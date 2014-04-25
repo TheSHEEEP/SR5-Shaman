@@ -856,9 +856,11 @@ CharEditMagicTab::handleSkillsBoxChecked(bool p_checked)
     if (p_checked)
     {
         ui->groupBoxSkills->layout()->addWidget(ui->frameFreeSkills);
+        ui->frameFreeSkills->setVisible(true);
     }
     else
     {
         ui->groupBoxSkills->layout()->removeWidget(ui->frameFreeSkills);
+        ui->frameFreeSkills->setVisible(false);
     }
 }

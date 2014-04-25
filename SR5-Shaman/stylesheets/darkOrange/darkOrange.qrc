@@ -3,6 +3,8 @@
     <file>rc/checkbox.png</file>
     <file>rc/down_arrow.png</file>
     <file>rc/handle.png</file>
+    <file>rc/branch-open.png</file>
+    <file>rc/branch-closed.png</file>
   </qresource>
   <qresource prefix="stylesheets/darkOrange">
       <file>darkOrange.qss</file>

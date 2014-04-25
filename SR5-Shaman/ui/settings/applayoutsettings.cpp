@@ -5,6 +5,7 @@
 #include <QFont>
 #include <QFontDatabase>
 #include <QFile>
+#include "data/appstatus.h"
 
 //---------------------------------------------------------------------------------
 AppLayoutSettings::AppLayoutSettings(QWidget *parent) :
@@ -21,24 +22,6 @@ AppLayoutSettings::~AppLayoutSettings()
 }
 
 //---------------------------------------------------------------------------------
-void applyStylesheet(const QString& p_sheet)
-{
-    if (p_sheet != "")
-    {
-        QFile file(p_sheet);
-        if(file.open(QFile::ReadOnly))
-        {
-           QString styleSheet = QLatin1String(file.readAll());
-           qApp->setStyleSheet(styleSheet);
-        }
-    }
-    else
-    {
-        qApp->setStyleSheet("");
-    }
-}
-
-//---------------------------------------------------------------------------------
 void
 AppLayoutSettings::initialize()
 {
@@ -46,7 +29,7 @@ AppLayoutSettings::initialize()
     // Add themes
     _themes["Default"] = "";
     _themes["Dark Orange"] = ":stylesheets/darkOrange/darkOrange.qss";
-    _themes["Dark"] = "../../stylesheets/dark.qss";
+    _themes["Dark"] = ":stylesheets/dark/dark.qss";
     _themes["Darkstyle"] = ":stylesheets/qdarkstyle/style.qss";
 
     // Set CB choices
@@ -182,4 +165,52 @@ AppLayoutSettings::handleFontSizeChange(int p_newSize)
                   p_newSize,
                   QFont::Normal, false);
     QApplication::setFont(newFont);
+}
+
+//---------------------------------------------------------------------------------
+void
+AppLayoutSettings::applyStylesheet(const QString& p_sheet)
+{
+    if (p_sheet != "")
+    {
+        QFile file(p_sheet);
+        if(file.open(QFile::ReadOnly))
+        {
+           QString styleSheet = QLatin1String(file.readAll());
+           qApp->setStyleSheet(styleSheet);
+
+           // Read some specific entries to get the color values
+           QRegularExpression regExp("CustomText(?s).*\\}");
+           QRegularExpressionMatch match = regExp.match(styleSheet);
+           if (match.hasMatch())
+           {
+               QString searchText = match.captured();
+               QRegularExpression regExp2("([0-9]{3})");
+               QRegularExpressionMatchIterator matches = regExp2.globalMatch(searchText);
+               QColor color(0, 0, 0);
+               int r = matches.next().captured().toInt();
+               int g = matches.next().captured().toInt();
+               int b = matches.next().captured().toInt();
+               color.setRgb(r, g, b);
+               APPSTATUS->getHelperColors().cbFree = color;
+               r = matches.next().captured().toInt();
+               g = matches.next().captured().toInt();
+               b = matches.next().captured().toInt();
+               color.setRgb(r, g, b);
+               APPSTATUS->getHelperColors().cbTaken = color;
+               r = matches.next().captured().toInt();
+               g = matches.next().captured().toInt();
+               b = matches.next().captured().toInt();
+               color.setRgb(r, g, b);
+               APPSTATUS->getHelperColors().statusBarMessage = color;
+           }
+        }
+    }
+    else
+    {
+        qApp->setStyleSheet("");
+        APPSTATUS->getHelperColors().cbFree = QColor(0, 0, 0);
+        APPSTATUS->getHelperColors().cbTaken = QColor(255, 0, 0);
+        APPSTATUS->getHelperColors().statusBarMessage = QColor(0, 0, 255);
+    }
 }

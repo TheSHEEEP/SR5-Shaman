@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="dark_icons">
+    <file>rc/branch-open.png</file>
+    <file>rc/branch-closed.png</file>
+  </qresource>
+  <qresource prefix="stylesheets/dark">
+      <file>dark.qss</file>
+  </qresource>
+</RCC>

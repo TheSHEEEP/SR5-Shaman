@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QObject>
+#include <QColor>
 
 /**
  * @brief The different possible application states.
@@ -20,6 +21,13 @@ enum AppState
 #define APPSTATUS AppStatus::getSingletonPtr()
 
 class QStatusBar;
+
+struct HelperColors
+{
+    QColor cbFree;
+    QColor cbTaken;
+    QColor statusBarMessage;
+};
 
 /**
  * @brief Singleton class that holds information about the current application status.
@@ -97,11 +105,17 @@ public:
      */
     void setStatusBarMessage(const QString& p_message, float p_seconds, const QColor& p_color);
 
+    /**
+     * @brief Returns the helper colors of the app.
+     */
+    HelperColors& getHelperColors();
+
 private:
     AppState _state;
 
-    QString     _currentLocale;
-    QStatusBar* _statusBar;
+    HelperColors    _helperColors;
+    QString         _currentLocale;
+    QStatusBar*     _statusBar;
 };
 
 
@@ -119,6 +133,14 @@ void
 AppStatus::setStatusBar(QStatusBar* p_statusBar)
 {
     _statusBar = p_statusBar;
+}
+
+//---------------------------------------------------------------------------------
+inline
+HelperColors&
+AppStatus::getHelperColors()
+{
+    return _helperColors;
 }
 
 #endif // APPSTATUS_H

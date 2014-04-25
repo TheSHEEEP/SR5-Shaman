@@ -163,6 +163,30 @@ QGroupBox::title {
     padding-right: 10px;
 }
 
+QGroupBox::indicator{
+    color: #b1b1b1;
+    background-color: #302F2F;
+    border: 1px solid silver;
+    width: 9px;
+    height: 9px;
+    height: 9px;
+}
+
+QGroupBox::indicator:hover, QGroupBox::indicator:pressed
+{
+    border: 1px solid #78879b;
+}
+
+QGroupBox::indicator:checked
+{
+    image:url(:/qss_icons/rc/checkbox.png);
+}
+
+QGroupBox::indicator:disabled
+{
+    border: 1px solid #444;
+}
+
 QAbstractScrollArea
 {
     border-radius: 3px;
@@ -1038,3 +1062,13 @@ QToolBox::tab {
      font: italic bold;
      color: white;
  }
+
+/* This is parsed by the SR5-Shamen.
+    !!!!! All values MUST have three digits (easier RegExp) !!!!!!*/
+CustomText
+{
+    color: rgb(192, 192, 192); /* cb free */
+    color: rgb(192, 000, 000); /* cb taken */
+    color: rgb(255, 170, 000); /* status bar hint */
+}
+
