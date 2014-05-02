@@ -382,29 +382,36 @@
         {
             "key" : "TAB_1_NAME_TYPES",
             "translations" : {
-                "en" : "Step 1: Name, Metatype & Magic Type",
-                "de" : "Schritt 1: Name, Metatyp & Magietyp"
+                "en" : "Name, Metatype, Magic Type",
+                "de" : "Name, Metatyp, Magietyp"
             }
         },
         {
             "key" : "TAB_2_ATTRIBUTES",
             "translations" : {
-                "en" : "Step 2: Attributes",
-                "de" : "Schritt 2: Attribute"
+                "en" : "Attributes",
+                "de" : "Attribute"
             }
         },
         {
             "key" : "TAB_3_MAGIC_RESONANCE",
             "translations" : {
-                "en" : "Step 3: Magic / Resonance",
-                "de" : "Schritt 3: Magie / Resonanz"
+                "en" : "Magic / Resonance",
+                "de" : "Magie / Resonanz"
             }
         },
         {
             "key" : "TAB_4_QUALITIES",
             "translations" : {
-                "en" : "Step 4: Qualities",
-                "de" : "Schritt 4: Qualities"
+                "en" : "Qualities",
+                "de" : "Qualities"
+            }
+        },
+        {
+            "key" : "TAB_5_SKILLS",
+            "translations" : {
+                "en" : "Skills",
+                "de" : "Fertigkeiten"
             }
         },
         {

@@ -13,6 +13,7 @@
 #include "ui/character/tabs/chareditattributetab.h"
 #include "ui/character/tabs/chareditmagictab.h"
 #include "ui/character/tabs/chareditqualitytab.h"
+#include "ui/character/tabs/chareditskilltab.h"
 
 //---------------------------------------------------------------------------------
 MainSplitView::MainSplitView(QWidget *parent)
@@ -26,6 +27,7 @@ MainSplitView::MainSplitView(QWidget *parent)
     , _tabCharEditAttribute(0)
     , _tabCharEditMagic(0)
     , _tabCharEditQuality(0)
+    , _tabCharEditSkills(0)
 {
     ui->setupUi(this);
 }
@@ -49,6 +51,7 @@ MainSplitView::~MainSplitView()
         delete _tabCharEditAttribute;
         delete _tabCharEditMagic;
         delete _tabCharEditQuality;
+        delete _tabCharEditSkills;
     }
 }
 
@@ -90,6 +93,11 @@ MainSplitView::initialize()
     _tabCharEditQuality->initialize();
     connect(_tabCharEditQuality, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
     connect(_tabCharEditQuality, SIGNAL(disableNext()), SLOT(handleDisableNext()));
+
+    _tabCharEditSkills = new CharEditSkillTab();
+    _tabCharEditSkills->initialize();
+    connect(_tabCharEditSkills, SIGNAL(guidedNextStep()), SLOT(handleGuidedNext()));
+    connect(_tabCharEditSkills, SIGNAL(disableNext()), SLOT(handleDisableNext()));
 }
 
 //---------------------------------------------------------------------------------
@@ -145,7 +153,45 @@ MainSplitView::initializeCharacterCreation()
         // Step 4: Qualities
         ui->charTabs->addTab(_tabCharEditQuality, Dictionary::getTranslation("TAB_4_QUALITIES"));
         _tabCharEditQuality->setEnabled(false);
+        // Step 5: Skills
+        ui->charTabs->addTab(_tabCharEditSkills, Dictionary::getTranslation("TAB_5_SKILLS"));
+        _tabCharEditSkills->setEnabled(false);
         ui->charTabs->setCurrentIndex(0);
+    }
+}
+
+//---------------------------------------------------------------------------------
+QWidget*
+MainSplitView::getActiveTab()
+{
+    return ui->charTabs->currentWidget();
+}
+
+
+//---------------------------------------------------------------------------------
+void
+MainSplitView::propagateKeyEventToActiveTab(QKeyEvent* p_event)
+{
+    // TODO: This whole pass key event "downwards" thing is super ugly. Better ideas?
+    if (ui->charTabs->currentWidget() == _tabCharEditAttribute)
+    {
+        _tabCharEditAttribute->keyPressEvent(p_event);
+    }
+    else if (ui->charTabs->currentWidget() == _tabCharEditMagic)
+    {
+        _tabCharEditMagic->keyPressEvent(p_event);
+    }
+    else if (ui->charTabs->currentWidget() == _tabCharEditMisc)
+    {
+        _tabCharEditMisc->keyPressEvent(p_event);
+    }
+    else if (ui->charTabs->currentWidget() == _tabCharEditQuality)
+    {
+        _tabCharEditQuality->keyPressEvent(p_event);
+    }
+    else if (ui->charTabs->currentWidget() == _tabCharEditSkills)
+    {
+        _tabCharEditSkills->keyPressEvent(p_event);
     }
 }
 
@@ -171,6 +217,11 @@ MainSplitView::applyOrder()
 void
 MainSplitView::handleGuidedNext()
 {
+    if (ui->charTabs->currentWidget() != sender())
+    {
+        return;
+    }
+
     if (ui->charTabs->currentIndex() < (ui->charTabs->count() - 1))
     {
         ui->charTabs->setTabEnabled(ui->charTabs->currentIndex() + 1, true);

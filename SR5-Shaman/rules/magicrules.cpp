@@ -650,7 +650,7 @@ MagicRules::getAllSpellDefinitionsByCategory(const QString& p_uniqueID) const
     {
         if ((*it)->category == p_uniqueID)
         {
-            result[it.key()] == *it;
+            result[it.key()] = *it;
         }
     }
 

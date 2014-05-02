@@ -3,6 +3,7 @@
 
 #include <qdesktopwidget.h>
 
+#include "globaleventfilter.h"
 #include "ui/settings/preferenceswindow.h"
 #include "ui/character/creationinitializingwindow.h"
 #include "data/appstatus.h"
@@ -34,7 +35,7 @@ MainWindow::~MainWindow()
 
 //---------------------------------------------------------------------------------
 void
-MainWindow::initialize()
+MainWindow::initialize(GlobalEventFilter* p_globalFilter)
 {
     // Create setting windows
     _prefWindow = new PreferencesWindow(this);
@@ -48,6 +49,7 @@ MainWindow::initialize()
 
     // Init children
     ui->mainSplitView->initialize();
+    p_globalFilter->setMainSplitView(ui->mainSplitView);
 
     // Show init message while initializing
     ui->statusBar->showMessage(tr("Initializing..."), 2000);

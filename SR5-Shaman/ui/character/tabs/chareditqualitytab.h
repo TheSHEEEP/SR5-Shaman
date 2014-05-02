@@ -10,6 +10,11 @@ class QualitySortFilterProxyModel;
 class QualityDelegate;
 
 
+/**
+ * @brief This tab holds information about all character qualities.
+ *          New qualities can be chosen and existing ones removed.
+ * @author  TheSHEEEP
+ */
 class CharEditQualityTab : public QWidget
 {
     Q_OBJECT
@@ -39,6 +44,12 @@ public:
      * @brief Will show/hide the elements specific to the guided creation.
      */
     virtual void showEvent(QShowEvent* /*unused*/);
+
+    /**
+     * @brief Some shortcuts for this tab.
+     * @param p_keyEvent    The event with the pressed key(s).
+     */
+    virtual void keyPressEvent(QKeyEvent* p_keyEvent);
 
 signals:
     void guidedNextStep();

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 
+#include "globaleventfilter.h"
 #include "rules/rules.h"
 #include "data/dictionary.h"
 #include "ui/models/skilltreemodel.h"
@@ -75,9 +76,13 @@ int main(int argc, char *argv[])
     // Initialize rules
     Rules::getSingletonPtr()->initialize();
 
+    // Install global event filter
+    GlobalEventFilter eventFilter(NULL);
+    a.installEventFilter(&eventFilter);
+
     // Init & show main window
     MainWindow w;
-    w.initialize();
+    w.initialize(&eventFilter);
     w.show();
 
     int ret = a.exec();

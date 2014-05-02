@@ -47,6 +47,12 @@ public:
      */
     virtual void showEvent(QShowEvent* /*unused*/);
 
+    /**
+     * @brief Some shortcuts for this tab.
+     * @param p_keyEvent    The event with the pressed key(s).
+     */
+    virtual void keyPressEvent(QKeyEvent* p_keyEvent);
+
 signals:
     void guidedNextStep();
     void disableNext();

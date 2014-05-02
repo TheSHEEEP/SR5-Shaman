@@ -1,4 +1,12 @@
 {
+    "skill_points_per_prio" : 
+    [ 
+        ["46", "10"],
+        ["36", "5"],
+        ["28", "2"],
+        ["22", "0"],
+        ["18", "0"]
+    ],
     "skill_groups" :
     [
         {   "unique_id" : "ACTING",

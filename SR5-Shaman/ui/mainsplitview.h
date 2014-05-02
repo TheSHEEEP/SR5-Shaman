@@ -12,6 +12,7 @@ class CharEditMiscTab;
 class CharEditAttributeTab;
 class CharEditMagicTab;
 class CharEditQualityTab;
+class CharEditSkillTab;
 
 /**
  * @brief This class manages the main split view between the character preview and
@@ -48,6 +49,17 @@ public:
      */
     void initializeCharacterCreation();
 
+    /**
+     * @brief Returns the currently active tab.
+     */
+    QWidget* getActiveTab();
+
+    /**
+     * @brief Will pass the passed key event on to the active tab.
+     * @param p_event   The key event to propagate.
+     */
+    void propagateKeyEventToActiveTab(QKeyEvent* p_event);
+
 private slots:
     /**
      * @brief Will proceed to the next step in the guided creation.
@@ -73,6 +85,7 @@ private:
     CharEditAttributeTab*   _tabCharEditAttribute;
     CharEditMagicTab*       _tabCharEditMagic;
     CharEditQualityTab*     _tabCharEditQuality;
+    CharEditSkillTab*       _tabCharEditSkills;
 
 private:
     /**

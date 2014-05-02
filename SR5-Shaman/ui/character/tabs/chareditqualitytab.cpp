@@ -3,6 +3,7 @@
 
 #include <QItemSelectionModel>
 #include <QPushButton>
+#include <QKeyEvent>
 
 #include "data/appstatus.h"
 #include "data/character/characterchoices.h"
@@ -120,6 +121,27 @@ CharEditQualityTab::showEvent(QShowEvent* /*unused*/)
 
     // Update values
     updateValues();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditQualityTab::keyPressEvent(QKeyEvent* p_keyEvent)
+{
+    switch (p_keyEvent->key())
+    {
+    case Qt::Key_NumberSign:
+    case Qt::Key_Apostrophe:
+        // Fast-forward mode for testing
+        if (p_keyEvent->modifiers() & Qt::ShiftModifier)
+        {
+            ui->btnGuidedContinue->setEnabled(true);
+            emit guidedNextStep();
+        }
+        break;
+
+    default:
+        break;
+    }
 }
 
 //---------------------------------------------------------------------------------

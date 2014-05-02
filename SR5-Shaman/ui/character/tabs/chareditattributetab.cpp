@@ -1,6 +1,8 @@
 #include "chareditattributetab.h"
 #include "ui_chareditattributetab.h"
 
+#include <QKeyEvent>
+
 #include "ui/utils/priorityeventfilter.h"
 #include "data/appstatus.h"
 #include "data/character/characterchoices.h"
@@ -329,6 +331,31 @@ CharEditAttributeTab::showEvent(QShowEvent* /*unused*/)
     else
     {
         ui->btnGuidedContinue->hide();
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditAttributeTab::keyPressEvent(QKeyEvent* p_keyEvent)
+{
+    switch (p_keyEvent->key())
+    {
+    case Qt::Key_NumberSign:
+    case Qt::Key_Apostrophe:
+        // Fast-forward mode for testing
+        if (p_keyEvent->modifiers() & Qt::ShiftModifier)
+        {
+            ui->cbPriority->setCurrentIndex(3);
+            CHARACTER_CHOICES->increaseAttribute("body", 9, 9);
+            CHARACTER_CHOICES->increaseAttribute("reaction", 9, 9);
+            CHARACTER_CHOICES->increaseAttribute("agility", 9, 9);
+            ui->btnGuidedContinue->setEnabled(true);
+            emit guidedNextStep();
+        }
+        break;
+
+    default:
+        break;
     }
 }
 

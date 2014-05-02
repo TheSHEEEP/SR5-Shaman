@@ -3,6 +3,7 @@
 
 #include <QMap>
 #include <QString>
+#include <QKeyEvent>
 
 #include "ui/utils/priorityeventfilter.h"
 #include "data/appstatus.h"
@@ -88,6 +89,29 @@ CharEditMiscTab::showEvent(QShowEvent* /*unused*/)
     else
     {
         ui->btnGuidedContinue->hide();
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditMiscTab::keyPressEvent(QKeyEvent* p_keyEvent)
+{
+    switch (p_keyEvent->key())
+    {
+    case Qt::Key_NumberSign:
+    case Qt::Key_Apostrophe:
+        // Fast-forward mode for testing
+        if (p_keyEvent->modifiers() & Qt::ShiftModifier)
+        {
+            ui->cbMetatype->setCurrentIndex(1);
+            ui->cbPriority->setCurrentIndex(2);
+            ui->btnGuidedContinue->setEnabled(true);
+            emit guidedNextStep();
+        }
+        break;
+
+    default:
+        break;
     }
 }
 

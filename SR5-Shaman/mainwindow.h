@@ -8,6 +8,7 @@ class MainWindow;
 }
 class PreferencesWindow;
 class CreationInitializingWindow;
+class GlobalEventFilter;
 
 /**
  *  Main SR5 Shaman window.
@@ -33,7 +34,7 @@ public:
     /**
      * @brief Initilizes the main window, setting up the correct size, etc.
      */
-    void initialize();
+    void initialize(GlobalEventFilter* p_globalFilter);
 
 private slots:
     /**
