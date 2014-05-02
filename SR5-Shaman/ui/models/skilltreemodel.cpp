@@ -1,10 +1,16 @@
 #include "skilltreemodel.h"
 
+#include <QAbstractItemView>
+#include <QSpinBox>
+
 #include "rules/rules.h"
 #include "data/appstatus.h"
+#include "data/dictionary.h"
 
 //---------------------------------------------------------------------------------
-SkillTreeModel::SkillTreeModel()
+SkillTreeModel::SkillTreeModel(bool p_advancedMode)
+    : _advancedMode(p_advancedMode)
+    , _itemView(NULL)
 {
 
 }
@@ -21,12 +27,70 @@ void
 SkillTreeModel::initialize()
 {
     _rootItem = SKILL_RULES->getModelRootItem();
+
+    // Clean up item controls
+    if (_advancedMode)
+    {
+        QMap<SkillDefinition*, SkillControlElements*>::iterator it;
+        for (it = _itemControls.begin(); it != _itemControls.end(); ++it)
+        {
+            if ((*it)->increases)
+            {
+                delete (*it)->increases;
+            }
+
+            delete (*it);
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+SkillTreeModel::updateItemControls()
+{
+    // In advanced mode
+    // Make sure the item has all the controls it needs and apply them
+    if (_advancedMode)
+    {
+        // Iterate over all categories
+        for (unsigned int i = 0; i < _rootItem->children.size(); ++i)
+        {
+            QModelIndex categoryIndex = index(i, 0);
+            // Iterate over all skills inside the category
+            for (unsigned int j = 0; j < _rootItem->children[i]->children.size(); ++j)
+            {
+                SkillDefinition* item = _rootItem->children[i]->children[j];
+
+                // Create required controls
+                SkillControlElements* elements;
+                if (!_itemControls.contains(item))
+                {
+                    // Create elements
+                    elements = new SkillControlElements();
+                    _itemControls.insert(item, elements);
+
+                    // All in-/decreasable skills need a spin box
+                    elements->increases = new QSpinBox();
+                    QModelIndex itemIndex = index(j, 1, categoryIndex);
+
+                    _itemView->setIndexWidget(itemIndex, elements->increases);
+                }
+            }
+        }
+    }
 }
 
 //---------------------------------------------------------------------------------
 QVariant
 SkillTreeModel::data(const QModelIndex& p_index, int p_role) const
 {
+    // Each odd table column has a special color
+    if (p_role == Qt::BackgroundRole &&
+        (p_index.column() % 2) == 1)
+    {
+        return QVariant(QBrush(APPSTATUS->getHelperColors().tableOddBg));
+    }
+
     // Validity checks
     if (!p_index.isValid())
         return QVariant();
@@ -49,7 +113,12 @@ SkillTreeModel::flags(const QModelIndex& p_index) const
     if (!p_index.isValid())
         return 0;
 
-    return QAbstractItemModel::flags(p_index);
+    Qt::ItemFlags flag = QAbstractItemModel::flags(p_index);
+    if (p_index.column() == 1)
+    {
+        flag |= Qt::ItemIsEditable;
+    }
+    return flag;
 }
 
 //---------------------------------------------------------------------------------
@@ -60,7 +129,19 @@ SkillTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_r
         return QVariant();
 
     if (p_orientation == Qt::Horizontal)
-        return QVariant("Name");
+    {
+        switch (p_section)
+        {
+        case 0:
+            return QVariant(Dictionary::getTranslation("VIEW_NAME"));
+        case 1:
+            return QVariant(Dictionary::getTranslation("VIEW_VALUE"));
+        case 2:
+            return QVariant(Dictionary::getTranslation("VIEW_ATTRIBUTE"));
+        case 3:
+            return QVariant(Dictionary::getTranslation("VIEW_TOTAL_VALUE"));
+        }
+    }
 
     return QVariant();
 }
@@ -83,7 +164,7 @@ SkillTreeModel::index(int p_row, int p_column, const QModelIndex& p_parent) cons
     // Get correct child item and create model index
     SkillDefinition* childItem = parentItem->children[p_row];
     if (childItem)
-        return createIndex(p_row, 0, childItem);
+        return createIndex(p_row, p_column, childItem);
     else
         return QModelIndex();
 }
@@ -131,10 +212,5 @@ SkillTreeModel::rowCount(const QModelIndex& p_parent) const
 int
 SkillTreeModel::columnCount(const QModelIndex& p_parent) const
 {
-    // TODO: This will probably be more as soon as we want to show more than just the name
-    return 1;
-//    if (p_parent.isValid())
-//        return static_cast<SkillDefinition*>(p_parent.internalPointer())->columnCount();
-//    else
-//        return _rootItem->columnCount();
+    return _advancedMode ? 4 : 1;
 }

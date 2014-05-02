@@ -27,8 +27,11 @@ QualityTreeModel::data(const QModelIndex& p_index, int p_role) const
     if (!p_index.isValid())
         return QVariant();
 
-    if (p_role != Qt::DisplayRole)
+    if (p_role != Qt::DisplayRole &&
+        p_role != Qt::EditRole)
+    {
         return QVariant();
+    }
 
     QualityDefinition* item = static_cast<QualityDefinition*>(p_index.internalPointer());
 
@@ -45,7 +48,14 @@ QualityTreeModel::flags(const QModelIndex& p_index) const
     if (!p_index.isValid())
         return 0;
 
-    return QAbstractItemModel::flags(p_index);
+    // Items in some columns are editable
+    int additionalFlags = 0;
+    if (p_index.column() == 1)
+    {
+        additionalFlags |= Qt::ItemIsEditable;
+    }
+
+    return QAbstractItemModel::flags(p_index) | (Qt::ItemFlag)additionalFlags;
 }
 
 //---------------------------------------------------------------------------------

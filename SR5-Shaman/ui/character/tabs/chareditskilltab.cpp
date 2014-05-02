@@ -33,8 +33,10 @@ CharEditSkillTab::initialize()
 {
     // Initialize the skill view
     // Available skills
-    SkillTreeModel* skillTreeModel = new SkillTreeModel();
+    SkillTreeModel* skillTreeModel = new SkillTreeModel(true);
+    skillTreeModel->setItemView(ui->treeSkills);
     skillTreeModel->initialize();
+    // skillTreeModel->updateItemControls();
     // Filter
     _skillsFilter = new SkillSortFilterProxyModel(ui->treeSkills);
     _skillsFilter->setSourceModel(skillTreeModel);
@@ -54,10 +56,10 @@ CharEditSkillTab::initialize()
     // Model & sorting
     ui->treeSkills->setModel(_skillsFilter);
     ui->treeSkills->setSortingEnabled(true);
+    ui->treeSkills->setEditTriggers(QAbstractItemView::AllEditTriggers);
     // Delegate
     _skillsDelegate = new SkillDelegate();
     ui->treeSkills->setItemDelegate(_skillsDelegate);
-    ui->treeSkills->setHeaderHidden(true);
     // Handle selection & drag
     connect(ui->treeSkills->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
                                                 SLOT(handleSkillChanged(QModelIndex,QModelIndex)));

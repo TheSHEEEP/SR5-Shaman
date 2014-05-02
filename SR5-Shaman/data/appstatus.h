@@ -27,6 +27,7 @@ struct HelperColors
     QColor cbFree;
     QColor cbTaken;
     QColor statusBarMessage;
+    QColor tableOddBg;
 };
 
 /**

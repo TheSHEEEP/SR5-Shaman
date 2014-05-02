@@ -4,9 +4,26 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
+#include <QMap>
 #include <vector>
 
 #include "rules/skillrules.h"
+
+class QAbstractItemView;
+class QSpinBox;
+
+/**
+ * @brief The SkillControlElements struct
+ */
+struct SkillControlElements
+{
+public:
+    SkillControlElements()
+        : increases(NULL)
+    {     }
+
+    QSpinBox*   increases;
+};
 
 /**
  * @brief This model is used to organize skills in a tree view.
@@ -20,7 +37,7 @@ public:
     /**
      * @brief Constructor.
      */
-    SkillTreeModel();
+    SkillTreeModel(bool p_advancedMode = false);
 
     /**
      * @brief Destructor.
@@ -31,6 +48,18 @@ public:
      * @brief Will get all skills from the rules.
      */
     void initialize();
+
+    /**
+     * @brief Sets the abstract item view (required for advanced mode).
+     */
+    void setItemView(QAbstractItemView* p_view);
+
+    /**
+     * @brief Will go through all skills and create item controls for skills
+     *          that do not yet have them.
+     *          Also applies those controls to the item view.
+     */
+    void updateItemControls();
 
     /**
      * @brief Adds a skill to the model.
@@ -81,6 +110,19 @@ public:
 
 private:
     SkillDefinition*     _rootItem;
+
+    bool                                            _advancedMode;
+    QAbstractItemView*                              _itemView;
+    QMap<SkillDefinition*, SkillControlElements*>   _itemControls;
 };
+
+
+//---------------------------------------------------------------------------------
+inline
+void
+SkillTreeModel::setItemView(QAbstractItemView* p_view)
+{
+    _itemView = p_view;
+}
 
 #endif // SKILLTREEMODEL_H

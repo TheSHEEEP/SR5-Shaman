@@ -1,6 +1,8 @@
 #include "skilldelegate.h"
 
 #include <QPainter>
+#include <QLabel>
+#include <QSpinBox>
 
 #include "data/appstatus.h"
 #include "rules/rules.h"
@@ -19,6 +21,42 @@ SkillDelegate::~SkillDelegate()
 
 }
 
+//---------------------------------------------------------------------------------
+QWidget*
+SkillDelegate::createEditor(QWidget* p_parent, const QStyleOptionViewItem& p_option,
+                                       const QModelIndex& p_index) const
+{
+    if (p_index.column() == 1)
+    {
+        QSpinBox* editor = new QSpinBox(p_parent);
+        editor->setMinimum(0);
+        editor->setMaximum(100);
+
+        return editor;
+    }
+    else
+    {
+        return new QLabel("Nothing here");
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+SkillDelegate::setEditorData(QWidget* p_editor, const QModelIndex& p_index) const
+{
+    /*QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
+    spinBox->setValue(value);*/
+}
+
+//---------------------------------------------------------------------------------
+void
+SkillDelegate::setModelData(QWidget* p_editor, QAbstractItemModel* p_model,
+                            const QModelIndex& p_index) const
+{
+    /*QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
+    spinBox->interpretText();
+    int value = spinBox->value();*/
+}
 
 //---------------------------------------------------------------------------------
 void
@@ -29,7 +67,7 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
 
     // Get category name
     QString text = "";
-    if (item->id.startsWith("CATEGORY"))
+    if (item->isCategory)
     {
         if (item->id == "CATEGORY_GROUPS")
         {

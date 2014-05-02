@@ -295,4 +295,5 @@ CustomText
     color: rgb(221, 221, 221); /* cb free */
     color: rgb(221, 000, 000); /* cb taken */
     color: rgb(255, 170, 000); /* status bar hint */
+    color: rgb(035, 035, 035); /* odd table column bg */
 }

@@ -203,6 +203,11 @@ AppLayoutSettings::applyStylesheet(const QString& p_sheet)
                b = matches.next().captured().toInt();
                color.setRgb(r, g, b);
                APPSTATUS->getHelperColors().statusBarMessage = color;
+               r = matches.next().captured().toInt();
+               g = matches.next().captured().toInt();
+               b = matches.next().captured().toInt();
+               color.setRgb(r, g, b);
+               APPSTATUS->getHelperColors().tableOddBg = color;
            }
         }
     }
@@ -212,5 +217,6 @@ AppLayoutSettings::applyStylesheet(const QString& p_sheet)
         APPSTATUS->getHelperColors().cbFree = QColor(0, 0, 0);
         APPSTATUS->getHelperColors().cbTaken = QColor(255, 0, 0);
         APPSTATUS->getHelperColors().statusBarMessage = QColor(0, 0, 255);
+        APPSTATUS->getHelperColors().tableOddBg = QColor(235, 235, 255);
     }
 }

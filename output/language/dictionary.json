@@ -420,6 +420,34 @@
                 "en" : "Not possible",
                 "de" : "Nicht möglich"
             }
+        },
+        {
+            "key" : "VIEW_NAME",
+            "translations" : {
+                "en" : "Name",
+                "de" : "Name"
+            }
+        },
+        {
+            "key" : "VIEW_VALUE",
+            "translations" : {
+                "en" : "Value",
+                "de" : "Wert"
+            }
+        },
+        {
+            "key" : "VIEW_ATTRIBUTE",
+            "translations" : {
+                "en" : "Attribute",
+                "de" : "Attribut"
+            }
+        },
+        {
+            "key" : "VIEW_TOTAL_VALUE",
+            "translations" : {
+                "en" : "Total",
+                "de" : "Insgesamt"
+            }
         }
     ]
 }
