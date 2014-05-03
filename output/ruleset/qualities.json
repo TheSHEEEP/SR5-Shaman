@@ -35,7 +35,7 @@
             "effects" : [
                 {
                     "type"         : "increase_skill_max",
-                    "attribute"    : "selected",
+                    "skill"        : "selected",
                     "value"        : "1",
                     "conditions" : [ "only_once" ]
                 }

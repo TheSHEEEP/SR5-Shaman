@@ -250,7 +250,7 @@ CharEditMagicTab::showEvent(QShowEvent* /*unused*/)
 
 //---------------------------------------------------------------------------------
 void
-CharEditMagicTab::keyPressEvent(QKeyEvent* p_keyEvent)
+CharEditMagicTab::keyPressedEvent(QKeyEvent* p_keyEvent)
 {
     switch (p_keyEvent->key())
     {

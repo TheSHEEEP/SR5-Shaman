@@ -55,13 +55,6 @@ public:
     void setItemView(QAbstractItemView* p_view);
 
     /**
-     * @brief Will go through all skills and create item controls for skills
-     *          that do not yet have them.
-     *          Also applies those controls to the item view.
-     */
-    void updateItemControls();
-
-    /**
      * @brief Adds a skill to the model.
      * @param p_id  The ID of the skill to add.
      */
@@ -113,7 +106,6 @@ private:
 
     bool                                            _advancedMode;
     QAbstractItemView*                              _itemView;
-    QMap<SkillDefinition*, SkillControlElements*>   _itemControls;
 };
 
 

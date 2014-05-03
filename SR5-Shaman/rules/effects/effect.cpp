@@ -331,11 +331,11 @@ Effect::limitIsMet()
     case EFFECTTYPE_INCREASE_SKILL:
     case EFFECTTYPE_INCREASE_DAMAGE_VALUE:
     case EFFECTTYPE_INCREASE_ACCURACY:
-        wouldBeValue = CHARACTER_VALUES->getSkill(_currentTarget, true, true) + _value.toDouble();
+        wouldBeValue = CHARACTER_VALUES->getSkill(_currentTarget) + _value.toDouble();
         break;
 
     case EFFECTTYPE_INCREASE_ATTRIBUTE:
-        wouldBeValue = CHARACTER_VALUES->getAttribute(_currentTarget, true, true) + _value.toDouble();
+        wouldBeValue = CHARACTER_VALUES->getAttribute(_currentTarget) + _value.toDouble();
         break;
 
     case EFFECTTYPE_INCREASE_ATTRIBUTE_MAX:
@@ -374,7 +374,7 @@ Effect::limitIsMet()
         }
         else if (token == "pure_skill_value")
         {
-            currentValue = CHARACTER_VALUES->getSkill(_currentTarget, false, false);
+            currentValue = CHARACTER_VALUES->getSkill(_currentTarget, false);
         }
         // Every else must be a number
         else

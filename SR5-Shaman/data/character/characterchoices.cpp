@@ -106,6 +106,19 @@ CharacterChoices::getSpentKarma() const
     // From qualities
     result += getQualitiesKarma(true);
 
+    // From skill increases
+    it = _skillIncreasesKarma.begin();
+    while (it != _skillIncreasesKarma.end())
+    {
+        // Get the pure value
+        int pureValue = CHARACTER_VALUES->getSkill(it.key(), false);
+
+        // Add the cost from the pure value to the pure value + karma increases
+        result += SKILL_RULES->calculateSkillIncreaseCost(it.key(), pureValue - it.value(), pureValue);
+
+        ++it;
+    }
+
     return result;
 }
 
@@ -408,13 +421,146 @@ CharacterChoices::resetAttributeIncreases(const QString p_attribute, bool p_from
 }
 
 //---------------------------------------------------------------------------------
+void
+CharacterChoices::increaseSkill(const QString& p_skill, int p_numIncreases)
+{
+    int currentValue = CHARACTER_VALUES->getSkill(p_skill);
+    int minimumValue = _skillIncreasesFreebies.contains(p_skill) ? _skillIncreasesFreebies[p_skill] : 0;
+    int maxValue = CHARACTER_VALUES->getSkillMax(p_skill);
+    int actualIncreases = p_numIncreases;
+
+    // Make sure to not increase higher than maximum, or lower than minimum
+    if ((currentValue + actualIncreases) > maxValue)
+    {
+        APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("SKILL_INC_ABOVE_MAX").arg(p_skill),
+                                       5.0f,
+                                       APPSTATUS->getHelperColors().statusBarMessage);
+        actualIncreases = maxValue - currentValue;
+    }
+    else if ((currentValue + actualIncreases) < minimumValue)
+    {
+        APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("SKILL_INC_BELOW_MIN").arg(p_skill),
+                                       5.0f,
+                                       APPSTATUS->getHelperColors().statusBarMessage);
+        actualIncreases = minimumValue - currentValue;
+    }
+
+    // Do nothing on no change
+    if (actualIncreases == 0)
+    {
+        return;
+    }
+
+    // Increase
+    if (actualIncreases > 0)
+    {
+        // Use available skill points first
+        int availableSkillPoints = getAvailableSkillPoints(SKILL_RULES->getDefinition(p_skill).isGroup);
+        int currentValuePure = CHARACTER_VALUES->getSkill(p_skill, false);
+        int increasesFromPoints = actualIncreases;
+        int increasesFromKarma = 0;
+        int wouldBeValue = currentValuePure + actualIncreases;
+
+        // Check if we need karma, and if so, how much
+        if (increasesFromPoints > availableSkillPoints)
+        {
+            increasesFromPoints = availableSkillPoints;
+            increasesFromKarma = actualIncreases - increasesFromPoints;
+
+            // Get required karma
+            int availableKarma = getAvailableKarma();
+            int karmaCost =
+                    SKILL_RULES->calculateSkillIncreaseCost(p_skill,
+                                                            currentValuePure + increasesFromPoints,
+                                                            wouldBeValue);
+
+            // If we don't have enough karma, calculate the maximum increase
+            if (karmaCost > availableKarma)
+            {
+                increasesFromKarma = SKILL_RULES->calculateMaximumSkillIncrease(p_skill,
+                                                                                currentValuePure + increasesFromPoints,
+                                                                                maxValue,
+                                                                                availableKarma);
+                actualIncreases = increasesFromPoints + increasesFromKarma;
+
+                APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("SKILL_INC_NOT_ENOUGH_KARMA")
+                                               .arg(p_skill).arg(wouldBeValue)
+                                               .arg(currentValuePure + actualIncreases),
+                                               5.0f,
+                                               APPSTATUS->getHelperColors().statusBarMessage);
+                wouldBeValue = currentValuePure + actualIncreases;
+            }
+        }
+
+        // Apply increase
+        if (!_skillIncreasesKarma.contains(p_skill))
+        {
+            _skillIncreasesKarma[p_skill] = 0;
+        }
+        _skillIncreasesKarma[p_skill] += increasesFromKarma;
+        if (!_skillIncreasesSkillPoints.contains(p_skill))
+        {
+            _skillIncreasesSkillPoints[p_skill] = 0;
+        }
+        _skillIncreasesSkillPoints[p_skill] += increasesFromPoints;
+    }
+    // Decrease
+    else
+    {
+        int decreases = -actualIncreases;
+
+        // Decrease from karma first
+        if (_skillIncreasesKarma.contains(p_skill))
+        {
+            int oldIncreases = _skillIncreasesKarma[p_skill];
+            if (oldIncreases > decreases)
+            {
+                _skillIncreasesKarma[p_skill] = oldIncreases - decreases;
+                return;
+            }
+            else
+            {
+                decreases -= oldIncreases;
+                _skillIncreasesKarma.erase(_skillIncreasesKarma.find(p_skill));
+            }
+        }
+
+        // If there are decreases left, decrease from skill points
+        if (decreases > 0)
+        {
+            if (_skillIncreasesSkillPoints.contains(p_skill))
+            {
+                int increases = _skillIncreasesSkillPoints[p_skill];
+                increases -= decreases;
+
+                if (increases <= 0)
+                {
+                    _skillIncreasesSkillPoints.erase(_skillIncreasesSkillPoints.find(p_skill));
+                }
+                else
+                {
+                    _skillIncreasesSkillPoints[p_skill] = increases;
+                }
+            }
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------
 int
-CharacterChoices::getSkillIncreases(const QString& p_skill, bool p_fromFreebies, bool p_fromKarma) const
+CharacterChoices::getSkillIncreases(const QString& p_skill,
+                                    bool p_fromFreebies,
+                                    bool p_fromSkillPoints,
+                                    bool p_fromKarma) const
 {
     int result = 0;
     if (p_fromFreebies && _skillIncreasesFreebies.find(p_skill) != _skillIncreasesFreebies.end())
     {
         result += _skillIncreasesFreebies[p_skill];
+    }
+    if (p_fromSkillPoints && _skillIncreasesSkillPoints.find(p_skill) != _skillIncreasesSkillPoints.end())
+    {
+        result += _skillIncreasesSkillPoints[p_skill];
     }
     if (p_fromKarma && _skillIncreasesKarma.find(p_skill) != _skillIncreasesKarma.end())
     {
@@ -467,6 +613,34 @@ CharacterChoices::getAvailableFreeSkills(bool p_skillGroups) const
     }
 
     return maxFreeSkills - spentSkills;
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterChoices::getAvailableSkillPoints(bool p_groupPoints) const
+{
+    // Sanity check - priority
+    if (getPriorityIndex(PRIORITY_SKILLS) == -1)
+    {
+        qWarning() << QString("Cannot get the number of available skill points when attributes have no priority selected.");
+        return 0;
+    }
+
+    // Get the available amount
+    int result = SKILL_RULES->getNumSkillPoints(getPriorityIndex(PRIORITY_SKILLS), p_groupPoints);
+
+    // Subtract the spent amount
+    QMap<QString, int>::const_iterator it = _skillIncreasesSkillPoints.begin();
+    while (it != _skillIncreasesSkillPoints.end())
+    {
+        if (SKILL_RULES->getDefinition(it.key()).isGroup == p_groupPoints)
+        {
+            result -= *it;
+        }
+        ++it;
+    }
+
+    return result;
 }
 
 //---------------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 #include "skillrules.h"
 
+#include <utility>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -174,6 +175,19 @@ SkillRules::initialize(const QString& p_jsonFile)
         qCritical() << QString("Error while reading file: %1\nError: %2").arg(p_jsonFile, error.errorString());
         return;
     }
+
+    // Read the skill points
+    QJsonArray pointsArray = doc.object().value("skill_points_per_prio").toArray();
+    _skillPoints.push_back(QPair<int,int>(  pointsArray[0].toArray()[0].toString().toInt(),
+                                            pointsArray[0].toArray()[1].toString().toInt()));
+    _skillPoints.push_back(QPair<int,int>(  pointsArray[1].toArray()[0].toString().toInt(),
+                                            pointsArray[1].toArray()[1].toString().toInt()));
+    _skillPoints.push_back(QPair<int,int>(  pointsArray[2].toArray()[0].toString().toInt(),
+                                            pointsArray[2].toArray()[1].toString().toInt()));
+    _skillPoints.push_back(QPair<int,int>(  pointsArray[3].toArray()[0].toString().toInt(),
+                                            pointsArray[3].toArray()[1].toString().toInt()));
+    _skillPoints.push_back(QPair<int,int>(  pointsArray[4].toArray()[0].toString().toInt(),
+                                            pointsArray[4].toArray()[1].toString().toInt()));
 
     // Parse each skill group and add to the rules
     QJsonArray skillsArray = doc.object().value("skill_groups").toArray();
@@ -363,6 +377,61 @@ SkillRules::getTypeString(SkillType p_type) const
     }
 
     return QObject::tr("This shouldn't happen");
+}
+
+//---------------------------------------------------------------------------------
+int
+SkillRules::getNumSkillPoints(int p_prioIndex, bool p_groupPoints) const
+{
+    return p_groupPoints ? _skillPoints[p_prioIndex].second : _skillPoints[p_prioIndex].first;
+}
+
+//---------------------------------------------------------------------------------
+int
+SkillRules::calculateSkillIncreaseCost(const QString& p_skill, int p_oldValue, int p_newValue)
+{
+    int result = 0;
+    int multiplier = getDefinition(p_skill).isGroup ? 5 : 2;
+    // Increase
+    if (p_oldValue < p_newValue)
+    {
+        for (int i = p_oldValue + 1; i <= p_newValue; ++i)
+        {
+            result += i * multiplier;
+        }
+    }
+    // Decrease
+    else
+    {
+        for (int i = p_oldValue; i > p_newValue; --i)
+        {
+            result += i * multiplier;
+        }
+    }
+
+    return result;
+}
+
+//---------------------------------------------------------------------------------
+int
+SkillRules::calculateMaximumSkillIncrease(  const QString& p_skill, int p_oldValue,
+                                            int p_maxValue, int p_availableKarma) const
+{
+    int result = 0;
+    int multiplier = getDefinition(p_skill).isGroup ? 5 : 2;
+    for (int i = p_oldValue + 1; i <= p_maxValue; ++i)
+    {
+        if ((i * multiplier) > p_availableKarma)
+        {
+            return result;
+        }
+        else
+        {
+            result++;
+            p_availableKarma -= i * multiplier;
+        }
+    }
+
 }
 
 //---------------------------------------------------------------------------------

@@ -125,7 +125,7 @@ CharEditQualityTab::showEvent(QShowEvent* /*unused*/)
 
 //---------------------------------------------------------------------------------
 void
-CharEditQualityTab::keyPressEvent(QKeyEvent* p_keyEvent)
+CharEditQualityTab::keyPressedEvent(QKeyEvent* p_keyEvent)
 {
     switch (p_keyEvent->key())
     {

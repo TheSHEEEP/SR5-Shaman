@@ -264,7 +264,7 @@ CharacterValues::getAdeptPowerLevel(const QString& p_id) const
 
 //---------------------------------------------------------------------------------
 int
-CharacterValues::getSkill(const QString& p_skill, bool p_withAugmentations, bool p_withOther) const
+CharacterValues::getSkill(const QString& p_skill, bool p_withEffects) const
 {
     // Sanity check - does the skill even exist?
     if (!SKILL_RULES->getIsValidSkill(p_skill))
@@ -279,23 +279,13 @@ CharacterValues::getSkill(const QString& p_skill, bool p_withAugmentations, bool
     skillValue += CHARACTER_CHOICES->getSkillIncreases(p_skill);
 
     // Add effects from augmentations, adept powers, qualities, etc.
-    if (p_withAugmentations || p_withOther)
+    if (p_withEffects)
     {
         std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_SKILL);
         for (unsigned int i = 0; i < effects.size(); ++i)
         {
             Effect* effect = effects[i];
-            // From others
-            if (p_withOther && (effect->getSource().magicAbility))
-            {
-                skillValue += effect->getValue().toInt();
-            }
-            // From cyberware
-            // TODO: Mind cyberware
-            else
-            {
-
-            }
+            skillValue += effect->getValue().toInt();
         }
     }
 
@@ -307,16 +297,24 @@ int
 CharacterValues::getSkillMax(const QString& p_skill) const
 {
     int maxValue = 0;
+    // TODO: Make this configurable?
     if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION)
     {
         maxValue = 6;
+    }
+    else
+    {
+        maxValue = 12;
     }
 
     // Mind effects
     std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_INCREASE_SKILL_MAX);
     for (unsigned int i = 0; i < effects.size(); ++i)
     {
-        maxValue += effects[i]->getValue().toInt();
+        if (effects[i]->getCurrentTarget() == p_skill)
+        {
+            maxValue += effects[i]->getValue().toInt();
+        }
     }
 
     return maxValue;

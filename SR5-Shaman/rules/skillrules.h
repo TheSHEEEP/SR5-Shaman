@@ -4,6 +4,7 @@
 #include <QString>
 #include <QMap>
 #include <vector>
+#include <QPair>
 #include <QObject>
 
 // Skill categories
@@ -128,6 +129,30 @@ public:
     SkillDefinition* getModelRootItem();
 
     /**
+     * @brief Returns the number of skill points for skills/skill groups.
+     * @param p_prioIndex   The chosen priority to look at.
+     * @param p_groupPoints If this is true, skill points for groups will be returned.
+     */
+    int getNumSkillPoints(int p_prioIndex, bool p_groupPoints) const;
+
+    /**
+     * @brief Returns the karma cost/gain to inrease/decrease the passed skill.
+     * @param p_skill       The skill to look at.
+     * @param p_oldValue    The old value.
+     * @param p_newValue    The new value.
+     */
+    int calculateSkillIncreaseCost(const QString& p_skill, int p_oldValue, int p_newValue);
+
+    /**
+     * @brief Returns the maximum number of increases for the passed values.
+     * @param p_skill           The skill to look at.
+     * @param p_oldValue        The start value.
+     * @param p_maxValue        The maximum value to increase to.
+     * @param p_availableKarma  The available karma.
+     */
+    int calculateMaximumSkillIncrease(  const QString& p_skill, int p_oldValue,
+                                        int p_maxValue, int p_availableKarma) const;
+    /**
      * @brief Returns the map of metatype definitions.
      */
     const QMap<QString, SkillDefinition*>& getAllDefinitions() const;
@@ -164,7 +189,8 @@ public:
     QString constructCustomizedSkill(const QString &p_id, const QString &p_customValue);
 
 private:
-    QMap<QString, SkillDefinition*>  _definitions;
+    QMap<QString, SkillDefinition*> _definitions;
+    std::vector<QPair<int, int>>    _skillPoints;
 
     SkillDefinition*    _rootItem;  // The root item of the skills, used to display in tree models
 };

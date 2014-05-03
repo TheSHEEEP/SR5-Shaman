@@ -6,10 +6,12 @@
 #include "data/appstatus.h"
 #include "data/character/characterchoices.h"
 #include "data/character/charactervalues.h"
+#include "data/dictionary.h"
 #include "rules/rules.h"
 #include "ui/models/skilltreemodel.h"
 #include "ui/models/skilldelegate.h"
 #include "ui/models/skillsortfilterproxymodel.h"
+#include "ui/utils/priorityeventfilter.h"
 
 //---------------------------------------------------------------------------------
 CharEditSkillTab::CharEditSkillTab(QWidget *parent)
@@ -17,6 +19,7 @@ CharEditSkillTab::CharEditSkillTab(QWidget *parent)
     , ui(new Ui::CharEditSkillTab)
     , _skillsFilter(NULL)
     , _skillsDelegate(NULL)
+    , _filter(NULL)
 {
     ui->setupUi(this);
 }
@@ -31,12 +34,16 @@ CharEditSkillTab::~CharEditSkillTab()
 void
 CharEditSkillTab::initialize()
 {
+    // Set priority event filter
+    _filter = new PriorityEventFilter();
+    ui->cbPriority->installEventFilter(_filter);
+    connect(ui->cbPriority, SIGNAL(activated(int)), _filter ,SLOT(handlePrioritySelection(int)));
+
     // Initialize the skill view
     // Available skills
     SkillTreeModel* skillTreeModel = new SkillTreeModel(true);
     skillTreeModel->setItemView(ui->treeSkills);
     skillTreeModel->initialize();
-    // skillTreeModel->updateItemControls();
     // Filter
     _skillsFilter = new SkillSortFilterProxyModel(ui->treeSkills);
     _skillsFilter->setSourceModel(skillTreeModel);
@@ -64,6 +71,22 @@ CharEditSkillTab::initialize()
     connect(ui->treeSkills->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
                                                 SLOT(handleSkillChanged(QModelIndex,QModelIndex)));
 
+    // Insert skill priorities
+    ui->cbPriority->blockSignals(true);
+    ui->cbPriority->addItem(QString("A (%1/%2)").arg(SKILL_RULES->getNumSkillPoints(0, false))
+                                                .arg(SKILL_RULES->getNumSkillPoints(0, true)), 0);
+    ui->cbPriority->addItem(QString("B (%1/%2)").arg(SKILL_RULES->getNumSkillPoints(1, false))
+                                                .arg(SKILL_RULES->getNumSkillPoints(1, true)), 1);
+    ui->cbPriority->addItem(QString("C (%1/%2)").arg(SKILL_RULES->getNumSkillPoints(2, false))
+                                                .arg(SKILL_RULES->getNumSkillPoints(2, true)), 2);
+    ui->cbPriority->addItem(QString("D (%1/%2)").arg(SKILL_RULES->getNumSkillPoints(3, false))
+                                                .arg(SKILL_RULES->getNumSkillPoints(3, true)), 3);
+    ui->cbPriority->addItem(QString("E (%1/%2)").arg(SKILL_RULES->getNumSkillPoints(4, false))
+                                                .arg(SKILL_RULES->getNumSkillPoints(4, true)), 4);
+    ui->cbPriority->addItem(QString(" "), -1);
+    ui->cbPriority->setCurrentIndex(5);
+    ui->cbPriority->blockSignals(false);
+
     // Apply translation
     applyTranslation();
 }
@@ -79,12 +102,32 @@ CharEditSkillTab::applyTranslation()
 void
 CharEditSkillTab::showEvent(QShowEvent* /*unused*/)
 {
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) != -1)
+    {
+        setEnabled(true);
+    }
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_SKILLS) != -1)
+    {
+        ui->treeSkills->setEnabled(true);
+    }
+
+    updateValues();
     checkContinue();
 }
 
 //---------------------------------------------------------------------------------
 void
-CharEditSkillTab::keyPressEvent(QKeyEvent* p_keyEvent)
+CharEditSkillTab::resizeEvent(QResizeEvent* p_event)
+{
+    int totalWidth = p_event->size().width();
+    ui->treeSkills->setColumnWidth(0, totalWidth * 0.35);
+    ui->treeSkills->setColumnWidth(1, totalWidth * 0.15);
+    ui->treeSkills->setColumnWidth(2, totalWidth * 0.1);
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditSkillTab::keyPressedEvent(QKeyEvent* p_keyEvent)
 {
     switch (p_keyEvent->key())
     {
@@ -109,8 +152,81 @@ CharEditSkillTab::checkContinue()
 {
     if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION)
     {
-
+        if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_SKILLS) != -1 &&
+            CHARACTER_CHOICES->getAvailableSkillPoints(false) == 0 &&
+            CHARACTER_CHOICES->getAvailableSkillPoints(true) == 0)
+        {
+            ui->btnGuidedContinue->setEnabled(true);
+            ui->btnGuidedContinue->setText(Dictionary::getTranslation("CONTINUE"));
+        }
+        else
+        {
+            ui->btnGuidedContinue->setEnabled(false);
+            ui->btnGuidedContinue->setText(Dictionary::getTranslation("SKILL_CANT_CONTINUE"));
+        }
     }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditSkillTab::updateValues()
+{
+    // Karma points
+    ui->lblKarmaValue->setText(QString("%1 / %2")
+                                .arg(CHARACTER_CHOICES->getAvailableKarma())
+                                .arg(CHARACTER_VALUES->getKarmaPool()));
+
+    // Make sure we have a valid priority
+    int priority = CHARACTER_CHOICES->getPriorityIndex(PRIORITY_SKILLS);
+    if (priority == -1)
+    {
+        return;
+    }
+
+    // Skill points
+    ui->lblSkillPointsValue->setText(QString("%1 / %2")
+                                .arg(CHARACTER_CHOICES->getAvailableSkillPoints(false))
+                                .arg(SKILL_RULES->getNumSkillPoints(priority, false)));
+
+    // Skill group points
+    ui->lblSkillGroupPointsValue->setText(QString("%1 / %2")
+                                .arg(CHARACTER_CHOICES->getAvailableSkillPoints(true))
+                                .arg(SKILL_RULES->getNumSkillPoints(priority, true)));
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditSkillTab::on_cbPriority_currentIndexChanged(int p_index)
+{
+    int prio = ui->cbPriority->itemData(p_index).toInt();
+
+    // Set/Unset the chosen priority for the skills
+    if (prio != -1)
+    {
+        CHARACTER_CHOICES->setPriority(prio, PRIORITY_SKILLS);
+    }
+    else
+    {
+        CHARACTER_CHOICES->unsetPriority(PRIORITY_SKILLS);
+    }
+
+    // It is possible that this choice deselected the metatype
+    if (CHARACTER_CHOICES->getPriorityIndex(PRIORITY_METATYPE) == -1)
+    {
+        setEnabled(false);
+        APPSTATUS->setStatusBarMessage(
+                    tr("Deselected metatype. Go back and select your metatype!"), 5.0f, QColor(255, 0, 0));
+        return;
+    }
+
+    // Enable or disable the attribute increase buttons
+    ui->treeSkills->setEnabled(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_SKILLS) != -1);
+
+    // Update the displayed values
+    updateValues();
+
+    // Check if we can continue
+    checkContinue();
 }
 
 //---------------------------------------------------------------------------------

@@ -65,6 +65,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
         </widget>
        </item>
        <item row="0" column="0">
@@ -137,7 +140,11 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QTreeView" name="treeSkills"/>
+    <widget class="QTreeView" name="treeSkills">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">

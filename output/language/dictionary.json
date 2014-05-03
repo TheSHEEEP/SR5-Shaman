@@ -1,5 +1,71 @@
 {
     "dictionary" : [
+        {   "key" : "body",
+            "translations" : {
+                "en" : "Body",
+                "de" : "Konstitution"
+            }
+        },
+        {   "key" : "agility",
+            "translations" : {
+                "en" : "Agility",
+                "de" : "Geschicklichkeit"
+            }
+        },
+        {   "key" : "reaction",
+            "translations" : {
+                "en" : "Reaction",
+                "de" : "Reaktion"
+            }
+        },
+        {   "key" : "strength",
+            "translations" : {
+                "en" : "Strength",
+                "de" : "Stärke"
+            }
+        },
+        {   "key" : "willpower",
+            "translations" : {
+                "en" : "Willpower",
+                "de" : "Willenskraft"
+            }
+        },
+        {   "key" : "logic",
+            "translations" : {
+                "en" : "Logic",
+                "de" : "Logik"
+            }
+        },
+        {   "key" : "intuition",
+            "translations" : {
+                "en" : "Intuition",
+                "de" : "Intuition"
+            }
+        },
+        {   "key" : "charisma",
+            "translations" : {
+                "en" : "Charisma",
+                "de" : "Charisma"
+            }
+        },
+        {   "key" : "edge",
+            "translations" : {
+                "en" : "Edge",
+                "de" : "Edge"
+            }
+        },
+        {   "key" : "magic",
+            "translations" : {
+                "en" : "Magic",
+                "de" : "Magie"
+            }
+        },
+        {   "key" : "CONTINUE",
+            "translations" : {
+                "en" : "Continue",
+                "de" : "Weiter"
+            }
+        },
         {   "key" : "CB_QUALITYMAX_TEXT",
             "translations" : {
                 "en" : "QUALITIES: Only sum counts as limit",
@@ -422,6 +488,41 @@
             }
         },
         {
+            "key" : "SIDE_ATTRIBUTES",
+            "translations" : {
+                "en" : "Attributes (%1)",
+                "de" : "Attribute (%1)"
+            }
+        },
+        {
+            "key" : "SIDE_SKILLS",
+            "translations" : {
+                "en" : "Skills (%1/%2)",
+                "de" : "Fertigkeiten (%1/%2)"
+            }
+        },
+        {
+            "key" : "SIDE_MAGIC_TYPE",
+            "translations" : {
+                "en" : "Magic / Resonance - %1",
+                "de" : "Magie / Resonanz - %1"
+            }
+        },
+        {
+            "key" : "SIDE_MAGIC",
+            "translations" : {
+                "en" : "Magic / Resonance",
+                "de" : "Magie / Resonanz"
+            }
+        },
+        {
+            "key" : "SIDE_METATYPE",
+            "translations" : {
+                "en" : "Metatype - %1 (%2)",
+                "de" : "Metatyp - %1 (%2)"
+            }
+        },
+        {
             "key" : "VIEW_NAME",
             "translations" : {
                 "en" : "Name",
@@ -443,10 +544,38 @@
             }
         },
         {
-            "key" : "VIEW_TOTAL_VALUE",
+            "key" : "VIEW_DICE_POOL",
             "translations" : {
-                "en" : "Total",
-                "de" : "Insgesamt"
+                "en" : "Dice Pool",
+                "de" : "Würfelpool"
+            }
+        },
+        {
+            "key" : "SKILL_INC_ABOVE_MAX",
+            "translations" : {
+                "en" : "Trying to increase skill %1 above maximum. Increasing to maximum instead.",
+                "de" : "Es wird versucht, die Fertigkeit %1 über das Maximum zu steigern. Steigere stattdessen auf Maximum."
+            }
+        },
+        {
+            "key" : "SKILL_INC_BELOW_MIN",
+            "translations" : {
+                "en" : "Trying to decrease skill %1 below minimum. Decreasing to minimum instead.",
+                "de" : "Es wird versucht, die Fertigkeit %1 unter das Minimum zu senken. Senke stattdessen auf Minimum."
+            }
+        },
+        {
+            "key" : "SKILL_INC_NOT_ENOUGH_KARMA",
+            "translations" : {
+                "en" : "Not eough karma to increase skill %1 to %2. Raising to %3 instead.",
+                "de" : "Nicht genug Karma um die Fertigkeit %1 auf %2 zu steigern. Steigere nur auf %3."
+            }
+        },
+        {
+            "key" : "SKILL_CANT_CONTINUE",
+            "translations" : {
+                "en" : "Select a skills priority and spend skill points.",
+                "de" : "Wähle eine Priorität für Fertigkeiten und gib die Fertigkeitenpunkte aus."
             }
         }
     ]

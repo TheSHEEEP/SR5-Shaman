@@ -175,23 +175,23 @@ MainSplitView::propagateKeyEventToActiveTab(QKeyEvent* p_event)
     // TODO: This whole pass key event "downwards" thing is super ugly. Better ideas?
     if (ui->charTabs->currentWidget() == _tabCharEditAttribute)
     {
-        _tabCharEditAttribute->keyPressEvent(p_event);
+        _tabCharEditAttribute->keyPressedEvent(p_event);
     }
     else if (ui->charTabs->currentWidget() == _tabCharEditMagic)
     {
-        _tabCharEditMagic->keyPressEvent(p_event);
+        _tabCharEditMagic->keyPressedEvent(p_event);
     }
     else if (ui->charTabs->currentWidget() == _tabCharEditMisc)
     {
-        _tabCharEditMisc->keyPressEvent(p_event);
+        _tabCharEditMisc->keyPressedEvent(p_event);
     }
     else if (ui->charTabs->currentWidget() == _tabCharEditQuality)
     {
-        _tabCharEditQuality->keyPressEvent(p_event);
+        _tabCharEditQuality->keyPressedEvent(p_event);
     }
     else if (ui->charTabs->currentWidget() == _tabCharEditSkills)
     {
-        _tabCharEditSkills->keyPressEvent(p_event);
+        _tabCharEditSkills->keyPressedEvent(p_event);
     }
 }
 

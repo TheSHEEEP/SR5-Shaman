@@ -336,7 +336,7 @@ CharEditAttributeTab::showEvent(QShowEvent* /*unused*/)
 
 //---------------------------------------------------------------------------------
 void
-CharEditAttributeTab::keyPressEvent(QKeyEvent* p_keyEvent)
+CharEditAttributeTab::keyPressedEvent(QKeyEvent* p_keyEvent)
 {
     switch (p_keyEvent->key())
     {

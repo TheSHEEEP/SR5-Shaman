@@ -94,7 +94,7 @@ CharEditMiscTab::showEvent(QShowEvent* /*unused*/)
 
 //---------------------------------------------------------------------------------
 void
-CharEditMiscTab::keyPressEvent(QKeyEvent* p_keyEvent)
+CharEditMiscTab::keyPressedEvent(QKeyEvent* p_keyEvent)
 {
     switch (p_keyEvent->key())
     {

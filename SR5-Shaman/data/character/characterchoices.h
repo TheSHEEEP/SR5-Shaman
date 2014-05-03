@@ -197,19 +197,35 @@ public:
     // SKILLS
     //*********************************************************************
     /**
+     * @brief Will increase/decrease the skill. Using skill points first, then karma.
+     * @param p_skill           The ID of the skill.
+     * @param p_numIncreases    The number of increases (negative for decreases).
+     */
+    void increaseSkill(const QString& p_skill, int p_numIncreases);
+
+    /**
      * @brief Returns the number of skill increases for the passed skill.
-     * @param p_attribute       The name of the skill to check.
-     * @param p_fromFreebies    If the increases from free attribute points should be counted.
+     * @param p_skill           The name of the skill to check.
+     * @param p_fromFreebies    If the increases from free skills should be counted.
+     * @param p_fromSkillPoints If the increases from skill points should be counted.
      * @param p_fromKarma       If the increases from karma points should be counted.
      * @return  The number of skill increases.
      */
-    int getSkillIncreases(const QString& p_skill, bool p_fromFreebies = true, bool p_fromKarma = true) const;
+    int getSkillIncreases(const QString& p_skill, bool p_fromFreebies = true,
+                          bool p_fromSkillPoints = true,
+                          bool p_fromKarma = true) const;
 
     /**
      * @brief Returns the number of remaining free skills.
      * @param p_skillGroups If this is true, the number of remaining free skill groups will be returned instead.
      */
     int getAvailableFreeSkills(bool p_skillGroups) const;
+
+    /**
+     * @brief Returns the number of available skill points.
+     * @param p_groupPoints If this is true, the number of skill points for groups will be returned.
+     */
+    int getAvailableSkillPoints(bool p_groupPoints) const;
 
     /**
      * @brief Adds the passed free skill.
@@ -363,6 +379,7 @@ private:
     QMap<QString, int>      _attributeIncreasesFreebies;
     QMap<QString, int>      _attributeIncreasesKarma;
     QMap<QString, int>      _skillIncreasesFreebies;
+    QMap<QString, int>      _skillIncreasesSkillPoints;
     QMap<QString, int>      _skillIncreasesKarma;
     QMap<QString, float>    _spellsFromFreebies;
     QMap<QString, float>    _spellsFromKarma;

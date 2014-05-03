@@ -7,6 +7,7 @@
 
 #include "data/character/characterchoices.h"
 #include "data/appstatus.h"
+#include "data/dictionary.h"
 
 //---------------------------------------------------------------------------------
 CreationSideInfo::CreationSideInfo(QWidget *parent)
@@ -81,11 +82,14 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
         break;
 
     case PRIORITY_ATTRIBUTES:
-        p_label->setText(tr("Attributes (%1)").arg(ATTRIBUTE_RULES->getNumFreebies(p_prioIndex)));
+        p_label->setText(Dictionary::getTranslation("SIDE_ATTRIBUTES")
+                         .arg(ATTRIBUTE_RULES->getNumFreebies(p_prioIndex)));
         break;
 
     case PRIORITY_SKILLS:
-        p_label->setText(tr("Skills"));
+        p_label->setText(Dictionary::getTranslation("SIDE_SKILLS")
+                         .arg(SKILL_RULES->getNumSkillPoints(p_prioIndex, false))
+                         .arg(SKILL_RULES->getNumSkillPoints(p_prioIndex, true)));
         break;
 
     case PRIORITY_RESOURCES:
@@ -103,11 +107,11 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
                 const MagicTypeDefinition& magicType =
                         MAGIC_RULES->getMagicTypeDefinition(CHARACTER_CHOICES->getMagicUserTypeID());
                 QString magicTypeName = magicType.translations[APPSTATUS->getCurrentLocale()];
-                p_label->setText(tr("Magic / Resonance") + " - " + magicTypeName);
+                p_label->setText(Dictionary::getTranslation("SIDE_MAGIC_TYPE")
+                                 .arg(magicTypeName));
             }
             else
-            {
-                p_label->setText(tr("Magic / Resonance"));
+            {p_label->setText(Dictionary::getTranslation("SIDE_MAGIC"));
             }
         }
         break;
@@ -121,7 +125,9 @@ CreationSideInfo::updatePriorityLabelText(QLabel* p_label, int p_prioIndex, Prio
                 METATYPE_RULES->getDefinition(CHARACTER_CHOICES->getMetatypeID());
         QString metatypeName = type.translations[APPSTATUS->getCurrentLocale()];
         int specialAttribPoints = type.specialAttribPointsPerPrio[p_prioIndex];
-        p_label->setText(tr("Metatype") + " - " + metatypeName + QString(" (%1)").arg(specialAttribPoints));
+        p_label->setText(Dictionary::getTranslation("SIDE_METATYPE")
+                            .arg(metatypeName)
+                            .arg(specialAttribPoints));
         break;
     }
 }
