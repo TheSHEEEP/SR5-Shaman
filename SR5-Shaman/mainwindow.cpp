@@ -3,6 +3,9 @@
 
 #include <qdesktopwidget.h>
 
+#include <QLabel>
+#include <QTimer>
+
 #include "globaleventfilter.h"
 #include "ui/settings/preferenceswindow.h"
 #include "ui/character/creationinitializingwindow.h"
@@ -14,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , _prefWindow(0)
     , _creationInitWindow(0)
+    , _targetWidth(0), _targetHeight(0)
+    , _initMaximizer(false)
 {
     ui->setupUi(this);
 }
@@ -58,18 +63,23 @@ MainWindow::initialize(GlobalEventFilter* p_globalFilter)
     APPSTATUS->setStatusBar(ui->statusBar);
 
     // Make sure the window fits the screen
-    int desktopWidth = QApplication::desktop()->width();
-    int desktopHeight = QApplication::desktop()->height();
-    int targetWidth = 1280;
-    int targetHeight = 800;
-    float step = 0.9f;
-    while (desktopWidth < targetWidth || desktopHeight < targetHeight)
+    _targetWidth = QApplication::desktop()->width();
+    _targetHeight = QApplication::desktop()->height();
+    showMaximized();
+    _initMaximizer = true;
+}
+
+//---------------------------------------------------------------------------------
+void
+MainWindow::resizeEvent(QResizeEvent* p_event)
+{
+    if (_initMaximizer)
     {
-        targetWidth = (targetWidth * step) + 0.5f;
-        targetHeight = (targetHeight * step) + 0.5f;
+        // This has to be done to prevent the mainSplitView from kicking out the status bar
+        ui->mainSplitView->hide();
+        ui->mainSplitView->setFixedHeight(height() * 0.9f);
+        ui->mainSplitView->show();
     }
-    setGeometry((desktopWidth >> 1) - (targetWidth >> 1), (desktopHeight >> 1) - (targetHeight >> 1),
-                targetWidth, targetHeight);
 }
 
 //---------------------------------------------------------------------------------

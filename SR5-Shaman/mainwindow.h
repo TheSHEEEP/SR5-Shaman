@@ -36,6 +36,11 @@ public:
      */
     void initialize(GlobalEventFilter* p_globalFilter);
 
+    /**
+     * @brief Resizes the content.
+     */
+    void resizeEvent(QResizeEvent* p_event);
+
 private slots:
     /**
      * @brief Show the preferences window.
@@ -68,6 +73,10 @@ private:
     PreferencesWindow*  _prefWindow;
 
     CreationInitializingWindow* _creationInitWindow;
+
+    int     _targetWidth;
+    int     _targetHeight;
+    bool    _initMaximizer;
 };
 
 #endif // MAINWINDOW_H

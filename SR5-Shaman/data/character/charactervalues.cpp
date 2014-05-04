@@ -275,8 +275,15 @@ CharacterValues::getSkill(const QString& p_skill, bool p_withEffects) const
 
     int skillValue = 0;
 
-    // Skill increases (via points or karma)
+    // Skill increases (via freebies, points or karma)
     skillValue += CHARACTER_CHOICES->getSkillIncreases(p_skill);
+
+    // If this skill is in a group, count the group increases, too
+    const SkillDefinition& skill = SKILL_RULES->getDefinition(p_skill);
+    if (!skill.isGroup && skill.group != "none")
+    {
+        skillValue += getSkill(skill.group);
+    }
 
     // Add effects from augmentations, adept powers, qualities, etc.
     if (p_withEffects)
@@ -285,7 +292,10 @@ CharacterValues::getSkill(const QString& p_skill, bool p_withEffects) const
         for (unsigned int i = 0; i < effects.size(); ++i)
         {
             Effect* effect = effects[i];
-            skillValue += effect->getValue().toInt();
+            if (effect->getCurrentTarget() == p_skill)
+            {
+                skillValue += effect->getValue().toInt();
+            }
         }
     }
 

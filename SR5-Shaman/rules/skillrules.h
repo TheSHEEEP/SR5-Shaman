@@ -87,6 +87,7 @@ public:
 };
 
 Q_DECLARE_METATYPE(SkillDefinition)
+Q_DECLARE_METATYPE(SkillDefinition*)
 
 /**
  * @brief This class holds all information regarding magic specific rules.

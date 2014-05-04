@@ -67,6 +67,7 @@ CharEditSkillTab::initialize()
     // Delegate
     _skillsDelegate = new SkillDelegate();
     ui->treeSkills->setItemDelegate(_skillsDelegate);
+    connect(_skillsDelegate, SIGNAL(skillChanged()), SLOT(handleSkillValueChanged()));
     // Handle selection & drag
     connect(ui->treeSkills->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
                                                 SLOT(handleSkillChanged(QModelIndex,QModelIndex)));
@@ -196,9 +197,18 @@ CharEditSkillTab::updateValues()
 
 //---------------------------------------------------------------------------------
 void
+CharEditSkillTab::handleSkillValueChanged()
+{
+    updateValues();
+    checkContinue();
+}
+
+//---------------------------------------------------------------------------------
+void
 CharEditSkillTab::on_cbPriority_currentIndexChanged(int p_index)
 {
     int prio = ui->cbPriority->itemData(p_index).toInt();
+    int oldPrio = CHARACTER_CHOICES->getPriorityIndex(PRIORITY_SKILLS);
 
     // Set/Unset the chosen priority for the skills
     if (prio != -1)
@@ -208,6 +218,13 @@ CharEditSkillTab::on_cbPriority_currentIndexChanged(int p_index)
     else
     {
         CHARACTER_CHOICES->unsetPriority(PRIORITY_SKILLS);
+    }
+
+    // If the old priority was higher than the new one, reset purchased skill points
+    if (oldPrio != -1 && oldPrio < prio)
+    {
+        CHARACTER_CHOICES->resetSkillPoints();
+        CHARACTER_CHOICES->resetSkillPurchases();
     }
 
     // It is possible that this choice deselected the metatype

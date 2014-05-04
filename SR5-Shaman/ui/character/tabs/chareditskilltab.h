@@ -79,6 +79,12 @@ private:
     void updateValues();
 
 private slots:
+
+    /**
+     * @brief Will cause an update of the displayed values.
+     */
+    void handleSkillValueChanged();
+
     /**
      * @brief Will set the selected priority for skills.
      * @param p_index   The now selected index.

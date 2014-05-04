@@ -246,6 +246,16 @@ public:
     void resetFreeSkills();
 
     /**
+     * @brief Removes all skill points spent on skills.
+     */
+    void resetSkillPoints();
+
+    /**
+     * @brief Removes all karma spent on skills.
+     */
+    void resetSkillPurchases();
+
+    /**
      * @brief Returns a list with the IDs of chosen free skills.
      */
     QStringList getChosenFreeSkills();
@@ -525,6 +535,22 @@ void
 CharacterChoices::resetFreeSkills()
 {
     _skillIncreasesFreebies.clear();
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterChoices::resetSkillPoints()
+{
+    _skillIncreasesSkillPoints.clear();
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterChoices::resetSkillPurchases()
+{
+    _skillIncreasesKarma.clear();
 }
 
 //---------------------------------------------------------------------------------

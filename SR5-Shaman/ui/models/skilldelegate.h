@@ -46,6 +46,19 @@ public:
      * @param p_index   The model index to display.
      */
     void paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, const QModelIndex& p_index) const;
+
+signals:
+    /**
+     * @brief Emitted when the user changes a skill level in the editor.
+     */
+    void skillChanged();
+
+private slots:
+    /**
+     * @brief Emitted when the value in the spinbox changed.
+     * @param p_newValue    The new value in the spinbox.
+     */
+    void spinBoxChanged(int p_newValue);
 };
 
 #endif // SKILLDELEGATE_H

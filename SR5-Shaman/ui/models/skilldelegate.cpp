@@ -35,8 +35,9 @@ SkillDelegate::createEditor(QWidget* p_parent, const QStyleOptionViewItem& p_opt
         QSpinBox* editor = new QSpinBox(p_parent);
         editor->setMinimum(0);
         editor->setMaximum(100);
-        // TODO: here
-        // Connect the editor to the skill tab if present
+        SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
+        editor->setProperty("skill", QVariant::fromValue(item));
+        connect(editor, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged(int)));
 
         return editor;
     }
@@ -73,14 +74,7 @@ void
 SkillDelegate::setModelData(QWidget* p_editor, QAbstractItemModel* p_model,
                             const QModelIndex& p_index) const
 {
-    // Get pure skill value
-    SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
-    int skillValuePure = CHARACTER_VALUES->getSkill(item->id, false);
-
-    // Increase skill
-    QSpinBox* spinBox = static_cast<QSpinBox*>(p_editor);
-    int value = spinBox->value();
-    CHARACTER_CHOICES->increaseSkill(item->id, value - skillValuePure);
+    // spinBoxChanged does this as it is called more reliably
 }
 
 //---------------------------------------------------------------------------------
@@ -181,4 +175,32 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
     drawFocus(p_painter, newOptions, newOptions.rect);
 
     p_painter->restore();
+}
+
+//---------------------------------------------------------------------------------
+void
+SkillDelegate::spinBoxChanged(int p_newValue)
+{
+    QSpinBox* spinBox = static_cast<QSpinBox*>(sender());
+    SkillDefinition* item = spinBox->property("skill").value<SkillDefinition*>();
+    int skillValuePure = CHARACTER_VALUES->getSkill(item->id, false);
+
+    // Increase skill
+    CHARACTER_CHOICES->increaseSkill(item->id, p_newValue - skillValuePure);
+
+    // Update spinbox text
+    int currentValuePure = CHARACTER_VALUES->getSkill(item->id, false);
+    int currentValueModified = CHARACTER_VALUES->getSkill(item->id);
+    int difference = currentValueModified - currentValuePure;
+    int maxValue = CHARACTER_VALUES->getSkillMax(item->id);
+    QString postfix = currentValueModified != currentValuePure ?
+                QString(" (+%1)").arg(difference) :
+                "";
+    postfix.append(QString(" / %1").arg(maxValue));
+    spinBox->setSuffix(postfix);
+    spinBox->blockSignals(true);
+    spinBox->setValue(currentValuePure);
+    spinBox->blockSignals(false);
+
+    emit skillChanged();
 }
