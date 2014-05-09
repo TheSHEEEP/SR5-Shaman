@@ -28,6 +28,11 @@ public:
     virtual ~SkillSortFilterProxyModel();
 
     /**
+     * @brief Emits the data changed signal to update any view.
+     */
+    void update();
+
+    /**
      * @brief Has to be overridden in order not to screw up the display, it seems.
      *          See here: http://schneide.wordpress.com/2010/04/26/wrestling-with-qts-model-view-api-filtering-in-treemodels/
      */

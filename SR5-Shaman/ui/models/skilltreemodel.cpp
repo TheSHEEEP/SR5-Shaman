@@ -30,6 +30,13 @@ SkillTreeModel::initialize()
 }
 
 //---------------------------------------------------------------------------------
+void
+SkillTreeModel::update()
+{
+    emit dataChanged(index(0,0), index(rowCount() - 1, 0));
+}
+
+//---------------------------------------------------------------------------------
 QVariant
 SkillTreeModel::data(const QModelIndex& p_index, int p_role) const
 {

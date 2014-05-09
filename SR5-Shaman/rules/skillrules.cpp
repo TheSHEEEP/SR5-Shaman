@@ -115,7 +115,7 @@ SkillRules::SkillRules()
     // Resonance
     category = new SkillDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY";
+    category->id = "CATEGORY_RESONANCE";
     category->type = SKILL_TYPE_RESONANCE;
     _rootItem->children.push_back(category);
     // Technical

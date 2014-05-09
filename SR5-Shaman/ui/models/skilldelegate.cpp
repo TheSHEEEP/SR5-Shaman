@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QLabel>
 #include <QSpinBox>
+#include <QPushButton>
 #include <QApplication>
 
 #include "data/appstatus.h"
@@ -32,14 +33,30 @@ SkillDelegate::createEditor(QWidget* p_parent, const QStyleOptionViewItem& p_opt
 {
     if (p_index.column() == 1)
     {
-        QSpinBox* editor = new QSpinBox(p_parent);
-        editor->setMinimum(0);
-        editor->setMaximum(100);
         SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
-        editor->setProperty("skill", QVariant::fromValue(item));
-        connect(editor, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged(int)));
 
-        return editor;
+        // Either create a spin box or a button to click
+        if (!item->requiresCustom || item->custom != "")
+        {
+            QSpinBox* editor = new QSpinBox(p_parent);
+            editor->setMinimum(0);
+            editor->setMaximum(100);
+            SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
+            editor->setProperty("skill", QVariant::fromValue(item));
+            connect(editor, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged(int)));
+
+            return editor;
+        }
+        else
+        {
+            QPushButton* button = new QPushButton(p_parent);
+            button->setText(Dictionary::getTranslation("ADD"));
+            button->setProperty("skill", QVariant::fromValue(item));
+            connect(button, SIGNAL(clicked()), SLOT(addButtonClicked()));
+
+            emit addButtonClicked(item);
+            return button;
+        }
     }
     else
     {
@@ -51,22 +68,27 @@ SkillDelegate::createEditor(QWidget* p_parent, const QStyleOptionViewItem& p_opt
 void
 SkillDelegate::setEditorData(QWidget* p_editor, const QModelIndex& p_index) const
 {
-    // Create the postfix
     SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
-    int skillValuePure = CHARACTER_VALUES->getSkill(item->id, false);
-    int skillValueMod = CHARACTER_VALUES->getSkill(item->id);
-    int skillMax = CHARACTER_VALUES->getSkillMax(item->id);
-    QString postfix = skillValueMod != skillValuePure ?
-                QString(" (+%1)").arg(skillValueMod - skillValuePure) :
-                "";
-    postfix.append(QString(" / %1").arg(skillMax));
 
-    // Apply value & postfix
-    QSpinBox* spinBox = static_cast<QSpinBox*>(p_editor);
-    spinBox->setValue(skillValuePure);
-    spinBox->setSuffix(postfix);
-    spinBox->setAlignment(Qt::AlignHCenter);
-    spinBox->setMaximum(skillMax);
+    // Only do something here if this was sent by a spin box
+    if (qobject_cast<QSpinBox*>(p_editor))
+    {
+        // Create the postfix
+        int skillValuePure = CHARACTER_VALUES->getSkill(item->id, false);
+        int skillValueMod = CHARACTER_VALUES->getSkill(item->id);
+        int skillMax = CHARACTER_VALUES->getSkillMax(item->id);
+        QString postfix = skillValueMod != skillValuePure ?
+                    QString(" (+%1)").arg(skillValueMod - skillValuePure) :
+                    "";
+        postfix.append(QString(" / %1").arg(skillMax));
+
+        // Apply value & postfix
+        QSpinBox* spinBox = static_cast<QSpinBox*>(p_editor);
+        spinBox->setValue(skillValuePure);
+        spinBox->setSuffix(postfix);
+        spinBox->setAlignment(Qt::AlignHCenter);
+        spinBox->setMaximum(skillMax);
+    }
 }
 
 //---------------------------------------------------------------------------------
@@ -75,6 +97,7 @@ SkillDelegate::setModelData(QWidget* p_editor, QAbstractItemModel* p_model,
                             const QModelIndex& p_index) const
 {
     // spinBoxChanged does this as it is called more reliably
+    // Also, nothing to do in case of push button click
 }
 
 //---------------------------------------------------------------------------------
@@ -117,36 +140,61 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
         }
     }
     // Second column is the skill value, presented as a spin box
+    // Or the button to add a custom variant of the skill
     else if (p_index.column() == 1 &&
              !item->isCategory)
     {
-        // Get the postfix
-        int skillValuePure = CHARACTER_VALUES->getSkill(item->id, false);
-        int skillValueMod = CHARACTER_VALUES->getSkill(item->id);
-        int skillMax = CHARACTER_VALUES->getSkillMax(item->id);
-        QString postfix = skillValueMod != skillValuePure ?
-                    QString(" (+%1)").arg(skillValueMod - skillValuePure) :
-                    "";
-        postfix.append(QString(" / %1").arg(skillMax));
+        // Show a SpinBox with the value
+        if (!item->requiresCustom || item->custom != "")
+        {
+            // Get the postfix
+            int skillValuePure = CHARACTER_VALUES->getSkill(item->id, false);
+            int skillValueMod = CHARACTER_VALUES->getSkill(item->id);
+            int skillMax = CHARACTER_VALUES->getSkillMax(item->id);
+            QString postfix = skillValueMod != skillValuePure ?
+                        QString(" (+%1)").arg(skillValueMod - skillValuePure) :
+                        "";
+            postfix.append(QString(" / %1").arg(skillMax));
 
-        // Draw a custom spin box
-        p_painter->save();
-        QStyleOptionSpinBox spinBoxOption;
-        spinBoxOption.rect = newOptions.rect;
-        spinBoxOption.state = newOptions.state;
-        spinBoxOption.state |= QStyle::State_Enabled;
-        spinBoxOption.activeSubControls = QStyle::SC_All;
-        spinBoxOption.subControls = QStyle::SC_All;
-        spinBoxOption.buttonSymbols = QAbstractSpinBox::UpDownArrows;
-        spinBoxOption.frame = true;
-        spinBoxOption.palette = newOptions.palette;
+            // Draw a custom spin box
+            p_painter->save();
+            QStyleOptionSpinBox spinBoxOption;
+            spinBoxOption.rect = newOptions.rect;
+            spinBoxOption.state = newOptions.state;
+            spinBoxOption.state |= QStyle::State_Enabled;
+            spinBoxOption.activeSubControls = QStyle::SC_All;
+            spinBoxOption.subControls = QStyle::SC_All;
+            spinBoxOption.buttonSymbols = QAbstractSpinBox::UpDownArrows;
+            spinBoxOption.frame = true;
+            spinBoxOption.palette = newOptions.palette;
 
-        // Get style and draw
-        QStyle* style = qApp->style();
-        style->drawComplexControl(QStyle::CC_SpinBox, &spinBoxOption, p_painter, 0);
-        style->drawItemText(p_painter, newOptions.rect, Qt::AlignHCenter, newOptions.palette, true,
-                            QString("%1%2").arg(skillValuePure).arg(postfix));
-        p_painter->restore();
+            // Get style and draw
+            QStyle* style = qApp->style();
+            QSpinBox box;
+            style->drawComplexControl(QStyle::CC_SpinBox, &spinBoxOption, p_painter,
+                                      static_cast<QWidget*>(&box));
+            style->drawItemText(p_painter, newOptions.rect, Qt::AlignHCenter, newOptions.palette, true,
+                                QString("%1%2").arg(skillValuePure).arg(postfix));
+            p_painter->restore();
+        }
+        else
+        {
+            // Draw a push button
+            p_painter->save();
+            QStyleOptionButton btnOption;
+            btnOption.rect = newOptions.rect;
+            btnOption.state = newOptions.state;
+            btnOption.state |= QStyle::State_Enabled;
+            btnOption.text = Dictionary::getTranslation("ADD");
+            btnOption.palette = newOptions.palette;
+
+            // Get style and draw
+            QStyle* style = qApp->style();
+            QPushButton btn;
+            style->drawControl(QStyle::CE_PushButton, &btnOption, p_painter,
+                               static_cast<QWidget*>(&btn));
+            p_painter->restore();
+        }
         return;
     }
     // Third column is the connected attribute
@@ -158,7 +206,8 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
     }
     // Fourth column is the dice pool
     else if (p_index.column() == 3 &&
-             !item->isCategory && !item->isGroup)
+             !item->isCategory && !item->isGroup &&
+             (!item->requiresCustom || item->custom != ""))
     {
         int value = CHARACTER_VALUES->getAttribute(item->attribute);
         value += CHARACTER_VALUES->getSkill(item->id);
@@ -203,4 +252,14 @@ SkillDelegate::spinBoxChanged(int p_newValue)
     spinBox->blockSignals(false);
 
     emit skillChanged();
+}
+
+//---------------------------------------------------------------------------------
+void
+SkillDelegate::addButtonClicked()
+{
+    QPushButton* button = static_cast<QPushButton*>(sender());
+    SkillDefinition* item = button->property("skill").value<SkillDefinition*>();
+
+    emit addButtonClicked(item);
 }

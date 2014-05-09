@@ -3,6 +3,8 @@
 
 #include <QItemDelegate>
 
+class SkillDefinition;
+
 /**
  * @brief This delegate can be configred to display a skill in different variations.
  *          Default is to display the translation.
@@ -53,12 +55,22 @@ signals:
      */
     void skillChanged();
 
+    /**
+     * @brief Emitted when the user changes a skill level in the editor.
+     */
+    void addButtonClicked(SkillDefinition* p_skill) const;
+
 private slots:
     /**
-     * @brief Emitted when the value in the spinbox changed.
+     * @brief Triggered when the value in the spinbox changed.
      * @param p_newValue    The new value in the spinbox.
      */
     void spinBoxChanged(int p_newValue);
+
+    /**
+     * @brief Triggered when an add-button was clicked.
+     */
+    void addButtonClicked();
 };
 
 #endif // SKILLDELEGATE_H

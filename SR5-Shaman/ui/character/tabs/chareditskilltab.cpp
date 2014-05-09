@@ -2,6 +2,7 @@
 #include "ui_chareditskilltab.h"
 
 #include <QKeyEvent>
+#include <QTimer>
 
 #include "data/appstatus.h"
 #include "data/character/characterchoices.h"
@@ -12,11 +13,13 @@
 #include "ui/models/skilldelegate.h"
 #include "ui/models/skillsortfilterproxymodel.h"
 #include "ui/utils/priorityeventfilter.h"
+#include "ui/character/popups/customdescriptorpopup.h"
 
 //---------------------------------------------------------------------------------
 CharEditSkillTab::CharEditSkillTab(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::CharEditSkillTab)
+    , _skillsModel(NULL)
     , _skillsFilter(NULL)
     , _skillsDelegate(NULL)
     , _filter(NULL)
@@ -41,12 +44,12 @@ CharEditSkillTab::initialize()
 
     // Initialize the skill view
     // Available skills
-    SkillTreeModel* skillTreeModel = new SkillTreeModel(true);
-    skillTreeModel->setItemView(ui->treeSkills);
-    skillTreeModel->initialize();
+    _skillsModel = new SkillTreeModel(true);
+    _skillsModel->setItemView(ui->treeSkills);
+    _skillsModel->initialize();
     // Filter
     _skillsFilter = new SkillSortFilterProxyModel(ui->treeSkills);
-    _skillsFilter->setSourceModel(skillTreeModel);
+    _skillsFilter->setSourceModel(_skillsModel);
     std::vector<SkillType> filterTypes;
     filterTypes.push_back(SKILL_TYPE_COMBAT);
     filterTypes.push_back(SKILL_TYPE_KNOWLEDGE);
@@ -59,6 +62,7 @@ CharEditSkillTab::initialize()
     _skillsFilter->setFilterTypes(filterTypes);
     _skillsFilter->setFilterMask(SKILL_FILTERMASK_TYPE);
     _skillsFilter->setShowEmptyCategories(true);
+    _skillsFilter->setShowUserSkills(true);
     _skillsFilter->applyFilter();
     // Model & sorting
     ui->treeSkills->setModel(_skillsFilter);
@@ -68,6 +72,8 @@ CharEditSkillTab::initialize()
     _skillsDelegate = new SkillDelegate();
     ui->treeSkills->setItemDelegate(_skillsDelegate);
     connect(_skillsDelegate, SIGNAL(skillChanged()), SLOT(handleSkillValueChanged()));
+    connect(_skillsDelegate, SIGNAL(addButtonClicked(SkillDefinition*)),
+                             SLOT(handleCustomSkillAdd(SkillDefinition*)));
     // Handle selection & drag
     connect(ui->treeSkills->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
                                                 SLOT(handleSkillChanged(QModelIndex,QModelIndex)));
@@ -197,10 +203,78 @@ CharEditSkillTab::updateValues()
 
 //---------------------------------------------------------------------------------
 void
+CharEditSkillTab::storeViewState()
+{
+    _expandedSkills.clear();
+    for(int i = 0; i < _skillsFilter->rowCount(); ++i)
+    {
+        QModelIndex index = _skillsFilter->index(i, 0);
+        if (ui->treeSkills->isExpanded(index))
+        {
+            _expandedSkills << i;
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditSkillTab::restoreViewState()
+{
+    foreach (int index, _expandedSkills)
+    {
+        // Search `item` text in model
+        QModelIndex item = _skillsFilter->index(index, 0);
+        if (item.isValid())
+        {
+            // Information: with this code, expands ONLY first level in QTreeView
+            ui->treeSkills->setExpanded(item, true);
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------
+void
 CharEditSkillTab::handleSkillValueChanged()
 {
     updateValues();
     checkContinue();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditSkillTab::handleCustomSkillAdd(SkillDefinition* p_skill)
+{
+    // If this requires a custom choice, show the modal window
+    QString customValue = "";
+
+    // Show the popup and get its result
+    CustomDescriptorPopup popup(NULL, p_skill->translations[APPSTATUS->getCurrentLocale()],
+                                false, true);
+    int result = popup.exec();
+    if (result == QDialog::Rejected)
+    {
+        return;
+    }
+    customValue = popup.getCustomization();
+
+    // Construct a new custom skill (this will do nothing if it already exists)
+    SKILL_RULES->constructCustomizedSkill(p_skill->id, customValue);
+
+    updateValues();
+    checkContinue();
+
+    // We cannot refresh the skill view now as this will cause a crash
+    // because we are actually still within a delegate function. Weird shit.
+    QTimer::singleShot(250, this, SLOT(forceViewUpdate()));
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditSkillTab::forceViewUpdate()
+{
+    storeViewState();
+    _skillsFilter->applyFilter();
+    restoreViewState();
 }
 
 //---------------------------------------------------------------------------------

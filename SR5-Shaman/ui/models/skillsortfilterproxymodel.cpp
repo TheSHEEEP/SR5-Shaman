@@ -24,6 +24,13 @@ SkillSortFilterProxyModel::~SkillSortFilterProxyModel()
 }
 
 //---------------------------------------------------------------------------------
+void
+SkillSortFilterProxyModel::update()
+{
+    emit dataChanged(index(0,0), index(rowCount() - 1, 0));
+}
+
+//---------------------------------------------------------------------------------
 int
 SkillSortFilterProxyModel::columnCount(const QModelIndex& p_parent ) const
 {
@@ -44,8 +51,10 @@ bool
 SkillSortFilterProxyModel::lessThan(const QModelIndex& p_left, const QModelIndex& p_right) const
 {
     // Sort by alphabet
-    QString leftData = sourceModel()->data(p_left).toString();
-    QString rightData = sourceModel()->data(p_right).toString();
+    SkillDefinition* leftItem = static_cast<SkillDefinition*>(p_left.internalPointer());
+    SkillDefinition* rightItem = static_cast<SkillDefinition*>(p_right.internalPointer());
+    QString leftData = leftItem->id;
+    QString rightData = rightItem->id;
 
     // Check for skill group item, it must always be last
     if (p_left.isValid())

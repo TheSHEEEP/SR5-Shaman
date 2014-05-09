@@ -66,6 +66,12 @@
                 "de" : "Weiter"
             }
         },
+        {   "key" : "ADD",
+            "translations" : {
+                "en" : "Add",
+                "de" : "Hinzufügen"
+            }
+        },
         {   "key" : "CB_QUALITYMAX_TEXT",
             "translations" : {
                 "en" : "QUALITIES: Only sum counts as limit",

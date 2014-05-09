@@ -368,7 +368,7 @@ QMainWindow::separator
     color: white;
     padding-left: 4px;
     spacing: 2px;
-    border: 1px dashed #3A3939;
+    border: 1px solid #3A3939;
 }
 
 QMainWindow::separator:hover
@@ -385,7 +385,7 @@ QMainWindow::separator:hover
 
 QMenu::separator
 {
-    height: 1px;
+    height: 3px;
     background-color: #3A3939;
     color: white;
     padding-left: 4px;

@@ -50,6 +50,12 @@ public:
     void initialize();
 
     /**
+     * @brief Emits the data changed signal.
+     * Call this after you added/removed a skill.
+     */
+    void update();
+
+    /**
      * @brief Sets the abstract item view (required for advanced mode).
      */
     void setItemView(QAbstractItemView* p_view);

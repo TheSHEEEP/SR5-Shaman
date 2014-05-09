@@ -2,13 +2,16 @@
 #define CHAREDITSKILLTAB_H
 
 #include <QWidget>
+#include <QVector>
 
 namespace Ui {
 class CharEditSkillTab;
 }
 
+class SkillTreeModel;
 class SkillSortFilterProxyModel;
 class SkillDelegate;
+class SkillDefinition;
 class PriorityEventFilter;
 
 /**
@@ -64,9 +67,12 @@ signals:
 private:
     Ui::CharEditSkillTab*   ui;
 
+    SkillTreeModel*             _skillsModel;
     SkillSortFilterProxyModel*  _skillsFilter;
     SkillDelegate*              _skillsDelegate;
     PriorityEventFilter*        _filter;
+
+    QVector<int>   _expandedSkills;
 
     /**
      * @brief During guided creation, checks if all conditions are met to continue with the creation.
@@ -78,12 +84,32 @@ private:
      */
     void updateValues();
 
+    /**
+     * @brief Will store the current view state (what is expanded).
+     */
+    void storeViewState();
+
+    /**
+     * @brief Will restore the stored view state (what was expanded).
+     */
+    void restoreViewState();
+
 private slots:
 
     /**
      * @brief Will cause an update of the displayed values.
      */
     void handleSkillValueChanged();
+
+    /**
+     * @brief Will cause an update of the displayed values.
+     */
+    void handleCustomSkillAdd(SkillDefinition *p_skill);
+
+    /**
+     * @brief Refreshes the skill view.
+     */
+    void forceViewUpdate();
 
     /**
      * @brief Will set the selected priority for skills.
