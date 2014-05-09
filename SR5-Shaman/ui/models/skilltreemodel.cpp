@@ -71,10 +71,15 @@ SkillTreeModel::flags(const QModelIndex& p_index) const
 
     Qt::ItemFlags flag = QAbstractItemModel::flags(p_index);
     SkillDefinition* item = static_cast<SkillDefinition*>(p_index.internalPointer());
-    // The first column may be editable
+    // The second and fourth column may be editable
     // if it is NOT a category or child of a group
     if (p_index.column() == 1 &&
         !item->isCategory)
+    {
+        flag |= Qt::ItemIsEditable;
+    }
+    else if (p_index.column() == 3 &&
+             !item->isCategory && !item->isGroup)
     {
         flag |= Qt::ItemIsEditable;
     }
@@ -95,6 +100,7 @@ SkillTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_r
         case 1:
         case 2:
         case 3:
+        case 4:
             return Qt::AlignHCenter;
         default:
             return Qt::AlignLeft;
@@ -116,6 +122,8 @@ SkillTreeModel::headerData(int p_section, Qt::Orientation p_orientation, int p_r
         case 2:
             return QVariant(Dictionary::getTranslation("VIEW_ATTRIBUTE"));
         case 3:
+            return QVariant(Dictionary::getTranslation("VIEW_SPECIALIZATIONS"));
+        case 4:
             return QVariant(Dictionary::getTranslation("VIEW_DICE_POOL"));
         }
     }
@@ -194,5 +202,5 @@ SkillTreeModel::rowCount(const QModelIndex& p_parent) const
 int
 SkillTreeModel::columnCount(const QModelIndex& p_parent) const
 {
-    return _advancedMode ? 4 : 1;
+    return _advancedMode ? 5 : 1;
 }

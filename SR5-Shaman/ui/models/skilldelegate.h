@@ -60,6 +60,11 @@ signals:
      */
     void addButtonClicked(SkillDefinition* p_skill) const;
 
+    /**
+     * @brief Emitted when the user clicks on a specializations button in the editor.
+     */
+    void specializationsClicked(SkillDefinition* p_skill) const;
+
 private slots:
     /**
      * @brief Triggered when the value in the spinbox changed.
@@ -71,6 +76,11 @@ private slots:
      * @brief Triggered when an add-button was clicked.
      */
     void addButtonClicked();
+
+    /**
+     * @brief Triggered when a specializations button was clicked.
+     */
+    void specializationsClicked();
 };
 
 #endif // SKILLDELEGATE_H

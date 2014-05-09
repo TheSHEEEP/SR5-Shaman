@@ -72,6 +72,12 @@
                 "de" : "Hinzufügen"
             }
         },
+        {   "key" : "MANAGE_SPECIALIZATIONS",
+            "translations" : {
+                "en" : "Specializations",
+                "de" : "Spezialisierungen"
+            }
+        },
         {   "key" : "CB_QUALITYMAX_TEXT",
             "translations" : {
                 "en" : "QUALITIES: Only sum counts as limit",
@@ -547,6 +553,13 @@
             "translations" : {
                 "en" : "Attribute",
                 "de" : "Attribut"
+            }
+        },
+        {
+            "key" : "VIEW_SPECIALIZATIONS",
+            "translations" : {
+                "en" : "Specializations",
+                "de" : "Spezialisierungen"
             }
         },
         {

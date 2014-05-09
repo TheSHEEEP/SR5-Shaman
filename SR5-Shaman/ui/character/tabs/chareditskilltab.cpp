@@ -74,6 +74,8 @@ CharEditSkillTab::initialize()
     connect(_skillsDelegate, SIGNAL(skillChanged()), SLOT(handleSkillValueChanged()));
     connect(_skillsDelegate, SIGNAL(addButtonClicked(SkillDefinition*)),
                              SLOT(handleCustomSkillAdd(SkillDefinition*)));
+    connect(_skillsDelegate, SIGNAL(specializationsClicked(SkillDefinition*)),
+                             SLOT(manageSpecializations(SkillDefinition*)));
     // Handle selection & drag
     connect(ui->treeSkills->selectionModel(),  SIGNAL(currentChanged(QModelIndex,QModelIndex)),
                                                 SLOT(handleSkillChanged(QModelIndex,QModelIndex)));
@@ -130,6 +132,7 @@ CharEditSkillTab::resizeEvent(QResizeEvent* p_event)
     ui->treeSkills->setColumnWidth(0, totalWidth * 0.35);
     ui->treeSkills->setColumnWidth(1, totalWidth * 0.15);
     ui->treeSkills->setColumnWidth(2, totalWidth * 0.1);
+    ui->treeSkills->setColumnWidth(3, totalWidth * 0.125);
 }
 
 //---------------------------------------------------------------------------------
@@ -266,6 +269,15 @@ CharEditSkillTab::handleCustomSkillAdd(SkillDefinition* p_skill)
     // We cannot refresh the skill view now as this will cause a crash
     // because we are actually still within a delegate function. Weird shit.
     QTimer::singleShot(250, this, SLOT(forceViewUpdate()));
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditSkillTab::manageSpecializations(SkillDefinition* p_skill)
+{
+    // TODO: here
+    // Show specializations management window
+    APPSTATUS->setStatusBarMessage(p_skill->id, 5.0f);
 }
 
 //---------------------------------------------------------------------------------

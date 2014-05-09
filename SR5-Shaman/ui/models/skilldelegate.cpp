@@ -58,9 +58,23 @@ SkillDelegate::createEditor(QWidget* p_parent, const QStyleOptionViewItem& p_opt
             return button;
         }
     }
+    else if (p_index.column() == 3)
+    {
+        SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
+
+        QPushButton* button = new QPushButton(p_parent);
+        // TODO: here
+        // Get number of specializations
+        button->setText(QString("%1").arg(0));
+        button->setProperty("skill", QVariant::fromValue(item));
+        connect(button, SIGNAL(clicked()), SLOT(specializationsClicked()));
+
+        emit specializationsClicked(item);
+        return button;
+    }
     else
     {
-        return new QLabel("Nothing here");
+        return new QLabel("You should never see this");
     }
 }
 
@@ -144,6 +158,9 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
     else if (p_index.column() == 1 &&
              !item->isCategory)
     {
+        p_painter->save();
+        drawBackground(p_painter, newOptions, p_index);
+
         // Show a SpinBox with the value
         if (!item->requiresCustom || item->custom != "")
         {
@@ -175,7 +192,6 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
                                       static_cast<QWidget*>(&box));
             style->drawItemText(p_painter, newOptions.rect, Qt::AlignHCenter, newOptions.palette, true,
                                 QString("%1%2").arg(skillValuePure).arg(postfix));
-            p_painter->restore();
         }
         else
         {
@@ -184,7 +200,7 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
             QStyleOptionButton btnOption;
             btnOption.rect = newOptions.rect;
             btnOption.state = newOptions.state;
-            btnOption.state |= QStyle::State_Enabled;
+            btnOption.state &= ~QStyle::State_MouseOver;
             btnOption.text = Dictionary::getTranslation("ADD");
             btnOption.palette = newOptions.palette;
 
@@ -193,8 +209,8 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
             QPushButton btn;
             style->drawControl(QStyle::CE_PushButton, &btnOption, p_painter,
                                static_cast<QWidget*>(&btn));
-            p_painter->restore();
         }
+        p_painter->restore();
         return;
     }
     // Third column is the connected attribute
@@ -204,8 +220,33 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
         text = Dictionary::getTranslation(item->attribute);
         newOptions.displayAlignment = Qt::AlignHCenter;
     }
-    // Fourth column is the dice pool
+    // Fourth column is the specialization management
     else if (p_index.column() == 3 &&
+             !item->isCategory && !item->isGroup &&
+             (!item->requiresCustom || item->custom != ""))
+    {
+        // Draw a push button
+        p_painter->save();
+        QStyleOptionButton btnOption;
+        btnOption.rect = newOptions.rect;
+        btnOption.state = newOptions.state;
+        btnOption.state &= ~QStyle::State_MouseOver;
+        btnOption.palette = newOptions.palette;
+        // TODO: here
+        // Get number of specializations
+        btnOption.text = QString("%1").arg(0);
+
+        // Get style and draw
+        QStyle* style = qApp->style();
+        QPushButton btn;
+        drawBackground(p_painter, newOptions, p_index);
+        style->drawControl(QStyle::CE_PushButton, &btnOption, p_painter,
+                           static_cast<QWidget*>(&btn));
+        p_painter->restore();
+        return;
+    }
+    // Fifth column is the dice pool
+    else if (p_index.column() == 4 &&
              !item->isCategory && !item->isGroup &&
              (!item->requiresCustom || item->custom != ""))
     {
@@ -262,4 +303,14 @@ SkillDelegate::addButtonClicked()
     SkillDefinition* item = button->property("skill").value<SkillDefinition*>();
 
     emit addButtonClicked(item);
+}
+
+//---------------------------------------------------------------------------------
+void
+SkillDelegate::specializationsClicked()
+{
+    QPushButton* button = static_cast<QPushButton*>(sender());
+    SkillDefinition* item = button->property("skill").value<SkillDefinition*>();
+
+    emit specializationsClicked(item);
 }

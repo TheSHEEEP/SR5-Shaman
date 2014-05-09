@@ -104,7 +104,12 @@ private slots:
     /**
      * @brief Will cause an update of the displayed values.
      */
-    void handleCustomSkillAdd(SkillDefinition *p_skill);
+    void handleCustomSkillAdd(SkillDefinition* p_skill);
+
+    /**
+     * @brief Will show the specialization management window for the passed skill.
+     */
+    void manageSpecializations(SkillDefinition* p_skill);
 
     /**
      * @brief Refreshes the skill view.
