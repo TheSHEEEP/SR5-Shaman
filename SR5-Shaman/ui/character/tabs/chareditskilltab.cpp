@@ -14,6 +14,7 @@
 #include "ui/models/skillsortfilterproxymodel.h"
 #include "ui/utils/priorityeventfilter.h"
 #include "ui/character/popups/customdescriptorpopup.h"
+#include "ui/character/popups/specializationdialog.h"
 
 //---------------------------------------------------------------------------------
 CharEditSkillTab::CharEditSkillTab(QWidget *parent)
@@ -23,14 +24,20 @@ CharEditSkillTab::CharEditSkillTab(QWidget *parent)
     , _skillsFilter(NULL)
     , _skillsDelegate(NULL)
     , _filter(NULL)
+    , _specDialog(NULL)
 {
     ui->setupUi(this);
+
+    _specDialog = new SpecializationDialog(this);
+    connect(_specDialog, SIGNAL(specializationChanged()), SLOT(handleSkillValueChanged()));
 }
 
 //---------------------------------------------------------------------------------
 CharEditSkillTab::~CharEditSkillTab()
 {
     delete ui;
+
+    delete _specDialog;
 }
 
 //---------------------------------------------------------------------------------
@@ -275,9 +282,9 @@ CharEditSkillTab::handleCustomSkillAdd(SkillDefinition* p_skill)
 void
 CharEditSkillTab::manageSpecializations(SkillDefinition* p_skill)
 {
-    // TODO: here
     // Show specializations management window
-    APPSTATUS->setStatusBarMessage(p_skill->id, 5.0f);
+    _specDialog->setSkill(p_skill->id);
+    _specDialog->show();
 }
 
 //---------------------------------------------------------------------------------

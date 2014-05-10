@@ -331,6 +331,13 @@ CharacterValues::getSkillMax(const QString& p_skill) const
 }
 
 //---------------------------------------------------------------------------------
+QStringList
+CharacterValues::getSkillSpecializations(const QString& p_skill) const
+{
+    return CHARACTER_CHOICES->getSkillSpecializations(p_skill);
+}
+
+//---------------------------------------------------------------------------------
 int
 CharacterValues::getInitiativeDice(bool p_modified) const
 {

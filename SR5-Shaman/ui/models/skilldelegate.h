@@ -42,6 +42,13 @@ public:
                       const QModelIndex& p_index) const;
 
     /**
+     * @brief Returns the correct size hint for the passed index.
+     * @param p_option  The style options.
+     * @param p_index   The index.
+     */
+    QSize sizeHint(const QStyleOptionViewItem& p_option, const QModelIndex& p_index) const;
+
+    /**
      * @brief Defines how the skill will be painted.
      * @param p_painter The painter to use.
      * @param p_option  The option with the default display parameters.

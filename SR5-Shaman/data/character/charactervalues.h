@@ -128,7 +128,7 @@ public:
     //*********************************************************************
     /**
      * @brief Returns a skill value.
-     * @param p_attribute     The ID of the skill.
+     * @param p_skill         The ID of the skill.
      * @param p_withEffects   If this is true, effects (from cyberware, qualities, etc.) will be minded.
      */
     int getSkill(const QString& p_skill, bool p_withEffects = true) const;
@@ -136,10 +136,15 @@ public:
     /**
      * @brief Returns the maximum value a skill can have.
      *          The value differs for creating a character and updating a character.
-     * @param p_attribute           The ID of the skill.
+     * @param p_skill   The ID of the skill.
      */
     int getSkillMax(const QString& p_skill) const;
 
+    /**
+     * @brief Returns a list with all skill specializations for the passed skill.
+     * @param p_skill   The ID of the skill.
+     */
+    QStringList getSkillSpecializations(const QString& p_skill) const;
 
     //*********************************************************************
     // INITIATIVE

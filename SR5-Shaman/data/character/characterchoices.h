@@ -241,6 +241,26 @@ public:
     void removeFreeSkill(const QString& p_id);
 
     /**
+     * @brief Returns a list with all skill specializations for the passed skill.
+     * @param p_skill   The ID of the skill.
+     */
+    QStringList getSkillSpecializations(const QString& p_skill) const;
+
+    /**
+     * @brief Adds the passed skill specialization to the passed skill.
+     * @param p_skill   The ID of the skill.
+     * @param p_spec    The specialization.
+     */
+    void addSkillSpecialization(const QString& p_skill, const QString& p_spec);
+
+    /**
+     * @brief Removes the passed skill specialization from the passed skill.
+     * @param p_skill   The ID of the skill.
+     * @param p_spec    The specialization.
+     */
+    void removeSkillSpecialization(const QString& p_skill, const QString& p_spec);
+
+    /**
      * @brief Removes all free skills.
      */
     void resetFreeSkills();
@@ -386,15 +406,17 @@ private:
     QString     _metatypeID;        // Corresponds to the unique ID of one metatype
     QString     _magicUserType;     // Corresponds to the unique ID of one magic user type
 
-    QMap<QString, int>      _attributeIncreasesFreebies;
-    QMap<QString, int>      _attributeIncreasesKarma;
-    QMap<QString, int>      _skillIncreasesFreebies;
-    QMap<QString, int>      _skillIncreasesSkillPoints;
-    QMap<QString, int>      _skillIncreasesKarma;
-    QMap<QString, float>    _spellsFromFreebies;
-    QMap<QString, float>    _spellsFromKarma;
-    QMap<QString, int>      _qualities;
-    int                     _purchasedPowerPoints;
+    QMap<QString, int>          _attributeIncreasesFreebies;
+    QMap<QString, int>          _attributeIncreasesKarma;
+    QMap<QString, int>          _skillIncreasesFreebies;
+    QMap<QString, int>          _skillIncreasesSkillPoints;
+    QMap<QString, int>          _skillIncreasesKarma;
+    QMap<QString, float>        _spellsFromFreebies;
+    QMap<QString, float>        _spellsFromKarma;
+    QMap<QString, int>          _qualities;
+    int                         _purchasedPowerPoints;
+
+    QMap<QString, std::vector<std::pair<QString, bool> > >  _skillSpecializations;
 
     HouseRules  _houseRules;
 };

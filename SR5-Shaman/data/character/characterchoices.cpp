@@ -119,6 +119,20 @@ CharacterChoices::getSpentKarma() const
         ++it;
     }
 
+    // From skill specializations
+    QMap<QString, std::vector<std::pair<QString, bool> > >::const_iterator it2;
+    for (it2 = _skillSpecializations.begin(); it2 != _skillSpecializations.end(); ++it2)
+    {
+        const std::vector<std::pair<QString, bool> >& specs = *it2;
+        for (unsigned int i = 0; i < specs.size(); ++i)
+        {
+            if (specs[i].second)
+            {
+                result += 7;
+            }
+        }
+    }
+
     return result;
 }
 
@@ -629,7 +643,8 @@ CharacterChoices::getAvailableSkillPoints(bool p_groupPoints) const
     // Get the available amount
     int result = SKILL_RULES->getNumSkillPoints(getPriorityIndex(PRIORITY_SKILLS), p_groupPoints);
 
-    // Subtract the spent amount
+    // Subtract the spent amounts
+    // From skill increases
     QMap<QString, int>::const_iterator it = _skillIncreasesSkillPoints.begin();
     while (it != _skillIncreasesSkillPoints.end())
     {
@@ -638,6 +653,23 @@ CharacterChoices::getAvailableSkillPoints(bool p_groupPoints) const
             result -= *it;
         }
         ++it;
+    }
+
+    // From skill specializations
+    if (!p_groupPoints)
+    {
+        QMap<QString, std::vector<std::pair<QString, bool> > >::const_iterator it2;
+        for (it2 = _skillSpecializations.begin(); it2 != _skillSpecializations.end(); ++it2)
+        {
+            const std::vector<std::pair<QString, bool> >& specs = *it2;
+            for (unsigned int i = 0; i < specs.size(); ++i)
+            {
+                if (!specs[i].second)
+                {
+                    --result;
+                }
+            }
+        }
     }
 
     return result;
@@ -708,6 +740,108 @@ CharacterChoices::removeFreeSkill(const QString& p_id)
     }
 
     _skillIncreasesFreebies.remove(p_id);
+}
+
+//---------------------------------------------------------------------------------
+QStringList
+CharacterChoices::getSkillSpecializations(const QString& p_skill) const
+{
+    if (_skillSpecializations.contains(p_skill))
+    {
+        const std::vector<std::pair<QString, bool> >& specs = _skillSpecializations[p_skill];
+        QStringList list;
+        for (unsigned int i = 0; i < specs.size(); ++i)
+        {
+            list.push_back(specs[i].first);
+        }
+        return list;
+    }
+
+    return QStringList();
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::addSkillSpecialization(const QString& p_skill, const QString& p_spec)
+{
+    // If we are at character creation, and already have a specialization, we can stop here
+    if (APPSTATUS->getState() == APPSTATE_GUIDED_CREATION &&
+        _skillSpecializations.contains(p_skill) &&
+        _skillSpecializations[p_skill].size() > 0)
+    {
+        APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("SKILL_SPEC_CREATION_ONLY_ONE"),
+                                       5.0f,
+                                       APPSTATUS->getHelperColors().statusBarMessage);
+        return;
+    }
+
+    // Check if we have enough skill points
+    int pointsAvailable = getAvailableSkillPoints(false);
+
+    // If not, check if we have enough karma
+    bool payByKarma = false;
+    if (pointsAvailable == 0)
+    {
+        int karmaAvailable = getAvailableKarma();
+
+        if (karmaAvailable >= 7)
+        {
+            payByKarma = true;
+        }
+        else
+        {
+            APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("SKILL_SPEC_NO_KARMA"),
+                                           5.0f,
+                                           APPSTATUS->getHelperColors().statusBarMessage);
+            return;
+        }
+    }
+
+    // Check that the specialization is not already present
+    if (_skillSpecializations.contains(p_skill))
+    {
+        std::vector<std::pair<QString, bool> >& specs = _skillSpecializations[p_skill];
+        for (unsigned int i = 0; i < specs.size(); ++i)
+        {
+            if (specs[i].first == p_spec)
+            {
+                APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("SKILL_SPEC_ALREADY")
+                                               .arg(p_spec),
+                                               5.0f,
+                                               APPSTATUS->getHelperColors().statusBarMessage);
+                return;
+            }
+        }
+    }
+
+    // Apply the specialization
+    _skillSpecializations[p_skill].push_back(std::pair<QString, bool>(p_spec, payByKarma));
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::removeSkillSpecialization(const QString& p_skill, const QString& p_spec)
+{
+    // Do we have specializations for the skill
+    if (_skillSpecializations.contains(p_skill))
+    {
+        // Remove the specialization if it exists
+        std::vector<std::pair<QString, bool> >& specs = _skillSpecializations[p_skill];
+        for (unsigned int i = 0; i < specs.size(); ++i)
+        {
+            if (specs[i].first == p_spec)
+            {
+                specs.erase(specs.begin() + i);
+                break;
+            }
+        }
+
+        // Remove the entry if no more specializations are present
+        if (specs.size() == 0)
+        {
+            _skillSpecializations.remove(p_skill);
+        }
+    }
 }
 
 //---------------------------------------------------------------------------------

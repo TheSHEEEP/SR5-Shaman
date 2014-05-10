@@ -596,6 +596,27 @@
                 "en" : "Select a skills priority and spend skill points.",
                 "de" : "Wähle eine Priorität für Fertigkeiten und gib die Fertigkeitenpunkte aus."
             }
+        },
+        {
+            "key" : "SKILL_SPEC_CREATION_ONLY_ONE",
+            "translations" : {
+                "en" : "Only one specialization per skill allowed during character creation.",
+                "de" : "Bei der Charaktererstellung ist nur eine Spezialisierung pro Fertigkeit erlaubt."
+            }
+        },
+        {
+            "key" : "SKILL_SPEC_NO_KARMA",
+            "translations" : {
+                "en" : "Not enough skill points or karma to buy a specialization.",
+                "de" : "Nicht genügend Fertigkeitspunkte oder Karma für eine Spezialisierung."
+            }
+        },
+        {
+            "key" : "SKILL_SPEC_ALREADY",
+            "translations" : {
+                "en" : "Skill specialization %1 already exists.",
+                "de" : "Fertigkeitsspezialisierung %1 existiert bereits."
+            }
         }
     ]
 }

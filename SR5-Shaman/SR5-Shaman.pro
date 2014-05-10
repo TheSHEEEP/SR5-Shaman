@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     ui/models/qualitysortfilterproxymodel.cpp \
     rules/qualityrules.cpp \
     ui/character/tabs/chareditskilltab.cpp \
-    globaleventfilter.cpp
+    globaleventfilter.cpp \
+    ui/character/popups/specializationdialog.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -92,7 +93,8 @@ HEADERS  += mainwindow.h \
     rules/qualityrules.h \
     rules/commonrules.h \
     ui/character/tabs/chareditskilltab.h \
-    globaleventfilter.h
+    globaleventfilter.h \
+    ui/character/popups/specializationdialog.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
@@ -107,7 +109,8 @@ FORMS    += mainwindow.ui \
     ui/character/tabs/chareditattributetab.ui \
     ui/character/popups/customdescriptorpopup.ui \
     ui/character/tabs/chareditqualitytab.ui \
-    ui/character/tabs/chareditskilltab.ui
+    ui/character/tabs/chareditskilltab.ui \
+    ui/character/popups/specializationdialog.ui
 
 TRANSLATIONS = sr5shaman_de.ts
 

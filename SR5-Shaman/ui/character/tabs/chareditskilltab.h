@@ -13,6 +13,7 @@ class SkillSortFilterProxyModel;
 class SkillDelegate;
 class SkillDefinition;
 class PriorityEventFilter;
+class SpecializationDialog;
 
 /**
  * @brief This tab holds information about all character skills.
@@ -73,6 +74,8 @@ private:
     PriorityEventFilter*        _filter;
 
     QVector<int>   _expandedSkills;
+
+    SpecializationDialog* _specDialog;
 
     /**
      * @brief During guided creation, checks if all conditions are met to continue with the creation.

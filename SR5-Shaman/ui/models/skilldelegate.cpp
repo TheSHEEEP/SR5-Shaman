@@ -63,9 +63,8 @@ SkillDelegate::createEditor(QWidget* p_parent, const QStyleOptionViewItem& p_opt
         SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
 
         QPushButton* button = new QPushButton(p_parent);
-        // TODO: here
         // Get number of specializations
-        button->setText(QString("%1").arg(0));
+        button->setText(QString("%1").arg(CHARACTER_VALUES->getSkillSpecializations(item->id).size()));
         button->setProperty("skill", QVariant::fromValue(item));
         connect(button, SIGNAL(clicked()), SLOT(specializationsClicked()));
 
@@ -112,6 +111,27 @@ SkillDelegate::setModelData(QWidget* p_editor, QAbstractItemModel* p_model,
 {
     // spinBoxChanged does this as it is called more reliably
     // Also, nothing to do in case of push button click
+}
+
+//---------------------------------------------------------------------------------
+QSize
+SkillDelegate::sizeHint(const QStyleOptionViewItem& p_option, const QModelIndex& p_index) const
+{
+    QSize result = QItemDelegate::sizeHint(p_option, p_index);
+    SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
+
+    if (p_index.column() == 1 &&
+        !item->isCategory && !item->isGroup)
+    {
+        result.setHeight(result.height() * 1.5);
+    }
+    else if (p_index.column() == 1 &&
+             !item->isCategory && !item->isGroup &&
+             (!item->requiresCustom || item->custom != ""))
+    {
+        result.setHeight(result.height() * 1.5);
+    }
+    return result;
 }
 
 //---------------------------------------------------------------------------------
@@ -190,7 +210,7 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
             QSpinBox box;
             style->drawComplexControl(QStyle::CC_SpinBox, &spinBoxOption, p_painter,
                                       static_cast<QWidget*>(&box));
-            style->drawItemText(p_painter, newOptions.rect, Qt::AlignHCenter, newOptions.palette, true,
+            style->drawItemText(p_painter, newOptions.rect, Qt::AlignHCenter | Qt::AlignVCenter, newOptions.palette, true,
                                 QString("%1%2").arg(skillValuePure).arg(postfix));
         }
         else
@@ -232,9 +252,8 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
         btnOption.state = newOptions.state;
         btnOption.state &= ~QStyle::State_MouseOver;
         btnOption.palette = newOptions.palette;
-        // TODO: here
         // Get number of specializations
-        btnOption.text = QString("%1").arg(0);
+        btnOption.text = QString("%1").arg(CHARACTER_VALUES->getSkillSpecializations(item->id).size());
 
         // Get style and draw
         QStyle* style = qApp->style();
