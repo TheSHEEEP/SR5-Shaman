@@ -22,6 +22,13 @@ void logMessage(QtMsgType p_type, const QMessageLogContext& p_context, const QSt
 {
     QString finalMessage;
 
+    // There are some warnings we can safely ignore
+    if (p_msg.contains("Painter ended with") ||         // Seems like this is caused by our custom painting delegate
+        false)
+    {
+        return;
+    }
+
     // Severity
     switch (p_type)
     {

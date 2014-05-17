@@ -50,6 +50,9 @@ PriorityEventFilter::eventFilter(QObject* p_obj, QEvent* p_event)
             {
                 // Set the color
                 color = APPSTATUS->getHelperColors().cbTaken;
+                int r = color.red();
+                int g = color.green();
+                int b = color.blue();
 
                 // Set the suffix
                 suffix = tr(" ... Taken by ");
@@ -93,7 +96,7 @@ PriorityEventFilter::eventFilter(QObject* p_obj, QEvent* p_event)
                 previousText = previousText.left(stringIndex);
             }
             box->setItemText(i, previousText + suffix);
-            box->setItemData(i, color, Qt::ForegroundRole);
+            box->setItemData(i, QBrush(color), Qt::ForegroundRole);
 
         } // END item iteration
 

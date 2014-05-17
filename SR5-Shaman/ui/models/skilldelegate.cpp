@@ -269,9 +269,14 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
              !item->isCategory && !item->isGroup &&
              (!item->requiresCustom || item->custom != ""))
     {
+        // Value
         int value = CHARACTER_VALUES->getAttribute(item->attribute);
         value += CHARACTER_VALUES->getSkill(item->id);
-        text = QString("%1").arg(value);
+
+        // Possible specializations
+        QString postfix = CHARACTER_VALUES->getSkillSpecializations(item->id).size() ? " (+2)" : "";
+
+        text = QString("%1%2").arg(value).arg(postfix);
         newOptions.displayAlignment = Qt::AlignHCenter;
     }
 
