@@ -339,6 +339,13 @@ CharacterValues::getSkillSpecializations(const QString& p_skill) const
 
 //---------------------------------------------------------------------------------
 int
+CharacterValues::getMaxKnowledgePoints() const
+{
+    return SKILL_RULES->calculateKnowledgePoints(getAttribute("intuition"), getAttribute("logic"));
+}
+
+//---------------------------------------------------------------------------------
+int
 CharacterValues::getInitiativeDice(bool p_modified) const
 {
     int value = 1;

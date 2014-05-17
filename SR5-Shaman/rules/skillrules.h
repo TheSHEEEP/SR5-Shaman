@@ -19,6 +19,7 @@ enum SkillType
     SKILL_TYPE_TECHNICAL,
     SKILL_TYPE_VEHICLE,
     SKILL_TYPE_KNOWLEDGE,
+    SKILL_TYPE_LANGUAGE,
     NUM_SKILL_TYPES
 };
 
@@ -30,6 +31,7 @@ enum KnowledgeType
     KNOWLEDGE_TYPE_INTEREST,
     KNOWLEDGE_TYPE_PROFESSIONAL,
     KNOWLEDGE_TYPE_STREET,
+    KNOWLEDGE_TYPE_LANGUAGE,
     NUM_KNOWLEDGE_TYPES
 };
 
@@ -153,6 +155,14 @@ public:
      */
     int calculateMaximumSkillIncrease(  const QString& p_skill, int p_oldValue,
                                         int p_maxValue, int p_availableKarma) const;
+
+    /**
+     * @brief Calculates and returns the number of knowledge/language points for the passed attribute values.
+     * @param p_intuition   The intuition value.
+     * @param p_logic       The logic value.
+     */
+    int calculateKnowledgePoints(int p_intuition, int p_logic) const;
+
     /**
      * @brief Returns the map of metatype definitions.
      */
@@ -188,6 +198,15 @@ public:
      * @return The ID of the new skill.
      */
     QString constructCustomizedSkill(const QString &p_id, const QString &p_customValue);
+
+    /**
+     * @brief Will construct a new knowledge or language skill.
+     * @param p_customValue     The name of the the new skill.
+     * @param p_isKnowledge     If this is true, this will be a knowledge skill, if is is false, a language.
+     * @param p_knowledgeType   The knowledge type. Ignored if p_isKnowledge is false.
+     * @return
+     */
+    QString constructKnowledgeSkill(const QString &p_customValue, bool p_isKnowledge, KnowledgeType p_knowledgeType);
 
 private:
     QMap<QString, SkillDefinition*> _definitions;

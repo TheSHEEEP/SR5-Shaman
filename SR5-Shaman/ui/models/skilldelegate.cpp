@@ -120,17 +120,8 @@ SkillDelegate::sizeHint(const QStyleOptionViewItem& p_option, const QModelIndex&
     QSize result = QItemDelegate::sizeHint(p_option, p_index);
     SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
 
-    if (p_index.column() == 1 &&
-        !item->isCategory && !item->isGroup)
-    {
-        result.setHeight(result.height() * 1.5);
-    }
-    else if (p_index.column() == 1 &&
-             !item->isCategory && !item->isGroup &&
-             (!item->requiresCustom || item->custom != ""))
-    {
-        result.setHeight(result.height() * 1.5);
-    }
+    result.setHeight(result.height() * 1.5);
+
     return result;
 }
 
@@ -164,6 +155,28 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
         if (text == "")
         {
             text = SKILL_RULES->getDefinition(item->id).translations[APPSTATUS->getCurrentLocale()];
+        }
+
+        // If this is a knowledge skill, show the type
+        if (item->type == SKILL_TYPE_KNOWLEDGE)
+        {
+            switch (item->knowledgeType)
+            {
+            case KNOWLEDGE_TYPE_ACADEMIC:
+                text.append(QString(" (%1)").arg(Dictionary::getTranslation("KNOWLEDGE_TYPE_ACADEMIC")));
+                break;
+            case KNOWLEDGE_TYPE_PROFESSIONAL:
+                text.append(QString(" (%1)").arg(Dictionary::getTranslation("KNOWLEDGE_TYPE_PROFESSIONAL")));
+                break;
+            case KNOWLEDGE_TYPE_INTEREST:
+                text.append(QString(" (%1)").arg(Dictionary::getTranslation("KNOWLEDGE_TYPE_INTEREST")));
+                break;
+            case KNOWLEDGE_TYPE_STREET:
+                text.append(QString(" (%1)").arg(Dictionary::getTranslation("KNOWLEDGE_TYPE_STREET")));
+                break;
+            default:
+                break;
+            }
         }
 
         // If this is the child of a group, change color for clarity to make it look disabled
@@ -238,7 +251,7 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
              !item->isCategory && !item->isGroup)
     {
         text = Dictionary::getTranslation(item->attribute);
-        newOptions.displayAlignment = Qt::AlignHCenter;
+        newOptions.displayAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
     }
     // Fourth column is the specialization management
     else if (p_index.column() == 3 &&
@@ -277,7 +290,7 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
         QString postfix = CHARACTER_VALUES->getSkillSpecializations(item->id).size() ? " (+2)" : "";
 
         text = QString("%1%2").arg(value).arg(postfix);
-        newOptions.displayAlignment = Qt::AlignHCenter;
+        newOptions.displayAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
     }
 
     // Call painter methods for drawing

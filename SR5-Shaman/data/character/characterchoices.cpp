@@ -469,7 +469,16 @@ CharacterChoices::increaseSkill(const QString& p_skill, int p_numIncreases)
     if (actualIncreases > 0)
     {
         // Use available skill points first
-        int availableSkillPoints = getAvailableSkillPoints(SKILL_RULES->getDefinition(p_skill).isGroup);
+        const SkillDefinition& def = SKILL_RULES->getDefinition(p_skill);
+        int availableSkillPoints = 0;
+        if (def.type != SKILL_TYPE_KNOWLEDGE && def.type != SKILL_TYPE_LANGUAGE)
+        {
+            availableSkillPoints = getAvailableSkillPoints(def.isGroup);
+        }
+        else
+        {
+            availableSkillPoints = getAvailableKnowledgePoints();
+        }
         int currentValuePure = CHARACTER_VALUES->getSkill(p_skill, false);
         int increasesFromPoints = actualIncreases;
         int increasesFromKarma = 0;
@@ -648,7 +657,9 @@ CharacterChoices::getAvailableSkillPoints(bool p_groupPoints) const
     QMap<QString, int>::const_iterator it = _skillIncreasesSkillPoints.begin();
     while (it != _skillIncreasesSkillPoints.end())
     {
-        if (SKILL_RULES->getDefinition(it.key()).isGroup == p_groupPoints)
+        const SkillDefinition& def = SKILL_RULES->getDefinition(it.key());
+        if (def.knowledgeType == KNOWLEDGE_TYPE_INVALID &&
+            def.isGroup == p_groupPoints)
         {
             result -= *it;
         }
@@ -664,7 +675,8 @@ CharacterChoices::getAvailableSkillPoints(bool p_groupPoints) const
             const std::vector<std::pair<QString, bool> >& specs = *it2;
             for (unsigned int i = 0; i < specs.size(); ++i)
             {
-                if (!specs[i].second)
+                if (SKILL_RULES->getDefinition(it2.key()).knowledgeType == KNOWLEDGE_TYPE_INVALID &&
+                    !specs[i].second)
                 {
                     --result;
                 }
@@ -776,7 +788,9 @@ CharacterChoices::addSkillSpecialization(const QString& p_skill, const QString& 
     }
 
     // Check if we have enough skill points
-    int pointsAvailable = getAvailableSkillPoints(false);
+    const SkillDefinition& def = SKILL_RULES->getDefinition(p_skill);
+    int pointsAvailable = (def.type == SKILL_TYPE_KNOWLEDGE || def.type == SKILL_TYPE_LANGUAGE) ?
+                            getAvailableKnowledgePoints() : getAvailableSkillPoints(false);
 
     // If not, check if we have enough karma
     bool payByKarma = false;
@@ -784,6 +798,8 @@ CharacterChoices::addSkillSpecialization(const QString& p_skill, const QString& 
     {
         int karmaAvailable = getAvailableKarma();
 
+        // TODO: here
+        // Different karma cost for knowledge specialization?
         if (karmaAvailable >= 7)
         {
             payByKarma = true;
@@ -842,6 +858,42 @@ CharacterChoices::removeSkillSpecialization(const QString& p_skill, const QStrin
             _skillSpecializations.remove(p_skill);
         }
     }
+}
+
+//---------------------------------------------------------------------------------
+int
+CharacterChoices::getAvailableKnowledgePoints() const
+{
+    int points = CHARACTER_VALUES->getMaxKnowledgePoints();
+
+    // Subtract spent points
+    QMap<QString, int>::const_iterator it = _skillIncreasesSkillPoints.begin();
+    while (it != _skillIncreasesSkillPoints.end())
+    {
+        const SkillDefinition& def = SKILL_RULES->getDefinition(it.key());
+        if (def.knowledgeType != KNOWLEDGE_TYPE_INVALID)
+        {
+            points -= *it;
+        }
+        ++it;
+    }
+
+    // From skill specializations
+    QMap<QString, std::vector<std::pair<QString, bool> > >::const_iterator it2;
+    for (it2 = _skillSpecializations.begin(); it2 != _skillSpecializations.end(); ++it2)
+    {
+        const std::vector<std::pair<QString, bool> >& specs = *it2;
+        for (unsigned int i = 0; i < specs.size(); ++i)
+        {
+            if (SKILL_RULES->getDefinition(it2.key()).knowledgeType != KNOWLEDGE_TYPE_INVALID &&
+                !specs[i].second)
+            {
+                --points;
+            }
+        }
+    }
+
+    return points;
 }
 
 //---------------------------------------------------------------------------------

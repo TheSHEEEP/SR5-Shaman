@@ -52,7 +52,8 @@ SOURCES += main.cpp\
     rules/qualityrules.cpp \
     ui/character/tabs/chareditskilltab.cpp \
     globaleventfilter.cpp \
-    ui/character/popups/specializationdialog.cpp
+    ui/character/popups/specializationdialog.cpp \
+    ui/character/popups/knowledgeskilldialog.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -94,7 +95,8 @@ HEADERS  += mainwindow.h \
     rules/commonrules.h \
     ui/character/tabs/chareditskilltab.h \
     globaleventfilter.h \
-    ui/character/popups/specializationdialog.h
+    ui/character/popups/specializationdialog.h \
+    ui/character/popups/knowledgeskilldialog.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
@@ -110,7 +112,8 @@ FORMS    += mainwindow.ui \
     ui/character/popups/customdescriptorpopup.ui \
     ui/character/tabs/chareditqualitytab.ui \
     ui/character/tabs/chareditskilltab.ui \
-    ui/character/popups/specializationdialog.ui
+    ui/character/popups/specializationdialog.ui \
+    ui/character/popups/knowledgeskilldialog.ui
 
 TRANSLATIONS = sr5shaman_de.ts
 

@@ -146,6 +146,11 @@ public:
      */
     QStringList getSkillSpecializations(const QString& p_skill) const;
 
+    /**
+     * @brief Returns the number of maximum knowledge/language points for this character.
+     */
+    int getMaxKnowledgePoints() const;
+
     //*********************************************************************
     // INITIATIVE
     //*********************************************************************

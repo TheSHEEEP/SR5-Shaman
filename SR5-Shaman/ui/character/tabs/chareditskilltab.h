@@ -136,6 +136,11 @@ private slots:
      * @brief Will remove/reset the selected skill.
      */
     void on_btnRemoveSkill_clicked();
+
+    /**
+     * @brief Will open the dialog to create a new language or knowledge skill.
+     */
+    void on_btnAddKnowledgeSkill_clicked();
 };
 
 #endif // CHAREDITSKILLTAB_H

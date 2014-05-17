@@ -14,6 +14,7 @@
 #include "ui/models/skillsortfilterproxymodel.h"
 #include "ui/utils/priorityeventfilter.h"
 #include "ui/character/popups/customdescriptorpopup.h"
+#include "ui/character/popups/knowledgeskilldialog.h"
 #include "ui/character/popups/specializationdialog.h"
 
 //---------------------------------------------------------------------------------
@@ -60,6 +61,7 @@ CharEditSkillTab::initialize()
     std::vector<SkillType> filterTypes;
     filterTypes.push_back(SKILL_TYPE_COMBAT);
     filterTypes.push_back(SKILL_TYPE_KNOWLEDGE);
+    filterTypes.push_back(SKILL_TYPE_LANGUAGE);
     filterTypes.push_back(SKILL_TYPE_MAGIC);
     filterTypes.push_back(SKILL_TYPE_PHYSICAL);
     filterTypes.push_back(SKILL_TYPE_RESONANCE);
@@ -209,6 +211,11 @@ CharEditSkillTab::updateValues()
     ui->lblSkillGroupPointsValue->setText(QString("%1 / %2")
                                 .arg(CHARACTER_CHOICES->getAvailableSkillPoints(true))
                                 .arg(SKILL_RULES->getNumSkillPoints(priority, true)));
+
+    // Knowledge/Language points
+    ui->lblKnowledgePointsValue->setText(QString("%1 / %2")
+                                .arg(CHARACTER_CHOICES->getAvailableKnowledgePoints())
+                                .arg(CHARACTER_VALUES->getMaxKnowledgePoints()));
 }
 
 //---------------------------------------------------------------------------------
@@ -377,4 +384,27 @@ void
 CharEditSkillTab::on_btnRemoveSkill_clicked()
 {
 
+}
+
+//---------------------------------------------------------------------------------
+void
+CharEditSkillTab::on_btnAddKnowledgeSkill_clicked()
+{
+    // Show the popup and get its result
+    KnowledgeSkillDialog popup(NULL);
+
+    int result = popup.exec();
+    if (result == QDialog::Rejected)
+    {
+        return;
+    }
+    QString customValue = popup.getValue();
+    bool isKnowledge = popup.getIsKnowledge();
+    KnowledgeType knowledgeType = popup.getKnowledgeType();
+
+    // Construct a new knowledge skill (this will do nothing if it already exists)
+    SKILL_RULES->constructKnowledgeSkill(customValue, isKnowledge, knowledgeType);
+
+    // Update the display
+    forceViewUpdate();
 }

@@ -261,6 +261,11 @@ public:
     void removeSkillSpecialization(const QString& p_skill, const QString& p_spec);
 
     /**
+     * @brief Returns the number of available knowledge/language points.
+     */
+    int getAvailableKnowledgePoints() const;
+
+    /**
      * @brief Removes all free skills.
      */
     void resetFreeSkills();
@@ -274,6 +279,11 @@ public:
      * @brief Removes all karma spent on skills.
      */
     void resetSkillPurchases();
+
+    /**
+     * @brief Removes all skill specializations.
+     */
+    void resetSkillSpecializations();
 
     /**
      * @brief Returns a list with the IDs of chosen free skills.
@@ -573,6 +583,14 @@ void
 CharacterChoices::resetSkillPurchases()
 {
     _skillIncreasesKarma.clear();
+}
+
+//---------------------------------------------------------------------------------
+inline
+void
+CharacterChoices::resetSkillSpecializations()
+{
+    _skillSpecializations.clear();
 }
 
 //---------------------------------------------------------------------------------

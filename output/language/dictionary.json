@@ -617,6 +617,34 @@
                 "en" : "Skill specialization %1 already exists.",
                 "de" : "Fertigkeitsspezialisierung %1 existiert bereits."
             }
+        },
+        {
+            "key" : "KNOWLEDGE_TYPE_ACADEMIC",
+            "translations" : {
+                "en" : "Academic",
+                "de" : "Akademisch"
+            }
+        },
+        {
+            "key" : "KNOWLEDGE_TYPE_INTEREST",
+            "translations" : {
+                "en" : "Interest",
+                "de" : "Hobby"
+            }
+        },
+        {
+            "key" : "KNOWLEDGE_TYPE_PROFESSIONAL",
+            "translations" : {
+                "en" : "Professional",
+                "de" : "Beruflich"
+            }
+        },
+        {
+            "key" : "KNOWLEDGE_TYPE_STREET",
+            "translations" : {
+                "en" : "Street",
+                "de" : "Straßenwissen"
+            }
         }
     ]
 }

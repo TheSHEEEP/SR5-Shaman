@@ -136,6 +136,12 @@ SkillRules::SkillRules()
     category->id = "CATEGORY_KNOWLEDGE";
     category->type = SKILL_TYPE_KNOWLEDGE;
     _rootItem->children.push_back(category);
+    // Language
+    category = new SkillDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_LANGUAGE";
+    category->type = SKILL_TYPE_LANGUAGE;
+    _rootItem->children.push_back(category);
     // Groups - this is a workaround
     category = new SkillDefinition(_rootItem);
     category->isCategory = true;
@@ -353,6 +359,9 @@ SkillRules::getTypeString(SkillType p_type) const
     case SKILL_TYPE_KNOWLEDGE:
         return QObject::tr("Knowledge");
 
+    case SKILL_TYPE_LANGUAGE:
+        return QObject::tr("Language");
+
     case SKILL_TYPE_MAGIC:
         return QObject::tr("Magic");
 
@@ -390,6 +399,10 @@ SkillRules::getNumSkillPoints(int p_prioIndex, bool p_groupPoints) const
 int
 SkillRules::calculateSkillIncreaseCost(const QString& p_skill, int p_oldValue, int p_newValue)
 {
+    // TODO: here
+    // Knowledge skills have a different cost than other skills.
+
+
     int result = 0;
     int multiplier = getDefinition(p_skill).isGroup ? 5 : 2;
     // Increase
@@ -432,6 +445,14 @@ SkillRules::calculateMaximumSkillIncrease(  const QString& p_skill, int p_oldVal
         }
     }
 
+    return result;
+}
+
+//---------------------------------------------------------------------------------
+int
+SkillRules::calculateKnowledgePoints(int p_intuition, int p_logic) const
+{
+    return (p_intuition + p_logic) << 1;
 }
 
 //---------------------------------------------------------------------------------
@@ -553,6 +574,87 @@ SkillRules::constructCustomizedSkill(const QString& p_id, const QString& p_custo
     {
         it.value().append(" (" + p_customValue + ")");
     }
+
+    // Add the skill
+    _definitions[newID] = newSkill;
+    return newID;
+}
+
+//---------------------------------------------------------------------------------
+QString
+SkillRules::constructKnowledgeSkill(const QString &p_customValue, bool p_isKnowledge, KnowledgeType p_knowledgeType)
+{
+    // Construct the ID
+    QString newID = p_isKnowledge ? "KNOWLEDGE_" : "LANGUAGE_";
+    if (p_isKnowledge)
+    {
+        switch (p_knowledgeType)
+        {
+        case KNOWLEDGE_TYPE_ACADEMIC:
+            newID.append("ACADEMIC_");
+            break;
+        case KNOWLEDGE_TYPE_INTEREST:
+            newID.append("INTEREST_");
+            break;
+        case KNOWLEDGE_TYPE_PROFESSIONAL:
+            newID.append("PROFESSIONAL_");
+            break;
+        case KNOWLEDGE_TYPE_STREET:
+            newID.append("STREET_");
+            break;
+        }
+    }
+    newID.append(p_customValue);
+
+    // Check if it already exists
+    if (_definitions.contains(newID))
+    {
+        return newID;
+    }
+
+    // Create the new skill
+    SkillDefinition* newSkill = new SkillDefinition();
+    newSkill->id = newID;
+    newSkill->isLanguage = !p_isKnowledge;
+    newSkill->custom = p_customValue;
+    newSkill->requiresCustom = false;
+    newSkill->isUserDefined = true;
+    newSkill->group = "none";
+    newSkill->isCategory = false;
+    newSkill->isGroup = false;
+    newSkill->type = p_isKnowledge ? SKILL_TYPE_KNOWLEDGE : SKILL_TYPE_LANGUAGE;
+    SkillDefinition* parent = p_isKnowledge ? _rootItem->children[SKILL_TYPE_KNOWLEDGE] : _rootItem->children[SKILL_TYPE_LANGUAGE];
+    newSkill->parent = parent;
+    parent->children.push_back(newSkill);
+
+    if (p_isKnowledge)
+    {
+        newSkill->knowledgeType = p_knowledgeType;
+        switch (p_knowledgeType)
+        {
+        case KNOWLEDGE_TYPE_ACADEMIC:
+        case KNOWLEDGE_TYPE_PROFESSIONAL:
+            newSkill->attribute = "logic";
+            break;
+
+        case KNOWLEDGE_TYPE_INTEREST:
+        case KNOWLEDGE_TYPE_STREET:
+            newSkill->attribute = "intuition";
+            break;
+
+        default:
+            newSkill->attribute = "Something Went Wrong During KnowledgeSkillCreation";
+            break;
+        }
+    }
+    else
+    {
+        newSkill->attribute = "intuition";
+        newSkill->knowledgeType = KNOWLEDGE_TYPE_LANGUAGE;
+    }
+
+    newSkill->translations["en"] = p_customValue;
+    newSkill->translations["de"] = p_customValue;
 
     // Add the skill
     _definitions[newID] = newSkill;
