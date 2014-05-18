@@ -180,7 +180,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Add Knowledge Skill</string>
+        <string>Add Knowledge/Language Skill</string>
        </property>
       </widget>
      </item>
@@ -190,7 +190,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Remove Skill</string>
+        <string>Reset Skill</string>
        </property>
       </widget>
      </item>

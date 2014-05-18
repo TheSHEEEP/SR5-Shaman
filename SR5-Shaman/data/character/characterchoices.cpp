@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QString>
 #include <QColor>
+#include <QMessageBox>
 
 #include "charactervalues.h"
 #include "effectregistry.h"
@@ -465,11 +466,21 @@ CharacterChoices::increaseSkill(const QString& p_skill, int p_numIncreases)
         return;
     }
 
+    // If this is a skill group, it can only change if all contained skills ahve the same (pure!) value
+    const SkillDefinition& def = SKILL_RULES->getDefinition(p_skill);
+    if (def.isGroup && actualIncreases != 0 && !getIsSkillGroupIntact(def.id))
+    {
+        APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("SKILL_GROUP_ONLY_CHANGE"),
+                                       5.0f,
+                                       APPSTATUS->getHelperColors().statusBarMessage);
+        return;
+    }
+
+
     // Increase
     if (actualIncreases > 0)
     {
         // Use available skill points first
-        const SkillDefinition& def = SKILL_RULES->getDefinition(p_skill);
         int availableSkillPoints = 0;
         if (def.type != SKILL_TYPE_KNOWLEDGE && def.type != SKILL_TYPE_LANGUAGE)
         {
@@ -936,6 +947,33 @@ CharacterChoices::getAvailableKnowledgePoints() const
     }
 
     return points;
+}
+
+//---------------------------------------------------------------------------------
+bool
+CharacterChoices::getIsSkillGroupIntact(const QString& p_group) const
+{
+    const SkillDefinition& def = SKILL_RULES->getDefinition(p_group);
+
+    // Is this even a group?
+    if (!def.isGroup)
+    {
+        qWarning() << p_group << " is not a skill group!";
+        return false;
+    }
+
+    // Are all contained skills at the same (pure!) level?
+    int referenceLevel = CHARACTER_VALUES->getSkill(def.children[0]->id, false);
+    for (unsigned int i = 1; i < def.children.size(); ++i)
+    {
+        if (CHARACTER_VALUES->getSkill(def.children[i]->id, false) != referenceLevel)
+        {
+            return false;
+        }
+    }
+
+    // If we reach this point, the group can be considered intact
+    return true;
 }
 
 //---------------------------------------------------------------------------------

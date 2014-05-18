@@ -278,6 +278,13 @@ public:
     int getAvailableKnowledgePoints() const;
 
     /**
+     * @brief Returns true if the passed skill group is intact.
+     *          Intact = All skills have the same pure value.
+     * @param p_group   The ID of the skill group.
+     */
+    bool getIsSkillGroupIntact(const QString& p_group) const;
+
+    /**
      * @brief Will reset all increases (except from freebies), specializations, etc. of this skill.
      * @param p_skill           The ID of the skill to reset.
      * @param p_deleteFromRules If true, the skill will be deleted from the rules, if it is a defined one

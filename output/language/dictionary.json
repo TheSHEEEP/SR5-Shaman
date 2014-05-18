@@ -652,6 +652,27 @@
                 "en" : "You can only have a maximum of %1 native languages.",
                 "de" : "Du kannst maximal %1 Muttersprachen auswählen."
             }
+        },
+        {
+            "key" : "DESTROY_GROUP_TITLE",
+            "translations" : {
+                "en" : "Destroy Skill Group?",
+                "de" : "Fertigkeitsgruppe Zerstören?"
+            }
+        },
+        {
+            "key" : "DESTROY_GROUP_QUESTION",
+            "translations" : {
+                "en" : "This change would destroy the skill group %1.\nYou will have to manually set all contained skills to the same level to be able to increase %1 again.\nAre you sure you want to do this change?",
+                "de" : "Diese Änderung würde die Fertigkeitsgruppe %1 zerstören.\nDu müssten dann alle entsprechenden Fertigkeiten manuell auf das gleiche Level setzen, um die Fertigkeitsgruppe %1 wieder steigern zu können.\nBist du dir sicher, dass du diese Änderung vornehmen möchtest?"
+            }
+        },
+        {
+            "key" : "SKILL_GROUP_ONLY_CHANGE",
+            "translations" : {
+                "en" : "A skill group can only be changed while all contained skills have the same pure value.",
+                "de" : "Eine Fertigkeitsgruppe kann nur verändert werden, solange alle entsprechenden Fertigkeiten die gleiche Stufe haben."
+            }
         }
     ]
 }
