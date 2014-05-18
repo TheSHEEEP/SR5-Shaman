@@ -191,6 +191,13 @@ public:
                                                                             bool p_onlyGroups) const;
 
     /**
+     * @brief Will completely remove the passed skill from the definitions.
+     *          USE WITH CAUTION!
+     * @param p_skill   The ID of the skill.
+     */
+    void removeSkill(const QString& p_skill);
+
+    /**
      * @brief Will construct a new skill out of the passed skill and the customization.
      *          A new skill will only be constructed if this specialization does not exist already.
      * @param p_id          The ID of the original skill.
@@ -204,9 +211,10 @@ public:
      * @param p_customValue     The name of the the new skill.
      * @param p_isKnowledge     If this is true, this will be a knowledge skill, if is is false, a language.
      * @param p_knowledgeType   The knowledge type. Ignored if p_isKnowledge is false.
-     * @return
+     * @return  The ID of the new skill.
      */
-    QString constructKnowledgeSkill(const QString &p_customValue, bool p_isKnowledge, KnowledgeType p_knowledgeType);
+    QString constructKnowledgeSkill(const QString &p_customValue,
+                                    bool p_isKnowledge, KnowledgeType p_knowledgeType);
 
 private:
     QMap<QString, SkillDefinition*> _definitions;

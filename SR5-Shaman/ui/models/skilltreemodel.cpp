@@ -6,6 +6,7 @@
 #include "rules/rules.h"
 #include "data/appstatus.h"
 #include "data/dictionary.h"
+#include "data/character/characterchoices.h"
 
 //---------------------------------------------------------------------------------
 SkillTreeModel::SkillTreeModel(bool p_advancedMode)
@@ -71,10 +72,12 @@ SkillTreeModel::flags(const QModelIndex& p_index) const
 
     Qt::ItemFlags flag = QAbstractItemModel::flags(p_index);
     SkillDefinition* item = static_cast<SkillDefinition*>(p_index.internalPointer());
+
     // The second and fourth column may be editable
-    // if it is NOT a category or child of a group
+    // If it is NOT a category or child of a group or a native language
     if (p_index.column() == 1 &&
-        !item->isCategory)
+        !item->isCategory &&
+        (!item->isLanguage || !CHARACTER_CHOICES->getIsNativeLanguage(item->id)))
     {
         flag |= Qt::ItemIsEditable;
     }

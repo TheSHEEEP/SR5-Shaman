@@ -42,10 +42,11 @@ KnowledgeSkillDialog::showEvent(QShowEvent* /**/)
     applyTranslation();
 
     ui->frameKnowledge->hide();
+    ui->frameNative->hide();
 }
 
 //---------------------------------------------------------------------------------
-const QString&
+QString
 KnowledgeSkillDialog::getValue() const
 {
     return ui->leValue->text();
@@ -59,10 +60,17 @@ KnowledgeSkillDialog::getIsKnowledge() const
 }
 
 //---------------------------------------------------------------------------------
+bool
+KnowledgeSkillDialog::getIsNativeTongue() const
+{
+    return ui->checkNative->isChecked();
+}
+
+//---------------------------------------------------------------------------------
 KnowledgeType
 KnowledgeSkillDialog::getKnowledgeType() const
 {
-    return (KnowledgeType)ui->cbKnowledgeType->currentData().toInt();
+    return (KnowledgeType)ui->cbKnowledgeType->itemData(ui->cbKnowledgeType->currentIndex()).toInt();
 }
 
 //---------------------------------------------------------------------------------
@@ -91,4 +99,5 @@ KnowledgeSkillDialog::handleRadioToggle(bool p_toggleState)
     QRadioButton* button = static_cast<QRadioButton*>(sender());
 
     ui->frameKnowledge->setHidden(!(p_toggleState && button == ui->radioKnowledge));
+    ui->frameNative->setHidden(!ui->frameKnowledge->isHidden());
 }

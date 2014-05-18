@@ -39,12 +39,17 @@ public:
     /**
      * @brief Returns the value typed by the user.
      */
-    const QString& getValue() const;
+    QString getValue() const;
 
     /**
      * @brief Returns true if the user selected knowledge skill.
      */
     bool getIsKnowledge() const;
+
+    /**
+     * @brief Returns true if the user selected a native tongue.
+     */
+    bool getIsNativeTongue() const;
 
     /**
      * @brief Returns the selected knowledge type.

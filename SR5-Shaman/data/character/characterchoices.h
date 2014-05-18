@@ -261,9 +261,29 @@ public:
     void removeSkillSpecialization(const QString& p_skill, const QString& p_spec);
 
     /**
+     * @brief Sets the passed language skill as a native one.
+     * @param p_skill   The ID of the language skill.
+     */
+    void setNativeLanguage(const QString& p_skill);
+
+    /**
+     * @brief Will return true if the passed skill was chosen as a native language.
+     * @param p_skill   The ID of the language skill.
+     */
+    bool getIsNativeLanguage(const QString& p_skill) const;
+
+    /**
      * @brief Returns the number of available knowledge/language points.
      */
     int getAvailableKnowledgePoints() const;
+
+    /**
+     * @brief Will reset all increases (except from freebies), specializations, etc. of this skill.
+     * @param p_skill           The ID of the skill to reset.
+     * @param p_deleteFromRules If true, the skill will be deleted from the rules, if it is a defined one
+     *                          and has no increases remaining.
+     */
+    void resetSkill(const QString& p_skill, bool p_deleteFromRules);
 
     /**
      * @brief Removes all free skills.

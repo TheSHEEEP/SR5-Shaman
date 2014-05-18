@@ -151,6 +151,11 @@ public:
      */
     int getMaxKnowledgePoints() const;
 
+    /**
+     * @brief Returns the maximum number of native languages.
+     */
+    int getMaxNativeLanguages() const;
+
     //*********************************************************************
     // INITIATIVE
     //*********************************************************************

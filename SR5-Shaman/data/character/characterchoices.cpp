@@ -861,6 +861,48 @@ CharacterChoices::removeSkillSpecialization(const QString& p_skill, const QStrin
 }
 
 //---------------------------------------------------------------------------------
+void
+CharacterChoices::setNativeLanguage(const QString& p_skill)
+{
+    // Sanity check - is this even a language?
+    if (!SKILL_RULES->getDefinition(p_skill).isLanguage)
+    {
+        qWarning() << p_skill + " is not a language skill!";
+        return;
+    }
+
+    // Check if we can have any more native tongues
+    int maxNumNative = CHARACTER_VALUES->getMaxNativeLanguages();
+    int numNative = 0;
+    QMap<QString, int>::iterator it;
+    for (it = _skillIncreasesFreebies.begin(); it != _skillIncreasesFreebies.end(); ++it)
+    {
+        if (SKILL_RULES->getDefinition(it.key()).isLanguage)
+        {
+            ++numNative;
+        }
+    }
+    if (numNative >= maxNumNative)
+    {
+        APPSTATUS->setStatusBarMessage(Dictionary::getTranslation("MAX_NUM_NATIVE_REACHED")
+                                       .arg(maxNumNative),
+                                       5.0f,
+                                       APPSTATUS->getHelperColors().statusBarMessage);
+        return;
+    }
+
+    // Add the language
+    _skillIncreasesFreebies[p_skill] = 1; // 1 is enough to mark this as a native tongue
+}
+
+//---------------------------------------------------------------------------------
+bool
+CharacterChoices::getIsNativeLanguage(const QString& p_skill) const
+{
+    return _skillIncreasesFreebies.contains(p_skill);
+}
+
+//---------------------------------------------------------------------------------
 int
 CharacterChoices::getAvailableKnowledgePoints() const
 {
@@ -894,6 +936,27 @@ CharacterChoices::getAvailableKnowledgePoints() const
     }
 
     return points;
+}
+
+//---------------------------------------------------------------------------------
+void
+CharacterChoices::resetSkill(const QString& p_skill, bool p_deleteFromRules)
+{
+    // Only remove from freebies if this is a language skill
+    const SkillDefinition& def = SKILL_RULES->getDefinition(p_skill);
+    if (def.isLanguage)
+    {
+        _skillIncreasesFreebies.remove(p_skill);
+    }
+    _skillIncreasesKarma.remove(p_skill);
+    _skillIncreasesSkillPoints.remove(p_skill);
+
+    // Completely delete the skill if user defined
+    if (p_deleteFromRules &&
+        def.isUserDefined)
+    {
+        SKILL_RULES->removeSkill(p_skill);
+    }
 }
 
 //---------------------------------------------------------------------------------

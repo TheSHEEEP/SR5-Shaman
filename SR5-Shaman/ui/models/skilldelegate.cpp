@@ -118,7 +118,6 @@ QSize
 SkillDelegate::sizeHint(const QStyleOptionViewItem& p_option, const QModelIndex& p_index) const
 {
     QSize result = QItemDelegate::sizeHint(p_option, p_index);
-    SkillDefinition* item = static_cast<SkillDefinition*>(p_index.data().value<void*>());
 
     result.setHeight(result.height() * 1.5);
 
@@ -188,14 +187,20 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
     }
     // Second column is the skill value, presented as a spin box
     // Or the button to add a custom variant of the skill
+    // Or just an "N" if this is a native language
     else if (p_index.column() == 1 &&
              !item->isCategory)
     {
-        p_painter->save();
-        drawBackground(p_painter, newOptions, p_index);
 
+        // If this is a native language, just write an N
+        if (item->isLanguage &&
+            CHARACTER_CHOICES->getIsNativeLanguage(item->id))
+        {
+            text = "N";
+            newOptions.displayAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
+        }
         // Show a SpinBox with the value
-        if (!item->requiresCustom || item->custom != "")
+        else if (!item->requiresCustom || item->custom != "")
         {
             // Get the postfix
             int skillValuePure = CHARACTER_VALUES->getSkill(item->id, false);
@@ -206,8 +211,10 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
                         "";
             postfix.append(QString(" / %1").arg(skillMax));
 
-            // Draw a custom spin box
             p_painter->save();
+            drawBackground(p_painter, newOptions, p_index);
+
+            // Draw a custom spin box
             QStyleOptionSpinBox spinBoxOption;
             spinBoxOption.rect = newOptions.rect;
             spinBoxOption.state = newOptions.state;
@@ -225,11 +232,15 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
                                       static_cast<QWidget*>(&box));
             style->drawItemText(p_painter, newOptions.rect, Qt::AlignHCenter | Qt::AlignVCenter, newOptions.palette, true,
                                 QString("%1%2").arg(skillValuePure).arg(postfix));
+            p_painter->restore();
+            return;
         }
         else
         {
-            // Draw a push button
             p_painter->save();
+            drawBackground(p_painter, newOptions, p_index);
+
+            // Draw a push button
             QStyleOptionButton btnOption;
             btnOption.rect = newOptions.rect;
             btnOption.state = newOptions.state;
@@ -242,9 +253,9 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
             QPushButton btn;
             style->drawControl(QStyle::CE_PushButton, &btnOption, p_painter,
                                static_cast<QWidget*>(&btn));
+            p_painter->restore();
+            return;
         }
-        p_painter->restore();
-        return;
     }
     // Third column is the connected attribute
     else if (p_index.column() == 2 &&
@@ -282,14 +293,24 @@ SkillDelegate::paint(QPainter* p_painter, const QStyleOptionViewItem& p_option, 
              !item->isCategory && !item->isGroup &&
              (!item->requiresCustom || item->custom != ""))
     {
-        // Value
-        int value = CHARACTER_VALUES->getAttribute(item->attribute);
-        value += CHARACTER_VALUES->getSkill(item->id);
+        // If this is a native language, just write an N
+        if (item->isLanguage &&
+            CHARACTER_CHOICES->getIsNativeLanguage(item->id))
+        {
+            text = "N";
+        }
+        // Otherwise, calculate the value normally
+        else
+        {
+            // Value
+            int value = CHARACTER_VALUES->getAttribute(item->attribute);
+            value += CHARACTER_VALUES->getSkill(item->id);
 
-        // Possible specializations
-        QString postfix = CHARACTER_VALUES->getSkillSpecializations(item->id).size() ? " (+2)" : "";
+            // Possible specializations
+            QString postfix = CHARACTER_VALUES->getSkillSpecializations(item->id).size() ? " (+2)" : "";
 
-        text = QString("%1%2").arg(value).arg(postfix);
+            text = QString("%1%2").arg(value).arg(postfix);
+        }
         newOptions.displayAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
     }
 

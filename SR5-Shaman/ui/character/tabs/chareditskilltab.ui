@@ -176,6 +176,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="btnAddKnowledgeSkill">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Add Knowledge Skill</string>
        </property>
@@ -183,6 +186,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnRemoveSkill">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Remove Skill</string>
        </property>

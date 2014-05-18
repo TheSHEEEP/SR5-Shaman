@@ -50,9 +50,6 @@ PriorityEventFilter::eventFilter(QObject* p_obj, QEvent* p_event)
             {
                 // Set the color
                 color = APPSTATUS->getHelperColors().cbTaken;
-                int r = color.red();
-                int g = color.green();
-                int b = color.blue();
 
                 // Set the suffix
                 suffix = tr(" ... Taken by ");

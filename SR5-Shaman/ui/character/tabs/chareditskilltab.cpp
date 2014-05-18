@@ -338,6 +338,7 @@ CharEditSkillTab::on_cbPriority_currentIndexChanged(int p_index)
 
     // Enable or disable the attribute increase buttons
     ui->treeSkills->setEnabled(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_SKILLS) != -1);
+    ui->btnAddKnowledgeSkill->setEnabled(CHARACTER_CHOICES->getPriorityIndex(PRIORITY_SKILLS) != -1);
 
     // Update the displayed values
     updateValues();
@@ -350,8 +351,6 @@ CharEditSkillTab::on_cbPriority_currentIndexChanged(int p_index)
 void
 CharEditSkillTab::handleSkillChanged(const QModelIndex& p_current, const QModelIndex& p_previous)
 {
-    QItemSelectionModel* model = static_cast<QItemSelectionModel*>(sender());
-
     // We somehow selected an invalid item
     if (!p_current.isValid())
     {
@@ -383,7 +382,16 @@ CharEditSkillTab::handleSkillChanged(const QModelIndex& p_current, const QModelI
 void
 CharEditSkillTab::on_btnRemoveSkill_clicked()
 {
+    // Get the currently selected skill
+    SkillDefinition* item = static_cast<SkillDefinition*>(ui->treeSkills->currentIndex().data().value<void*>());
 
+    // Reset the skill (and try to remove it
+    CHARACTER_CHOICES->resetSkill(item->id, true);
+
+    // Update view and display
+    forceViewUpdate();
+    updateValues();
+    checkContinue();
 }
 
 //---------------------------------------------------------------------------------
@@ -401,9 +409,16 @@ CharEditSkillTab::on_btnAddKnowledgeSkill_clicked()
     QString customValue = popup.getValue();
     bool isKnowledge = popup.getIsKnowledge();
     KnowledgeType knowledgeType = popup.getKnowledgeType();
+    bool isNative = popup.getIsNativeTongue();
 
     // Construct a new knowledge skill (this will do nothing if it already exists)
-    SKILL_RULES->constructKnowledgeSkill(customValue, isKnowledge, knowledgeType);
+    QString id = SKILL_RULES->constructKnowledgeSkill(customValue, isKnowledge, knowledgeType);
+
+    // If it is a native language, make sure to mark that
+    if (!isKnowledge && isNative)
+    {
+        CHARACTER_CHOICES->setNativeLanguage(id);
+    }
 
     // Update the display
     forceViewUpdate();

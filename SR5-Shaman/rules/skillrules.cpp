@@ -15,7 +15,8 @@
 SkillDefinition::SkillDefinition(SkillDefinition* p_parent)
     : parent(p_parent)
     , id("")
-    , isCategory(false), isGroup(false), isLanguage(false), isUserDefined(false), requiresCustom(false)
+    , isCategory(false), isGroup(false), isLanguage(false)
+    , isUserDefined(false), requiresCustom(false)
     , type(SKILL_TYPE_INVALID)
     , knowledgeType(KNOWLEDGE_TYPE_INVALID)
     , custom("")
@@ -533,6 +534,29 @@ SkillRules::getDefinitionsByType(SkillType p_type, bool p_onlyGroups) const
 }
 
 //---------------------------------------------------------------------------------
+void
+SkillRules::removeSkill(const QString& p_skill)
+{
+    // Remove from parent
+    SkillDefinition* skill = _definitions[p_skill];
+    SkillDefinition* parent = skill->parent;
+    for (unsigned int i = 0; i < parent->children.size(); ++i)
+    {
+        if (parent->children[i] == skill)
+        {
+            parent->children.erase(parent->children.begin() + i);
+            break;
+        }
+    }
+
+    // Remove from definitions
+    _definitions.remove(p_skill);
+
+    // Clean up
+    delete skill;
+}
+
+//---------------------------------------------------------------------------------
 QString
 SkillRules::constructCustomizedSkill(const QString& p_id, const QString& p_customValue)
 {
@@ -582,7 +606,8 @@ SkillRules::constructCustomizedSkill(const QString& p_id, const QString& p_custo
 
 //---------------------------------------------------------------------------------
 QString
-SkillRules::constructKnowledgeSkill(const QString &p_customValue, bool p_isKnowledge, KnowledgeType p_knowledgeType)
+SkillRules::constructKnowledgeSkill(const QString &p_customValue,
+                                    bool p_isKnowledge, KnowledgeType p_knowledgeType)
 {
     // Construct the ID
     QString newID = p_isKnowledge ? "KNOWLEDGE_" : "LANGUAGE_";
@@ -602,6 +627,10 @@ SkillRules::constructKnowledgeSkill(const QString &p_customValue, bool p_isKnowl
         case KNOWLEDGE_TYPE_STREET:
             newID.append("STREET_");
             break;
+
+        default:
+            qCritical() << "Invalid knowledge type!";
+            return "ERROR";
         }
     }
     newID.append(p_customValue);

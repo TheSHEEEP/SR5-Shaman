@@ -346,6 +346,22 @@ CharacterValues::getMaxKnowledgePoints() const
 
 //---------------------------------------------------------------------------------
 int
+CharacterValues::getMaxNativeLanguages() const
+{
+    int max = 1;
+
+    // Mind effects
+    std::vector<Effect*> effects = EFFECT_REGISTRY->getEffectsByType(EFFECTTYPE_ADD_FREE_LANGUAGES);
+    for (unsigned int i = 0; i < effects.size(); ++i)
+    {
+        max += effects[i]->getValue().toInt();
+    }
+
+    return max;
+}
+
+//---------------------------------------------------------------------------------
+int
 CharacterValues::getInitiativeDice(bool p_modified) const
 {
     int value = 1;

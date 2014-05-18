@@ -645,6 +645,13 @@
                 "en" : "Street",
                 "de" : "Straßenwissen"
             }
+        },
+        {
+            "key" : "MAX_NUM_NATIVE_REACHED",
+            "translations" : {
+                "en" : "You can only have a maximum of %1 native languages.",
+                "de" : "Du kannst maximal %1 Muttersprachen auswählen."
+            }
         }
     ]
 }
