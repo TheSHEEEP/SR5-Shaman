@@ -45,6 +45,10 @@ Rules::initialize()
     _qualityRules = new QualityRules();
     _qualityRules->initialize("../../ruleset/qualities.json");
 
+    // Read resource rules
+    _resourceRules = new ResourceRules();
+    _resourceRules->initialize("../../ruleset/resources.json");
+
     // Done!
     _initialized = true;
 }

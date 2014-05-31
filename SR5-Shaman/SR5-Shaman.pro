@@ -53,7 +53,12 @@ SOURCES += main.cpp\
     ui/character/tabs/chareditskilltab.cpp \
     globaleventfilter.cpp \
     ui/character/popups/specializationdialog.cpp \
-    ui/character/popups/knowledgeskilldialog.cpp
+    ui/character/popups/knowledgeskilldialog.cpp \
+    ui/character/tabs/chareditresourcetab.cpp \
+    rules/resourcerules.cpp \
+    ui/models/resourcedelegate.cpp \
+    ui/models/resourcesortfilterproxymodel.cpp \
+    ui/models/resourcetreemodel.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -96,7 +101,12 @@ HEADERS  += mainwindow.h \
     ui/character/tabs/chareditskilltab.h \
     globaleventfilter.h \
     ui/character/popups/specializationdialog.h \
-    ui/character/popups/knowledgeskilldialog.h
+    ui/character/popups/knowledgeskilldialog.h \
+    ui/character/tabs/chareditresourcetab.h \
+    rules/resourcerules.h \
+    ui/models/resourcedelegate.h \
+    ui/models/resourcesortfilterproxymodel.h \
+    ui/models/resourcetreemodel.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
@@ -113,7 +123,8 @@ FORMS    += mainwindow.ui \
     ui/character/tabs/chareditqualitytab.ui \
     ui/character/tabs/chareditskilltab.ui \
     ui/character/popups/specializationdialog.ui \
-    ui/character/popups/knowledgeskilldialog.ui
+    ui/character/popups/knowledgeskilldialog.ui \
+    ui/character/tabs/chareditresourcetab.ui
 
 TRANSLATIONS = sr5shaman_de.ts
 

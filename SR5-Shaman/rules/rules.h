@@ -10,6 +10,7 @@
 #include "magicrules.h"
 #include "skillrules.h"
 #include "qualityrules.h"
+#include "resourcerules.h"
 
 // Helpful defines
 #define METATYPE_RULES Rules::getSingletonPtr()->getMetatypeRules()
@@ -17,6 +18,7 @@
 #define MAGIC_RULES Rules::getSingletonPtr()->getMagicRules()
 #define QUALITY_RULES Rules::getSingletonPtr()->getQualityRules()
 #define SKILL_RULES Rules::getSingletonPtr()->getSkillRules()
+#define RESOURCE_RULES Rules::getSingletonPtr()->getResourceRules()
 
 /**
  * @brief The priorities of the character generation.
@@ -94,6 +96,11 @@ public:
      */
     QualityRules* getQualityRules() const;
 
+    /**
+     * @brief Returns a pointer to the resource rules.
+     */
+    ResourceRules* getResourceRules() const;
+
 private:
     bool    _initialized;
 
@@ -101,7 +108,8 @@ private:
     AttributeRules*     _attributeRules;
     MagicRules*         _magicRules;
     SkillRules*         _skillRules;
-    QualityRules*         _qualityRules;
+    QualityRules*       _qualityRules;
+    ResourceRules*      _resourceRules;
 };
 
 //---------------------------------------------------------------------------------
@@ -142,6 +150,14 @@ QualityRules*
 Rules::getQualityRules() const
 {
     return _qualityRules;
+}
+
+//---------------------------------------------------------------------------------
+inline
+ResourceRules*
+Rules::getResourceRules() const
+{
+    return _resourceRules;
 }
 
 #endif // RULES_H

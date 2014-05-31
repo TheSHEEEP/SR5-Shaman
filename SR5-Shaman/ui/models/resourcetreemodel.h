@@ -1,5 +1,5 @@
-#ifndef SKILLTREEMODEL_H
-#define SKILLTREEMODEL_H
+#ifndef RESOURCETREEMODEL_H
+#define RESOURCETREEMODEL_H
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
@@ -7,16 +7,16 @@
 #include <QMap>
 #include <vector>
 
-#include "rules/skillrules.h"
+#include "rules/Resourcerules.h"
 
 class QAbstractItemView;
 class QSpinBox;
 
 /**
- * @brief This model is used to organize skills in a tree view.
+ * @brief This model is used to organize Resources in a tree view.
  * @author  TheSHEEEP
  */
-class SkillTreeModel : public QAbstractItemModel
+class ResourceTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -24,21 +24,21 @@ public:
     /**
      * @brief Constructor.
      */
-    SkillTreeModel(bool p_advancedMode = false);
+    ResourceTreeModel(bool p_advancedMode = false);
 
     /**
      * @brief Destructor.
      */
-    ~SkillTreeModel();
+    ~ResourceTreeModel();
 
     /**
-     * @brief Will get all skills from the rules.
+     * @brief Will get all resources from the rules.
      */
     void initialize();
 
     /**
      * @brief Emits the data changed signal.
-     * Call this after you added/removed a skill.
+     * Call this after you added/removed a Resource.
      */
     void update();
 
@@ -68,10 +68,10 @@ public:
     /**
      * @brief Returns the model index of the passed values.
      * @param p_row     The row to look at.
-     * @param p_column  The column to look at.
+     * @param p_Resource  The Resource to look at.
      * @param p_parent  The parent to search in.
      */
-    QModelIndex index(int p_row, int p_column, const QModelIndex& p_parent = QModelIndex()) const;
+    QModelIndex index(int p_row, int p_Resource, const QModelIndex& p_parent = QModelIndex()) const;
 
     /**
      * @brief Returns the parent of the passed model index.
@@ -84,24 +84,24 @@ public:
     int rowCount(const QModelIndex& p_parent = QModelIndex()) const;
 
     /**
-     * @brief Returns the column count of the passed model index.
+     * @brief Returns the resource count of the passed model index.
      */
     int columnCount(const QModelIndex& p_parent = QModelIndex()) const;
 
 private:
-    SkillDefinition*     _rootItem;
+    ResourceDefinition*     _rootItem;
 
-    bool                                            _advancedMode;
-    QAbstractItemView*                              _itemView;
+    bool                _advancedMode;
+    QAbstractItemView*  _itemView;
 };
 
 
 //---------------------------------------------------------------------------------
 inline
 void
-SkillTreeModel::setItemView(QAbstractItemView* p_view)
+ResourceTreeModel::setItemView(QAbstractItemView* p_view)
 {
     _itemView = p_view;
 }
 
-#endif // SKILLTREEMODEL_H
+#endif // RESOURCETREEMODEL_H

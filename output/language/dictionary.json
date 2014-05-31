@@ -673,6 +673,20 @@
                 "en" : "A skill group can only be changed while all contained skills have the same pure value.",
                 "de" : "Eine Fertigkeitsgruppe kann nur verändert werden, solange alle entsprechenden Fertigkeiten die gleiche Stufe haben."
             }
+        },
+        {
+            "key" : "RESOURCE_TYPE_INVALID",
+            "translations" : {
+                "en" : "Invalid Resource Type",
+                "de" : "Ungültiger Ressourcentyp"
+            }
+        },
+        {
+            "key" : "RESOURCE_CANT_CONTINUE",
+            "translations" : {
+                "en" : "Select a resource priority and have less than 5000 nuyen remaining.",
+                "de" : "Wähle eine Priorität für Ressources und behalte höchstens 5000 Nuyen übrig."
+            }
         }
     ]
 }
