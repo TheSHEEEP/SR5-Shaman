@@ -9,8 +9,8 @@
 #include "data/character/characterchoices.h"
 
 //---------------------------------------------------------------------------------
-ResourceTreeModel::ResourceTreeModel(bool p_advancedMode)
-    : _advancedMode(p_advancedMode)
+ResourceTreeModel::ResourceTreeModel(bool p_selectedResourcesMode)
+    : _selectedResourcesMode(p_selectedResourcesMode)
     , _itemView(NULL)
 {
 
@@ -27,7 +27,16 @@ ResourceTreeModel::~ResourceTreeModel()
 void
 ResourceTreeModel::initialize()
 {
-    _rootItem = RESOURCE_RULES->getModelRootItem();
+    // In normal mode, just use the available resources
+    if (!_selectedResourcesMode)
+    {
+        _rootItem = RESOURCE_RULES->getModelRootItem();
+    }
+    // In selected resource mode, get the resources from player choices
+    else
+    {
+        _rootItem = CHARACTER_CHOICES->getRootResourceSelection();
+    }
 }
 
 //---------------------------------------------------------------------------------

@@ -431,6 +431,15 @@ public:
     int getQualitiesKarma(bool p_positive) const;
 
     //*********************************************************************
+    // RESOURCES
+    //*********************************************************************
+
+    /**
+     * @brief Returns the root node of the resources the player has selected.
+     */
+    ResourceDefinition* getRootResourceSelection() const;
+
+    //*********************************************************************
     // CREATION DATA
     //*********************************************************************
     HouseRules& getHouseRules();
@@ -454,6 +463,8 @@ private:
     int                         _purchasedPowerPoints;
 
     QMap<QString, std::vector<std::pair<QString, bool> > >  _skillSpecializations;
+
+    ResourceDefinition*     _rootResourceSelection;
 
     HouseRules  _houseRules;
 };
@@ -626,6 +637,14 @@ int
 CharacterChoices::getPurchasedPowerPoints() const
 {
     return _purchasedPowerPoints;
+}
+
+//---------------------------------------------------------------------------------
+inline
+ResourceDefinition*
+CharacterChoices::getRootResourceSelection() const
+{
+    return _rootResourceSelection;
 }
 
 //---------------------------------------------------------------------------------

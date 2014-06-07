@@ -59,10 +59,13 @@ signals:
 private:
     Ui::CharEditResourceTab *ui;
 
+    PriorityEventFilter*           _filter;
     ResourceTreeModel*             _resourceModel;
     ResourceSortFilterProxyModel*  _resourceFilter;
     ResourceDelegate*              _resourceDelegate;
-    PriorityEventFilter*           _filter;
+    ResourceTreeModel*             _resourceModelAvailable;
+    ResourceSortFilterProxyModel*  _resourceFilterAvailable;
+    ResourceDelegate*              _resourceDelegateAvailable;
 
     QVector<int>   _expandedResources;
 

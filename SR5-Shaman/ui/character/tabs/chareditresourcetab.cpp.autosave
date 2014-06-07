@@ -19,6 +19,13 @@
 CharEditResourceTab::CharEditResourceTab(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::CharEditResourceTab)
+    , _filter(NULL)
+    , _resourceModel(NULL)
+    , _resourceFilter(NULL)
+    , _resourceDelegate(NULL)
+    , _resourceModelAvailable(NULL)
+    , _resourceFilterAvailable(NULL)
+    , _resourceDelegateAvailable(NULL)
 {
     ui->setupUi(this);
 }

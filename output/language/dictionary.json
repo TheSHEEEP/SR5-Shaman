@@ -687,6 +687,356 @@
                 "en" : "Select a resource priority and have less than 5000 nuyen remaining.",
                 "de" : "Wähle eine Priorität für Ressources und behalte höchstens 5000 Nuyen übrig."
             }
+        },
+        {
+            "key" : "MELEE_WEAPONS",
+            "translations" : {
+                "en" : "Melee Weapons",
+                "de" : "Nahkampfwaffen"
+            }
+        },
+        {
+            "key" : "MELEE_BLADES",
+            "translations" : {
+                "en" : "Blades",
+                "de" : "Klingenwaffen"
+            }
+        },
+        {
+            "key" : "MELEE_CLUBS",
+            "translations" : {
+                "en" : "Clubs",
+                "de" : "Knüppel"
+            }
+        },
+        {
+            "key" : "MELEE_OTHER",
+            "translations" : {
+                "en" : "Other",
+                "de" : "Andere"
+            }
+        },
+        {
+            "key" : "PROJECTILE_WEAPONS",
+            "translations" : {
+                "en" : "Projectile & Throwing Weapons",
+                "de" : "Projektil- & Wurfwaffen"
+            }
+        },
+        {
+            "key" : "PROJECTILE_BOWS",
+            "translations" : {
+                "en" : "Bows",
+                "de" : "Bögen"
+            }
+        },
+        {
+            "key" : "PROJECTILE_CROSSBOWS",
+            "translations" : {
+                "en" : "Crossbows",
+                "de" : "Armbrüste"
+            }
+        },
+        {
+            "key" : "PROJECTILE_THROWING",
+            "translations" : {
+                "en" : "Throwing Weapons",
+                "de" : "Wurfwaffen"
+            }
+        },
+        {
+            "key" : "FIREARMS",
+            "translations" : {
+                "en" : "Firearms",
+                "de" : "Feuerwaffen"
+            }
+        },
+        {
+            "key" : "FIREARM_TASERS",
+            "translations" : {
+                "en" : "Tasers",
+                "de" : "Taser"
+            }
+        },
+        {
+            "key" : "FIREARM_HOLDOUTS",
+            "translations" : {
+                "en" : "Hold-Outs",
+                "de" : "Holdout-Pistolen"
+            }
+        },
+        {
+            "key" : "FIREARM_LPISTOLS",
+            "translations" : {
+                "en" : "Light Pistols",
+                "de" : "Leichte Pistolen"
+            }
+        },
+        {
+            "key" : "FIREARM_HPISTOLS",
+            "translations" : {
+                "en" : "Heavy Pistols",
+                "de" : "Schwere Pistolen"
+            }
+        },
+        {
+            "key" : "FIREARM_MPISTOLS",
+            "translations" : {
+                "en" : "Machine Pistols",
+                "de" : "Automatikpistolen"
+            }
+        },
+        {
+            "key" : "FIREARM_SMGS",
+            "translations" : {
+                "en" : "Submachine Guns",
+                "de" : "Maschinenpistole"
+            }
+        },
+        {
+            "key" : "FIREARM_ASSAULTR",
+            "translations" : {
+                "en" : "Assault Rifles",
+                "de" : "Sturmgewehre"
+            }
+        },
+        {
+            "key" : "FIREARM_SNIPERR",
+            "translations" : {
+                "en" : "Sniper Rifles",
+                "de" : "Scharfschützengewehre"
+            }
+        },
+        {
+            "key" : "FIREARM_SHOTGUNS",
+            "translations" : {
+                "en" : "Shotguns",
+                "de" : "Schrotflinten"
+            }
+        },
+        {
+            "key" : "FIREARM_SPECIALW",
+            "translations" : {
+                "en" : "Special Weapons",
+                "de" : "Spezielle Waffen"
+            }
+        },
+        {
+            "key" : "FIREARM_MACHINEG",
+            "translations" : {
+                "en" : "Machine Guns",
+                "de" : "Maschinengewehre"
+            }
+        },
+        {
+            "key" : "FIREARM_CANNONS_LAUNCHERS",
+            "translations" : {
+                "en" : "Cannons/Launchers",
+                "de" : "Sturmkanonen, Granat- & Raketenwerfer"
+            }
+        },
+        {
+            "key" : "AMMUNITION",
+            "translations" : {
+                "en" : "Ammunition",
+                "de" : "Munition"
+            }
+        },
+        {
+            "key" : "EXPLOSIVES",
+            "translations" : {
+                "en" : "Explosives",
+                "de" : "Sprengstoffe"
+            }
+        },
+        {
+            "key" : "CLOTHING_ARMOR",
+            "translations" : {
+                "en" : "Clothing And Armor",
+                "de" : "Kleidung Und Panzerung"
+            }
+        },
+        {
+            "key" : "CLOTHING",
+            "translations" : {
+                "en" : "Clothing",
+                "de" : "Kleidung"
+            }
+        },
+        {
+            "key" : "ARMOR",
+            "translations" : {
+                "en" : "Armor",
+                "de" : "Panzerung"
+            }
+        },
+        {
+            "key" : "ELECTRONICS",
+            "translations" : {
+                "en" : "Electronics",
+                "de" : "Elektronik"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_COMMLINKS",
+            "translations" : {
+                "en" : "Commlinks",
+                "de" : "Kommlinks"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_CYBERDECKS",
+            "translations" : {
+                "en" : "Cyberdecks",
+                "de" : "Cyberdecks"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_ACCESSORIES",
+            "translations" : {
+                "en" : "Accessories",
+                "de" : "Elektronikzubehör"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_RIGGERC",
+            "translations" : {
+                "en" : "Rigger Consoles",
+                "de" : "Riggerkonsolen"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_RFID",
+            "translations" : {
+                "en" : "RFID Tags",
+                "de" : "RFID-Chips"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_COMMUNICATION",
+            "translations" : {
+                "en" : "Communications",
+                "de" : "Kommunikation"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_SOFTWARE",
+            "translations" : {
+                "en" : "Software",
+                "de" : "Software"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_SKILLSOFT",
+            "translations" : {
+                "en" : "Skillsofts",
+                "de" : "Talentsofts"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_CREDSTICKS",
+            "translations" : {
+                "en" : "Credsticks",
+                "de" : "Credsticks"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_ID",
+            "translations" : {
+                "en" : "Identification",
+                "de" : "Identifizierung"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_TOOLS",
+            "translations" : {
+                "en" : "Tools",
+                "de" : "Werkzeuge"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_OPTICAL_IMAGING",
+            "translations" : {
+                "en" : "Optical & Imaging Devices",
+                "de" : "Optische & Aufnahmegeräte"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_VISION_ENH",
+            "translations" : {
+                "en" : "Vision Enhancements",
+                "de" : "Sichtverstärkungen"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_AUDIO_DEV",
+            "translations" : {
+                "en" : "Audio Devices",
+                "de" : "Audiogeräte"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_AUDIO_ENH",
+            "translations" : {
+                "en" : "Audio Enhancements",
+                "de" : "Audioverstärkungen"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_SENSORS",
+            "translations" : {
+                "en" : "Sensors",
+                "de" : "Sensoren"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_SECURITY_DEV",
+            "translations" : {
+                "en" : "Security Devices",
+                "de" : "Sicherheitsgeräte"
+            }
+        },
+        {
+            "key" : "ELECTRONICS_BE_GEAR",
+            "translations" : {
+                "en" : "Breaking & Entering Gear",
+                "de" : "Einbruchswerkzeug"
+            }
+        },
+        {
+            "key" : "INDUSTRIAL_CHEMICALS",
+            "translations" : {
+                "en" : "Industrial Chemicals",
+                "de" : "Industriechemikalien"
+            }
+        },
+        {
+            "key" : "SURVIVAL_GEAR",
+            "translations" : {
+                "en" : "Survival Gear",
+                "de" : "Überlebensausrüstung"
+            }
+        },
+        {
+            "key" : "GRAPPLE_FLARE",
+            "translations" : {
+                "en" : "Grapple & Flare Gun",
+                "de" : "Enterhaken- & Signalkanone"
+            }
+        },
+        {
+            "key" : "BIOTECH",
+            "translations" : {
+                "en" : "Biotech",
+                "de" : "Biotech"
+            }
+        },
+        {
+            "key" : "DOCWAGON",
+            "translations" : {
+                "en" : "Docwagon Contract",
+                "de" : "Docwagon-Vertrag"
+            }
         }
     ]
 }

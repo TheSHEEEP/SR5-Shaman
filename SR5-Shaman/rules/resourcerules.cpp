@@ -81,67 +81,307 @@ ResourceRules::ResourceRules()
     _rootItem->parent = NULL;
 
     // Add categories
-    // THE ORDER IS VERY IMPORTANT HERE, DEPENDS ON THE SKILL TYPE ENUM
-    // Combat
-    /*SkillDefinition* category = new SkillDefinition(_rootItem);
+    // THE ORDER IS VERY IMPORTANT HERE, DO NOT CHANGE IT
+    // Melee Weapons
+    ResourceDefinition* category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_COMBAT";
-    category->type = SKILL_TYPE_COMBAT;
+    category->id = "CATEGORY_MELEE_WEAPONS";
+    category->type = RESOURCE_TYPE_MELEE_WEAPON;
     _rootItem->children.push_back(category);
-    // Physical
-    category = new SkillDefinition(_rootItem);
+        // Blades
+        ResourceDefinition* subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_MELEE_BLADES";
+        subCategory->type = RESOURCE_TYPE_MELEE_WEAPON;
+        category->children.push_back(subCategory);
+        // Clubs
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_MELEE_CLUBS";
+        subCategory->type = RESOURCE_TYPE_MELEE_WEAPON;
+        category->children.push_back(subCategory);
+        // Other
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_MELEE_OTHER";
+        subCategory->type = RESOURCE_TYPE_MELEE_WEAPON;
+        category->children.push_back(subCategory);
+    // Projectile Weapons
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_PHYSICAL";
-    category->type = SKILL_TYPE_PHYSICAL;
+    category->id = "CATEGORY_PROJECTILE_WEAPONS";
+    category->type = RESOURCE_TYPE_PROJECTILE_WEAPON;
     _rootItem->children.push_back(category);
-    // Social
-    category = new SkillDefinition(_rootItem);
+        // Bows
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_PROJECTILE_BOWS";
+        subCategory->type = RESOURCE_TYPE_PROJECTILE_WEAPON;
+        category->children.push_back(subCategory);
+        // Crossbows
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_PROJECTILE_CROSSBOWS";
+        subCategory->type = RESOURCE_TYPE_PROJECTILE_WEAPON;
+        category->children.push_back(subCategory);
+        // Other
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_PROJECTILE_THROWING";
+        subCategory->type = RESOURCE_TYPE_PROJECTILE_WEAPON;
+        category->children.push_back(subCategory);
+    // Firearms
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_SOCIAL";
-    category->type = SKILL_TYPE_SOCIAL;
+    category->id = "CATEGORY_FIREARMS";
+    category->type = RESOURCE_TYPE_FIREARM;
     _rootItem->children.push_back(category);
-    // Magical
-    category = new SkillDefinition(_rootItem);
+        // Tasers
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_TASERS";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Hold-Outs
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_HOLDOUTS";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Light Pistols
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_LPISTOLS";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Heavy Pistols
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_HPISTOLS";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Machine Pistols
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_MPISTOLS";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // SMGs
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_SMGS";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Assault Rifles
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_ASSAULTR";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Sniper Rifles
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_SNIPERR";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Shotguns
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_SHOTGUNS";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Special Weapons
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_SPECIALW";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Machine Guns
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_MACHINEG";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+        // Cannons & Launcher
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_FIREARM_CANNONS_LAUNCHERS";
+        subCategory->type = RESOURCE_TYPE_FIREARM;
+        category->children.push_back(subCategory);
+    // Ammunition
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_MAGIC";
-    category->type = SKILL_TYPE_MAGIC;
+    category->id = "CATEGORY_AMMUNITION";
+    category->type = RESOURCE_TYPE_AMMUNITION;
     _rootItem->children.push_back(category);
-    // Resonance
-    category = new SkillDefinition(_rootItem);
+    // Explosives
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_RESONANCE";
-    category->type = SKILL_TYPE_RESONANCE;
+    category->id = "CATEGORY_EXPLOSIVES";
+    category->type = RESOURCE_TYPE_EXPLOSIVES;
     _rootItem->children.push_back(category);
-    // Technical
-    category = new SkillDefinition(_rootItem);
+    // Clothing and armor
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_TECHNICAL";
-    category->type = SKILL_TYPE_TECHNICAL;
+    category->id = "CATEGORY_CLOTHING_ARMOR";
+    category->type = RESOURCE_TYPE_CLOTHING_ARMOR;
     _rootItem->children.push_back(category);
-    // Vehicle
-    category = new SkillDefinition(_rootItem);
+        // Clothing
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_CLOTHING";
+        subCategory->type = RESOURCE_TYPE_CLOTHING_ARMOR;
+        category->children.push_back(subCategory);
+        // Armor
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ARMOR";
+        subCategory->type = RESOURCE_TYPE_CLOTHING_ARMOR;
+        category->children.push_back(subCategory);
+    // Electronics
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_VEHICLE";
-    category->type = SKILL_TYPE_VEHICLE;
+    category->id = "CATEGORY_ELECTRONICS";
+    category->type = RESOURCE_TYPE_ELECTRONICS;
     _rootItem->children.push_back(category);
-    // Knowledge
-    category = new SkillDefinition(_rootItem);
+        // Commlinks
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_COMMLINKS";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Cyberdecks
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_CYBERDECKS";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Accessories
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_ACCESSORIES";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Rigger consoles
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_RIGGERC";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // RFID tags
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_RFID";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Communication
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_COMMUNICATION";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Software
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_SOFTWARE";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Skillsoft
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_SKILLSOFT";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Credsticks
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_CREDSTICKS";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Identification
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_ID";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Tools
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_TOOLS";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Optical & imaging
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_OPTICAL_IMAGING";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Vision enhancements
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_VISION_ENH";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Audio devices
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_AUDIO_DEV";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Audio enhancements
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_AUDIO_ENH";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Sensors
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_SENSORS";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Security devices
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_SECURITY_DEV";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+        // Breaking & entering
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_ELECTRONICS_BE_GEAR";
+        subCategory->type = RESOURCE_TYPE_ELECTRONICS;
+        category->children.push_back(subCategory);
+    // Industrial chemicals
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_KNOWLEDGE";
-    category->type = SKILL_TYPE_KNOWLEDGE;
+    category->id = "CATEGORY_INDUSTRIAL_CHEMICALS";
+    category->type = RESOURCE_TYPE_INDUSTRIAL_CHEMICALS;
     _rootItem->children.push_back(category);
-    // Language
-    category = new SkillDefinition(_rootItem);
+    // Survival gear
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_LANGUAGE";
-    category->type = SKILL_TYPE_LANGUAGE;
+    category->id = "CATEGORY_SURVIVAL_GEAR";
+    category->type = RESOURCE_TYPE_SURVIVAL_GEAR;
     _rootItem->children.push_back(category);
-    // Groups - this is a workaround
-    category = new SkillDefinition(_rootItem);
+    // Grapple & flare gun
+    category = new ResourceDefinition(_rootItem);
     category->isCategory = true;
-    category->id = "CATEGORY_GROUPS";
-    category->type = NUM_SKILL_TYPES;
-    _rootItem->children.push_back(category);*/
+    category->id = "CATEGORY_GRAPPLE_FLARE";
+    category->type = RESOURCE_TYPE_GRAPPLE_FLARE;
+    _rootItem->children.push_back(category);
+    // Biotech
+    category = new ResourceDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_BIOTECH";
+    category->type = RESOURCE_TYPE_BIOTECH;
+    _rootItem->children.push_back(category);
+    // Docwagon
+    category = new ResourceDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_DOCWAGON";
+    category->type = RESOURCE_TYPE_DOCWAGON;
+    _rootItem->children.push_back(category);
 }
 
 //---------------------------------------------------------------------------------
@@ -177,7 +417,7 @@ ResourceRules::initialize(const QString& p_jsonFile)
     }
 
     // Read the resource points
-    QJsonArray pointsArray = doc.object().value("skill_points_per_prio").toArray();
+    /*QJsonArray pointsArray = doc.object().value("skill_points_per_prio").toArray();
     _skillPoints.push_back(QPair<int,int>(  pointsArray[0].toArray()[0].toString().toInt(),
                                             pointsArray[0].toArray()[1].toString().toInt()));
     _skillPoints.push_back(QPair<int,int>(  pointsArray[1].toArray()[0].toString().toInt(),
@@ -187,7 +427,7 @@ ResourceRules::initialize(const QString& p_jsonFile)
     _skillPoints.push_back(QPair<int,int>(  pointsArray[3].toArray()[0].toString().toInt(),
                                             pointsArray[3].toArray()[1].toString().toInt()));
     _skillPoints.push_back(QPair<int,int>(  pointsArray[4].toArray()[0].toString().toInt(),
-                                            pointsArray[4].toArray()[1].toString().toInt()));
+                                            pointsArray[4].toArray()[1].toString().toInt()));*/
 
     /*// Parse each skill group and add to the rules
     QJsonArray skillsArray = doc.object().value("skill_groups").toArray();

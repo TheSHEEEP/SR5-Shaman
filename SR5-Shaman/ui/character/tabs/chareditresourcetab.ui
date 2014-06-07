@@ -96,7 +96,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>   </string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -122,7 +122,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>   </string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -130,8 +130,18 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btnRemoveItem">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Remove Item</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
@@ -146,21 +156,18 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="btnRemoveItem">
+      <widget class="QPushButton" name="btnAddItem">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Remove Item</string>
+        <string>Add Item</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <widget class="QTreeView" name="treeResources"/>
-   </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <spacer name="horizontalSpacer_3">
@@ -182,6 +189,30 @@
        </property>
        <property name="text">
         <string>Continue</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QTreeView" name="treeResources">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>60</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeView" name="treeResourcesAvailable">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>40</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
       </widget>
      </item>

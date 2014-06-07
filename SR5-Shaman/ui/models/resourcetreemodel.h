@@ -24,7 +24,7 @@ public:
     /**
      * @brief Constructor.
      */
-    ResourceTreeModel(bool p_advancedMode = false);
+    ResourceTreeModel(bool p_selectedResourcesMode = false);
 
     /**
      * @brief Destructor.
@@ -91,7 +91,7 @@ public:
 private:
     ResourceDefinition*     _rootItem;
 
-    bool                _advancedMode;
+    bool                _selectedResourcesMode;
     QAbstractItemView*  _itemView;
 };
 
