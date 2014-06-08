@@ -48,9 +48,13 @@ ResourceSortFilterProxyModel::applyFilter()
 bool
 ResourceSortFilterProxyModel::lessThan(const QModelIndex& p_left, const QModelIndex& p_right) const
 {
-    // Sort by alphabet
     ResourceDefinition* leftItem = static_cast<ResourceDefinition*>(p_left.internalPointer());
     ResourceDefinition* rightItem = static_cast<ResourceDefinition*>(p_right.internalPointer());
+    // Sorting depends on exact item type
+
+    // Categories are sorted by type
+
+    // Actual items are sorted alphabetically
     QString leftData = leftItem->id;
     QString rightData = rightItem->id;
 

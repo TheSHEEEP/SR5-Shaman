@@ -382,6 +382,138 @@ ResourceRules::ResourceRules()
     category->id = "CATEGORY_DOCWAGON";
     category->type = RESOURCE_TYPE_DOCWAGON;
     _rootItem->children.push_back(category);
+    // Augmentation
+    category = new ResourceDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_AUGMENTATION";
+    category->type = RESOURCE_TYPE_AUGMENTATION;
+    _rootItem->children.push_back(category);
+        // Headware
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_AUG_HEADWARE";
+        subCategory->type = RESOURCE_TYPE_AUGMENTATION;
+        category->children.push_back(subCategory);
+        // Eyeware
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_AUG_EYEWARE";
+        subCategory->type = RESOURCE_TYPE_AUGMENTATION;
+        category->children.push_back(subCategory);
+        // Earware
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_AUG_EARWARE";
+        subCategory->type = RESOURCE_TYPE_AUGMENTATION;
+        category->children.push_back(subCategory);
+        // Bodyware
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_AUG_BODYWARE";
+        subCategory->type = RESOURCE_TYPE_AUGMENTATION;
+        category->children.push_back(subCategory);
+        // Cyberlimbs
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_AUG_CYBERLIMBS";
+        subCategory->type = RESOURCE_TYPE_AUGMENTATION;
+        category->children.push_back(subCategory);
+        // Bioware
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_AUG_BIOWARE";
+        subCategory->type = RESOURCE_TYPE_AUGMENTATION;
+        category->children.push_back(subCategory);
+    // Magical equipment
+    category = new ResourceDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_MAGICAL_EQUIPMENT";
+    category->type = RESOURCE_TYPE_MAGICAL_EQUIPMENT;
+    _rootItem->children.push_back(category);
+    // Vehicles and drones
+    category = new ResourceDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_VEHICLES_DRONES";
+    category->type = RESOURCE_TYPE_VEHICLES_DRONES;
+    _rootItem->children.push_back(category);
+        // Bikes
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_BIKES";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Cars
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_CARS";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Trucks and vans
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_TRUCKS_VANS";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Boats
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_BOATS";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Submarines
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_SUBMARINES";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Fixed-wing aircraft
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_FWAIRCRAFT";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Rotorcraft
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_ROTORCRAFT";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // VTOL/VSTOL
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_VTOL";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Microdrones
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_MICRODRONES";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Minidrohnen
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_MINIDRONES";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Small drones
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_SMALL_DRONES";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Medium drones
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_MEDIUM_DRONES";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
+        // Large drones
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_VD_LARGE_DRONES";
+        subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
+        category->children.push_back(subCategory);
 }
 
 //---------------------------------------------------------------------------------

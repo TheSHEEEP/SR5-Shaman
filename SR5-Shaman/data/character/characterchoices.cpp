@@ -19,6 +19,8 @@ CharacterChoices::CharacterChoices()
     , _purchasedPowerPoints(0)
 {
     _selectedPriorities.resize(5, PRIORITY_INVALID);
+
+
 }
 
 //---------------------------------------------------------------------------------

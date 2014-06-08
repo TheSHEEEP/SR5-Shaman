@@ -1037,6 +1037,167 @@
                 "en" : "Docwagon Contract",
                 "de" : "Docwagon-Vertrag"
             }
+        },
+        {
+            "key" : "AUGMENTATION",
+            "translations" : {
+                "en" : "Augmentation",
+                "de" : "Bodytech"
+            }
+        },
+        {
+            "key" : "AUG_HEADWARE",
+            "translations" : {
+                "en" : "Headware",
+                "de" : "Headware"
+            }
+        },
+        {
+            "key" : "AUG_EYEWARE",
+            "translations" : {
+                "en" : "Eyeware",
+                "de" : "Augen-Cyberware"
+            }
+        },
+        {
+            "key" : "AUG_EARWARE",
+            "translations" : {
+                "en" : "Earware",
+                "de" : "Ohren-Cyberware"
+            }
+        },
+        {
+            "key" : "AUG_BODYWARE",
+            "translations" : {
+                "en" : "Bodyware",
+                "de" : "Bodyware"
+            }
+        },
+        {
+            "key" : "AUG_CYBERLIMBS",
+            "translations" : {
+                "en" : "Cyberlimbs",
+                "de" : "Cybergliedmaßen"
+            }
+        },
+        {
+            "key" : "AUG_BIOWARE",
+            "translations" : {
+                "en" : "Bioware",
+                "de" : "Cybergliedmaßen"
+            }
+        },
+        {
+            "key" : "MAGICAL_EQUIPMENT",
+            "translations" : {
+                "en" : "Magical Equipment",
+                "de" : "Magische Ausrüstung"
+            }
+        },
+        {
+            "key" : "VEHICLES_DRONES",
+            "translations" : {
+                "en" : "Vehicles & Drones",
+                "de" : "Fahrzeuge & Drohnen"
+            }
+        },
+        {
+            "key" : "VD_BIKES",
+            "translations" : {
+                "en" : "Bikes",
+                "de" : "Motorräder"
+            }
+        },
+        {
+            "key" : "VD_CARS",
+            "translations" : {
+                "en" : "Cars",
+                "de" : "Autos"
+            }
+        },
+        {
+            "key" : "VD_BIKES",
+            "translations" : {
+                "en" : "Bikes",
+                "de" : "Motorräder"
+            }
+        },
+        {
+            "key" : "VD_TRUCKS_VANS",
+            "translations" : {
+                "en" : "Trucks & Vans",
+                "de" : "LKWs & Vans"
+            }
+        },
+        {
+            "key" : "VD_BOATS",
+            "translations" : {
+                "en" : "Boats",
+                "de" : "Boote"
+            }
+        },
+        {
+            "key" : "VD_SUBMARINES",
+            "translations" : {
+                "en" : "Submarines",
+                "de" : "U-Boote"
+            }
+        },
+        {
+            "key" : "VD_FWAIRCRAFT",
+            "translations" : {
+                "en" : "Fixed-Wing Aircraft",
+                "de" : "Starrflügler"
+            }
+        },
+        {
+            "key" : "VD_ROTORCRAFT",
+            "translations" : {
+                "en" : "Rotorcraft",
+                "de" : "Rotormaschinen"
+            }
+        },
+        {
+            "key" : "VD_VTOL",
+            "translations" : {
+                "en" : "VTOL/VSTOL",
+                "de" : "VTOL/VSTOL"
+            }
+        },
+        {
+            "key" : "VD_MICRODRONES",
+            "translations" : {
+                "en" : "Microdrones",
+                "de" : "Mikrodrohnen"
+            }
+        },
+        {
+            "key" : "VD_MINIDRONES",
+            "translations" : {
+                "en" : "Minidrones",
+                "de" : "Minidrohnen"
+            }
+        },
+        {
+            "key" : "VD_SMALL_DRONES",
+            "translations" : {
+                "en" : "Small Drones",
+                "de" : "Kleine Drohnen"
+            }
+        },
+        {
+            "key" : "VD_MEDIUM_DRONES",
+            "translations" : {
+                "en" : "Medium Drones",
+                "de" : "Mittlere Drohnen"
+            }
+        },
+        {
+            "key" : "VD_LARGE_DRONES",
+            "translations" : {
+                "en" : "Large Drones",
+                "de" : "Große Drohnen"
+            }
         }
     ]
 }
