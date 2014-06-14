@@ -29,6 +29,12 @@ enum ResourceType
     NUM_RESOURCE_TYPES
 };
 
+// Resource sub-types, those are simple defines as they represent the index within
+// a resource category
+#define RESOURCE_SUBTYPE_MELEE_BLADES   0
+#define RESOURCE_SUBTYPE_MELEE_CLUBS    1
+#define RESOURCE_SUBTYPE_MELEE_OTHER    2
+
 /**
  * @brief This is the definition of a single skill.
  *          Also has some additional functionality to serve as a model item for Views.
@@ -73,6 +79,7 @@ public:
     bool                            requiresCustom;
     QString                         custom;     // This can be used for further definition, like the name defined by the user
     ResourceType                    type;
+    unsigned short                  subType;
     QMap<QString, QString>          translations;
 };
 

@@ -93,18 +93,21 @@ ResourceRules::ResourceRules()
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_MELEE_BLADES";
         subCategory->type = RESOURCE_TYPE_MELEE_WEAPON;
+        subCategory->subType = RESOURCE_SUBTYPE_MELEE_BLADES;
         category->children.push_back(subCategory);
         // Clubs
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_MELEE_CLUBS";
         subCategory->type = RESOURCE_TYPE_MELEE_WEAPON;
+        subCategory->subType = RESOURCE_SUBTYPE_MELEE_CLUBS;
         category->children.push_back(subCategory);
         // Other
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_MELEE_OTHER";
         subCategory->type = RESOURCE_TYPE_MELEE_WEAPON;
+        subCategory->subType = RESOURCE_SUBTYPE_MELEE_OTHER;
         category->children.push_back(subCategory);
     // Projectile Weapons
     category = new ResourceDefinition(_rootItem);

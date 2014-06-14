@@ -1,6 +1,125 @@
 {
     "resources" :
     [
-
+        {   "unique_id" : "COMBAT_AXE",
+            "translations" : 
+            { 
+                "en" : "Combat Axe",
+                "de" : "Kampfaxt"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_BLADES",
+            "availability"  : "12E",
+            "cost"          : "4000",
+            "accuracy"      : "4",
+            "reach"         : "2",
+            "damage"        : ["Str + 5", "P"],
+            "ap"            : "-4"
+        },
+        {   "unique_id" : "COMBAT_KNIFE",
+            "translations" : 
+            { 
+                "en" : "Combat Knife",
+                "de" : "Kampfmesser"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_BLADES",
+            "availability"  : "4",
+            "cost"          : "300",
+            "accuracy"      : "6",
+            "reach"         : "0",
+            "damage"        : ["Str + 2", "P"],
+            "ap"            : "-3"
+        },
+        {   "unique_id" : "FOREARM_SNAP_BLADES",
+            "translations" : 
+            { 
+                "en" : "Forearm Snap-Blades",
+                "de" : "Unterarmschnappklingen"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_BLADES",
+            "availability"  : "7E",
+            "cost"          : "200",
+            "accuracy"      : "4",
+            "reach"         : "0",
+            "damage"        : ["Str + 2", "P"],
+            "ap"            : "-2"
+        },
+        {   "unique_id" : "KATANA",
+            "translations" : 
+            { 
+                "en" : "Katana",
+                "de" : "Katana"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_BLADES",
+            "availability"  : "9E",
+            "cost"          : "1000",
+            "accuracy"      : "7",
+            "reach"         : "1",
+            "damage"        : ["Str + 3", "P"],
+            "ap"            : "-3"
+        },
+        {   "unique_id" : "KNIFE",
+            "translations" : 
+            { 
+                "en" : "Knife",
+                "de" : "Messer"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_BLADES",
+            "availability"  : "0",
+            "cost"          : "10",
+            "accuracy"      : "5",
+            "reach"         : "0",
+            "damage"        : ["Str + 1", "P"],
+            "ap"            : "-1"
+        },
+        {   "unique_id" : "POLEARM",
+            "translations" : 
+            { 
+                "en" : "Polearm",
+                "de" : "Stangenwaffe"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_BLADES",
+            "availability"  : "6E",
+            "cost"          : "1000",
+            "accuracy"      : "5",
+            "reach"         : "3",
+            "damage"        : ["Str + 3", "P"],
+            "ap"            : "-2"
+        },
+        {   "unique_id" : "SURVIVAL_KNIFE",
+            "translations" : 
+            { 
+                "en" : "Survival Knife",
+                "de" : "Überlebensmesser"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_BLADES",
+            "availability"  : "0",
+            "cost"          : "100",
+            "accuracy"      : "5",
+            "reach"         : "0",
+            "damage"        : ["Str + 2", "P"],
+            "ap"            : "-1"
+        },
+        {   "unique_id" : "SWORD",
+            "translations" : 
+            { 
+                "en" : "Sword",
+                "de" : "Schwert"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_BLADES",
+            "availability"  : "5E",
+            "cost"          : "500",
+            "accuracy"      : "6",
+            "reach"         : "1",
+            "damage"        : ["Str + 3", "P"],
+            "ap"            : "-2"
+        }
     ]
 }
