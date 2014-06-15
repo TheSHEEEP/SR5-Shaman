@@ -9,7 +9,7 @@
             },
             "type"          : "MELEE_WEAPON",
             "subtype"       : "MELEE_BLADES",
-            "availability"  : "12E",
+            "availability"  : "12R",
             "cost"          : "4000",
             "accuracy"      : "4",
             "reach"         : "2",
@@ -39,12 +39,13 @@
             },
             "type"          : "MELEE_WEAPON",
             "subtype"       : "MELEE_BLADES",
-            "availability"  : "7E",
+            "availability"  : "7R",
             "cost"          : "200",
             "accuracy"      : "4",
             "reach"         : "0",
             "damage"        : ["Str + 2", "P"],
-            "ap"            : "-2"
+            "ap"            : "-2",
+            "wireless"      : "true"
         },
         {   "unique_id" : "KATANA",
             "translations" : 
@@ -54,7 +55,7 @@
             },
             "type"          : "MELEE_WEAPON",
             "subtype"       : "MELEE_BLADES",
-            "availability"  : "9E",
+            "availability"  : "9R",
             "cost"          : "1000",
             "accuracy"      : "7",
             "reach"         : "1",
@@ -84,7 +85,7 @@
             },
             "type"          : "MELEE_WEAPON",
             "subtype"       : "MELEE_BLADES",
-            "availability"  : "6E",
+            "availability"  : "6R",
             "cost"          : "1000",
             "accuracy"      : "5",
             "reach"         : "3",
@@ -104,7 +105,8 @@
             "accuracy"      : "5",
             "reach"         : "0",
             "damage"        : ["Str + 2", "P"],
-            "ap"            : "-1"
+            "ap"            : "-1",
+            "wireless"      : "true"
         },
         {   "unique_id" : "SWORD",
             "translations" : 
@@ -114,12 +116,500 @@
             },
             "type"          : "MELEE_WEAPON",
             "subtype"       : "MELEE_BLADES",
-            "availability"  : "5E",
+            "availability"  : "5R",
             "cost"          : "500",
             "accuracy"      : "6",
             "reach"         : "1",
             "damage"        : ["Str + 3", "P"],
             "ap"            : "-2"
+        },
+        {   "unique_id" : "CLUB",
+            "translations" : 
+            { 
+                "en" : "Club",
+                "de" : "Knüppel"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_CLUBS",
+            "availability"  : "0",
+            "cost"          : "30",
+            "accuracy"      : "4",
+            "reach"         : "1",
+            "damage"        : ["Str + 3", "P"],
+            "ap"            : "0"
+        },
+        {   "unique_id" : "EXTEND_BATON",
+            "translations" : 
+            { 
+                "en" : "Extendable Baton",
+                "de" : "Teleskopschlagstock"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_CLUBS",
+            "availability"  : "4",
+            "cost"          : "100",
+            "accuracy"      : "5",
+            "reach"         : "1",
+            "damage"        : ["Str + 2", "P"],
+            "ap"            : "0",
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "SAP",
+            "translations" : 
+            { 
+                "en" : "Sap",
+                "de" : "Totschläger"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_CLUBS",
+            "availability"  : "2",
+            "cost"          : "30",
+            "accuracy"      : "5",
+            "reach"         : "0",
+            "damage"        : ["Str + 2", "P"],
+            "ap"            : "0"
+        },
+        {   "unique_id" : "STAFF",
+            "translations" : 
+            { 
+                "en" : "Staff",
+                "de" : "Stab"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_CLUBS",
+            "availability"  : "3",
+            "cost"          : "100",
+            "accuracy"      : "6",
+            "reach"         : "2",
+            "damage"        : ["Str + 3", "P"],
+            "ap"            : "0"
+        },
+        {   "unique_id" : "STUN_BATON",
+            "translations" : 
+            { 
+                "en" : "Stun Baton",
+                "de" : "Betäubungsschlagstock"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_CLUBS",
+            "availability"  : "6R",
+            "cost"          : "750",
+            "accuracy"      : "4",
+            "reach"         : "1",
+            "damage"        : ["9", "S(e)"],
+            "ap"            : "-5",
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "TELESCOPING_STAFF",
+            "translations" : 
+            { 
+                "en" : "Telescoping Staff",
+                "de" : "Teleskopstab"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_CLUBS",
+            "availability"  : "4",
+            "cost"          : "350",
+            "accuracy"      : "4",
+            "reach"         : "2",
+            "damage"        : ["Str + 2", "P"],
+            "ap"            : "0",
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "KNUCKS",
+            "translations" : 
+            { 
+                "en" : "Staff",
+                "de" : "Stab"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_OTHER",
+            "availability"  : "2R",
+            "cost"          : "100",
+            "accuracy"      : "physical",
+            "reach"         : "0",
+            "damage"        : ["Str + 1", "P"],
+            "ap"            : "0"
+        },
+        {   "unique_id" : "MONOF_WHIP",
+            "translations" : 
+            { 
+                "en" : "Monofilament Whip",
+                "de" : "Monofilamentpeitsche"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_OTHER",
+            "availability"  : "12F",
+            "cost"          : "10000",
+            "accuracy"      : "5(7)",
+            "reach"         : "2",
+            "damage"        : ["12", "P"],
+            "ap"            : "-8",
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "SHOCK_GLOVES",
+            "translations" : 
+            { 
+                "en" : "Shock Gloves",
+                "de" : "Schockhandschuhe"
+            },
+            "type"          : "MELEE_WEAPON",
+            "subtype"       : "MELEE_OTHER",
+            "availability"  : "6R",
+            "cost"          : "550",
+            "accuracy"      : "physical",
+            "reach"         : "0",
+            "damage"        : ["8", "S(e)"],
+            "ap"            : "-5",
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "BOW",
+            "translations" : 
+            { 
+                "en" : "Bow",
+                "de" : "Bogen"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_BOWS",
+            "availability"  : "rating",
+            "cost"          : "rating * 100",
+            "accuracy"      : "6",
+            "damage"        : ["rating + 2", "P"],
+            "ap"            : "-rating / 4",
+            "max_rating"    : "10"
+        },
+        {   "unique_id" : "ARROW",
+            "translations" : 
+            { 
+                "en" : "Arrow",
+                "de" : "Pfeil"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_BOWS",
+            "availability"  : "rating",
+            "cost"          : "rating * 2",
+            "ammo"          : "true",
+            "max_rating"    : "10"
+        },
+        {   "unique_id" : "INJ_ARROW",
+            "translations" : 
+            { 
+                "en" : "Injection Arrow",
+                "de" : "Injektionspfeil"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_BOWS",
+            "availability"  : "rating + 2 R",
+            "cost"          : "rating * 20",
+            "ammo"          : "true",
+            "max_rating"    : "10"
+        },
+        {   "unique_id" : "CROSSBOW_L",
+            "translations" : 
+            { 
+                "en" : "Light Crossbow",
+                "de" : "Leichte Armbrust"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_CROSSBOWS",
+            "availability"  : "2",
+            "cost"          : "300",
+            "accuracy"      : "7",
+            "damage"        : ["5", "P"],
+            "ap"            : "-1"
+        },
+        {   "unique_id" : "CROSSBOW_M",
+            "translations" : 
+            { 
+                "en" : "Medium Crossbow",
+                "de" : "Mittlere Armbrust"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_CROSSBOWS",
+            "availability"  : "4R",
+            "cost"          : "500",
+            "accuracy"      : "6",
+            "damage"        : ["7", "P"],
+            "ap"            : "-2"
+        },
+        {   "unique_id" : "CROSSBOW_H",
+            "translations" : 
+            { 
+                "en" : "Heavy Crossbow",
+                "de" : "Schwere Armbrust"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_CROSSBOWS",
+            "availability"  : "8R",
+            "cost"          : "1000",
+            "accuracy"      : "5",
+            "damage"        : ["10", "P"],
+            "ap"            : "-3"
+        },
+        {   "unique_id" : "BOLT",
+            "translations" : 
+            { 
+                "en" : "Bolt",
+                "de" : "Bolzen"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_CROSSBOWS",
+            "availability"  : "2",
+            "cost"          : "5",
+            "ammo"          : "true"
+        },
+        {   "unique_id" : "INJ_BOLT",
+            "translations" : 
+            { 
+                "en" : "Injection Bolt",
+                "de" : "Injektionsbolzen"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_CROSSBOWS",
+            "availability"  : "8E",
+            "cost"          : "5",
+            "ammo"          : "true"
+        },
+        {   "unique_id" : "SHURIKEN",
+            "translations" : 
+            { 
+                "en" : "Shuriken",
+                "de" : "Shuriken"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_THROWING",
+            "availability"  : "4R",
+            "cost"          : "25",
+            "accuracy"      : "physical",
+            "damage"        : ["STR + 1", "P"],
+            "ap"            : "-1",
+            "stacks"        : "true",
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "THROWING_KNIFE",
+            "translations" : 
+            { 
+                "en" : "Throwing Knife",
+                "de" : "Wurfmesser"
+            },
+            "type"          : "PROJECTILE_WEAPON",
+            "subtype"       : "PROJECTILE_THROWING",
+            "availability"  : "4R",
+            "cost"          : "25",
+            "accuracy"      : "physical",
+            "damage"        : ["STR + 1", "P"],
+            "ap"            : "-1",
+            "stacks"        : "true",
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "DEFIANCE_EX_S",
+            "translations" : 
+            { 
+                "en" : "Defiance EX Shocker",
+                "de" : "Defiance EX-Shocker"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_TASERS",
+            "availability"  : "0",
+            "cost"          : "250",
+            "accuracy"      : "4",
+            "damage"        : ["9", "S(e)"],
+            "ap"            : "-5",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "4(m)",
+            "mounts"        : ["top"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "YAMAHA_PULSAR",
+            "translations" : 
+            { 
+                "en" : "Yamaha Pulsar",
+                "de" : "Yamaha Pulsar"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_TASERS",
+            "availability"  : "0",
+            "cost"          : "180",
+            "accuracy"      : "5",
+            "damage"        : ["7", "S(e)"],
+            "ap"            : "-5",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "4(m)",
+            "mounts"        : ["top"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "FTIFF_NEEDLER",
+            "translations" : 
+            { 
+                "en" : "Fichetti Tiffany Needler",
+                "de" : "Fichetti Tiffany Needler"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HOLDOUTS",
+            "availability"  : "5R",
+            "cost"          : "1000",
+            "accuracy"      : "5",
+            "damage"        : ["8", "P(f)"],
+            "ap"            : "+5",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "4(c)",
+            "mounts"        : [],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "STREETLINE_SPEC",
+            "translations" : 
+            { 
+                "en" : "Streetline Special",
+                "de" : "Streetline Special"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HOLDOUTS",
+            "availability"  : "4R",
+            "cost"          : "120",
+            "accuracy"      : "4",
+            "damage"        : ["6", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "6(c)",
+            "mounts"        : [],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "WALTHER_PALM",
+            "translations" : 
+            { 
+                "en" : "Walther Palm Pistol",
+                "de" : "Walther Palm Pistol"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HOLDOUTS",
+            "availability"  : "4R",
+            "cost"          : "180",
+            "accuracy"      : "4",
+            "damage"        : ["7", "P"],
+            "ap"            : "0",
+            "modi"          : ["SS", "BF"],
+            "rc"            : "0",
+            "ammo"          : "2(b)",
+            "mounts"        : [],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_LFIRE_70",
+            "translations" : 
+            { 
+                "en" : "Ares Light Fire 70",
+                "de" : "Ares Light Fire 70"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_LPISTOLS",
+            "availability"  : "3R",
+            "cost"          : "200",
+            "accuracy"      : "7",
+            "damage"        : ["6", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "16(c)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_LFIRE_75",
+            "translations" : 
+            { 
+                "en" : "Ares Light Fire 75",
+                "de" : "Ares Light Fire 75"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_LPISTOLS",
+            "availability"  : "6F",
+            "cost"          : "1250",
+            "accuracy"      : "6(8)",
+            "damage"        : ["6", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "16(c)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "BERETTA_201T",
+            "translations" : 
+            { 
+                "en" : "Beretta 201T",
+                "de" : "Beretta 201T"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_LPISTOLS",
+            "availability"  : "7R",
+            "cost"          : "210",
+            "accuracy"      : "6",
+            "damage"        : ["6", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA", "BF"],
+            "rc"            : "(1)",
+            "ammo"          : "21(s)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "COLT_AM_L36",
+            "translations" : 
+            { 
+                "en" : "Colt America L36",
+                "de" : "Colt America L36"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_LPISTOLS",
+            "availability"  : "4R",
+            "cost"          : "320",
+            "accuracy"      : "7",
+            "damage"        : ["7", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "11(s)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "FISECURITY_600",
+            "translations" : 
+            { 
+                "en" : "Fichetti Security 600",
+                "de" : "Fichetti Security 600"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_LPISTOLS",
+            "availability"  : "6R",
+            "cost"          : "350",
+            "accuracy"      : "6(7)",
+            "damage"        : ["7", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "(1)",
+            "ammo"          : "30(s)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "TAURUS_O6",
+            "translations" : 
+            { 
+                "en" : "Beretta 201T",
+                "de" : "Beretta 201T"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_LPISTOLS",
+            "availability"  : "3R",
+            "cost"          : "300",
+            "accuracy"      : "5(6)",
+            "damage"        : ["6/7", "P"],
+            "ap"            : "0/-1",
+            "modi"          : ["SA", "SS"],
+            "rc"            : "0",
+            "ammo"          : "6(cy)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
         }
     ]
 }

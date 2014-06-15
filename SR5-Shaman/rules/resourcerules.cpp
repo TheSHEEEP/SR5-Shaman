@@ -120,18 +120,21 @@ ResourceRules::ResourceRules()
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_PROJECTILE_BOWS";
         subCategory->type = RESOURCE_TYPE_PROJECTILE_WEAPON;
+        subCategory->subType = RESOURCE_SUBTYPE_PROJECTILE_BOWS;
         category->children.push_back(subCategory);
         // Crossbows
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_PROJECTILE_CROSSBOWS";
         subCategory->type = RESOURCE_TYPE_PROJECTILE_WEAPON;
+        subCategory->subType = RESOURCE_SUBTYPE_PROJECTILE_CROSSBOWS;
         category->children.push_back(subCategory);
         // Other
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_PROJECTILE_THROWING";
         subCategory->type = RESOURCE_TYPE_PROJECTILE_WEAPON;
+        subCategory->subType = RESOURCE_SUBTYPE_PROJECTILE_THROWING;
         category->children.push_back(subCategory);
     // Firearms
     category = new ResourceDefinition(_rootItem);
@@ -144,72 +147,84 @@ ResourceRules::ResourceRules()
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_TASERS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_TASERS;
         category->children.push_back(subCategory);
         // Hold-Outs
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_HOLDOUTS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_HOLDOUTS;
         category->children.push_back(subCategory);
         // Light Pistols
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_LPISTOLS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_LPISTOLS;
         category->children.push_back(subCategory);
         // Heavy Pistols
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_HPISTOLS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_HPISTOLS;
         category->children.push_back(subCategory);
         // Machine Pistols
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_MPISTOLS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_MPISTOLS;
         category->children.push_back(subCategory);
         // SMGs
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_SMGS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_SMGS;
         category->children.push_back(subCategory);
         // Assault Rifles
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_ASSAULTR";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_ASSAULTR;
         category->children.push_back(subCategory);
         // Sniper Rifles
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_SNIPERR";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_SNIPERR;
         category->children.push_back(subCategory);
         // Shotguns
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_SHOTGUNS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_SHOTGUNS;
         category->children.push_back(subCategory);
         // Special Weapons
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_SPECIALW";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_SPECIALW;
         category->children.push_back(subCategory);
         // Machine Guns
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_MACHINEG";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_MACHINEG;
         category->children.push_back(subCategory);
         // Cannons & Launcher
         subCategory = new ResourceDefinition(category);
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_CANNONS_LAUNCHERS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_LAUNCHERS;
         category->children.push_back(subCategory);
     // Ammunition
     category = new ResourceDefinition(_rootItem);
