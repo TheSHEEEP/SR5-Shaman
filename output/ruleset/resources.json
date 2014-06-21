@@ -526,13 +526,17 @@
             "subtype"       : "FIREARM_LPISTOLS",
             "availability"  : "6F",
             "cost"          : "1250",
-            "accuracy"      : "6(8)",
+            "accuracy"      : "6",
             "damage"        : ["6", "P"],
             "ap"            : "0",
             "modi"          : ["SA"],
             "rc"            : "0",
             "ammo"          : "16(c)",
             "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"],
+                ["SILENCER", "internal", "true"]
+            ],
             "wireless"      : "true"
         },
         {   "unique_id" : "BERETTA_201T",
@@ -549,9 +553,12 @@
             "damage"        : ["6", "P"],
             "ap"            : "0",
             "modi"          : ["SA", "BF"],
-            "rc"            : "(1)",
+            "rc"            : "0",
             "ammo"          : "21(s)",
             "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"]
+            ],
             "wireless"      : "true"
         },
         {   "unique_id" : "COLT_AM_L36",
@@ -583,33 +590,434 @@
             "subtype"       : "FIREARM_LPISTOLS",
             "availability"  : "6R",
             "cost"          : "350",
-            "accuracy"      : "6(7)",
+            "accuracy"      : "6",
             "damage"        : ["7", "P"],
             "ap"            : "0",
             "modi"          : ["SA"],
-            "rc"            : "(1)",
+            "rc"            : "0",
             "ammo"          : "30(s)",
             "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["LASER_SIGHT", "top", "true"]
+            ],
             "wireless"      : "true"
         },
         {   "unique_id" : "TAURUS_O6",
             "translations" : 
             { 
-                "en" : "Beretta 201T",
-                "de" : "Beretta 201T"
+                "en" : "Taurus Omni-6",
+                "de" : "Taurus Omni-6"
             },
             "type"          : "FIREARM",
             "subtype"       : "FIREARM_LPISTOLS",
             "availability"  : "3R",
             "cost"          : "300",
-            "accuracy"      : "5(6)",
+            "accuracy"      : "5",
             "damage"        : ["6/7", "P"],
             "ap"            : "0/-1",
             "modi"          : ["SA", "SS"],
             "rc"            : "0",
             "ammo"          : "6(cy)",
             "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["LASER_SIGHT", "top", "true"]
+            ],
             "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_PRED_V",
+            "translations" : 
+            { 
+                "en" : "Ares Predator V",
+                "de" : "Ares Predator V"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HPISTOLS",
+            "availability"  : "5R",
+            "cost"          : "725",
+            "accuracy"      : "5",
+            "damage"        : ["8", "P"],
+            "ap"            : "-1",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "15(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_VIPER_SL",
+            "translations" : 
+            { 
+                "en" : "Ares Viper Slivergun",
+                "de" : "Ares Viper Slivergun"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HPISTOLS",
+            "availability"  : "8F",
+            "cost"          : "380",
+            "accuracy"      : "4",
+            "damage"        : ["9", "P(f)"],
+            "ap"            : "+4",
+            "modi"          : ["SA", "BF"],
+            "rc"            : "0",
+            "ammo"          : "30(c)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "BROWN_UP",
+            "translations" : 
+            { 
+                "en" : "Browning Ultra-Power",
+                "de" : "Browning Ultra-Power"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HPISTOLS",
+            "availability"  : "4R",
+            "cost"          : "640",
+            "accuracy"      : "5",
+            "damage"        : ["8", "P"],
+            "ap"            : "-1",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "10(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["LASER_SIGHT", "top", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "COLT_GOV_2066",
+            "translations" : 
+            { 
+                "en" : "Colt Government 2066",
+                "de" : "Colt Government 2066"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HPISTOLS",
+            "availability"  : "7R",
+            "cost"          : "425",
+            "accuracy"      : "6",
+            "damage"        : ["7", "P"],
+            "ap"            : "-1",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "14(c)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "REMINGTON_ROOM",
+            "translations" : 
+            { 
+                "en" : "Remington Roomsweeper",
+                "de" : "Remington Roomsweeper"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HPISTOLS",
+            "availability"  : "6R",
+            "cost"          : "250",
+            "accuracy"      : "6",
+            "damage"        : ["7/9", "P/P(f)"],
+            "ap"            : "-1/+4",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "8(m)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "RUGER_SUP_W",
+            "translations" : 
+            { 
+                "en" : "Ruger Super Warhawk",
+                "de" : "Ruger Super Warhawk"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_HPISTOLS",
+            "availability"  : "4R",
+            "cost"          : "400",
+            "accuracy"      : "5",
+            "damage"        : ["9", "P"],
+            "ap"            : "-2",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "6(cy)",
+            "mounts"        : ["top", "barrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_CRUS_II",
+            "translations" : 
+            { 
+                "en" : "Ares Crusader II",
+                "de" : "Ares Crusader II"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MPISTOLS",
+            "availability"  : "9R",
+            "cost"          : "830",
+            "accuracy"      : "5",
+            "damage"        : ["7", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA", "BF"],
+            "rc"            : "0",
+            "ammo"          : "40(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"],
+                ["GAS_VENT_SYSTEM", "barrel", "false", "2"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "CESCKA_BL_S",
+            "translations" : 
+            { 
+                "en" : "Ceska Black Scorpion",
+                "de" : "Ceska Black Scorpion"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MPISTOLS",
+            "availability"  : "6R",
+            "cost"          : "270",
+            "accuracy"      : "5",
+            "damage"        : ["6", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA", "BF"],
+            "rc"            : "0",
+            "ammo"          : "35(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "STEYR_TMP",
+            "translations" : 
+            { 
+                "en" : "Steyr TMP",
+                "de" : "Steyr TMP"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MPISTOLS",
+            "availability"  : "8R",
+            "cost"          : "350",
+            "accuracy"      : "4",
+            "damage"        : ["7", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA", "BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "30(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["LASER_SIGHT", "top", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "COLT_COBRA_TZ",
+            "translations" : 
+            { 
+                "en" : "Colt Cobra TZ-120",
+                "de" : "Colt Cobra TZ-120"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SMGS",
+            "availability"  : "5R",
+            "cost"          : "660",
+            "accuracy"      : "4",
+            "damage"        : ["7", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA", "BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "32(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["LASER_SIGHT", "top", "true"],
+                ["GAS_VENT_SYSTEM", "barrel", "false", "2"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "FN_P93",
+            "translations" : 
+            { 
+                "en" : "FN P93 Praetor",
+                "de" : "FN P93 Praetor"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SMGS",
+            "availability"  : "11F",
+            "cost"          : "900",
+            "accuracy"      : "6",
+            "damage"        : ["8", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA", "BF", "FA"],
+            "rc"            : "1",
+            "ammo"          : "50(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "HK_227",
+            "translations" : 
+            { 
+                "en" : "HK-227",
+                "de" : "HK-227"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SMGS",
+            "availability"  : "8R",
+            "cost"          : "730",
+            "accuracy"      : "5",
+            "damage"        : ["7", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA", "BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "28(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["SMARTGUN_INT", "internal", "false"],
+                ["SILENCER", "internal", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "INGRAM_SMART_X",
+            "translations" : 
+            { 
+                "en" : "Ingram Smartgun X",
+                "de" : "Ingram Smartgun X"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SMGS",
+            "availability"  : "6R",
+            "cost"          : "800",
+            "accuracy"      : "4",
+            "damage"        : ["8", "P"],
+            "ap"            : "0",
+            "modi"          : ["BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "32(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"],
+                ["SILENCER", "internal", "true"],
+                ["GAS_VENT_SYSTEM", "barrel", "false", "2"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "SCK_100",
+            "translations" : 
+            { 
+                "en" : "SCK Model 100",
+                "de" : "SCK Modell 100"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SMGS",
+            "availability"  : "6R",
+            "cost"          : "875",
+            "accuracy"      : "5",
+            "damage"        : ["8", "P"],
+            "ap"            : "0",
+            "modi"          : ["SA", "BF"],
+            "rc"            : "0",
+            "ammo"          : "30(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["SMARTGUN_INT", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "UZI_IV",
+            "translations" : 
+            { 
+                "en" : "Uzi IV",
+                "de" : "Uzi IV"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SMGS",
+            "availability"  : "4R",
+            "cost"          : "450",
+            "accuracy"      : "4",
+            "damage"        : ["7", "P"],
+            "ap"            : "0",
+            "modi"          : ["BF"],
+            "rc"            : "0",
+            "ammo"          : "24(c)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["LASER_SIGHT", "top", "true"]
+            ],
+            "wireless"      : "true"
+        }
+    ],
+    "weapon_mounts" : [
+        {   "unique_id" : "STOCK",
+            "translations" : 
+            { 
+                "en" : "Stock",
+                "de" : "Schulterstütze"
+            },
+            "locations" : ["internal"],
+            "permanent" : "false",
+            "effects"   : {
+                "rc"    : "+1"
+            }
+        },
+        {   "unique_id" : "LASER_SIGHT",
+            "translations" : 
+            { 
+                "en" : "Laser Sight",
+                "de" : "Lasermarkierer"
+            },
+            "locations" : ["underbarrel", "top"],
+            "permanent" : "false",
+            "availability"      : "2",
+            "cost"              : "125",
+            "effects"   : {
+                "ac"    : "+1"
+            }
+        },
+        {   "unique_id" : "SMARTGUN_INT",
+            "translations" : 
+            { 
+                "en" : "Smartgun System, Internal",
+                "de" : "Smartgunsystem, Intern"
+            },
+            "locations" : ["internal"],
+            "permanent" : "false",
+            "availability"      : "+2R",
+            "cost"              : "weapon_price",
+            "effects"   : {
+                "ac"    : "+2"
+            }
+        },
+        {   "unique_id" : "SILENCER",
+            "translations" : 
+            { 
+                "en" : "Silencer/Suppressor",
+                "de" : "Gasventilsystem"
+            },
+            "locations"         : ["barrel"],
+            "permanent"         : "false",
+            "availability"      : "9V",
+            "cost"              : "500"
+        },
+        {   "unique_id" : "GAS_VENT_SYSTEM",
+            "translations" : 
+            { 
+                "en" : "Gas-Vent System",
+                "de" : "Schalldämpfer"
+            },
+            "locations"                 : ["barrel"],
+            "permanent"                 : "true",
+            "availability_per_level"    : "3R",
+            "cost_per_level"            : "200",
+            "effects_per_level"         : {
+                "rc"    : "+1"
+            }
         }
     ]
 }
