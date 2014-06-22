@@ -951,6 +951,494 @@
                 ["LASER_SIGHT", "top", "true"]
             ],
             "wireless"      : "true"
+        },
+        {   "unique_id" : "AK_97",
+            "translations" : 
+            { 
+                "en" : "AK-97",
+                "de" : "AK-97"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_ASSAULTR",
+            "availability"  : "4R",
+            "cost"          : "950",
+            "accuracy"      : "5",
+            "damage"        : ["10", "P"],
+            "ap"            : "-2",
+            "modi"          : ["SA", "BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "38(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_ALPHA",
+            "translations" : 
+            { 
+                "en" : "Ares Alpha",
+                "de" : "Ares Alpha"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_ASSAULTR",
+            "availability"  : "11F",
+            "cost"          : "2650",
+            "accuracy"      : "5",
+            "damage"        : ["11", "P"],
+            "ap"            : "-2",
+            "modi"          : ["SA", "BF", "FA"],
+            "rc"            : "2",
+            "ammo"          : "42(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "COLT_M23",
+            "translations" : 
+            { 
+                "en" : "Colt M23",
+                "de" : "Colt M23"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_ASSAULTR",
+            "availability"  : "4R",
+            "cost"          : "550",
+            "accuracy"      : "4",
+            "damage"        : ["9", "P"],
+            "ap"            : "-2",
+            "modi"          : ["SA", "BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "40(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "FN_HAR",
+            "translations" : 
+            { 
+                "en" : "FN HAR",
+                "de" : "FN HAR"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_ASSAULTR",
+            "availability"  : "8R",
+            "cost"          : "1500",
+            "accuracy"      : "5",
+            "damage"        : ["10", "P"],
+            "ap"            : "-2",
+            "modi"          : ["SA", "BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "35(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["LASER_SIGHT", "top", "true"],
+                ["GAS_VENT_SYSTEM", "barrel", "false", "2"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "YAMAHA_RAIDEN",
+            "translations" : 
+            { 
+                "en" : "Yamaha Raiden",
+                "de" : "Yamaha Raiden"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_ASSAULTR",
+            "availability"  : "14F",
+            "cost"          : "2600",
+            "accuracy"      : "6",
+            "damage"        : ["11", "P"],
+            "ap"            : "-2",
+            "modi"          : ["BF", "FA"],
+            "rc"            : "1",
+            "ammo"          : "60(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_DES_STR",
+            "translations" : 
+            { 
+                "en" : "Ares Desert Strike",
+                "de" : "Ares Desert Strike"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SNIPERR",
+            "availability"  : "10F",
+            "cost"          : "17500",
+            "accuracy"      : "7",
+            "damage"        : ["13", "P"],
+            "ap"            : "-4",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "14(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "CAV_EBR",
+            "translations" : 
+            { 
+                "en" : "Cavalier Arms Crocket EBR",
+                "de" : "Cavalier Arms Crocket EBR"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SNIPERR",
+            "availability"  : "11F",
+            "cost"          : "10300",
+            "accuracy"      : "6",
+            "damage"        : ["12", "P"],
+            "ap"            : "-3",
+            "modi"          : ["SA", "BF"],
+            "rc"            : "0",
+            "ammo"          : "20(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["IMAGING_SCOPE", "top", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "RANGER_ARMS_SM5",
+            "translations" : 
+            { 
+                "en" : "Ranger Arms SM-5",
+                "de" : "Ranger Arms SM-5"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SNIPERR",
+            "availability"  : "16F",
+            "cost"          : "28000",
+            "accuracy"      : "8",
+            "damage"        : ["14", "P"],
+            "ap"            : "-5",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "15(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["SILENCER", "barrel", "true"],
+                ["IMAGING_SCOPE", "top", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "REM_950",
+            "translations" : 
+            { 
+                "en" : "Remington 950",
+                "de" : "Remington 950"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SNIPERR",
+            "availability"  : "4R",
+            "cost"          : "2100",
+            "accuracy"      : "7",
+            "damage"        : ["12", "P"],
+            "ap"            : "-4",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "5(m)",
+            "mounts"        : ["top", "barrel"],
+            "premounted"    : [
+                ["IMAGING_SCOPE", "top", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "RUGER_101",
+            "translations" : 
+            { 
+                "en" : "Ruger 101",
+                "de" : "Ruger 101"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SNIPERR",
+            "availability"  : "4R",
+            "cost"          : "1300",
+            "accuracy"      : "6",
+            "damage"        : ["11", "P"],
+            "ap"            : "-3",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "8(m)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["IMAGING_SCOPE", "top", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "DEFIANCE_T250",
+            "translations" : 
+            { 
+                "en" : "Defiance T-250",
+                "de" : "Defiance T-250"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SHOTGUNS",
+            "availability"  : "4R",
+            "cost"          : "450",
+            "accuracy"      : "4",
+            "damage"        : ["10", "P"],
+            "ap"            : "-1",
+            "modi"          : ["SS", "SA"],
+            "rc"            : "0",
+            "ammo"          : "5(m)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ENFIELD_AS7",
+            "translations" : 
+            { 
+                "en" : "Enfield AS-7",
+                "de" : "Enfield AS-7"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SHOTGUNS",
+            "availability"  : "12F",
+            "cost"          : "1100",
+            "accuracy"      : "4",
+            "damage"        : ["13", "P"],
+            "ap"            : "-1",
+            "modi"          : ["SA", "BF"],
+            "rc"            : "0",
+            "ammo"          : "10(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["LASER_SIGHT", "top", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ENFIELD_AS7_2",
+            "translations" : 
+            { 
+                "en" : "Enfield AS-7 (2)",
+                "de" : "Enfield AS-7 (2)"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SHOTGUNS",
+            "availability"  : "12F",
+            "cost"          : "1100",
+            "accuracy"      : "4",
+            "damage"        : ["13", "P"],
+            "ap"            : "-1",
+            "modi"          : ["SA", "BF"],
+            "rc"            : "0",
+            "ammo"          : "24(d)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["LASER_SIGHT", "top", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "PJSS_55",
+            "translations" : 
+            { 
+                "en" : "PJSS Model 55",
+                "de" : "PJSS Modell 55"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SHOTGUNS",
+            "availability"  : "9R",
+            "cost"          : "1000",
+            "accuracy"      : "6",
+            "damage"        : ["11", "P"],
+            "ap"            : "-1",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "2(b)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_SUPER_SQ",
+            "translations" : 
+            { 
+                "en" : "Ares S-III Super Squirt",
+                "de" : "Ares S-III Super Squirt"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SPECIALW",
+            "availability"  : "7R",
+            "cost"          : "950",
+            "accuracy"      : "3",
+            "damage"        : ["Chemical"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "20(c)",
+            "mounts"        : ["top", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "FICH_PAIN_IND",
+            "translations" : 
+            { 
+                "en" : "Fichetti Pain Inducer",
+                "de" : "Fichetti Pain Inducer"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SPECIALW",
+            "availability"  : "11R",
+            "cost"          : "5000",
+            "accuracy"      : "3",
+            "damage"        : ["Special"],
+            "ap"            : "0",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "Special",
+            "mounts"        : ["top", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "PARASHIELD_DART_P",
+            "translations" : 
+            { 
+                "en" : "Parashield Dart Pistol",
+                "de" : "Parashield Pfeilpistole"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SPECIALW",
+            "availability"  : "4R",
+            "cost"          : "600",
+            "accuracy"      : "5",
+            "damage"        : ["Drug/Toxin"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "5(c)",
+            "mounts"        : ["top"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "PARASHIELD_DART_R",
+            "translations" : 
+            { 
+                "en" : "Parashield Dart Rifle",
+                "de" : "Parashield Pfeilgewehr"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_SPECIALW",
+            "availability"  : "6R",
+            "cost"          : "1200",
+            "accuracy"      : "6",
+            "damage"        : ["Drug/Toxin"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "6(m)",
+            "mounts"        : ["top", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "INGRAM_VAL",
+            "translations" : 
+            { 
+                "en" : "Ingram Valiant (Clip)",
+                "de" : "Ingram Valiant (Streifen)"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MACHINEG",
+            "availability"  : "12F",
+            "cost"          : "5800",
+            "accuracy"      : "5",
+            "damage"        : ["9", "P"],
+            "ap"            : "-2",
+            "modi"          : ["BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "50(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["LASER_SIGHT", "top", "true"],
+                ["GAS_VENT_SYSTEM", "barrel", "false", "2"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "INGRAM_VAL_2",
+            "translations" : 
+            { 
+                "en" : "Ingram Valiant (Belt)",
+                "de" : "Ingram Valiant (Gurt)"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MACHINEG",
+            "availability"  : "12F",
+            "cost"          : "5800",
+            "accuracy"      : "5",
+            "damage"        : ["9", "P"],
+            "ap"            : "-2",
+            "modi"          : ["BF", "FA"],
+            "rc"            : "0",
+            "ammo"          : "100(belt)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"],
+                ["LASER_SIGHT", "top", "true"],
+                ["GAS_VENT_SYSTEM", "barrel", "false", "2"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "STONER_ARES_M202",
+            "translations" : 
+            { 
+                "en" : "Stoner-Ares M202 (Clip)",
+                "de" : "Stoner-Ares M202 (Streifen)"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MACHINEG",
+            "availability"  : "12F",
+            "cost"          : "7000",
+            "accuracy"      : "5",
+            "damage"        : ["10", "P"],
+            "ap"            : "-3",
+            "modi"          : ["FA"],
+            "rc"            : "0",
+            "ammo"          : "50(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "STONER_ARES_M202_2",
+            "translations" : 
+            { 
+                "en" : "Stoner-Ares M202 (Belt)",
+                "de" : "Stoner-Ares M202 (Gurt)"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MACHINEG",
+            "availability"  : "12F",
+            "cost"          : "7000",
+            "accuracy"      : "5",
+            "damage"        : ["10", "P"],
+            "ap"            : "-3",
+            "modi"          : ["FA"],
+            "rc"            : "0",
+            "ammo"          : "100(belt)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "RPK_SMG",
+            "translations" : 
+            { 
+                "en" : "RPK SMG (Clip)",
+                "de" : "RPK SMG (Streifen)"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MACHINEG",
+            "availability"  : "16F",
+            "cost"          : "16300",
+            "accuracy"      : "5",
+            "damage"        : ["12", "P"],
+            "ap"            : "-4",
+            "modi"          : ["FA"],
+            "rc"            : "0",
+            "ammo"          : "50(c)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["TRIPOD", "underbarrel", "true"]
+            ],
+            "wireless"      : "true"
         }
     ],
     "weapon_mounts" : [
@@ -963,7 +1451,7 @@
             "locations" : ["internal"],
             "permanent" : "false",
             "effects"   : {
-                "rc"    : "+1"
+                "rc"    : "1"
             }
         },
         {   "unique_id" : "LASER_SIGHT",
@@ -977,7 +1465,7 @@
             "availability"      : "2",
             "cost"              : "125",
             "effects"   : {
-                "ac"    : "+1"
+                "ac"    : "1"
             }
         },
         {   "unique_id" : "SMARTGUN_INT",
@@ -991,7 +1479,7 @@
             "availability"      : "+2R",
             "cost"              : "weapon_price",
             "effects"   : {
-                "ac"    : "+2"
+                "ac"    : "2"
             }
         },
         {   "unique_id" : "SILENCER",
@@ -1016,7 +1504,32 @@
             "availability_per_level"    : "3R",
             "cost_per_level"            : "200",
             "effects_per_level"         : {
-                "rc"    : "+1"
+                "rc"    : "1"
+            }
+        },
+        {   "unique_id" : "IMAGING_SCOPE",
+            "translations" : 
+            { 
+                "en" : "Imaging Scope",
+                "de" : "Zielfernrohr"
+            },
+            "locations"                 : ["top"],
+            "permanent"                 : "false",
+            "availability"              : "2",
+            "cost"                      : "300"
+        },
+        {   "unique_id" : "TRIPOD",
+            "translations" : 
+            { 
+                "en" : "Tripod",
+                "de" : "Dreibein"
+            },
+            "locations"                 : ["underbarrel"],
+            "permanent"                 : "false",
+            "availability"              : "4",
+            "cost"                      : "500",
+            "effects"                   : {
+                "rc"    : "6"
             }
         }
     ]
