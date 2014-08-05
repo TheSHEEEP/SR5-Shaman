@@ -1421,7 +1421,7 @@
         {   "unique_id" : "RPK_SMG",
             "translations" : 
             { 
-                "en" : "RPK SMG (Clip)",
+                "en" : "RPK HMG (Clip)",
                 "de" : "RPK SMG (Streifen)"
             },
             "type"          : "FIREARM",
@@ -1439,6 +1439,154 @@
                 ["TRIPOD", "underbarrel", "true"]
             ],
             "wireless"      : "true"
+        },
+        {   "unique_id" : "RPK_SMG_2",
+            "translations" : 
+            { 
+                "en" : "RPK HMG (Belt)",
+                "de" : "RPK SMG (Gurt)"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_MACHINEG",
+            "availability"  : "16F",
+            "cost"          : "16300",
+            "accuracy"      : "5",
+            "damage"        : ["12", "P"],
+            "ap"            : "-4",
+            "modi"          : ["FA"],
+            "rc"            : "0",
+            "ammo"          : "100(belt)",
+            "mounts"        : ["top", "barrel", "underbarrel"],
+            "premounted"    : [
+                ["TRIPOD", "underbarrel", "true"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARES_ANTIOCH_2",
+            "translations" : 
+            { 
+                "en" : "Ares Antioch-2",
+                "de" : "Ares Antioch-2"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_CANNONS_LAUNCHERS",
+            "availability"  : "8F",
+            "cost"          : "3200",
+            "accuracy"      : "4",
+            "damage"        : ["grenade"],
+            "ap"            : "0",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "8(m)",
+            "mounts"        : ["top", "underbarrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ARMTECH_MTL_12",
+            "translations" : 
+            { 
+                "en" : "ArmTech MGL-12",
+                "de" : "ArmTech MGL-12"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_CANNONS_LAUNCHERS",
+            "availability"  : "10F",
+            "cost"          : "5000",
+            "accuracy"      : "4",
+            "damage"        : ["grenade"],
+            "ap"            : "0",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "12(c)",
+            "mounts"        : ["top", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "AZTECH_STRIKER",
+            "translations" : 
+            { 
+                "en" : "Aztechnology Striker",
+                "de" : "Aztechnology Striker"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_CANNONS_LAUNCHERS",
+            "availability"  : "10F",
+            "cost"          : "1200",
+            "accuracy"      : "5",
+            "damage"        : ["missile"],
+            "ap"            : "0",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "1(ml)",
+            "mounts"        : ["top", "underbarrel"],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "KRIME_CANNON",
+            "translations" : 
+            { 
+                "en" : "Krime Cannon",
+                "de" : "Krime Cannon"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_CANNONS_LAUNCHERS",
+            "availability"  : "20F",
+            "cost"          : "21000",
+            "accuracy"      : "4",
+            "damage"        : ["16", "P"],
+            "ap"            : "-6",
+            "modi"          : ["SA"],
+            "rc"            : "0",
+            "ammo"          : "6(m)",
+            "mounts"        : ["top", "underbarrel"],
+            "premounted"    : [
+                ["STOCK", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "ONOTARI_INTER",
+            "translations" : 
+            { 
+                "en" : "Onotari Interceptor",
+                "de" : "Onotari Interceptor"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_CANNONS_LAUNCHERS",
+            "availability"  : "18F",
+            "cost"          : "14000",
+            "accuracy"      : "4",
+            "damage"        : ["missile"],
+            "ap"            : "0",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "2(ml)",
+            "mounts"        : ["top", "underbarrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"]
+            ],
+            "wireless"      : "true"
+        },
+        {   "unique_id" : "PANTHER_XXL",
+            "translations" : 
+            { 
+                "en" : "Panther XXL",
+                "de" : "Panther XXL"
+            },
+            "type"          : "FIREARM",
+            "subtype"       : "FIREARM_CANNONS_LAUNCHERS",
+            "availability"  : "20F",
+            "cost"          : "43000",
+            "accuracy"      : "5",
+            "damage"        : ["17", "P"],
+            "ap"            : "-6",
+            "modi"          : ["SS"],
+            "rc"            : "0",
+            "ammo"          : "15(c)",
+            "mounts"        : ["top", "underbarrel"],
+            "premounted"    : [
+                ["SMARTGUN_INT", "internal", "false"]
+            ],
+            "wireless"      : "true"
         }
     ],
     "weapon_mounts" : [
@@ -1448,8 +1596,8 @@
                 "en" : "Stock",
                 "de" : "Schulterstütze"
             },
-            "locations" : ["internal"],
-            "permanent" : "false",
+            "locations"         : ["internal"],
+            "permanent"         : "false",
             "effects"   : {
                 "rc"    : "1"
             }
@@ -1460,8 +1608,8 @@
                 "en" : "Laser Sight",
                 "de" : "Lasermarkierer"
             },
-            "locations" : ["underbarrel", "top"],
-            "permanent" : "false",
+            "locations"         : ["underbarrel", "top"],
+            "permanent"         : "false",
             "availability"      : "2",
             "cost"              : "125",
             "effects"   : {
@@ -1474,10 +1622,26 @@
                 "en" : "Smartgun System, Internal",
                 "de" : "Smartgunsystem, Intern"
             },
-            "locations" : ["internal"],
-            "permanent" : "false",
+            "locations"         : ["internal"],
+            "permanent"         : "false",
             "availability"      : "+2R",
             "cost"              : "weapon_price",
+            "wireless"          : "true",
+            "effects"   : {
+                "ac"    : "2"
+            }
+        },
+        {   "unique_id" : "SMARTGUN_EXT",
+            "translations" : 
+            { 
+                "en" : "Smartgun System, External",
+                "de" : "Smartgunsystem, Extern"
+            },
+            "locations"         : ["top", "underbarrel"],
+            "permanent"         : "false",
+            "availability"      : "4R",
+            "cost"              : "200",
+            "wireless"          : "true",
             "effects"   : {
                 "ac"    : "2"
             }
@@ -1526,11 +1690,281 @@
             },
             "locations"                 : ["underbarrel"],
             "permanent"                 : "false",
+            "wireless"                  : "true",
             "availability"              : "4",
             "cost"                      : "500",
             "effects"                   : {
                 "rc"    : "6"
             }
+        },
+        {   "unique_id" : "AIRBURST_LINK",
+            "translations" : 
+            { 
+                "en" : "Airburst Link",
+                "de" : "Airburst-Verbindung"
+            },
+            "locations"         : ["external"],
+            "permanent"         : "false",
+            "req_wireless"      : "true",
+            "req_smartgun"      : "true",
+            "availability"      : "6R",
+            "cost"              : "600"
+        },
+        {   "unique_id" : "BIPOD",
+            "translations" : 
+            { 
+                "en" : "Bipod",
+                "de" : "Zweibein"
+            },
+            "locations"         : ["underbarrel"],
+            "permanent"         : "false",
+            "wireless"          : "true",
+            "availability"      : "2",
+            "cost"              : "200",
+            "effects"   : {
+                "rc"    : "2"
+            }
+        },
+        {   "unique_id" : "CONC_HOLSTER",
+            "translations" : 
+            { 
+                "en" : "Concealable Holster",
+                "de" : "Tarnholster"
+            },
+            "locations"         : ["external"],
+            "types"             : ["FIREARM_TASERS", "FIREARM_LPISTOLS", "FIREARM_HPISTOLS"],
+            "permanent"         : "false",
+            "wireless"          : "true",
+            "availability"      : "2",
+            "cost"              : "150"
+        },
+        {   "unique_id" : "GYRO_MOUNT",
+            "translations" : 
+            { 
+                "en" : "Gyro Mount",
+                "de" : "Gyrostabilisator"
+            },
+            "locations"         : ["underbarrel"],
+            "types"             : ["FIREARM_CANNONS_LAUNCHERS", "FIREARM_ASSAULTR"],
+            "permanent"         : "false",
+            "wireless"          : "true",
+            "availability"      : "7",
+            "cost"              : "1400",
+            "effects"   : {
+                "rc"    : "6"
+            }
+        },
+        {   "unique_id" : "H_ARM_SLIDE",
+            "translations" : 
+            { 
+                "en" : "Hidden Arm Slide",
+                "de" : "Springarm"
+            },
+            "locations"         : ["external"],
+            "types"             : ["FIREARM_TASERS", "FIREARM_LPISTOLS", "FIREARM_HOLDOUTS"],
+            "permanent"         : "false",
+            "wireless"          : "true",
+            "availability"      : "4R",
+            "cost"              : "350"
+        },
+        {   "unique_id" : "PERISCOPE",
+            "translations" : 
+            { 
+                "en" : "Periscope",
+                "de" : "Persikop"
+            },
+            "locations"         : ["top"],
+            "permanent"         : "false",
+            "wireless"          : "true",
+            "availability"      : "3",
+            "cost"              : "70"
+        },
+        {   "unique_id" : "QDRAW_HOLSTER",
+            "translations" : 
+            { 
+                "en" : "Quick-Draw Holster",
+                "de" : "Schnellziehholster"
+            },
+            "locations"         : ["external"],
+            "permanent"         : "false",
+            "wireless"          : "false",
+            "availability"      : "4",
+            "cost"              : "175"
+        },
+        {   "unique_id" : "SMART_FIRING_P",
+            "translations" : 
+            { 
+                "en" : "Smart Firing Platform",
+                "de" : "Smart-Feuerplattform"
+            },
+            "locations"         : ["underbarrel"],
+            "permanent"         : "false",
+            "wireless"          : "true",
+            "req_smartgun"      : "true",
+            "availability"      : "12F",
+            "cost"              : "2500",
+            "effects"   : {
+                "rc"    : "5"
+            }
+        },
+        {   "unique_id" : "SPARE_CLIP",
+            "translations" : 
+            { 
+                "en" : "Spare Clip",
+                "de" : "Ersatzladestreifen"
+            },
+            "locations"         : ["external"],
+            "permanent"         : "false",
+            "wireless"          : "false",
+            "availability"      : "4",
+            "cost"              : "5"
+        },
+        {   "unique_id" : "SPEED_LOADER",
+            "translations" : 
+            { 
+                "en" : "Speed Loader",
+                "de" : "Schnelllader"
+            },
+            "locations"         : ["external"],
+            "items"             : ["TAURUS_O6", "RUGER_SUP_W"],
+            "permanent"         : "false",
+            "wireless"          : "false",
+            "availability"      : "2",
+            "cost"              : "25"
         }
+    ],
+    "ammunition" : [
+        {
+            "unique_id" : "APDS",
+            "translations" : 
+            { 
+                "en" : "APDS",
+                "de" : "APDS"
+            },
+            "damage_mod"        : "0",
+            "ap_mod"            : "-4",
+            "availability"      : "12F",
+            "cost"              : "120"
+        },
+        {
+            "unique_id" : "DMSO_GELPACKS",
+            "translations" : 
+            { 
+                "en" : "DMSO-Gelpacks",
+                "de" : "DMSO-Gelpacks"
+            },
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "2R",
+            "cost"              : "20"
+        },
+        {
+            "unique_id" : "EXP_ROUNDS",
+            "translations" : 
+            { 
+                "en" : "Explosive Rounds",
+                "de" : "Explosivmunition"
+            },
+            "damage_mod"        : "1",
+            "ap_mod"            : "-1",
+            "availability"      : "9F",
+            "cost"              : "80"
+        },
+        {
+            "unique_id" : "FLECH",
+            "translations" : 
+            { 
+                "en" : "Flechette Rounds",
+                "de" : "Flechettemunition"
+            },
+            "damage_mod"        : "2",
+            "ap_mod"            : "5",
+            "availability"      : "6R",
+            "cost"              : "65"
+        },
+        {
+            "unique_id" : "GEL_ROUNDS",
+            "translations" : 
+            { 
+                "en" : "Gel Rounds",
+                "de" : "Gelmunition"
+            },
+            "damage_mod"        : "0",
+            "ap_mod"            : "1",
+            "availability"      : "2R",
+            "cost"              : "25"
+        },
+        {
+            "unique_id" : "HOLLOW_POINTS",
+            "translations" : 
+            { 
+                "en" : "Hollow Points",
+                "de" : "Hohlspitzmunition"
+            },
+            "damage_mod"        : "1",
+            "ap_mod"            : "2",
+            "availability"      : "4F",
+            "cost"              : "70"
+        },
+        {
+            "unique_id" : "INJ_DARTS",
+            "translations" : 
+            { 
+                "en" : "Injection Darts",
+                "de" : "Injektionspfeile"
+            },
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "4R",
+            "cost"              : "75"
+        },
+        {
+            "unique_id" : "REG_AMMO",
+            "translations" : 
+            { 
+                "en" : "Regular Ammo",
+                "de" : "Standardmunition"
+            },
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "2R",
+            "cost"              : "20"
+        },
+        {
+            "unique_id" : "STICKNSHOCK",
+            "translations" : 
+            { 
+                "en" : "Stick-N-Shock",
+                "de" : "Schockermunition"
+            },
+            "damage_mod"        : "2",
+            "ap_mod"            : "-5",
+            "availability"      : "6R",
+            "cost"              : "80"
+        },
+        {
+            "unique_id" : "TRACER",
+            "translations" : 
+            { 
+                "en" : "Tracer",
+                "de" : "Leuchtspurmunition"
+            },
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "6R",
+            "cost"              : "60"
+        },
+        {
+            "unique_id" : "TASER_DART",
+            "translations" : 
+            { 
+                "en" : "Taser Dart",
+                "de" : "Taserpfeile"
+            },
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "3",
+            "cost"              : "50"
+        },
     ]
 }
