@@ -1966,5 +1966,203 @@
             "availability"      : "3",
             "cost"              : "50"
         },
+        {
+            "unique_id" : "FLASH_BANG",
+            "translations" : 
+            { 
+                "en" : "Flash-Bang",
+                "de" : "Schockgranate"
+            },
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["10", "S"],
+            "ap"                : "-4",
+            "blast"             : "10m",
+            "availability"      : "6R",
+            "cost"              : "100"
+        },
+        {
+            "unique_id" : "FLASH_PAK",
+            "translations" : 
+            { 
+                "en" : "Flash-Pak",
+                "de" : "Flash-Pack"
+            },
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["special"],
+            "ap"                : "0",
+            "blast"             : "special",
+            "availability"      : "4",
+            "cost"              : "125"
+        },
+        {
+            "unique_id" : "FRAGMENTATION",
+            "translations" : 
+            { 
+                "en" : "Fragmentation",
+                "de" : "Splittergranate"
+            },
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["18", "P"],
+            "ap"                : "+5",
+            "blast"             : "-1/m",
+            "availability"      : "11F",
+            "cost"              : "100"
+        },
+        {
+            "unique_id" : "HIGH_EXP",
+            "translations" : 
+            { 
+                "en" : "High Explosive",
+                "de" : "Sprenggranate"
+            },
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["16", "P"],
+            "ap"                : "-2",
+            "blast"             : "-2/m",
+            "availability"      : "11F",
+            "cost"              : "100"
+        },
+        {
+            "unique_id" : "GAS_GREN",
+            "translations" : 
+            { 
+                "en" : "Gas",
+                "de" : "Gasgranate"
+            },
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["as chemical"],
+            "ap"                : "0",
+            "blast"             : "10m",
+            "availability"      : "2 + chemical",
+            "cost"              : "40"
+        },
+        {
+            "unique_id" : "SMOKE_GREN",
+            "translations" : 
+            { 
+                "en" : "Smoke",
+                "de" : "Rauchgranate"
+            },
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["0", "P"],
+            "ap"                : "0",
+            "blast"             : "10m",
+            "availability"      : "4R",
+            "cost"              : "40"
+        },
+        {
+            "unique_id" : "THER_SMOKE",
+            "translations" : 
+            { 
+                "en" : "Thermal Smoke",
+                "de" : "IR-Rauchgranate"
+            },
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["0", "P"],
+            "ap"                : "0",
+            "blast"             : "10m",
+            "availability"      : "6R",
+            "cost"              : "60"
+        },
+        {
+            "unique_id" : "ANT_VEH_ROCKET",
+            "translations" : 
+            { 
+                "en" : "Anti-Vehicle",
+                "de" : "Anti-Fahrzeugrakete"
+            },
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["24", "P"],
+            "ap"                : "-10/-4",
+            "blast"             : "-4/m",
+            "availability"      : "18F",
+            "cost"              : "2800"
+        },
+        {
+            "unique_id" : "ANT_VEH_ROCKET_GUIDED",
+            "translations" : 
+            { 
+                "en" : "Anti-Vehicle (Missile)",
+                "de" : "Anti-Fahrzeug-Lenkrakete"
+            },
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["24", "P"],
+            "ap"                : "-10/-4",
+            "blast"             : "-4/m",
+            "availability"      : "22F",
+            "cost"              : "2800 + rating * 500",
+            "max_rating"        : "10"
+        },
+        {
+            "unique_id" : "FRAG_ROCKET",
+            "translations" : 
+            { 
+                "en" : "Fragmentation",
+                "de" : "Splitterrakete"
+            },
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["23", "P"],
+            "ap"                : "+5",
+            "blast"             : "-1/m",
+            "availability"      : "12F",
+            "cost"              : "2000"
+        },
+        {
+            "unique_id" : "FRAG_ROCKET_GUIDED",
+            "translations" : 
+            { 
+                "en" : "Fragmentation (Missile)",
+                "de" : "Splitter-Lenkrakete"
+            },
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["23", "P"],
+            "ap"                : "+5",
+            "blast"             : "-1/m",
+            "availability"      : "16F",
+            "cost"              : "2000 + rating * 500",
+            "max_rating"        : "10"
+        },
+        {
+            "unique_id" : "HIGH_EXP_ROCKET",
+            "translations" : 
+            { 
+                "en" : "High-Explosive",
+                "de" : "Sprengrakete"
+            },
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["21", "P"],
+            "ap"                : "-2",
+            "blast"             : "-2/m",
+            "availability"      : "18F",
+            "cost"              : "2100"
+        },
+        {
+            "unique_id" : "HIGH_EXP_ROCKET_GUIDED",
+            "translations" : 
+            { 
+                "en" : "High-Explosive (Missile)",
+                "de" : "Spreng-Lenkrakete"
+            },
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["21", "P"],
+            "ap"                : "-12",
+            "blast"             : "-2/m",
+            "availability"      : "22F",
+            "cost"              : "2100 + rating * 500",
+            "max_rating"        : "10"
+        }
     ]
 }

@@ -232,6 +232,20 @@ ResourceRules::ResourceRules()
     category->id = "CATEGORY_AMMUNITION";
     category->type = RESOURCE_TYPE_AMMUNITION;
     _rootItem->children.push_back(category);
+        // Grenades
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_AMMU_GRENADES";
+        subCategory->type = RESOURCE_TYPE_AMMUNITION;
+        subCategory->subType = RESOURCE_SUBTYPE_AMMU_GRENADES;
+        category->children.push_back(subCategory);
+        // Grenades
+        subCategory = new ResourceDefinition(category);
+        subCategory->isCategory = true;
+        subCategory->id = "CATEGORY_AMMU_ROCKETS";
+        subCategory->type = RESOURCE_TYPE_AMMUNITION;
+        subCategory->subType = RESOURCE_SUBTYPE_AMMU_ROCKETS;
+        category->children.push_back(subCategory);
     // Explosives
     category = new ResourceDefinition(_rootItem);
     category->isCategory = true;

@@ -133,6 +133,16 @@
    <item row="3" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+      <widget class="QPushButton" name="btnManageItem">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Manage Item</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="btnRemoveItem">
        <property name="enabled">
         <bool>false</bool>

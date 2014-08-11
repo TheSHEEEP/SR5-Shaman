@@ -843,6 +843,20 @@
             }
         },
         {
+            "key" : "AMMU_GRENADES",
+            "translations" : {
+                "en" : "Grenades",
+                "de" : "Granaten"
+            }
+        },
+        {
+            "key" : "AMMU_ROCKETS",
+            "translations" : {
+                "en" : "Rockets",
+                "de" : "Raketen"
+            }
+        },
+        {
             "key" : "EXPLOSIVES",
             "translations" : {
                 "en" : "Explosives",
