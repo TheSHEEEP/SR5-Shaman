@@ -2,56 +2,16 @@
 #define RESOURCERULES_H
 
 #include <QString>
+#include <QStringList>
 #include <QMap>
 #include <vector>
 #include <QPair>
 #include <QObject>
 
-// Resource categories - THE ORDER IS OMPORTANT
-enum ResourceType
-{
-    RESOURCE_TYPE_INVALID = -1,
-    RESOURCE_TYPE_MELEE_WEAPON,
-    RESOURCE_TYPE_PROJECTILE_WEAPON,
-    RESOURCE_TYPE_FIREARM,
-    RESOURCE_TYPE_AMMUNITION,
-    RESOURCE_TYPE_EXPLOSIVES,
-    RESOURCE_TYPE_CLOTHING_ARMOR,
-    RESOURCE_TYPE_ELECTRONICS,
-    RESOURCE_TYPE_INDUSTRIAL_CHEMICALS,
-    RESOURCE_TYPE_SURVIVAL_GEAR,
-    RESOURCE_TYPE_GRAPPLE_FLARE,
-    RESOURCE_TYPE_BIOTECH,
-    RESOURCE_TYPE_DOCWAGON,
-    RESOURCE_TYPE_AUGMENTATION,
-    RESOURCE_TYPE_MAGICAL_EQUIPMENT,
-    RESOURCE_TYPE_VEHICLES_DRONES,
-    NUM_RESOURCE_TYPES
-};
+class ResourceEffect;
 
-// Resource sub-types, those are simple defines as they represent the index within
-// a resource category
-#define RESOURCE_SUBTYPE_MELEE_BLADES           0
-#define RESOURCE_SUBTYPE_MELEE_CLUBS            1
-#define RESOURCE_SUBTYPE_MELEE_OTHER            2
-#define RESOURCE_SUBTYPE_PROJECTILE_BOWS        0
-#define RESOURCE_SUBTYPE_PROJECTILE_CROSSBOWS   1
-#define RESOURCE_SUBTYPE_PROJECTILE_THROWING    2
-#define RESOURCE_SUBTYPE_FIREARM_TASERS         0
-#define RESOURCE_SUBTYPE_FIREARM_HOLDOUTS       1
-#define RESOURCE_SUBTYPE_FIREARM_LPISTOLS       2
-#define RESOURCE_SUBTYPE_FIREARM_HPISTOLS       3
-#define RESOURCE_SUBTYPE_FIREARM_MPISTOLS       4
-#define RESOURCE_SUBTYPE_FIREARM_SMGS           5
-#define RESOURCE_SUBTYPE_FIREARM_ASSAULTR       6
-#define RESOURCE_SUBTYPE_FIREARM_SNIPERR        7
-#define RESOURCE_SUBTYPE_FIREARM_SHOTGUNS       8
-#define RESOURCE_SUBTYPE_FIREARM_SPECIALW       9
-#define RESOURCE_SUBTYPE_FIREARM_MACHINEG       10
-#define RESOURCE_SUBTYPE_FIREARM_LAUNCHERS      11
-#define RESOURCE_SUBTYPE_AMMU_GRENADES          0
-#define RESOURCE_SUBTYPE_AMMU_ROCKETS           1
-
+// All those resource infos are just too many to spam into the header
+#include "resourcerules.inl"
 
 /**
  * @brief This is the definition of a single skill.
@@ -99,6 +59,32 @@ public:
     ResourceType                    type;
     unsigned short                  subType;
     QMap<QString, QString>          translations;
+
+    // Common resource data
+    QString                     availabilityNum;
+    signed char                 availabilityRating;
+    QString                     cost;
+    signed char                 maxRating;
+    bool                        stacks;
+    QStringList                 mounts;
+    std::vector<MountInfo>      attachedMounts;
+    bool                        wireless;
+
+    // Weapon resource data
+    signed char                 accuracy;
+    signed char                 reach;
+    char                        damageNum[64];
+    char                        damageType[8];
+    signed char                 ap;
+    signed char                 fireModi[4];
+    signed char                 rc;
+    signed short                clipSize;
+    signed char                 clipType;
+
+    // Mount resource data
+    QStringList                     locations;
+    bool                            permanent;
+    std::vector<ResourceEffect*>    effects;
 };
 
 Q_DECLARE_METATYPE(ResourceDefinition)

@@ -209,5 +209,5 @@ ResourceTreeModel::rowCount(const QModelIndex& p_parent) const
 int
 ResourceTreeModel::columnCount(const QModelIndex& p_parent) const
 {
-    return _advancedMode ? 5 : 1;
+    return 5;
 }

@@ -241,7 +241,7 @@
             "subtype"       : "MELEE_OTHER",
             "availability"  : "12F",
             "cost"          : "10000",
-            "accuracy"      : "5(7)",
+            "accuracy"      : "5",
             "reach"         : "2",
             "damage"        : ["12", "P"],
             "ap"            : "-8",
@@ -288,7 +288,7 @@
             "subtype"       : "PROJECTILE_BOWS",
             "availability"  : "rating",
             "cost"          : "rating * 2",
-            "ammo"          : "true",
+            "stacks"        : "true",
             "max_rating"    : "10"
         },
         {   "unique_id" : "INJ_ARROW",
@@ -301,7 +301,7 @@
             "subtype"       : "PROJECTILE_BOWS",
             "availability"  : "rating + 2 R",
             "cost"          : "rating * 20",
-            "ammo"          : "true",
+            "stacks"        : "true",
             "max_rating"    : "10"
         },
         {   "unique_id" : "CROSSBOW_L",
@@ -356,7 +356,7 @@
             "subtype"       : "PROJECTILE_CROSSBOWS",
             "availability"  : "2",
             "cost"          : "5",
-            "ammo"          : "true"
+            "stacks"        : "true"
         },
         {   "unique_id" : "INJ_BOLT",
             "translations" : 
@@ -368,7 +368,7 @@
             "subtype"       : "PROJECTILE_CROSSBOWS",
             "availability"  : "8E",
             "cost"          : "5",
-            "ammo"          : "true"
+            "stacks"        : "true"
         },
         {   "unique_id" : "SHURIKEN",
             "translations" : 
@@ -452,7 +452,7 @@
             "cost"          : "1000",
             "accuracy"      : "5",
             "damage"        : ["8", "P(f)"],
-            "ap"            : "+5",
+            "ap"            : "5",
             "modi"          : ["SA"],
             "rc"            : "0",
             "ammo"          : "4(c)",
@@ -1589,7 +1589,7 @@
             "wireless"      : "true"
         }
     ],
-    "weapon_mounts" : [
+    "mounts" : [
         {   "unique_id" : "STOCK",
             "translations" : 
             { 

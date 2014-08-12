@@ -58,7 +58,8 @@ SOURCES += main.cpp\
     rules/resourcerules.cpp \
     ui/models/resourcedelegate.cpp \
     ui/models/resourcesortfilterproxymodel.cpp \
-    ui/models/resourcetreemodel.cpp
+    ui/models/resourcetreemodel.cpp \
+    rules/effects/resourceeffect.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -106,7 +107,9 @@ HEADERS  += mainwindow.h \
     rules/resourcerules.h \
     ui/models/resourcedelegate.h \
     ui/models/resourcesortfilterproxymodel.h \
-    ui/models/resourcetreemodel.h
+    ui/models/resourcetreemodel.h \
+    rules/resourcerules.inl \
+    rules/effects/resourceeffect.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
