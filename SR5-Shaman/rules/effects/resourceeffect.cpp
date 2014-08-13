@@ -17,13 +17,19 @@ ResourceEffect::ResourceEffect(QJsonValueRef* p_jsonObject)
     QJsonObject obj = val.toObject();
     // ResourceEffect type
     QString tempString = obj["type"].toString();
-    if (tempString == "increase_skill")
+    if (tempString == "mod_ac")
     {
-        _resourceEffectType = RESOURCE_EFFECTTYPE_INVALID;
+        _resourceEffectType = RESOURCE_EFFECTTYPE_MOD_AC;
     }
-    else if (tempString == "none")
+    else if (tempString == "mod_rc")
     {
-        _resourceEffectType = RESOURCE_EFFECTTYPE_NONE;
+        _resourceEffectType = RESOURCE_EFFECTTYPE_MOD_RC;
+    }
+
+    // Get value
+    if (obj.contains("value"))
+    {
+        _value = obj["value"].toString().toInt();
     }
 }
 

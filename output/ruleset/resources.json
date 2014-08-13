@@ -1598,9 +1598,12 @@
             },
             "locations"         : ["internal"],
             "permanent"         : "false",
-            "effects"   : {
-                "rc"    : "1"
-            }
+            "effects"   : [
+                {  
+                    "type"         : "mod_rc",
+                    "value"        : "1"
+                }
+            ]
         },
         {   "unique_id" : "LASER_SIGHT",
             "translations" : 
@@ -1612,9 +1615,12 @@
             "permanent"         : "false",
             "availability"      : "2",
             "cost"              : "125",
-            "effects"   : {
-                "ac"    : "1"
-            }
+            "effects"   : [
+                {  
+                    "type"         : "mod_ac",
+                    "value"        : "1"
+                }
+            ]
         },
         {   "unique_id" : "SMARTGUN_INT",
             "translations" : 
@@ -1627,9 +1633,12 @@
             "availability"      : "+2R",
             "cost"              : "weapon_price",
             "wireless"          : "true",
-            "effects"   : {
-                "ac"    : "2"
-            }
+            "effects"   : [
+                {  
+                    "type"         : "mod_ac",
+                    "value"        : "2"
+                }
+            ]
         },
         {   "unique_id" : "SMARTGUN_EXT",
             "translations" : 
@@ -1642,9 +1651,12 @@
             "availability"      : "4R",
             "cost"              : "200",
             "wireless"          : "true",
-            "effects"   : {
-                "ac"    : "2"
-            }
+            "effects"   : [
+                {  
+                    "type"         : "mod_ac",
+                    "value"        : "2"
+                }
+            ]
         },
         {   "unique_id" : "SILENCER",
             "translations" : 
@@ -1665,11 +1677,15 @@
             },
             "locations"                 : ["barrel"],
             "permanent"                 : "true",
-            "availability_per_level"    : "3R",
-            "cost_per_level"            : "200",
-            "effects_per_level"         : {
-                "rc"    : "1"
-            }
+            "availability_per_rating"   : "3R",
+            "cost_per_rating"           : "200",
+            "max_rating"                : "3",
+            "effects_per_rating"        : [
+                {  
+                    "type"         : "mod_rc",
+                    "value"        : "1"
+                }
+            ]
         },
         {   "unique_id" : "IMAGING_SCOPE",
             "translations" : 
@@ -1693,9 +1709,12 @@
             "wireless"                  : "true",
             "availability"              : "4",
             "cost"                      : "500",
-            "effects"                   : {
-                "rc"    : "6"
-            }
+            "effects"   : [
+                {  
+                    "type"         : "mod_rc",
+                    "value"        : "6"
+                }
+            ]
         },
         {   "unique_id" : "AIRBURST_LINK",
             "translations" : 
@@ -1721,9 +1740,12 @@
             "wireless"          : "true",
             "availability"      : "2",
             "cost"              : "200",
-            "effects"   : {
-                "rc"    : "2"
-            }
+            "effects"   : [
+                {  
+                    "type"         : "mod_rc",
+                    "value"        : "2"
+                }
+            ]
         },
         {   "unique_id" : "CONC_HOLSTER",
             "translations" : 
@@ -1750,9 +1772,12 @@
             "wireless"          : "true",
             "availability"      : "7",
             "cost"              : "1400",
-            "effects"   : {
-                "rc"    : "6"
-            }
+            "effects"   : [
+                {  
+                    "type"         : "mod_rc",
+                    "value"        : "6"
+                }
+            ]
         },
         {   "unique_id" : "H_ARM_SLIDE",
             "translations" : 
@@ -1803,9 +1828,12 @@
             "req_smartgun"      : "true",
             "availability"      : "12F",
             "cost"              : "2500",
-            "effects"   : {
-                "rc"    : "5"
-            }
+            "effects"   : [
+                {  
+                    "type"         : "mod_rc",
+                    "value"        : "5"
+                }
+            ]
         },
         {   "unique_id" : "SPARE_CLIP",
             "translations" : 

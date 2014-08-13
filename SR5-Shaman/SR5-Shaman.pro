@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     ui/models/resourcedelegate.cpp \
     ui/models/resourcesortfilterproxymodel.cpp \
     ui/models/resourcetreemodel.cpp \
-    rules/effects/resourceeffect.cpp
+    rules/effects/resourceeffect.cpp \
+    ui/character/popups/resourcemanagedialog.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -109,7 +110,8 @@ HEADERS  += mainwindow.h \
     ui/models/resourcesortfilterproxymodel.h \
     ui/models/resourcetreemodel.h \
     rules/resourcerules.inl \
-    rules/effects/resourceeffect.h
+    rules/effects/resourceeffect.h \
+    ui/character/popups/resourcemanagedialog.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \
@@ -127,7 +129,8 @@ FORMS    += mainwindow.ui \
     ui/character/tabs/chareditskilltab.ui \
     ui/character/popups/specializationdialog.ui \
     ui/character/popups/knowledgeskilldialog.ui \
-    ui/character/tabs/chareditresourcetab.ui
+    ui/character/tabs/chareditresourcetab.ui \
+    ui/character/popups/resourcemanagedialog.ui
 
 TRANSLATIONS = sr5shaman_de.ts
 

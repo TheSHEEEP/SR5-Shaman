@@ -20,6 +20,12 @@ ResourceDefinition::ResourceDefinition(ResourceDefinition* p_parent)
     , isUserDefined(false), requiresCustom(false)
     , custom("")
     , type(RESOURCE_TYPE_INVALID)
+    , subType(RESOURCE_SUBTYPE_INVALID)
+    , availabilityNum("") , availabilityClass(AVAILABILITY_CLASS_INVALID), availabilityIsPerRating(false)
+    , cost(""), costIsPerRating(false)
+    , maxRating(0)
+    , stacks(false)
+    , wireless(false)
 {
     children.clear();
 }
@@ -33,8 +39,18 @@ ResourceDefinition::ResourceDefinition(const ResourceDefinition& p_other)
     isUserDefined = p_other.isUserDefined;
     requiresCustom = p_other.requiresCustom;
     type = p_other.type;
+    subType = p_other.subType;
     custom = p_other.custom;
     children = p_other.children;
+
+    availabilityNum = p_other.availabilityNum;
+    availabilityClass = p_other.availabilityClass;
+    availabilityIsPerRating = p_other.availabilityIsPerRating;
+    cost = p_other.cost;
+    costIsPerRating = p_other.costIsPerRating;
+    maxRating = p_other.maxRating;
+    stacks = p_other.stacks;
+    wireless = p_other.wireless;
 }
 
 //---------------------------------------------------------------------------------
@@ -69,6 +85,77 @@ ResourceDefinition::getChild(const QString& p_id) const
         }
     }
     return NULL;
+}
+
+//---------------------------------------------------------------------------------
+WeaponDefinition::WeaponDefinition(ResourceDefinition* p_parent)
+    : ResourceDefinition(p_parent)
+    , accuracy(0)
+    , reach(0)
+    , damageNum(""), damageType("")
+    , ap(0), rc(0)
+    , clipSize(0)
+    , clipType(WEAPON_CLIP_TYPE_INVALID)
+    , blast("")
+{
+}
+
+//---------------------------------------------------------------------------------
+WeaponDefinition::WeaponDefinition(const WeaponDefinition& p_other)
+    : ResourceDefinition(p_other)
+{
+    accuracy = p_other.accuracy;
+    reach = p_other.reach;
+    damageNum = p_other.damageNum;
+    damageType = p_other.damageType;
+    ap = p_other.ap;
+    fireModi = p_other.fireModi;
+    rc = p_other.rc;
+    clipSize = p_other.clipSize;
+    clipType = p_other.clipType;
+    blast = p_other.blast;
+}
+
+//---------------------------------------------------------------------------------
+WeaponDefinition::~WeaponDefinition()
+{
+
+}
+
+//---------------------------------------------------------------------------------
+MountDefinition::MountDefinition(ResourceDefinition* p_parent)
+    : ResourceDefinition(p_parent)
+    , permanent(false)
+    , effectsArePerRating(false)
+    , requiresWirelessHost(false)
+    , requiresSmartlinkOnHost(false)
+{
+}
+QStringList                     locations;
+QStringList                     validSubtypes;
+QStringList                     validItems;
+bool                            permanent;
+std::vector<ResourceEffect*>    effects;
+bool                            effectsArePerRating;
+bool                            requiresWirelessHost;
+bool                            requiresSmartlinkOnHost;
+//---------------------------------------------------------------------------------
+MountDefinition::MountDefinition(const MountDefinition& p_other)
+    : ResourceDefinition(p_other)
+{
+    locations = p_other.locations;
+    validSubtypes = p_other.validSubtypes;
+    validItems = p_other.validItems;
+    permanent = p_other.permanent;
+    effectsArePerRating = p_other.effectsArePerRating;
+    requiresWirelessHost = p_other.requiresWirelessHost;
+    requiresSmartlinkOnHost = p_other.requiresSmartlinkOnHost;
+}
+
+//---------------------------------------------------------------------------------
+MountDefinition::~MountDefinition()
+{
+
 }
 
 //---------------------------------------------------------------------------------

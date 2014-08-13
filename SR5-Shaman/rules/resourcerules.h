@@ -10,85 +10,8 @@
 
 class ResourceEffect;
 
-// All those resource infos are just too many to spam into the header
+// All those resource infos and definitions are just too many to spam into the header of the rules
 #include "resourcerules.inl"
-
-/**
- * @brief This is the definition of a single skill.
- *          Also has some additional functionality to serve as a model item for Views.
- */
-class ResourceDefinition
-{
-public:
-    /**
-     * @brief Constructor.
-     */
-    ResourceDefinition(ResourceDefinition* p_parent = NULL);
-
-    /**
-     * @brief Copy constructor.
-     */
-    ResourceDefinition(const ResourceDefinition& p_other);
-
-    /**
-     * @brief Destructor.
-     */
-    ~ResourceDefinition();
-
-    /**
-     * @brief Returns true if this item has a child with the passed value.
-     * @param p_id  The ID to look for.
-     */
-    bool hasChild(const QString& p_id) const;
-
-    /**
-     * @brief Returns the child with the passed value. Or NULL, if no child was found.
-     */
-    ResourceDefinition* getChild(const QString& p_id) const;
-
-    // Those two seem to be redundant, but are useful when this definition is used as
-    // a model item inside a View
-    ResourceDefinition*                parent;
-    std::vector<ResourceDefinition*>   children;
-
-    QString                         id;
-    bool                            isCategory;
-    bool                            isUserDefined;
-    bool                            requiresCustom;
-    QString                         custom;     // This can be used for further definition, like the name defined by the user
-    ResourceType                    type;
-    unsigned short                  subType;
-    QMap<QString, QString>          translations;
-
-    // Common resource data
-    QString                     availabilityNum;
-    signed char                 availabilityRating;
-    QString                     cost;
-    signed char                 maxRating;
-    bool                        stacks;
-    QStringList                 mounts;
-    std::vector<MountInfo>      attachedMounts;
-    bool                        wireless;
-
-    // Weapon resource data
-    signed char                 accuracy;
-    signed char                 reach;
-    char                        damageNum[64];
-    char                        damageType[8];
-    signed char                 ap;
-    signed char                 fireModi[4];
-    signed char                 rc;
-    signed short                clipSize;
-    signed char                 clipType;
-
-    // Mount resource data
-    QStringList                     locations;
-    bool                            permanent;
-    std::vector<ResourceEffect*>    effects;
-};
-
-Q_DECLARE_METATYPE(ResourceDefinition)
-Q_DECLARE_METATYPE(ResourceDefinition*)
 
 /**
  * @brief This class holds all information regarding resources.

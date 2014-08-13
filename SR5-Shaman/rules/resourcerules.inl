@@ -22,6 +22,7 @@ enum ResourceType
 
 // Resource sub-types, those are simple defines as they represent the index within
 // a resource category
+#define RESOURCE_SUBTYPE_INVALID                -1
 #define RESOURCE_SUBTYPE_MELEE_BLADES           0
 #define RESOURCE_SUBTYPE_MELEE_CLUBS            1
 #define RESOURCE_SUBTYPE_MELEE_OTHER            2
@@ -66,6 +67,15 @@ enum WeaponClipType
     WEAPON_CLIP_TYPE_BELT,
     NUM_WEAPON_CLIP_TYPES
 };
+// Availability classes
+enum AvailabilityClass
+{
+    AVAILABILITY_CLASS_INVALID = -1,
+    AVAILABILITY_CLASS_NORMAL,
+    AVAILABILITY_CLASS_RESTRICTED,
+    AVAILABILITY_CLASS_FORBIDDEN,
+    NUM_AVAILABILITY_CLASSES
+};
 
 // Information about mounts
 struct MountInfo
@@ -75,3 +85,136 @@ struct MountInfo
     bool    removable;
     char    rating;
 };
+
+/**
+ * @brief This is the base definition of a single resource.
+ *          Also has some additional functionality to serve as a model item for Views.
+ */
+class ResourceDefinition
+{
+public:
+    /**
+     * @brief Constructor.
+     */
+    ResourceDefinition(ResourceDefinition* p_parent = NULL);
+
+    /**
+     * @brief Copy constructor.
+     */
+    ResourceDefinition(const ResourceDefinition& p_other);
+
+    /**
+     * @brief Destructor.
+     */
+    ~ResourceDefinition();
+
+    /**
+     * @brief Returns true if this item has a child with the passed value.
+     * @param p_id  The ID to look for.
+     */
+    bool hasChild(const QString& p_id) const;
+
+    /**
+     * @brief Returns the child with the passed value. Or NULL, if no child was found.
+     */
+    ResourceDefinition* getChild(const QString& p_id) const;
+
+    // Those two seem to be redundant, but are useful when this definition is used as
+    // a model item inside a View
+    ResourceDefinition*                parent;
+    std::vector<ResourceDefinition*>   children;
+
+    QString                         id;
+    bool                            isCategory;
+    bool                            isUserDefined;
+    bool                            requiresCustom;
+    QString                         custom;     // This can be used for further definition, like the name defined by the user
+    ResourceType                    type;
+    unsigned short                  subType;
+    QMap<QString, QString>          translations;
+
+    // Common resource data
+    QString                     availabilityNum;
+    signed char                 availabilityClass;
+    bool                        availabilityIsPerRating;
+    QString                     cost;
+    bool                        costIsPerRating;
+    signed char                 maxRating;
+    bool                        stacks;
+    QStringList                 mounts;
+    std::vector<MountInfo>      attachedMounts;
+    bool                        wireless;
+};
+
+Q_DECLARE_METATYPE(ResourceDefinition)
+Q_DECLARE_METATYPE(ResourceDefinition*)
+
+/**
+ * @brief This is the definition of a single weapon resource. Also used for ammunition.
+ */
+class WeaponDefinition : public ResourceDefinition
+{
+public:
+    /**
+     * @brief Constructor.
+     */
+    WeaponDefinition(ResourceDefinition* p_parent = NULL);
+
+    /**
+     * @brief Copy constructor.
+     */
+    WeaponDefinition(const WeaponDefinition& p_other);
+
+    /**
+     * @brief Destructor.
+     */
+    ~WeaponDefinition();
+
+    signed char                     accuracy;
+    signed char                     reach;
+    QString                         damageNum;
+    QString                         damageType;
+    signed char                     ap;
+    std::vector<WeaponFireModus>    fireModi;
+    signed char                     rc;
+    signed short                    clipSize;
+    WeaponClipType                  clipType;
+    QString                         blast;
+};
+
+Q_DECLARE_METATYPE(WeaponDefinition)
+Q_DECLARE_METATYPE(WeaponDefinition*)
+
+/**
+ * @brief This is the definition of a single mount resource.
+ */
+class MountDefinition : public ResourceDefinition
+{
+public:
+    /**
+     * @brief Constructor.
+     */
+    MountDefinition(ResourceDefinition* p_parent = NULL);
+
+    /**
+     * @brief Copy constructor.
+     */
+    MountDefinition(const MountDefinition& p_other);
+
+    /**
+     * @brief Destructor.
+     */
+    ~MountDefinition();
+
+    QStringList                     locations;
+    QStringList                     validSubtypes;
+    QStringList                     validItems;
+    bool                            permanent;
+    std::vector<ResourceEffect*>    effects;
+    bool                            effectsArePerRating;
+    bool                            requiresWirelessHost;
+    bool                            requiresSmartlinkOnHost;
+};
+
+Q_DECLARE_METATYPE(MountDefinition)
+Q_DECLARE_METATYPE(MountDefinition*)
