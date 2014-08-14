@@ -9,6 +9,7 @@
 #include <QObject>
 
 class ResourceEffect;
+class QJsonObject;
 
 // All those resource infos and definitions are just too many to spam into the header of the rules
 #include "resourcerules.inl"
@@ -46,6 +47,12 @@ public:
      * @return The root item of the model. Use this for display in trees, etc.
      */
     ResourceDefinition* getModelRootItem();
+
+    /**
+     * @brief Returns the number of nuyen available for a character with the passed resource priority.
+     * @param p_prioIndex   The index of the priority.
+     */
+    int getNuyenForPriority(int p_prioIndex) const;
 
     /**
      * @brief Returns the map of resource definitions.
@@ -88,9 +95,23 @@ public:
 
 private:
     QMap<QString, ResourceDefinition*>  _definitions;
-    std::vector<QPair<int, int>>        _skillPoints;
+    std::vector<int>                    _nuyenPerPrio;
 
     ResourceDefinition*    _rootItem;  // The root item of the skills, used to display in tree models
+
+    /**
+     * @brief Parses the JSON object to get the correct availability.
+     * @param p_resourceDef     The resource definition to fill.
+     * @param p_currentResource The JSON object that has the availability information.
+     */
+    void fillAvailability(ResourceDefinition* p_resourceDef, QJsonObject* p_currentResource);
+
+    /**
+     * @brief Parses the JSON object to get the correct cost.
+     * @param p_resourceDef     The resource definition to fill.
+     * @param p_currentResource The JSON object that has the cost information.
+     */
+    void fillCost(ResourceDefinition* p_resourceDef, QJsonObject* p_currentResource);
 };
 
 

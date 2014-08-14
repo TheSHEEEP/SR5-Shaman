@@ -11,6 +11,7 @@
 #include <QDebug>
 #include <QString>
 #include "data/dictionary.h"
+#include "rules/effects/resourceeffect.h"
 
 //---------------------------------------------------------------------------------
 ResourceDefinition::ResourceDefinition(ResourceDefinition* p_parent)
@@ -56,7 +57,6 @@ ResourceDefinition::ResourceDefinition(const ResourceDefinition& p_other)
 //---------------------------------------------------------------------------------
 ResourceDefinition::~ResourceDefinition()
 {
-
 }
 
 //---------------------------------------------------------------------------------
@@ -119,7 +119,6 @@ WeaponDefinition::WeaponDefinition(const WeaponDefinition& p_other)
 //---------------------------------------------------------------------------------
 WeaponDefinition::~WeaponDefinition()
 {
-
 }
 
 //---------------------------------------------------------------------------------
@@ -131,14 +130,7 @@ MountDefinition::MountDefinition(ResourceDefinition* p_parent)
     , requiresSmartlinkOnHost(false)
 {
 }
-QStringList                     locations;
-QStringList                     validSubtypes;
-QStringList                     validItems;
-bool                            permanent;
-std::vector<ResourceEffect*>    effects;
-bool                            effectsArePerRating;
-bool                            requiresWirelessHost;
-bool                            requiresSmartlinkOnHost;
+
 //---------------------------------------------------------------------------------
 MountDefinition::MountDefinition(const MountDefinition& p_other)
     : ResourceDefinition(p_other)
@@ -155,7 +147,6 @@ MountDefinition::MountDefinition(const MountDefinition& p_other)
 //---------------------------------------------------------------------------------
 MountDefinition::~MountDefinition()
 {
-
 }
 
 //---------------------------------------------------------------------------------
@@ -633,6 +624,12 @@ ResourceRules::ResourceRules()
         subCategory->id = "CATEGORY_VD_LARGE_DRONES";
         subCategory->type = RESOURCE_TYPE_VEHICLES_DRONES;
         category->children.push_back(subCategory);
+    // Mounts
+    category = new ResourceDefinition(_rootItem);
+    category->isCategory = true;
+    category->id = "CATEGORY_MOUNTS";
+    category->type = RESOURCE_TYPE_MOUNT;
+    _rootItem->children.push_back(category);
 }
 
 //---------------------------------------------------------------------------------
@@ -667,136 +664,215 @@ ResourceRules::initialize(const QString& p_jsonFile)
         return;
     }
 
-    // Read the resource points
-    /*QJsonArray pointsArray = doc.object().value("skill_points_per_prio").toArray();
-    _skillPoints.push_back(QPair<int,int>(  pointsArray[0].toArray()[0].toString().toInt(),
-                                            pointsArray[0].toArray()[1].toString().toInt()));
-    _skillPoints.push_back(QPair<int,int>(  pointsArray[1].toArray()[0].toString().toInt(),
-                                            pointsArray[1].toArray()[1].toString().toInt()));
-    _skillPoints.push_back(QPair<int,int>(  pointsArray[2].toArray()[0].toString().toInt(),
-                                            pointsArray[2].toArray()[1].toString().toInt()));
-    _skillPoints.push_back(QPair<int,int>(  pointsArray[3].toArray()[0].toString().toInt(),
-                                            pointsArray[3].toArray()[1].toString().toInt()));
-    _skillPoints.push_back(QPair<int,int>(  pointsArray[4].toArray()[0].toString().toInt(),
-                                            pointsArray[4].toArray()[1].toString().toInt()));*/
+    // Read the karma per priority points
+    QJsonArray nuyenArray = doc.object().value("nuyen_per_prio").toArray();
+    _nuyenPerPrio.push_back(nuyenArray[0].toString().toInt());
+    _nuyenPerPrio.push_back(nuyenArray[1].toString().toInt());
+    _nuyenPerPrio.push_back(nuyenArray[2].toString().toInt());
+    _nuyenPerPrio.push_back(nuyenArray[3].toString().toInt());
+    _nuyenPerPrio.push_back(nuyenArray[4].toString().toInt());
 
-    /*// Parse each skill group and add to the rules
-    QJsonArray skillsArray = doc.object().value("skill_groups").toArray();
-    QJsonObject currentSkill;
-    SkillDefinition* skillDef = NULL;
+    // Parse each mount
+    QJsonArray mountArray = doc.object().value("mounts").toArray();
+    QJsonObject currentResource;
+    ResourceDefinition* resourceDef = NULL;
+    WeaponDefinition* weaponDef = NULL;
+    MountDefinition* mountDef = NULL;
     QJsonArray tempArray;
     QJsonObject tempObject;
-    QJsonObject tempObject2;
-    SkillDefinition* category = NULL;
-
-    // Parse each skill and add to the rules
-    skillsArray = doc.object().value("skills").toArray();
-    skillDef = 0;
-    QString group = "";
+    ResourceDefinition* category = NULL;
     QString uniqueId = "";
-    QString type = "";
-    for (int i = 0; i < skillsArray.size(); ++i)
+    QString tempString = "";
+    for (int i = 0; i < mountArray.size(); ++i)
     {
-        currentSkill = skillsArray.at(i).toObject();
+        currentResource = mountArray.at(i).toObject();
 
         // ID
-        uniqueId = currentSkill["unique_id"].toString();
+        uniqueId = currentResource["unique_id"].toString();
 
-        // Add type definition
-        skillDef = new SkillDefinition();
-        skillDef->id = uniqueId;
+        // Create correct type definition
+        mountDef = new MountDefinition();
+        mountDef->id = uniqueId;
+        mountDef->type = RESOURCE_TYPE_MOUNT;
 
         // Translations
-        tempObject = currentSkill["translations"].toObject();
+        tempObject = currentResource["translations"].toObject();
         for (int j = 0; j < tempObject.keys().size(); ++j)
         {
-            skillDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+            mountDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
         }
 
-        // Attribute
-        skillDef->attribute = currentSkill["attribute"].toString();
-
-        // Group
-        group = currentSkill["group"].toString();
-        skillDef->group = group;
-        if (group != "none")
+        // Locations
+        tempArray = currentResource["locations"].toArray();
+        for (int j = 0; j < tempArray.size(); ++j)
         {
-            // Add to the group
-            if (_definitions.contains(group))
+            mountDef->locations.push_back(tempArray[j].toString());
+        }
+
+        // Permanent
+        mountDef->permanent = currentResource["permanent"].toString() == "true";
+
+        // Max rating
+        if (currentResource.contains("max_rating"))
+        {
+            mountDef->maxRating = currentResource["max_rating"].toString().toInt();
+        }
+
+        // Availabilities can have different keys
+        fillAvailability(mountDef, &currentResource);
+
+        // Cost can have different keys
+        fillCost(mountDef, &currentResource);
+
+        // Effects
+        bool gotEffects = false;
+        if (currentResource.contains("effects_per_rating"))
+        {
+            gotEffects = true;
+            tempString = "effects_per_rating";
+            mountDef->effectsArePerRating = true;
+        }
+        else if (currentResource.contains("effects"))
+        {
+            gotEffects = true;
+            tempString = "effects";
+        }
+        if (gotEffects)
+        {
+            tempArray = currentResource[tempString].toArray();
+            for (int j = 0; j < tempArray.size(); ++j)
             {
-                _definitions[group]->groupSkills[uniqueId] = skillDef;
-                _definitions[group]->children.push_back(skillDef);
+                QJsonValueRef obj = tempArray[j];
+                mountDef->effects.push_back(new ResourceEffect(&obj));
             }
-            // Error! group doesn't exist
-            else
+        }
+
+        // Wireless
+        if (currentResource.contains("wireless"))
+        {
+            mountDef->wireless = currentResource["wireless"].toString() == "true";
+        }
+
+        // Requires wireless host
+        if (currentResource.contains("req_wireless"))
+        {
+            mountDef->requiresWirelessHost = currentResource["req_wireless"].toString() == "true";
+        }
+
+        // Requires smartlinked host
+        if (currentResource.contains("req_smartlink"))
+        {
+            mountDef->requiresSmartlinkOnHost = currentResource["req_smartlink"].toString() == "true";
+        }
+
+        // Valid subtypes
+        if (currentResource.contains("subtypes"))
+        {
+            tempArray = currentResource["subtypes"].toArray();
+            for (int j = 0; j < tempArray.size(); ++j)
             {
-                qCritical() << "Skill group \"" << group << "\" doesn't exist. Requested by skill \""
-                            <<  uniqueId << "\". Skill parsing aborted.";
-                return;
+                mountDef->validSubtypes.push_back(tempArray[j].toString());
             }
         }
 
-        // Requires custom?
-        if (currentSkill.contains("requires_custom"))
+        // Valid specific items
+        if (currentResource.contains("items"))
         {
-            skillDef->requiresCustom = currentSkill["requires_custom"].toString() == "true";
-        }
-
-        // Type
-        type = currentSkill["type"].toString();
-        if (type == "combat")
-        {
-            skillDef->type = SKILL_TYPE_COMBAT;
-        }
-        else if (type == "physical")
-        {
-            skillDef->type = SKILL_TYPE_PHYSICAL;
-        }
-        else if (type == "social")
-        {
-            skillDef->type = SKILL_TYPE_SOCIAL;
-        }
-        else if (type == "magic")
-        {
-            skillDef->type = SKILL_TYPE_MAGIC;
-        }
-        else if (type == "resonance")
-        {
-            skillDef->type = SKILL_TYPE_RESONANCE;
-        }
-        else if (type == "technical")
-        {
-            skillDef->type = SKILL_TYPE_TECHNICAL;
-        }
-        else if (type == "vehicle")
-        {
-            skillDef->type = SKILL_TYPE_VEHICLE;
-        }
-        else if (type == "knowledge")
-        {
-            skillDef->type = SKILL_TYPE_KNOWLEDGE;
-        }
-        else
-        {
-            qCritical() << "Skill \"" << uniqueId << "\" does not have a valid type. Parsing aborted.";
-            return;
+            tempArray = currentResource["items"].toArray();
+            for (int j = 0; j < tempArray.size(); ++j)
+            {
+                mountDef->validItems.push_back(tempArray[j].toString());
+            }
         }
 
         // Get the correct category
-        category = _rootItem->children[skillDef->type];
-        skillDef->parent = category;
+        category = _rootItem->children[mountDef->type];
+        mountDef->parent = category;
 
         // Add to category
-        category->children.push_back(skillDef);
+        category->children.push_back(mountDef);
 
         // Make sure the definition doesn't already exist
         if (_definitions.contains(uniqueId))
         {
-            qCritical() << "Skill \"" << uniqueId << "\" already exists. Skill parsing aborted.";
+            qCritical() << "Mount \"" << uniqueId << "\" already exists. Resource parsing aborted.";
             return;
         }
-        _definitions[currentSkill["unique_id"].toString()] = skillDef;
-    }*/
+        qDebug() << "Added mount: " << uniqueId << "\n";
+        _definitions[currentResource["unique_id"].toString()] = mountDef;
+    }
+}
+
+
+//---------------------------------------------------------------------------------
+void
+ResourceRules::fillAvailability(ResourceDefinition* p_resourceDef, QJsonObject* p_currentResource)
+{
+    QJsonObject currentResource = *p_currentResource;
+
+    // Get the correct availability string
+    QString tempString;
+    if (currentResource.contains("availability"))
+    {
+        tempString = currentResource["availability"].toString();
+    }
+    else if (currentResource.contains("availability_per_rating"))
+    {
+        tempString = currentResource["availability_per_rating"].toString();
+        p_resourceDef->availabilityIsPerRating = true;
+    }
+    else
+    {
+        qCritical() << "Resource \"" << p_resourceDef->id << "\" has no availability!";
+        return;
+    }
+
+    // Availability class
+    bool hasAvClass = false;
+    if (tempString.endsWith("R"))
+    {
+        hasAvClass = true;
+        p_resourceDef->availabilityClass = AVAILABILITY_CLASS_RESTRICTED;
+    }
+    else if (tempString.endsWith("F"))
+    {
+        hasAvClass = true;
+        p_resourceDef->availabilityClass = AVAILABILITY_CLASS_FORBIDDEN;
+    }
+    else
+    {
+        p_resourceDef->availabilityClass = AVAILABILITY_CLASS_NORMAL;
+    }
+
+    // Availability
+    if (hasAvClass)
+    {
+        tempString = tempString.mid(0, tempString.length() - 1);
+    }
+    p_resourceDef->availabilityNum = tempString;
+}
+
+//---------------------------------------------------------------------------------
+void
+ResourceRules::fillCost(ResourceDefinition* p_resourceDef, QJsonObject* p_currentResource)
+{
+    QJsonObject currentResource = *p_currentResource;
+
+    // Get the correct cost
+    if (currentResource.contains("cost"))
+    {
+        p_resourceDef->cost = currentResource["cost"].toString();
+    }
+    else if (currentResource.contains("cost_per_rating"))
+    {
+        p_resourceDef->cost = currentResource["cost_per_rating"].toString();
+        p_resourceDef->costIsPerRating = true;
+    }
+    else
+    {
+        qCritical() << "Resource \"" << p_resourceDef->id << "\" has no cost!";
+        return;
+    }
 }
 
 //---------------------------------------------------------------------------------
@@ -812,6 +888,19 @@ ResourceRules::getTypeString(ResourceType p_type) const
     }
 
     return QObject::tr("This shouldn't happen");
+}
+
+//---------------------------------------------------------------------------------
+int
+ResourceRules::getNuyenForPriority(int p_prioIndex) const
+{
+    if (p_prioIndex < 0 || p_prioIndex > 4)
+    {
+        qCritical() << QString("Invalid priority passed: %1").arg(p_prioIndex);
+        return -10000000;
+    }
+
+    return _nuyenPerPrio[p_prioIndex];
 }
 
 //---------------------------------------------------------------------------------

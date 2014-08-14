@@ -60,7 +60,8 @@ SOURCES += main.cpp\
     ui/models/resourcesortfilterproxymodel.cpp \
     ui/models/resourcetreemodel.cpp \
     rules/effects/resourceeffect.cpp \
-    ui/character/popups/resourcemanagedialog.cpp
+    ui/character/popups/resourcemanagedialog.cpp \
+    data/character/chosenresource.cpp
 
 HEADERS  += mainwindow.h \
     ui/mainsplitview.h \
@@ -111,7 +112,8 @@ HEADERS  += mainwindow.h \
     ui/models/resourcetreemodel.h \
     rules/resourcerules.inl \
     rules/effects/resourceeffect.h \
-    ui/character/popups/resourcemanagedialog.h
+    ui/character/popups/resourcemanagedialog.h \
+    data/character/chosenresource.h
 
 FORMS    += mainwindow.ui \
     ui/mainsplitview.ui \

@@ -17,6 +17,7 @@ enum ResourceType
     RESOURCE_TYPE_AUGMENTATION,
     RESOURCE_TYPE_MAGICAL_EQUIPMENT,
     RESOURCE_TYPE_VEHICLES_DRONES,
+    RESOURCE_TYPE_MOUNT,   // This type is meant for every kind of mount, no matter if for weapons, clothing, etc.
     NUM_RESOURCE_TYPES
 };
 
@@ -74,6 +75,7 @@ enum AvailabilityClass
     AVAILABILITY_CLASS_NORMAL,
     AVAILABILITY_CLASS_RESTRICTED,
     AVAILABILITY_CLASS_FORBIDDEN,
+    AVAILABILITY_CLASS_NONE,
     NUM_AVAILABILITY_CLASSES
 };
 

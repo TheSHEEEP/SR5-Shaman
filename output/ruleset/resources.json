@@ -1,4 +1,8 @@
 {
+    "nuyen_per_prio" : 
+    [ 
+        "450000", "270000", "140000", "50000", "6000"
+    ],
     "resources" :
     [
         {   "unique_id" : "COMBAT_AXE",
@@ -1598,6 +1602,8 @@
             },
             "locations"         : ["internal"],
             "permanent"         : "false",
+            "availability"      : "2",
+            "cost"              : "50",
             "effects"   : [
                 {  
                     "type"         : "mod_rc",
@@ -1754,7 +1760,7 @@
                 "de" : "Tarnholster"
             },
             "locations"         : ["external"],
-            "types"             : ["FIREARM_TASERS", "FIREARM_LPISTOLS", "FIREARM_HPISTOLS"],
+            "subtypes"          : ["FIREARM_TASERS", "FIREARM_LPISTOLS", "FIREARM_HPISTOLS"],
             "permanent"         : "false",
             "wireless"          : "true",
             "availability"      : "2",
@@ -1767,7 +1773,7 @@
                 "de" : "Gyrostabilisator"
             },
             "locations"         : ["underbarrel"],
-            "types"             : ["FIREARM_CANNONS_LAUNCHERS", "FIREARM_ASSAULTR"],
+            "subtypes"          : ["FIREARM_CANNONS_LAUNCHERS", "FIREARM_ASSAULTR"],
             "permanent"         : "false",
             "wireless"          : "true",
             "availability"      : "7",
@@ -1786,7 +1792,7 @@
                 "de" : "Springarm"
             },
             "locations"         : ["external"],
-            "types"             : ["FIREARM_TASERS", "FIREARM_LPISTOLS", "FIREARM_HOLDOUTS"],
+            "subtypes"          : ["FIREARM_TASERS", "FIREARM_LPISTOLS", "FIREARM_HOLDOUTS"],
             "permanent"         : "false",
             "wireless"          : "true",
             "availability"      : "4R",

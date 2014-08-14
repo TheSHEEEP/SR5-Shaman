@@ -1130,13 +1130,6 @@
             }
         },
         {
-            "key" : "VD_BIKES",
-            "translations" : {
-                "en" : "Bikes",
-                "de" : "Motorräder"
-            }
-        },
-        {
             "key" : "VD_TRUCKS_VANS",
             "translations" : {
                 "en" : "Trucks & Vans",
