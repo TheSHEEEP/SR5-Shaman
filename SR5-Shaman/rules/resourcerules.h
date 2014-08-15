@@ -112,6 +112,13 @@ private:
      * @param p_currentResource The JSON object that has the cost information.
      */
     void fillCost(ResourceDefinition* p_resourceDef, QJsonObject* p_currentResource);
+
+    /**
+     * @brief Parses the JSON object to fill the weapon specific fields.
+     * @param p_resourceDef     The weapon definition to fill.
+     * @param p_currentResource The JSON object that has the information.
+     */
+    void fillWeaponDefinition(WeaponDefinition* p_weaponDef, QJsonObject* p_currentResource);
 };
 
 

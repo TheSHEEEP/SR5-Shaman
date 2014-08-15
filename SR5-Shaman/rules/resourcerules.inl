@@ -23,27 +23,27 @@ enum ResourceType
 
 // Resource sub-types, those are simple defines as they represent the index within
 // a resource category
-#define RESOURCE_SUBTYPE_INVALID                -1
-#define RESOURCE_SUBTYPE_MELEE_BLADES           0
-#define RESOURCE_SUBTYPE_MELEE_CLUBS            1
-#define RESOURCE_SUBTYPE_MELEE_OTHER            2
-#define RESOURCE_SUBTYPE_PROJECTILE_BOWS        0
-#define RESOURCE_SUBTYPE_PROJECTILE_CROSSBOWS   1
-#define RESOURCE_SUBTYPE_PROJECTILE_THROWING    2
-#define RESOURCE_SUBTYPE_FIREARM_TASERS         0
-#define RESOURCE_SUBTYPE_FIREARM_HOLDOUTS       1
-#define RESOURCE_SUBTYPE_FIREARM_LPISTOLS       2
-#define RESOURCE_SUBTYPE_FIREARM_HPISTOLS       3
-#define RESOURCE_SUBTYPE_FIREARM_MPISTOLS       4
-#define RESOURCE_SUBTYPE_FIREARM_SMGS           5
-#define RESOURCE_SUBTYPE_FIREARM_ASSAULTR       6
-#define RESOURCE_SUBTYPE_FIREARM_SNIPERR        7
-#define RESOURCE_SUBTYPE_FIREARM_SHOTGUNS       8
-#define RESOURCE_SUBTYPE_FIREARM_SPECIALW       9
-#define RESOURCE_SUBTYPE_FIREARM_MACHINEG       10
-#define RESOURCE_SUBTYPE_FIREARM_LAUNCHERS      11
-#define RESOURCE_SUBTYPE_AMMU_GRENADES          0
-#define RESOURCE_SUBTYPE_AMMU_ROCKETS           1
+#define RESOURCE_SUBTYPE_INVALID                    -1
+#define RESOURCE_SUBTYPE_MELEE_BLADES               0
+#define RESOURCE_SUBTYPE_MELEE_CLUBS                1
+#define RESOURCE_SUBTYPE_MELEE_OTHER                2
+#define RESOURCE_SUBTYPE_PROJECTILE_BOWS            0
+#define RESOURCE_SUBTYPE_PROJECTILE_CROSSBOWS       1
+#define RESOURCE_SUBTYPE_PROJECTILE_THROWING        2
+#define RESOURCE_SUBTYPE_FIREARM_TASERS             0
+#define RESOURCE_SUBTYPE_FIREARM_HOLDOUTS           1
+#define RESOURCE_SUBTYPE_FIREARM_LPISTOLS           2
+#define RESOURCE_SUBTYPE_FIREARM_HPISTOLS           3
+#define RESOURCE_SUBTYPE_FIREARM_MPISTOLS           4
+#define RESOURCE_SUBTYPE_FIREARM_SMGS               5
+#define RESOURCE_SUBTYPE_FIREARM_ASSAULTR           6
+#define RESOURCE_SUBTYPE_FIREARM_SNIPERR            7
+#define RESOURCE_SUBTYPE_FIREARM_SHOTGUNS           8
+#define RESOURCE_SUBTYPE_FIREARM_SPECIALW           9
+#define RESOURCE_SUBTYPE_FIREARM_MACHINEG           10
+#define RESOURCE_SUBTYPE_FIREARM_CANNONS_LAUNCHERS  11
+#define RESOURCE_SUBTYPE_AMMU_GRENADES              0
+#define RESOURCE_SUBTYPE_AMMU_ROCKETS               1
 
 // Weapon fire modi
 enum WeaponFireModus
@@ -82,6 +82,17 @@ enum AvailabilityClass
 // Information about mounts
 struct MountInfo
 {
+    MountInfo()
+        : id(""), location(""), removable(false), rating(0)
+    { }
+    MountInfo(const MountInfo& p_other)
+    {
+        id = p_other.id;
+        location = p_other.location;
+        removable = p_other.removable;
+        rating = p_other.rating;
+    }
+
     QString id;
     QString location;
     bool    removable;
@@ -177,8 +188,10 @@ public:
     QString                         damageNum;
     QString                         damageType;
     signed char                     ap;
+    bool                            apIsModding;
     std::vector<WeaponFireModus>    fireModi;
     signed char                     rc;
+    bool                            rcIsModding;
     signed short                    clipSize;
     WeaponClipType                  clipType;
     QString                         blast;

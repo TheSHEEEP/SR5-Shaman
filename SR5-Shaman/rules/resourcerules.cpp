@@ -93,7 +93,7 @@ WeaponDefinition::WeaponDefinition(ResourceDefinition* p_parent)
     , accuracy(0)
     , reach(0)
     , damageNum(""), damageType("")
-    , ap(0), rc(0)
+    , ap(0), apIsModding(false), rc(0), rcIsModding(false)
     , clipSize(0)
     , clipType(WEAPON_CLIP_TYPE_INVALID)
     , blast("")
@@ -109,8 +109,10 @@ WeaponDefinition::WeaponDefinition(const WeaponDefinition& p_other)
     damageNum = p_other.damageNum;
     damageType = p_other.damageType;
     ap = p_other.ap;
+    apIsModding = p_other.apIsModding;
     fireModi = p_other.fireModi;
     rc = p_other.rc;
+    rcIsModding = p_other.rcIsModding;
     clipSize = p_other.clipSize;
     clipType = p_other.clipType;
     blast = p_other.blast;
@@ -302,7 +304,7 @@ ResourceRules::ResourceRules()
         subCategory->isCategory = true;
         subCategory->id = "CATEGORY_FIREARM_CANNONS_LAUNCHERS";
         subCategory->type = RESOURCE_TYPE_FIREARM;
-        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_LAUNCHERS;
+        subCategory->subType = RESOURCE_SUBTYPE_FIREARM_CANNONS_LAUNCHERS;
         category->children.push_back(subCategory);
     // Ammunition
     category = new ResourceDefinition(_rootItem);
@@ -643,6 +645,25 @@ ResourceRules::~ResourceRules()
     }
 }
 
+// This will make the parsing function cost some lines less
+#define CHECKIF(PARAM) \
+    if (tempString == #PARAM) \
+    { \
+        resourceDef->subType = RESOURCE_SUBTYPE_##PARAM; \
+    }
+#define CHECKELSEIF(PARAM) \
+    else if (tempString == #PARAM) \
+    { \
+        resourceDef->subType = RESOURCE_SUBTYPE_##PARAM; \
+    }
+#define ENDCHECK() \
+    else \
+    { \
+        qCritical() << "Resource \"" << uniqueId << "\" of unknown subtype \"" \
+                    << tempString << "\". Resource parsing aborted."; \
+        return; \
+    }
+
 //---------------------------------------------------------------------------------
 void
 ResourceRules::initialize(const QString& p_jsonFile)
@@ -664,7 +685,7 @@ ResourceRules::initialize(const QString& p_jsonFile)
         return;
     }
 
-    // Read the karma per priority points
+    // Read the nuyen per priority points
     QJsonArray nuyenArray = doc.object().value("nuyen_per_prio").toArray();
     _nuyenPerPrio.push_back(nuyenArray[0].toString().toInt());
     _nuyenPerPrio.push_back(nuyenArray[1].toString().toInt());
@@ -798,8 +819,207 @@ ResourceRules::initialize(const QString& p_jsonFile)
             qCritical() << "Mount \"" << uniqueId << "\" already exists. Resource parsing aborted.";
             return;
         }
-        qDebug() << "Added mount: " << uniqueId << "\n";
         _definitions[currentResource["unique_id"].toString()] = mountDef;
+    }
+
+    // Parse each resource
+    QJsonArray resourceArray = doc.object().value("resources").toArray();
+    currentResource;
+    resourceDef = NULL;
+    weaponDef = NULL;
+    mountDef = NULL;
+    category = NULL;
+    uniqueId = "";
+    tempString = "";
+    ResourceType type;
+    QJsonArray tempArray2;
+    for (int i = 0; i < resourceArray.size(); ++i)
+    {
+        currentResource = mountArray.at(i).toObject();
+
+        // ID
+        uniqueId = currentResource["unique_id"].toString();
+
+        // Get the correct type and create the according resource definition
+        tempString = currentResource["type"].toString();
+        if (tempString == "MELEE_WEAPON")
+        {
+            type = RESOURCE_TYPE_MELEE_WEAPON;
+            weaponDef = new WeaponDefinition();
+            resourceDef = static_cast<ResourceDefinition*>(weaponDef);
+        }
+        else if (tempString == "PROJECTILE_WEAPON")
+        {
+            type = RESOURCE_TYPE_PROJECTILE_WEAPON;
+            weaponDef = new WeaponDefinition();
+            resourceDef = static_cast<ResourceDefinition*>(weaponDef);
+        }
+        else if (tempString == "FIREARM")
+        {
+            type = RESOURCE_TYPE_FIREARM;
+            weaponDef = new WeaponDefinition();
+            resourceDef = static_cast<ResourceDefinition*>(weaponDef);
+        }
+        else if (tempString == "AMMUNITION")
+        {
+            type = RESOURCE_TYPE_AMMUNITION;
+            weaponDef = new WeaponDefinition();
+            resourceDef = static_cast<ResourceDefinition*>(weaponDef);
+        }
+        else
+        {
+            qCritical() << "resource \"" << uniqueId << "\" of unknown type \""
+                        << tempString << "\". Resource parsing aborted.";
+            return;
+        }
+        resourceDef->type = type;
+
+        // Get the category & subtype
+        // Most items are of a subtype and thus not in a top level category
+        if (currentResource.contains("subtype"))
+        {
+            tempString = currentResource["subtype"].toString();
+
+            switch (type)
+            {
+            case RESOURCE_TYPE_MELEE_WEAPON:
+                CHECKIF(MELEE_BLADES)
+                CHECKELSEIF(MELEE_CLUBS)
+                CHECKELSEIF(MELEE_OTHER)
+                ENDCHECK()
+                break;
+
+            case RESOURCE_TYPE_PROJECTILE_WEAPON:
+                CHECKIF(PROJECTILE_BOWS)
+                CHECKELSEIF(PROJECTILE_CROSSBOWS)
+                CHECKELSEIF(PROJECTILE_THROWING)
+                ENDCHECK()
+                break;
+
+            case RESOURCE_TYPE_FIREARM:
+                CHECKIF(FIREARM_TASERS)
+                CHECKELSEIF(FIREARM_HOLDOUTS)
+                CHECKELSEIF(FIREARM_LPISTOLS)
+                CHECKELSEIF(FIREARM_HPISTOLS)
+                CHECKELSEIF(FIREARM_MPISTOLS)
+                CHECKELSEIF(FIREARM_SMGS)
+                CHECKELSEIF(FIREARM_ASSAULTR)
+                CHECKELSEIF(FIREARM_SNIPERR)
+                CHECKELSEIF(FIREARM_SHOTGUNS)
+                CHECKELSEIF(FIREARM_SPECIALW)
+                CHECKELSEIF(FIREARM_MACHINEG)
+                CHECKELSEIF(FIREARM_CANNONS_LAUNCHERS)
+                ENDCHECK()
+                break;
+
+            case RESOURCE_TYPE_AMMUNITION:
+                CHECKIF(AMMU_GRENADES)
+                CHECKELSEIF(AMMU_ROCKETS)
+                ENDCHECK()
+                break;
+
+            default:
+                break;
+            }
+
+            // Set the category
+            category = _rootItem->children[type]->children[resourceDef->subType];
+        }
+        // Otherwise, the resource sits in a top category
+        else
+        {
+            category = _rootItem->children[type];
+        }
+
+        // ---------------------------------------------------------------
+        // Parse the information common to all types of resources
+        // ---------------------------------------------------------------
+        // Translations
+        tempObject = currentResource["translations"].toObject();
+        for (int j = 0; j < tempObject.keys().size(); ++j)
+        {
+            resourceDef->translations[tempObject.keys().at(j)] = tempObject[tempObject.keys().at(j)].toString();
+        }
+
+        // Max rating
+        if (currentResource.contains("max_rating"))
+        {
+            resourceDef->maxRating = currentResource["max_rating"].toString().toInt();
+        }
+
+        // Stacks or not
+        if (currentResource.contains("stacks"))
+        {
+            resourceDef->stacks = currentResource["stacks"].toString() == "true";
+        }
+
+        // Availabilities can have different keys
+        fillAvailability(resourceDef, &currentResource);
+
+        // Cost can have different keys
+        fillCost(resourceDef, &currentResource);
+
+        // Wireless
+        if (currentResource.contains("wireless"))
+        {
+            resourceDef->wireless = currentResource["wireless"].toString() == "true";
+        }
+
+        // Possible mount locations
+        tempArray = currentResource["mounts"].toArray();
+        for (int j = 0; j < tempArray.size(); ++j)
+        {
+            resourceDef->mounts.push_back(tempArray[j].toString());
+        }
+
+        // Premounted mounts
+        tempArray = currentResource["premounted"].toArray();
+        MountInfo info;
+        for (int j = 0; j < tempArray.size(); ++j)
+        {
+            tempArray2 = tempArray[j].toArray();
+            info.id = tempArray2[0].toString();
+            if (!_definitions.contains(info.id))
+            {
+                qCritical() << "Resource \"" << uniqueId << "\" has unknown mount \""
+                            << info.id << "\". Resource parsing aborted.";
+                return;
+            }
+            info.location = tempArray2[1].toString();
+            info.removable = tempArray2[2].toString() == true;
+            if (tempArray2.size() > 3)
+            {
+                info.rating = tempArray2[3].toString().toInt();
+            }
+            resourceDef->attachedMounts.push_back(info);
+        }
+
+        // ---------------------------------------------------------------
+        // Parse the information specific to certain types
+        // ---------------------------------------------------------------
+        switch(type)
+        {
+        case RESOURCE_TYPE_MELEE_WEAPON:
+        case RESOURCE_TYPE_PROJECTILE_WEAPON:
+        case RESOURCE_TYPE_FIREARM:
+        case RESOURCE_TYPE_AMMUNITION:
+            fillWeaponDefinition(weaponDef, &currentResource);
+            break;
+
+        default:
+            break;
+        }
+
+        // Add to category
+        category->children.push_back(resourceDef);
+
+        // Make sure the definition doesn't already exist
+        if (_definitions.contains(uniqueId))
+        {
+            qCritical() << "Resource \"" << uniqueId << "\" already exists. Resource parsing aborted.";
+            return;
+        }
+        _definitions[currentResource["unique_id"].toString()] = resourceDef;
     }
 }
 
@@ -873,6 +1093,15 @@ ResourceRules::fillCost(ResourceDefinition* p_resourceDef, QJsonObject* p_curren
         qCritical() << "Resource \"" << p_resourceDef->id << "\" has no cost!";
         return;
     }
+}
+
+//---------------------------------------------------------------------------------
+void
+ResourceRules::fillWeaponDefinition(WeaponDefinition* p_weaponDef, QJsonObject* p_currentResource)
+{
+    QJsonObject currentResource = *p_currentResource;
+
+    // TODO: here
 }
 
 //---------------------------------------------------------------------------------

@@ -1591,6 +1591,360 @@
                 ["SMARTGUN_INT", "internal", "false"]
             ],
             "wireless"      : "true"
+        },
+        {
+            "unique_id" : "APDS",
+            "translations" : 
+            { 
+                "en" : "APDS",
+                "de" : "APDS"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "0",
+            "ap_mod"            : "-4",
+            "availability"      : "12F",
+            "cost"              : "120"
+        },
+        {
+            "unique_id" : "DMSO_GELPACKS",
+            "translations" : 
+            { 
+                "en" : "DMSO-Gelpacks",
+                "de" : "DMSO-Gelpacks"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "2R",
+            "cost"              : "20"
+        },
+        {
+            "unique_id" : "EXP_ROUNDS",
+            "translations" : 
+            { 
+                "en" : "Explosive Rounds",
+                "de" : "Explosivmunition"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "1",
+            "ap_mod"            : "-1",
+            "availability"      : "9F",
+            "cost"              : "80"
+        },
+        {
+            "unique_id" : "FLECH",
+            "translations" : 
+            { 
+                "en" : "Flechette Rounds",
+                "de" : "Flechettemunition"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "2",
+            "ap_mod"            : "5",
+            "availability"      : "6R",
+            "cost"              : "65"
+        },
+        {
+            "unique_id" : "GEL_ROUNDS",
+            "translations" : 
+            { 
+                "en" : "Gel Rounds",
+                "de" : "Gelmunition"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "0",
+            "ap_mod"            : "1",
+            "availability"      : "2R",
+            "cost"              : "25"
+        },
+        {
+            "unique_id" : "HOLLOW_POINTS",
+            "translations" : 
+            { 
+                "en" : "Hollow Points",
+                "de" : "Hohlspitzmunition"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "1",
+            "ap_mod"            : "2",
+            "availability"      : "4F",
+            "cost"              : "70"
+        },
+        {
+            "unique_id" : "INJ_DARTS",
+            "translations" : 
+            { 
+                "en" : "Injection Darts",
+                "de" : "Injektionspfeile"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "4R",
+            "cost"              : "75"
+        },
+        {
+            "unique_id" : "REG_AMMO",
+            "translations" : 
+            { 
+                "en" : "Regular Ammo",
+                "de" : "Standardmunition"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "2R",
+            "cost"              : "20"
+        },
+        {
+            "unique_id" : "STICKNSHOCK",
+            "translations" : 
+            { 
+                "en" : "Stick-N-Shock",
+                "de" : "Schockermunition"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "2",
+            "ap_mod"            : "-5",
+            "availability"      : "6R",
+            "cost"              : "80"
+        },
+        {
+            "unique_id" : "TRACER",
+            "translations" : 
+            { 
+                "en" : "Tracer",
+                "de" : "Leuchtspurmunition"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "6R",
+            "cost"              : "60"
+        },
+        {
+            "unique_id" : "TASER_DART",
+            "translations" : 
+            { 
+                "en" : "Taser Dart",
+                "de" : "Taserpfeile"
+            },
+            "type"              : "AMMUNITION",
+            "damage_mod"        : "0",
+            "ap_mod"            : "0",
+            "availability"      : "3",
+            "cost"              : "50"
+        },
+        {
+            "unique_id" : "FLASH_BANG",
+            "translations" : 
+            { 
+                "en" : "Flash-Bang",
+                "de" : "Schockgranate"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["10", "S"],
+            "ap"                : "-4",
+            "blast"             : "10m",
+            "availability"      : "6R",
+            "cost"              : "100"
+        },
+        {
+            "unique_id" : "FLASH_PAK",
+            "translations" : 
+            { 
+                "en" : "Flash-Pak",
+                "de" : "Flash-Pack"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["special"],
+            "ap"                : "0",
+            "blast"             : "special",
+            "availability"      : "4",
+            "cost"              : "125"
+        },
+        {
+            "unique_id" : "FRAGMENTATION",
+            "translations" : 
+            { 
+                "en" : "Fragmentation",
+                "de" : "Splittergranate"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["18", "P"],
+            "ap"                : "+5",
+            "blast"             : "-1/m",
+            "availability"      : "11F",
+            "cost"              : "100"
+        },
+        {
+            "unique_id" : "HIGH_EXP",
+            "translations" : 
+            { 
+                "en" : "High Explosive",
+                "de" : "Sprenggranate"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["16", "P"],
+            "ap"                : "-2",
+            "blast"             : "-2/m",
+            "availability"      : "11F",
+            "cost"              : "100"
+        },
+        {
+            "unique_id" : "GAS_GREN",
+            "translations" : 
+            { 
+                "en" : "Gas",
+                "de" : "Gasgranate"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["as chemical"],
+            "ap"                : "0",
+            "blast"             : "10m",
+            "availability"      : "2 + chemical",
+            "cost"              : "40"
+        },
+        {
+            "unique_id" : "SMOKE_GREN",
+            "translations" : 
+            { 
+                "en" : "Smoke",
+                "de" : "Rauchgranate"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["0", "P"],
+            "ap"                : "0",
+            "blast"             : "10m",
+            "availability"      : "4R",
+            "cost"              : "40"
+        },
+        {
+            "unique_id" : "THER_SMOKE",
+            "translations" : 
+            { 
+                "en" : "Thermal Smoke",
+                "de" : "IR-Rauchgranate"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_GRENADES",
+            "wireless"          : "true",
+            "damage"            : ["0", "P"],
+            "ap"                : "0",
+            "blast"             : "10m",
+            "availability"      : "6R",
+            "cost"              : "60"
+        },
+        {
+            "unique_id" : "ANT_VEH_ROCKET",
+            "translations" : 
+            { 
+                "en" : "Anti-Vehicle",
+                "de" : "Anti-Fahrzeugrakete"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["24", "P"],
+            "ap"                : "-10/-4",
+            "blast"             : "-4/m",
+            "availability"      : "18F",
+            "cost"              : "2800"
+        },
+        {
+            "unique_id" : "ANT_VEH_ROCKET_GUIDED",
+            "translations" : 
+            { 
+                "en" : "Anti-Vehicle (Missile)",
+                "de" : "Anti-Fahrzeug-Lenkrakete"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["24", "P"],
+            "ap"                : "-10/-4",
+            "blast"             : "-4/m",
+            "availability"      : "22F",
+            "cost"              : "2800 + rating * 500",
+            "max_rating"        : "10"
+        },
+        {
+            "unique_id" : "FRAG_ROCKET",
+            "translations" : 
+            { 
+                "en" : "Fragmentation",
+                "de" : "Splitterrakete"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["23", "P"],
+            "ap"                : "+5",
+            "blast"             : "-1/m",
+            "availability"      : "12F",
+            "cost"              : "2000"
+        },
+        {
+            "unique_id" : "FRAG_ROCKET_GUIDED",
+            "translations" : 
+            { 
+                "en" : "Fragmentation (Missile)",
+                "de" : "Splitter-Lenkrakete"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["23", "P"],
+            "ap"                : "+5",
+            "blast"             : "-1/m",
+            "availability"      : "16F",
+            "cost"              : "2000 + rating * 500",
+            "max_rating"        : "10"
+        },
+        {
+            "unique_id" : "HIGH_EXP_ROCKET",
+            "translations" : 
+            { 
+                "en" : "High-Explosive",
+                "de" : "Sprengrakete"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["21", "P"],
+            "ap"                : "-2",
+            "blast"             : "-2/m",
+            "availability"      : "18F",
+            "cost"              : "2100"
+        },
+        {
+            "unique_id" : "HIGH_EXP_ROCKET_GUIDED",
+            "translations" : 
+            { 
+                "en" : "High-Explosive (Missile)",
+                "de" : "Spreng-Lenkrakete"
+            },
+            "type"              : "AMMUNITION",
+            "subtype"           : "AMMU_ROCKETS",
+            "wireless"          : "true",
+            "damage"            : ["21", "P"],
+            "ap"                : "-12",
+            "blast"             : "-2/m",
+            "availability"      : "22F",
+            "cost"              : "2100 + rating * 500",
+            "max_rating"        : "10"
         }
     ],
     "mounts" : [
@@ -1865,338 +2219,6 @@
             "wireless"          : "false",
             "availability"      : "2",
             "cost"              : "25"
-        }
-    ],
-    "ammunition" : [
-        {
-            "unique_id" : "APDS",
-            "translations" : 
-            { 
-                "en" : "APDS",
-                "de" : "APDS"
-            },
-            "damage_mod"        : "0",
-            "ap_mod"            : "-4",
-            "availability"      : "12F",
-            "cost"              : "120"
-        },
-        {
-            "unique_id" : "DMSO_GELPACKS",
-            "translations" : 
-            { 
-                "en" : "DMSO-Gelpacks",
-                "de" : "DMSO-Gelpacks"
-            },
-            "damage_mod"        : "0",
-            "ap_mod"            : "0",
-            "availability"      : "2R",
-            "cost"              : "20"
-        },
-        {
-            "unique_id" : "EXP_ROUNDS",
-            "translations" : 
-            { 
-                "en" : "Explosive Rounds",
-                "de" : "Explosivmunition"
-            },
-            "damage_mod"        : "1",
-            "ap_mod"            : "-1",
-            "availability"      : "9F",
-            "cost"              : "80"
-        },
-        {
-            "unique_id" : "FLECH",
-            "translations" : 
-            { 
-                "en" : "Flechette Rounds",
-                "de" : "Flechettemunition"
-            },
-            "damage_mod"        : "2",
-            "ap_mod"            : "5",
-            "availability"      : "6R",
-            "cost"              : "65"
-        },
-        {
-            "unique_id" : "GEL_ROUNDS",
-            "translations" : 
-            { 
-                "en" : "Gel Rounds",
-                "de" : "Gelmunition"
-            },
-            "damage_mod"        : "0",
-            "ap_mod"            : "1",
-            "availability"      : "2R",
-            "cost"              : "25"
-        },
-        {
-            "unique_id" : "HOLLOW_POINTS",
-            "translations" : 
-            { 
-                "en" : "Hollow Points",
-                "de" : "Hohlspitzmunition"
-            },
-            "damage_mod"        : "1",
-            "ap_mod"            : "2",
-            "availability"      : "4F",
-            "cost"              : "70"
-        },
-        {
-            "unique_id" : "INJ_DARTS",
-            "translations" : 
-            { 
-                "en" : "Injection Darts",
-                "de" : "Injektionspfeile"
-            },
-            "damage_mod"        : "0",
-            "ap_mod"            : "0",
-            "availability"      : "4R",
-            "cost"              : "75"
-        },
-        {
-            "unique_id" : "REG_AMMO",
-            "translations" : 
-            { 
-                "en" : "Regular Ammo",
-                "de" : "Standardmunition"
-            },
-            "damage_mod"        : "0",
-            "ap_mod"            : "0",
-            "availability"      : "2R",
-            "cost"              : "20"
-        },
-        {
-            "unique_id" : "STICKNSHOCK",
-            "translations" : 
-            { 
-                "en" : "Stick-N-Shock",
-                "de" : "Schockermunition"
-            },
-            "damage_mod"        : "2",
-            "ap_mod"            : "-5",
-            "availability"      : "6R",
-            "cost"              : "80"
-        },
-        {
-            "unique_id" : "TRACER",
-            "translations" : 
-            { 
-                "en" : "Tracer",
-                "de" : "Leuchtspurmunition"
-            },
-            "damage_mod"        : "0",
-            "ap_mod"            : "0",
-            "availability"      : "6R",
-            "cost"              : "60"
-        },
-        {
-            "unique_id" : "TASER_DART",
-            "translations" : 
-            { 
-                "en" : "Taser Dart",
-                "de" : "Taserpfeile"
-            },
-            "damage_mod"        : "0",
-            "ap_mod"            : "0",
-            "availability"      : "3",
-            "cost"              : "50"
-        },
-        {
-            "unique_id" : "FLASH_BANG",
-            "translations" : 
-            { 
-                "en" : "Flash-Bang",
-                "de" : "Schockgranate"
-            },
-            "subtype"           : "AMMU_GRENADES",
-            "wireless"          : "true",
-            "damage"            : ["10", "S"],
-            "ap"                : "-4",
-            "blast"             : "10m",
-            "availability"      : "6R",
-            "cost"              : "100"
-        },
-        {
-            "unique_id" : "FLASH_PAK",
-            "translations" : 
-            { 
-                "en" : "Flash-Pak",
-                "de" : "Flash-Pack"
-            },
-            "subtype"           : "AMMU_GRENADES",
-            "wireless"          : "true",
-            "damage"            : ["special"],
-            "ap"                : "0",
-            "blast"             : "special",
-            "availability"      : "4",
-            "cost"              : "125"
-        },
-        {
-            "unique_id" : "FRAGMENTATION",
-            "translations" : 
-            { 
-                "en" : "Fragmentation",
-                "de" : "Splittergranate"
-            },
-            "subtype"           : "AMMU_GRENADES",
-            "wireless"          : "true",
-            "damage"            : ["18", "P"],
-            "ap"                : "+5",
-            "blast"             : "-1/m",
-            "availability"      : "11F",
-            "cost"              : "100"
-        },
-        {
-            "unique_id" : "HIGH_EXP",
-            "translations" : 
-            { 
-                "en" : "High Explosive",
-                "de" : "Sprenggranate"
-            },
-            "subtype"           : "AMMU_GRENADES",
-            "wireless"          : "true",
-            "damage"            : ["16", "P"],
-            "ap"                : "-2",
-            "blast"             : "-2/m",
-            "availability"      : "11F",
-            "cost"              : "100"
-        },
-        {
-            "unique_id" : "GAS_GREN",
-            "translations" : 
-            { 
-                "en" : "Gas",
-                "de" : "Gasgranate"
-            },
-            "subtype"           : "AMMU_GRENADES",
-            "wireless"          : "true",
-            "damage"            : ["as chemical"],
-            "ap"                : "0",
-            "blast"             : "10m",
-            "availability"      : "2 + chemical",
-            "cost"              : "40"
-        },
-        {
-            "unique_id" : "SMOKE_GREN",
-            "translations" : 
-            { 
-                "en" : "Smoke",
-                "de" : "Rauchgranate"
-            },
-            "subtype"           : "AMMU_GRENADES",
-            "wireless"          : "true",
-            "damage"            : ["0", "P"],
-            "ap"                : "0",
-            "blast"             : "10m",
-            "availability"      : "4R",
-            "cost"              : "40"
-        },
-        {
-            "unique_id" : "THER_SMOKE",
-            "translations" : 
-            { 
-                "en" : "Thermal Smoke",
-                "de" : "IR-Rauchgranate"
-            },
-            "subtype"           : "AMMU_GRENADES",
-            "wireless"          : "true",
-            "damage"            : ["0", "P"],
-            "ap"                : "0",
-            "blast"             : "10m",
-            "availability"      : "6R",
-            "cost"              : "60"
-        },
-        {
-            "unique_id" : "ANT_VEH_ROCKET",
-            "translations" : 
-            { 
-                "en" : "Anti-Vehicle",
-                "de" : "Anti-Fahrzeugrakete"
-            },
-            "subtype"           : "AMMU_ROCKETS",
-            "wireless"          : "true",
-            "damage"            : ["24", "P"],
-            "ap"                : "-10/-4",
-            "blast"             : "-4/m",
-            "availability"      : "18F",
-            "cost"              : "2800"
-        },
-        {
-            "unique_id" : "ANT_VEH_ROCKET_GUIDED",
-            "translations" : 
-            { 
-                "en" : "Anti-Vehicle (Missile)",
-                "de" : "Anti-Fahrzeug-Lenkrakete"
-            },
-            "subtype"           : "AMMU_ROCKETS",
-            "wireless"          : "true",
-            "damage"            : ["24", "P"],
-            "ap"                : "-10/-4",
-            "blast"             : "-4/m",
-            "availability"      : "22F",
-            "cost"              : "2800 + rating * 500",
-            "max_rating"        : "10"
-        },
-        {
-            "unique_id" : "FRAG_ROCKET",
-            "translations" : 
-            { 
-                "en" : "Fragmentation",
-                "de" : "Splitterrakete"
-            },
-            "subtype"           : "AMMU_ROCKETS",
-            "wireless"          : "true",
-            "damage"            : ["23", "P"],
-            "ap"                : "+5",
-            "blast"             : "-1/m",
-            "availability"      : "12F",
-            "cost"              : "2000"
-        },
-        {
-            "unique_id" : "FRAG_ROCKET_GUIDED",
-            "translations" : 
-            { 
-                "en" : "Fragmentation (Missile)",
-                "de" : "Splitter-Lenkrakete"
-            },
-            "subtype"           : "AMMU_ROCKETS",
-            "wireless"          : "true",
-            "damage"            : ["23", "P"],
-            "ap"                : "+5",
-            "blast"             : "-1/m",
-            "availability"      : "16F",
-            "cost"              : "2000 + rating * 500",
-            "max_rating"        : "10"
-        },
-        {
-            "unique_id" : "HIGH_EXP_ROCKET",
-            "translations" : 
-            { 
-                "en" : "High-Explosive",
-                "de" : "Sprengrakete"
-            },
-            "subtype"           : "AMMU_ROCKETS",
-            "wireless"          : "true",
-            "damage"            : ["21", "P"],
-            "ap"                : "-2",
-            "blast"             : "-2/m",
-            "availability"      : "18F",
-            "cost"              : "2100"
-        },
-        {
-            "unique_id" : "HIGH_EXP_ROCKET_GUIDED",
-            "translations" : 
-            { 
-                "en" : "High-Explosive (Missile)",
-                "de" : "Spreng-Lenkrakete"
-            },
-            "subtype"           : "AMMU_ROCKETS",
-            "wireless"          : "true",
-            "damage"            : ["21", "P"],
-            "ap"                : "-12",
-            "blast"             : "-2/m",
-            "availability"      : "22F",
-            "cost"              : "2100 + rating * 500",
-            "max_rating"        : "10"
         }
     ]
 }
